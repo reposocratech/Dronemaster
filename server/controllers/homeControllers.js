@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+
+
 class homeControllers {
   // 1.- Login
   // localhost:4000/login
@@ -51,8 +53,24 @@ class homeControllers {
             res.status(401).json("incorrect email or password");
           }
         });
-      }
+       }
     });
   };
+  
+  selectAllCourses = (req, res) => {
+    let sql = `SELECT * FROM course`;
+
+    connection.query(sql, (error, result) => {
+      if (error) {
+        res.status(400).json({ error });
+      } else {
+        res.status(200).json(result);
+        console.log(result);
+           }
+    });
+  };
+
+ 
 }
+
 module.exports = new homeControllers();
