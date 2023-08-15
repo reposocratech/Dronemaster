@@ -5,6 +5,21 @@ const courseControllers = require("../controllers/courseControllers");
 const verify = require("../middleware/verify");
 
 
+// ---------------------------------------------------------------------------
+// 1.- Add commentary
+// localhost:4000/courses/addCommentary/:user_id/:course_id/:unit_id/:lesson_id
+router.post(
+  "/addCommentary/:user_id/:course_id/:unit_id/:lesson_id",
+  courseControllers.addComentary
+);
+
+// ---------------------------------------------------------------------------
+// 1.- Response commentary
+// localhost:4000/courses/responseCommentary/:user_id/:course_id/:unit_id/:lesson_id/:parent_comment_id
+router.post(
+  "/responseCommentary/:user_id/:course_id/:unit_id/:lesson_id/:parent_comment_id",
+  courseControllers.responseComentary
+);
 
 
 //1. Create a course by student
@@ -24,5 +39,6 @@ router.put("/disableCourse/:course_id",/* verify, */ courseControllers.disableCo
 
 /* GET courses listing. */
 router.get("/todosCursos", courseControllers.selectAllCourses);
+
 
 module.exports = router;
