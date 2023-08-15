@@ -22,9 +22,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/admin", adminRouter);
-app.use("/teacher", teacherRouter);
-app.use("/student", studentRouter);
-app.use("/course", courseRouter);
+app.use("/teachers", teacherRouter);
+app.use("/students", studentRouter);
+app.use("/courses", courseRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
