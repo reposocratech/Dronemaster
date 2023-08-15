@@ -1,6 +1,7 @@
 const connection = require("../config/db");
 
 class courseControllers {
+
   createCourse = (req, res) => {
     const { user_id } = req.params;
     //Teacher id, comes from a Select option at the creation form.
@@ -119,6 +120,20 @@ class courseControllers {
     connection.query(sql, (error, result) => {
       if (error) res.status(500).json(err);
       res.status(200).json({ message: "Course disable succesfully" });
+    });
+  };
+  
+  
+ selectAllCourses = (req, res) => {
+    let sql = `SELECT * FROM course`;
+
+    connection.query(sql, (error, result) => {
+      if (error) {
+        res.status(400).json({ error });
+      } else {
+        res.status(200).json(result);
+        console.log(result);
+      }
     });
   };
 }
