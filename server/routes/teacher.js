@@ -4,6 +4,23 @@ const teacherControllers = require("../controllers/teacherControllers");
 
 /* localhost:4000/teachers */
 
+
+
+
+
+////activar comentario///
+router.put(
+  "/comment/:comment_id/visibility",
+  teacherControllers.enableCommentVisibility
+);
+
+// Ruta para deshabilitar la visibilidad de un comentario
+router.post(
+  "/comments/disable-visibility/:comment_id",
+  disableCommentVisibility
+);
+
+
 //X.- Enable resources
 //localhost:4000/teachers/enableResource
 
