@@ -1,6 +1,6 @@
 const connection = require("../config/db");
 
-class courseControllers {
+class homeControllers {
   selectAllCourses = (req, res) => {
     let sql = `SELECT * FROM course`;
 
@@ -15,4 +15,4 @@ class courseControllers {
   };
 }
 
-module.exports = new courseControllers();
+module.exports = new homeControllers();

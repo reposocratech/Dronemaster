@@ -1,8 +1,7 @@
 var express = require("express");
 var router = express.Router();
-const courseControllers = require("../controllers/courseControllers");
+const courseControllers = require("../controllers/homeControllers");
 
-/* GET home page. */
 /* GET courses listing. */
 router.get("/todosCursos", courseControllers.selectAllCourses);
 
