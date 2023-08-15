@@ -1,8 +1,6 @@
 const connection = require("../config/db");
 
 class courseControllers {
-
-
   createCourse = (req, res) => {
     const { user_id } = req.params;
     //Teacher id, comes from a Select option at the creation form.
@@ -34,7 +32,7 @@ class courseControllers {
           //Set Current Date
           let dateNow = new Date();
 
-          let formatedDate = `${dateNow.getFullYear()}/${dateNow.getMonth()}/${dateNow.getDate()}`
+          let formatedDate = `${dateNow.getFullYear()}/${dateNow.getMonth()}/${dateNow.getDate()}`;
 
           //Set teacher_id to user_course;
           let sqlTeacher = `INSERT INTO user_course (user_id, course_id, start_date) VALUES (${teacher_id}, ${course_id}, "${formatedDate}" )`;
@@ -123,9 +121,8 @@ class courseControllers {
       res.status(200).json({ message: "Course disable succesfully" });
     });
   };
-  
-  
- selectAllCourses = (req, res) => {
+
+  selectAllCourses = (req, res) => {
     let sql = `SELECT * FROM course`;
 
     connection.query(sql, (error, result) => {
@@ -135,9 +132,10 @@ class courseControllers {
         res.status(200).json(result);
         console.log(result);
       }
+    });
+  };
 
-      
-      // 1.- Add commentary
+  // 1.- Add commentary
   // localhost:4000/courses/addCommentary/:user_id/:course_id/:unit_id/:lesson_id
   addComentary = (req, res) => {
     console.log("req params (add comentary): ", req.params);
