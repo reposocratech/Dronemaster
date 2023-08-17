@@ -1,8 +1,11 @@
 const connection = require("../config/db");
 
 class courseControllers {
+  // 1. Create a course by admin
+  // http://localhost:4000/courses/createCourse/:user_id
   createCourse = (req, res) => {
     const { user_id } = req.params;
+
     //Teacher id, comes from a Select option at the creation form.
     const {
       course_name,
@@ -10,36 +13,33 @@ class courseControllers {
       price,
       course_description,
       teacher_id,
-    } = req.body; //? Form Data --> JSON.parse()
+      category_id,
+    } = req.body;
 
-    const tagsList = ["232342", "lelelel"];
+    // tagList is connected with FormData (Frontend)
+    //const tagsList = ["232342", "lelelel"];
 
     //Get type form user
     let sqlGetType = `SELECT type FROM user WHERE user_id = ${user_id}`;
-
-    connection.query(sqlGetType, (err, resultType) => {
-      if (err) res.status(500).json(err);
+    connection.query(sqlGetType, (error, resultType) => {
+      if (error) res.status(400).json(error);
 
       //Check if user is an Admin
       if (resultType[0].type === 2) {
         // Create a new Course
-        let sql = `INSERT INTO course (course_name, course_length, price, course_description, created_by_user_id) VALUES ('${course_name}',${course_length},${price},'${course_description}', ${user_id})`;
+        let sql = `INSERT INTO course (course_name, course_length, price, course_description ,category_id, created_by_user_id) VALUES ('${course_name}',${course_length},${price},'${course_description}',${category_id}, ${user_id})`;
 
         connection.query(sql, (error, result) => {
           if (error) res.status(500).json(error);
 
           let course_id = result.insertId;
+
           //Set Current Date
           let dateNow = new Date();
-
           let formatedDate = `${dateNow.getFullYear()}/${dateNow.getMonth()}/${dateNow.getDate()}`;
 
           //Set teacher_id to user_course;
           let sqlTeacher = `INSERT INTO user_course (user_id, course_id, start_date) VALUES (${teacher_id}, ${course_id}, "${formatedDate}" )`;
-
-          if (!teacher_id) {
-            let sqlTeacher = `INSERT INTO user_course (user_id, course_id, start_date) VALUES ( 0 , ${course_id}, "${formatedDate}" )`;
-          }
 
           connection.query(sqlTeacher, (error, result) => {
             if (error) res.status(500).json(error);
@@ -73,6 +73,7 @@ class courseControllers {
               }
 
               let sqlTagCourse = `INSERT INTO tag_course (tag_id, course_id) VALUES (${tagId}, ${course_id})`;
+
               connection.query(sqlTagCourse, (err, result) => {
                 if (err) {
                   console.error(err);
@@ -83,6 +84,7 @@ class courseControllers {
             // Insert new tags
             for (const newTag of newTags) {
               let sqlInsertNewTag = `INSERT INTO tag (tag_name) VALUES ('${newTag}')`;
+
               connection.query(sqlInsertNewTag, (error3, result2) => {
                 if (error3) {
                   return res.status(500).json(error3);
@@ -100,6 +102,8 @@ class courseControllers {
     });
   };
 
+  // 2. Enable Course
+  // http://localhost:4000/courses/enableCourse/:course_id
   enableCourse = (req, res) => {
     const { course_id } = req.params;
 
@@ -111,6 +115,8 @@ class courseControllers {
     });
   };
 
+  // 3. Disable Course
+  // http://localhost:4000/courses/disableCourse/:course_id
   disableCourse = (req, res) => {
     const { course_id } = req.params;
 
@@ -122,47 +128,86 @@ class courseControllers {
     });
   };
 
+  // 4.- All courses
+  // http://localhost:4000/courses/allCourses
   selectAllCourses = (req, res) => {
-    let sql = `SELECT * FROM course`;
+    let sql = `SELECT * FROM course WHERE course_is_hidden = 0`;
 
     connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 5.- Edit course
+  // http://localhost:4000/courses/editCourse/:course_id
+  editCourse = (req, res) => {
+    const {
+      course_name,
+      category_id,
+      course_length,
+      teacher_id,
+      course_description,
+      price,
+    } = req.body;
+
+    const { course_id } = req.params;
+
+    let sql = `UPDATE course SET course_name="${course_name}" ,category_id=${category_id} ,course_length=${course_length}  ,course_description="${course_description}" ,price=${price} WHERE course_id = ${course_id}`;
+
+    connection.query(sql, (error, result) => {
+      if (error) res.status(400).json({ error });
+    });
+
+    //Check if user_course relationship already exist
+    let sqlGetUser_course = `Select user_id FROM user_course WHERE course_id = ${course_id}  ORDER BY start_date DESC LIMIT 1`;
+
+    connection.query(sqlGetUser_course, (error, user_courseResult) => {
       if (error) {
         res.status(400).json({ error });
       } else {
-        res.status(200).json(result);
-        console.log(result);
+        let sqlTeacher = `UPDATE user_course SET user_id=${teacher_id} WHERE course_id = ${course_id} and user_id = ${user_courseResult[0].user_id}`;
+
+        connection.query(sqlTeacher, (error, result) => {
+          error
+            ? res.status(404).json({ error })
+            : res.status(200).json(result);
+        });
       }
     });
   };
 
-  // 1.- Add commentary
-  // localhost:4000/courses/addCommentary/:user_id/:course_id/:unit_id/:lesson_id
-  addComentary = (req, res) => {
-    console.log("req params (add comentary): ", req.params);
+  // 6.- Create course category
+  // http://localhost:4000/courses/createCategory
+  createCategory = (req, res) => {
+    const { category_name } = req.body;
 
-    let { user_id, course_id, unit_id, lesson_id } = req.params;
-    let { comment_content } = req.body;
-    console.log(("req body: ", req.body));
+    const existCategory = [];
 
-    let sql = `INSERT INTO comment (user_id, course_id, unit_id, lesson_id, comment_content) VALUES ("${user_id}", "${course_id}", "${unit_id}", "${lesson_id}", "${comment_content}")`;
+    // We check if category table is empty
+    let sql1 = "SELECT * FROM category";
 
-    connection.query(sql, (error, result) => {
-      error ? res.status(400).json({ error }) : res.status(201).json(result);
-    });
-  };
+    connection.query(sql1, (error, result) => {
+      if (error) res.status(400).json(error);
 
-  responseComentary = (req, res) => {
-    console.log("req params (add comentary): ", req.params);
+      if (result.length !== 0) {
+        for (let i = 0; i < result.length; i++) {
+          // if there are info in category que copy that in a new array
+          existCategory.push(result[i].category_name);
+        }
+      }
 
-    let { user_id, course_id, unit_id, lesson_id, parent_comment_id } =
-      req.params;
-    let { comment_content } = req.body;
-    console.log(("req body: ", req.body));
+      // category verification if exist
+      if (existCategory.includes(category_name)) {
+        return res.status(400).json({ message: "category already exist" });
+      } else {
+        // Not exist category
+        let sql2 = `INSERT INTO category (category_name) VALUES ("${category_name}")`;
 
-    let sql = `INSERT INTO comment (user_id, course_id, unit_id, lesson_id, parent_comment_id, comment_content) VALUES ("${user_id}", "${course_id}", "${unit_id}", "${lesson_id}", "${parent_comment_id}", "${comment_content}")`;
-
-    connection.query(sql, (error, result) => {
-      error ? res.status(400).json({ error }) : res.status(201).json(result);
+        connection.query(sql2, (error, result) => {
+          if (error) res.status(400).json(error);
+          res.status(201).json({ message: "Category created successfully" });
+        });
+      }
     });
   };
 }

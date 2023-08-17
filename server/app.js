@@ -9,7 +9,7 @@ var adminRouter = require("./routes/admin");
 var teacherRouter = require("./routes/teacher");
 var studentRouter = require("./routes/student");
 var courseRouter = require("./routes/course");
-var homeRouter = require("./routes/home");
+var commonRouter = require("./routes/common");
 
 var app = express();
 
@@ -23,13 +23,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-
 app.use("/admin", adminRouter);
 app.use("/teachers", teacherRouter);
 app.use("/students", studentRouter);
 app.use("/courses", courseRouter);
-app.use("/", homeRouter);
-
+app.use("/", commonRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
