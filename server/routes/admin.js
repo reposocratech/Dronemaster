@@ -3,72 +3,40 @@ var router = express.Router();
 const adminControllers = require("../controllers/adminControllers");
 const bcrypt = require("bcrypt");
 
+// 1.- Create teacher or admin
+// http://localhost:4000/admin/createTeacher
+router.post("/createTeacherOrAdmin", adminControllers.createTeacherOrAdmin);
 
-/* localhost:4000/admin */
+// 2.- View all teachers
+// http://localhost:4000/admin/allTeachers
+router.get("/allTeachers", adminControllers.selectAllTeachers);
 
-//X.- View all students
-//localhost:4000/admin/allStudents
-//Brings the information of all the students suscribed in the portal
+// 3.- View all students
+// http://localhost:4000/admin/allStudents
+router.get("/allStudents", adminControllers.selectAllStudents);
 
-router.get("/allStudents", adminControllers.viewAllStudents);
+// 4.- Enable comment
+// http://localhost:4000/admin/enableComment/:comment_id
+router.put("/enableComment/:comment_id", adminControllers.enableComment);
 
-//X.- Enable resources
-//localhost:4000/admin/enableResource
+// 5.- Disable comment
+// http://localhost:4000/admin/disableComment/:comment_id
+router.post("/disableComment/:comment_id", adminControllers.disableComment);
 
-router.put("/enableResource/:lesson_id", adminControllers.enableReources);
+// 6.- Enable User
+// http://localhost:4000/admin/enableUser/:user_id
+router.put("/enableUser/:user_id", adminControllers.enableUser);
 
-//X.- Disable resources
-//localhost:4000/admin/disableResource
+// 7.- Disable User
+// http://localhost:4000/admin/disableUser/:user_id
+router.put("/disableUser/:user_id", adminControllers.disableUser);
 
-router.put("/disableResource/:lesson_id", adminControllers.enableReources);
+// 8.- Passed course
+// localhost:4000/admin/passedCourse/:user_id
+router.put("/passedCourse/:user_id", adminControllers.passedCourse);
 
-//X.- Enable teacher
-//localhost:4000/admin/enableTeacher
-
-router.put("/enableTeacher/:id", adminControllers.enableTeacher);
-
-//X.- Disable teacher
-//localhost:4000/admin/disableTeacher
-router.put("/disableTeacher/:id", adminControllers.disableTeacher);
-
-///REGISTRO PROFESOR
-router.post("/createTeacher", adminControllers.createTeacher);
-
-/////Mostrar todos los profesores/////
-router.get("/todosProfesores", adminControllers.selectAllTeachers);
-
-////// Mostrar Alumno/////////
-router.get("/todosAlumnos", adminControllers.selectAllStudents);
-
-router.put(
-  "/comment/:comment_id/visibility",
-  adminControllers.enableCommentVisibility
-);
-
-// Ruta para deshabilitar la visibilidad de un comentario
-router.post(
-  "/comments/disable-visibility/:comment_id",
-  disableCommentVisibility
-);
-
-// ---------------------------------------------------------------------
-// 1.- Disable student
-// localhost:4000/admin/disableStudent/:id
-router.put("/disableStudent/:id", adminControllers.disableStudent);
-
-// ---------------------------------------------------------------------
-// 2.- Enable student
-// localhost:4000/admin/enableStudent/:id
-router.put("/enableStudent/:id", adminControllers.enableStudent);
-
-// ---------------------------------------------------------------------
-// 3.- Passed course
-// localhost:4000/admin/passedCourse/:id
-router.put("/passedCourse/:id", adminControllers.passedCourse);
-
-// ---------------------------------------------------------------------
-// 4.- Not passed course
-// localhost:4000/admin/notPassedCourse/:id
-router.put("/notPassedCourse/:id", adminControllers.notPassedCourse);
+// 9.- Not passed course
+// localhost:4000/admin/notPassedCourse/:user_id
+router.put("/notPassedCourse/:user_id", adminControllers.notPassedCourse);
 
 module.exports = router;

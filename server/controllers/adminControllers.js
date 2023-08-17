@@ -1,30 +1,19 @@
 const connection = require("../config/db");
 
 class adminControllers {
-  createTeacher = (req, res) => {
-    const {
-      user_name,
-      user_lastname,
-      email,
-      password,
-      type,
-      national_id,
-      address,
-      phone,
-      user_img,
-    } = req.body;
-    console.log(req.body);
-    let saltRounds = 8;
+  // 1.- Create teacher
+  // http://localhost:4000/admin/createTeacher
+  createTeacherOrAdmin = (req, res) => {
+    const { user_name, user_lastname, email, password, type } = req.body;
+
+    let saltRounds = 10;
     bcrypt.genSalt(saltRounds, function (err, saltRounds) {
       bcrypt.hash(password, saltRounds, function (err, hash) {
-        if (err) {
-          console.log(err);
-        }
+        err && res.status(401).json({ err });
 
-        let sql = `INSERT INTO user (user_name, user_lastname, email, password, type, national_id, address, phone, user_img) VALUES ('${user_name}', '${user_lastname}', '${email}', '${hash}', '${type}', '${national_id}', '${address}', '${phone}', '${user_img}')`;
+        let sql = `INSERT INTO user (user_name, user_lastname, email, password, type, national_id, address, phone, user_img) VALUES ('${user_name}', '${user_lastname}', '${email}', '${hash}', '${type}')`;
 
         connection.query(sql, (error, result) => {
-          console.log(error);
           error
             ? res.status(400).json({ error })
             : res.status(201).json(result);
@@ -33,214 +22,102 @@ class adminControllers {
     });
   };
 
+  // 2.- View all teachers
+  // http://localhost:4000/admin/allTeachers
   selectAllTeachers = (req, res) => {
     let sql = `SELECT * FROM user WHERE type = 1 AND is_deleted = 0`;
 
     connection.query(sql, (error, result) => {
-      if (error) {
-        res.status(400).json({ error });
-      } else {
-        res.status(200).json(result);
-        console.log(result);
-      }
+      error ? res.status(400).json({ error }) : res.status(201).json(result);
     });
   };
 
+  // 3.- View all students
+  // http://localhost:4000/admin/allStudents
   selectAllStudents = (req, res) => {
     let sql = `SELECT * FROM user WHERE type = 0 AND is_deleted = 0`;
 
     connection.query(sql, (error, result) => {
-      if (error) {
-        res.status(400).json({ error });
-      } else {
-        res.status(200).json(result);
-        console.log(result);
-      }
+      error ? res.status(400).json({ error }) : res.status(201).json(result);
     });
   };
 
-  enableCommentVisibility = (req, res) => {
+  // 4.- Enable comment
+  // http://localhost:4000/admin/enableComment
+  enableComment = (req, res) => {
     const { comment_id } = req.params;
-    const { user_id, type } = req.body;
+    const { type } = req.body;
 
-    if (type !== 1 && type !== 2) {
-      return res.status(403).json({
-        error: "No tienes permiso para habilitar o deshabilitar comentarios",
+    if (type !== 2) {
+      res.status(403).json({ error });
+    } else {
+      let updateSql = `UPDATE comment SET comment_is_hidden = 0 WHERE comment_id = ${comment_id}`;
+
+      connection.query(updateSql, (error, result) => {
+        error ? res.status(400).json({ error }) : res.status(201).json(result);
       });
     }
-
-    let updateSql = `UPDATE comment SET comment_is_hidden = 0 WHERE comment_id = ?`;
-
-    connection.query(updateSql, [comment_id], (error, result) => {
-      if (error) {
-        res.status(400).json({ error });
-      } else {
-        res.status(200).json({
-          message:
-            "Estado de visibilidad del comentario actualizado correctamente (Hidden)",
-        });
-      }
-    });
   };
 
-  disableCommentVisibility = (req, res) => {
+  // 5.- Disable comment
+  // http://localhost:4000/admin/disableComment
+  disableComment = (req, res) => {
     const { comment_id } = req.params;
-    const { user_id, type } = req.body;
+    const { type } = req.body;
 
-    if (type !== 1 && type !== 2) {
-      return res.status(403).json({
-        error: "No tienes permiso para habilitar o deshabilitar comentarios",
+    if (type !== 2) {
+      res.status(403).json({ error });
+    } else {
+      let sql = `UPDATE comment SET comment_is_hidden = 1 WHERE comment_id = ${comment_id}`;
+
+      connection.query(sql, (error, result) => {
+        error ? res.status(400).json({ error }) : res.status(200).json(result);
       });
     }
-
-    let updateSql = `UPDATE comment SET comment_is_hidden = 1 WHERE comment_id = ?`;
-
-    connection.query(updateSql, [comment_id], (error, result) => {
-      if (error) {
-        res.status(400).json({ error });
-      } else {
-        res.status(200).json({
-          message:
-            "Estado de visibilidad del comentario actualizado correctamente (Visible)",
-        });
-      }
-    });
   };
 
-  //X.- View all students - Brings the information of all the students suscribed in the portal
-  //localhost:4000/admin/allStudents
+  // 6.- Enable User
+  // http://localhost:4000/admin/enableUser/:user_id
+  enableUser = (req, res) => {
+    const { user_id } = req.params;
 
-  viewAllStudents = (req, res) => {
-    let sql = "SELECT * FROM user";
-    connection.query(sql, (error, result) => {
-      if (error) {
-        //console.log(error)
-        res.status(400).json({ error });
-      }
-      res.status(200).json(result);
-    });
-  };
-
-  //X.- Enable resources included in a lesson
-  //localhost:4000/admin/enableResource
-
-  enableReources = (req, res) => {
-    let { id } = req.params;
-    console.log(id);
-
-    let sql = `UPDATE resource SET resource_is_hidden = 0 WHERE resource_id = "${id}"`;
-    connection.query(sql, (error, result) => {
-      if (error) {
-        console.log(error);
-        res.status(400).json({ error });
-      }
-      res.status(200).json(result);
-    });
-  };
-
-  //X.- Disable resources included in a lesson
-  //localhost:4000/admin/enableResource
-
-  disableReources = (req, res) => {
-    let { id } = req.params;
-    console.log(id);
-
-    let sql = `UPDATE resource SET resource_is_hidden = 1 WHERE resource_id = "${id}"`;
-    connection.query(sql, (error, result) => {
-      if (error) {
-        console.log(error);
-        res.status(400).json({ error });
-      }
-      res.status(200).json(result);
-    });
-  };
-
-  enableTeacher = (req, res) => {
-    let { id } = req.params;
-    console.log(id);
-
-    let sql = `UPDATE user SET is_deleted = 0 WHERE user_id = "${id}"`;
-    connection.query(sql, (error, result) => {
-      if (error) {
-        console.log(error);
-        res.status(400).json({ error });
-      }
-
-      res.status(200).json(result);
-    });
-  };
-
-  disableTeacher = (req, res) => {
-    let { id } = req.params;
-    console.log(id);
-
-    let sql = `UPDATE user SET is_deleted = 1 WHERE user_id = "${id}"`;
-    connection.query(sql, (error, result) => {
-      if (error) {
-        console.log(error);
-        res.status(400).json({ error });
-      }
-
-      res.status(200).json(result);
-    });
-  };
-
-  // 1.- Disable student
-  // localhost:4000/admin/disableStudent/:id
-  disableStudent = (req, res) => {
-    console.log("req params (disable student): ", req.params);
-    let { id } = req.params;
-
-    let sql = `UPDATE user SET is_deleted = 1 WHERE user_id = "${id}"`;
-    let sql2 = `SELECT * FROM user`;
+    let sql = `UPDATE user SET is_deleted = 0 WHERE user_id = "${user_id}"`;
 
     connection.query(sql, (error, result) => {
-      if (error) throw error;
-    });
-
-    connection.query(sql2, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
   };
 
-  // 2.- Enable student
-  // localhost:4000/admin/enableStudent/:id
-  enableStudent = (req, res) => {
-    console.log("req params (enable student): ", req.params);
-    let { id } = req.params;
+  // 7.- Disable User
+  // http://localhost:4000/admin/disableUser/:user_id
+  disableUser = (req, res) => {
+    const { user_id } = req.params;
 
-    let sql = `UPDATE user SET is_deleted = 0 WHERE user_id = "${id}"`;
-    let sql2 = `SELECT * FROM user`;
+    let sql = `UPDATE user SET is_deleted = 1 WHERE user_id = "${user_id}"`;
 
     connection.query(sql, (error, result) => {
-      if (error) throw error;
-    });
-
-    connection.query(sql2, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
   };
 
-  // 3.- Passed course
-  // localhost:4000/admin/passedCourse/:id
+  // 8.- Passed course
+  // localhost:4000/admin/passedCourse/:user_id
   passedCourse = (req, res) => {
-    console.log("req params (passed course): ", req.params);
-    let { id } = req.params;
+    const { user_id } = req.params;
 
-    let sql = `UPDATE user_course SET status = 4 WHERE user_id = "${id}"`;
+    let sql = `UPDATE user_course SET status = 4 WHERE user_id = "${user_id}"`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
   };
 
-  // 4.- Not passed course
-  // localhost:4000/admin/notPassedCourse/:id
+  // 9.- Not passed course
+  // localhost:4000/admin/notPassedCourse/:user_id
   notPassedCourse = (req, res) => {
-    console.log("req params (not passed course): ", req.params);
-    let { id } = req.params;
+    const { user_id } = req.params;
 
-    let sql = `UPDATE user_course SET status = 3 WHERE user_id = "${id}"`;
+    let sql = `UPDATE user_course SET status = 3 WHERE user_id = "${user_id}"`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
