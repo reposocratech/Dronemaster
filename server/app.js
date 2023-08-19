@@ -5,6 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const cors = require("cors")
 const router = express.Router();
+var cors = require('cors')
 
 var adminRouter = require("./routes/admin");
 var teacherRouter = require("./routes/teacher");
