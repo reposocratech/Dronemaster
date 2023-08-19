@@ -1,6 +1,59 @@
-.nav{
+@import '../../../public/styles/variables';
 
-    
-  
+.navOffCanvas {
+    background-color: $primaryDarkColor !important;
 
+    .search {
+        border: 2px solid $PrimaryOrangeColor;
+        border-radius: 20px;
+        width: 35vw;
+        height: 4vh;
+        color: white;
+        display: flex;
+
+        input {
+            border: transparent;
+            outline: none;
+            font-style: italic;
+        }
+    }
+}
+
+.navBar {
+    background-color: $primaryDarkColor;
+    color: white;
+    padding: 8px clamp(8px, 3vw, 45px);
+    height: 80px;
+
+    .logo {
+        width: clamp(180px, 18vw, 200px);
+    }
+
+    .navContainer {
+        margin: 0px;
+        padding: 0px;
+        display: flex;
+        justify-content: space-between;
+
+        .toogle {
+            border: 2px solid $PrimaryOrangeColor;
+            background-color: $PrimaryOrangeColor;
+        }
+
+        .search {
+            border: 2px solid $PrimaryOrangeColor;
+            border-radius: 20px;
+            width: 25vw;
+            height: 4vh;
+            color: white;
+
+            input {
+                border: transparent;
+                outline: none;
+                font-style: italic;
+
+            }
+
+        }
+    }
 }

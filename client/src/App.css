@@ -1,41 +1,37 @@
-
-
-
-
-.btnOutline1{
-    border-radius: 86.5px;
-    border: 3px solid var(--primary-orange, #F7AB16);
-
-    padding: 0px 16px;
-    align-items: center;
-   
-    background-color: transparent;
-
+.btnOutline1 {
+  color: white;
+  border-radius: 86.5px;
+  border: 2px solid var(--primary-orange, #f7ab16);
+  padding: 0px 16px;
+  align-items: center;
+  background-color: transparent;
 }
 
-
-.btnOutline2{
-    display: inline-flex;
-    padding: 16px 24px;
-    align-items: center;
-    gap: 10px;
-    border-radius: 20px;
-    border: 3px solid var(--primary-orange, #F7AB16);
-     background-color: transparent;
-
-
+.btnOutline2 {
+  color: white;
+  display: inline-flex;
+  padding: 6px 12px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 20px;
+  border: 2px solid var(--primary-orange, #f7ab16);
+  background-color: transparent;
 }
 
+.btnNormal {
+  font-weight: bold;
+  color: white;
+  border: 0px;
+  border-radius: 18px;
+  background: var(--primary-orange, #f7ab16);
+  display: inline-flex;
+  padding: 12px 25px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
 
-
-.btnNormal{
-    border-radius: 23px;
-    background: var(--primary-orange, #F7AB16);
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    display: inline-flex;
-    padding: 17px 57px;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    
+.btnNormal:hover {
+  background: white;
+  color: #f7ab16;
 }
