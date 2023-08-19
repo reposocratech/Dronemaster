@@ -5,7 +5,7 @@ import NavBarApp from '../components/NavBar/NavBarApp'
 import HomeApp from '../Pages/Home/HomeApp'
 import RegisterForm from '../Pages/Users/RegisterForm/RegisterForm'
 import LoginForm from '../Pages/Users/LoginForm/LoginForm'
-import AllCourses from '../Pages/Courses/AllCourses'
+import AllCourses from "../Pages/AllCourses/AllCourses";
 import AboutApp from '../Pages/About/AboutApp'
 import FooterApp from '../components/Footer/FooterApp'
 

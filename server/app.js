@@ -3,7 +3,9 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-var cors = require("cors");
+const cors = require("cors")
+const router = express.Router();
+var cors = require('cors')
 
 var adminRouter = require("./routes/admin");
 var teacherRouter = require("./routes/teacher");
