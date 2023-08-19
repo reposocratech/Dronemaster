@@ -210,6 +210,28 @@ class courseControllers {
       }
     });
   };
+
+  // 7.- Get all categories (NOT EMPTY)
+  // http://localhost:4000/courses/allCategories
+  selectAllCourseCategories = (req, res) => {
+    const sql =
+      "SELECT DISTINCT category.category_id, category.category_name FROM category  INNER JOIN course ON category.category_id = course.category_id AND course.course_is_hidden = 0";
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 8.- Get all tags of a Course (
+  // http://localhost:4000/courses/courseTags/:course_id
+  selectAllCourseTags = (req, res) => {
+    const { course_id } = req.params;
+    let sql = `SELECT tag.tag_id, tag.tag_name FROM tag_course INNER JOIN tag ON tag_course.tag_id = tag.tag_id INNER JOIN course course ON tag_course.course_id = course.course_id WHERE course.course_is_hidden = 0 AND course.course_id = ${course_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
 }
 
 module.exports = new courseControllers();
