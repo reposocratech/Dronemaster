@@ -31,4 +31,13 @@ router.put("/editCourse/:course_id", courseControllers.editCourse);
 // http://localhost:4000/courses/createCategory
 router.post("/createCategory/", courseControllers.createCategory);
 
+// 7.- Get all categories (NOT EMPTY)
+// http://localhost:4000/courses/allCategories
+router.get("/allCategories", courseControllers.selectAllCourseCategories);
+
+// 8.- Get all tags of a Course (
+// http://localhost:4000/courses/courseTags/:course_id
+router.get("/courseTags/:course_id", courseControllers.selectAllCourseTags);
+
+
 module.exports = router;
