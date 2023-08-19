@@ -5,14 +5,16 @@ require("dotenv").config();
 
 class commonControllers {
   // 1.- Login
-  // localhost:4000/login
+  // http://localhost:4000/login
+
   login = (req, res) => {
     const { email, password } = req.body;
-
+    
     let sql = `SELECT * FROM user WHERE email = "${email}"`;
-
+    
     connection.query(sql, (error, result) => {
       // if query is failed
+      
       if (error) return res.status(404).json(error);
 
       // if there isn´t an user with this email
@@ -49,7 +51,7 @@ class commonControllers {
           }
         });
       }
-    });
+    });  
   };
 
   //3.- Counter which includes total of teachers, courses and students
