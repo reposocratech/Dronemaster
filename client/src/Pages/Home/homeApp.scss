@@ -1,0 +1,61 @@
+@import '../../../public/styles/variables';
+
+.home {
+    min-height: calc(100vh - 80px);
+    background-color: $primaryDarkColor;
+    color: white;
+
+    .homeInfo {
+        padding: clamp(8px, 20vw, 150px) clamp(8px, 3vw, 45px);
+
+        h1 {
+            margin: 0;
+            padding-bottom: 30px;
+            font-size: clamp(20px, 4rem, 75px);
+
+            span {
+                color: $PrimaryOrangeColor;
+            }
+        }
+
+        p {
+            margin: 0;
+            padding-bottom: 20px;
+        }
+
+        .allCounter {
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            gap: 100px;
+
+            .homeCounter {
+                font-size: 3rem;
+                color: $PrimaryOrangeColor;
+                text-align: center;
+            }
+
+            p {
+                font-size: 1.5rem;
+            }
+        }
+
+
+    }
+
+    .homeImage {
+        padding: clamp(8px, 18vw, 100px) clamp(8px, 3vw, 45px);
+        display: flex;
+        justify-content: center;
+        align-items: start;
+
+
+        .orangeCircle {
+            width: 550px;
+            height: 550px;
+            background-color: $PrimaryOrangeColor;
+            border-radius: 50%;
+
+        }
+    }
+}

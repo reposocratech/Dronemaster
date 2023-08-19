@@ -1,0 +1,81 @@
+@import '../../../public/styles/variables';
+
+.footer {
+    padding: 0px;
+    background-color: $primaryDarkColor;
+    color: $PrimaryLightColor;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    .footerLine {
+        border: 0.5px solid $PrimaryLightColor;
+        width: clamp(180px, 90vw, 1500px);
+        opacity: 0.5;
+        margin: 8px;
+    }
+
+    .footer1 {
+        width: clamp(250px, 35vw, 550px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .titleFooter1 {
+            font-size: 12px;
+        }
+
+        hr {
+            border: 1px solid $PrimaryOrangeColor;
+            width: clamp(180px, 18vw, 300px);
+            opacity: 0.5;
+            margin: 8px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 14px;
+            margin: 0;
+            padding: 8px 0px;
+        }
+
+        h2 {
+            margin: 0;
+            padding: 8px 0px;
+        }
+
+        button {
+            margin: 8px;
+        }
+    }
+
+    .footer2 {
+        max-width: 100vw;
+        padding: 8px clamp(8px, 3vw, 45px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 25vw;
+
+
+        .logoFooter {
+            width: clamp(180px, 18vw, 200px);
+        }
+
+        .footerInfo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+
+
+            p {
+                margin: 0;
+            }
+        }
+    }
+
+
+}
