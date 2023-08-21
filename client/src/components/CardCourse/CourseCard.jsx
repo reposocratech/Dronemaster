@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StarRating } from "../../../../components/StarRating/StarRating";
+import { StarRating } from "../StarRating/StarRating";
 import axios from "axios";
 
 export const CourseCard = ({ oneCourse }) => {
@@ -35,13 +35,13 @@ export const CourseCard = ({ oneCourse }) => {
           <div className="courseScore">
             <h5>{oneCourse.score}</h5>
             <StarRating rating={oneCourse.score} />
-            <h6 className="ratingCounter">
+{/*             <h6 className="ratingCounter">
               (
               {oneCourse.counter_rating
-                .toLocaleString()
+                .toLocaleString() 
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
               )
-            </h6>
+            </h6> */}
           </div>
         )}
         <h4>

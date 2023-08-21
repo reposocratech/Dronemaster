@@ -1,7 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { getLocalStorage } from '../helper/localStorageDroneMaster'
 import jwDecode from 'jwt-decode'
-
 import axios from 'axios'
 
 
@@ -16,19 +15,16 @@ const DroneMasterProvider = ({children}) => {
 
   useEffect(() =>{
 
-
     const tokenLocalStorage = getLocalStorage("token");
-
-    
     setToken(tokenLocalStorage)
    
    if(tokenLocalStorage){
        const id = jwDecode(tokenLocalStorage).user.id;
    
        axios
-       .get()
+       .get(`http://localhost:4000/myProfile/${id}`)
        .then((res)=>{
-         console.log("La respuesta del context*********",res)
+         console.log("La respuesta de CONTEXTOOOOOOOOO", res)
                setUser(res.data.resultUser[0])
                setIsLogged(true);
                
@@ -39,7 +35,7 @@ const DroneMasterProvider = ({children}) => {
    
    }, [])
    
-   console.log("*************************", user)
+   console.log("************************* ESTE ES EL", user)
 
 
 
@@ -55,7 +51,9 @@ const DroneMasterProvider = ({children}) => {
           user, 
           setUser,
           token,
-          setToken
+          setToken,  
+          isLogged,
+          setIsLogged
 
 
       }}>

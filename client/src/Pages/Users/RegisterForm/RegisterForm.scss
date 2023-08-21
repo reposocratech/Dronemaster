@@ -1,168 +1,165 @@
+@import "../../../../public/styles/variables";
 
-.box {
-    border: 0px none;
-    height: 1080px;
-    width: 1920px;
+.main {
+  min-height: calc(100vh - 80px);
+  background-color: $PrimaryDarkColor;
+  font-family: "Inter-Regular", Helvetica;
+}
+
+.formposition {
+  position: absolute;
+  top: 20%;
+  left: 20%;
+}
+
+.formContainer {
+  height: 500px;
+  width: 500px;
+  display: flex;
+  align-content: center;
+  transition: all 1 ease;
+}
+
+.input-user {
+  align-items: center;
+  background-color: #d9d9d9cc;
+  border: none;
+  border-radius: 20px;
+  display: flex;
+  gap: 50px;
+  min-height: 47px;
+  min-width: 380px;
+  padding: 16px 19px;
+  position: relative;
+  width: 100%;
+  color: #1d1d1b;
+  font-family: "Inter-Regular", Helvetica;
+  font-size: 15px;
+}
+
+.span {
+  color: #f7ab16;
+  text-decoration: none;
+}
+
+.text-group {
+  align-items: center;
+  background-color: $PrimaryOrangeColor;
+  border: 1px none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 500px;
+  justify-content: center;
+  min-width: 500px;
+  position: relative;
+  width: 100%;
+}
+
+.text-group2 {
+  align-items: center;
+  background-color: #d9d9d982;
+  border: 1px none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 500px;
+  justify-content: center;
+  min-width: 500px;
+  position: relative;
+  width: 100%;
+}
+.text-group .welcome-title {
+  align-self: stretch;
+  color: #000000;
+  font-family: "Inter-Bold", Helvetica;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 4.16px;
+  line-height: normal;
+  position: relative;
+  text-align: center;
+}
+
+.text-group .text-paragraph-cont {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 16px;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+  position: relative;
+  color: #000000;
+}
+
+.text-group .text-wrapper {
+  color: var(--cuaternary-dark);
+  font-family: "Inter-SemiBold", Helvetica;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1.82px;
+  line-height: normal;
+  position: relative;
+  text-align: center;
+  width: 400px;
+}
+
+// Esto es el estilo del form
+.homeform {
+  min-height: calc(100vh - 80px);
+  background-color: $PrimaryDarkColor;
+  color: white;
+  position: relative;
+  filter: blur(7px);
+
+  .homeInfo {
+    padding: clamp(8px, 20vw, 150px) clamp(8px, 3vw, 45px);
+
+    h1 {
+      margin: 0;
+      padding-bottom: 30px;
+      font-size: clamp(20px, 4rem, 75px);
+
+      span {
+        color: $PrimaryOrangeColor;
+      }
     }
-    .box .frame {
-    background-color: var(--primary-dark);
-    border: 1px solid;
-    border-color: var(--primary-dark);
-    height: 1080px;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 1920px;
+
+    p {
+      margin: 0;
+      padding-bottom: 20px;
     }
-    
-    
-    .prop-egular-small {
-        align-items: center;
-        background-color: var(--primary-orange);
-        border-radius: 10px;
-        box-shadow: 0px 4px 4px #00000040;
-        display: inline-flex;
-        gap: 10px;
-        padding: 8px 24px;
-        position: relative;
-        }
-        .prop-egular-small .regular-small {
-        color: #ffffff;
-        font-family: "Inter-SemiBold", Helvetica;
-        font-size: 20px;
-        font-weight: 600;
-        letter-spacing: 0;
-        line-height: normal;
-        margin-top: -1px;
-        position: relative;
+
+    .allCounter {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      gap: 100px;
+
+      .homeCounter {
+        font-size: 3rem;
+        color: $PrimaryOrangeColor;
         text-align: center;
-        white-space: nowrap;
-        width: fit-content;
-        }
-    
-        .input-user {
-            align-items: center;
-            background-color: #d9d9d9cc;
-            border: 1px none;
-            display: flex;
-            gap: 10px;
-            min-height: 47px;
-            min-width: 380px;
-            padding: 16px 19px;
-            position: relative;
-            width: 100%;
-            }
-            
-            .prop-egular-small {
-                align-items: center;
-                background-color: var(--primary-orange);
-                border-radius: 10px;
-                box-shadow: 0px 4px 4px #00000040;
-                display: inline-flex;
-                gap: 10px;
-                padding: 8px 24px;
-                position: relative;
-                }
-                .prop-egular-small .regular-small {
-                color: #ffffff;
-                font-family: "Inter-SemiBold", Helvetica;
-                font-size: 20px;
-                font-weight: 600;
-                letter-spacing: 0;
-                line-height: normal;
-                margin-top: -1px;
-                position: relative;
-                text-align: center;
-                white-space: nowrap;
-                width: fit-content;
-                
-                }
-    
-                .label {
-                    border: 0px none;
-                    height: 19px;
-                    width: 370px;
-                    }
-                    .label .formas-parte-de {
-                    color: transparent;
-                    font-family: "Inter-Regular", Helvetica;
-                    font-size: 16px;
-                    font-weight: 400;
-                    left: 0;
-                    letter-spacing: 2.08px;
-                    line-height: normal;
-                    position: fixed;
-                    text-align: center;
-                    top: 0;
-                    white-space: nowrap;
-                    }
-                    .label .text-wrapper {
-                    color: #1d1d1b;
-                    }
-                    .label .span {
-                    color: #f7ab16;
-                    }
-                    
-                
-    
-    .text-group {
-        align-items: center;
-        background-color: var(--primary-orange);
-        border: 1px none;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        height: 500px;
-        justify-content: center;
-        min-width: 500px;
-        position: relative;
-        width: 100%;
-        }
-        .text-group .welcome-title {
-        align-self: stretch;
-        color: #000000;
-        font-family: "Inter-Bold", Helvetica;
-        font-size: 32px;
-        font-weight: 700;
-        letter-spacing: 4.16px;
-        line-height: normal;
-        position: relative;
-        text-align: center;
-        }
-        .text-group .vector {
-        height: 2px;
-        position: relative;
-        width: 254px;
-        }
-        .text-group .text-paragraph-cont {
-        align-items: center;
-        display: inline-flex;
-        flex: 0 0 auto;
-        flex-direction: column;
-        gap: 5px;
-        justify-content: center;
-        position: relative;
-        }
-        .text-group .welcome-paragraph {
-        color: var(--cuaternary-dark);
-        font-family: "Inter-Bold", Helvetica;
-        font-size: 16px;
-        font-weight: 700;
-        letter-spacing: 2.08px;
-        line-height: normal;
-        margin-top: -1px;
-        position: relative;
-        text-align: center;
-        width: 500px;
-        }
-        .text-group .text-wrapper {
-        color: var(--cuaternary-dark);
-        font-family: "Inter-SemiBold", Helvetica;
-        font-size: 14px;
-        font-weight: 600;
-        letter-spacing: 1.82px;
-        line-height: normal;
-        position: relative;
-        text-align: center;
-        width: 400px;
-        }
+      }
+
+      p {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  .homeImage {
+    padding: clamp(8px, 18vw, 100px) clamp(8px, 3vw, 45px);
+    display: flex;
+    justify-content: center;
+    align-items: start;
+
+    .orangeCircle {
+      width: 550px;
+      height: 550px;
+      background-color: $PrimaryOrangeColor;
+      border-radius: 50%;
+    }
+  }
+}
