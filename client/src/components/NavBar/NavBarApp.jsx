@@ -1,12 +1,13 @@
 import React from 'react'
 import { Navbar, Nav, Offcanvas, Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './NavBarApp.scss';
 import logo_DroneMaster from '../../../public/dashboard_images/logo_DroneMaster.png'
 import { FiSearch } from "react-icons/fi";
 
 
 const NavBarApp = () => {
+  const navigate = useNavigate()
 
   return (
     <Navbar key={'lg'} expand={'lg'} className="navBar d-flex justify-content-end" >
@@ -43,8 +44,8 @@ const NavBarApp = () => {
               </Nav>
 
               <div className='d-flex justify-content-center align-items-center gap-2'>
-                <button className='btnOutline2 border-light'>Iniciar sesión</button>
-                <button className='btnOutline2'>Registrarse</button>
+                <button className='btnOutline2 border-light' onClick={() => { navigate('/login') }}>Iniciar sesión</button>
+                <button className='btnOutline2' onClick={() => { navigate('/register') }}>Registrarse</button>
               </div>
             </div>
 

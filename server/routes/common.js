@@ -45,4 +45,12 @@ router.put("/enableResource/:resource_id", commonControllers.enableResources);
 // http://localhost:4000/disableResource/:resource_id
 router.put("/disableResource/:resource_id", commonControllers.enableResources);
 
+// 11.- Get 4 top courses (
+// http://localhost:4000/topCourses
+router.get("/topCourses", commonControllers.selectTopCourses);
+
+// 12.- Get 4 best rated (
+// http://localhost:4000/bestRatedCourses
+router.get("/bestRatedCourses", commonControllers.selectBestRatedCourses);
+
 module.exports = router;

@@ -1,7 +1,7 @@
 @import '../../../public/styles/variables';
 
 .navOffCanvas {
-    background-color: $primaryDarkColor !important;
+    background-color: $PrimaryDarkColor !important;
 
     .search {
         border: 2px solid $PrimaryOrangeColor;
@@ -20,7 +20,7 @@
 }
 
 .navBar {
-    background-color: $primaryDarkColor;
+    background-color: $PrimaryDarkColor;
     color: white;
     padding: 8px clamp(8px, 3vw, 45px);
     height: 80px;

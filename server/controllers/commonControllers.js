@@ -9,12 +9,12 @@ class commonControllers {
 
   login = (req, res) => {
     const { email, password } = req.body;
-    
+
     let sql = `SELECT * FROM user WHERE email = "${email}"`;
-    
+
     connection.query(sql, (error, result) => {
       // if query is failed
-      
+
       if (error) return res.status(404).json(error);
 
       // if there isn´t an user with this email
@@ -51,7 +51,7 @@ class commonControllers {
           }
         });
       }
-    });  
+    });
   };
 
   //3.- Counter which includes total of teachers, courses and students
@@ -159,6 +159,26 @@ class commonControllers {
     const { resource_id } = req.params;
 
     let sql = `UPDATE resource SET resource_is_hidden = 1 WHERE resource_id = "${resource_id}"`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 11.- Get 4 top courses (
+  // http://localhost:4000/topCourses
+  selectTopCourses = (req, res) => {
+    let sql = "SELECT * FROM course ORDER BY course_id DESC LIMIT 4";
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 12.- Get 4 best rated (
+  // http://localhost:4000/bestRatedCourses
+  selectBestRatedCourses = (req, res) => {
+    let sql = "SELECT * FROM course ORDER BY score DESC LIMIT 4";
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
