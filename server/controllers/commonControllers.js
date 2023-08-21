@@ -66,7 +66,7 @@ class commonControllers {
   };
 
   // 4.- Edit user info
-  // localhost:4000/editMyProfile/:user_id
+  // http://localhost:4000/editMyProfile/:user_id
   editMyProfile = (req, res) => {
     const { user_id } = req.params;
 
@@ -91,7 +91,7 @@ class commonControllers {
   };
 
   // 5.- Add commentary
-  // localhost:4000/addCommentary/:user_id/:course_id/:unit_id/:lesson_id
+  // http://localhost:4000/addCommentary/:user_id/:course_id/:unit_id/:lesson_id
   addComentary = (req, res) => {
     const { user_id, course_id, unit_id, lesson_id } = req.params;
     const { comment_content } = req.body;
@@ -104,7 +104,7 @@ class commonControllers {
   };
 
   // 6.- Response commentary
-  // localhost:4000/responseCommentary/:user_id/:course_id/:unit_id/:lesson_id/:parent_comment_id
+  // http://localhost:4000/responseCommentary/:user_id/:course_id/:unit_id/:lesson_id/:parent_comment_id
   responseComentary = (req, res) => {
     const { user_id, course_id, unit_id, lesson_id, parent_comment_id } =
       req.params;
@@ -118,7 +118,7 @@ class commonControllers {
   };
 
   // 7.- Get student info
-  // localhost:4000/myProfile/:user_id
+  // http://localhost:4000/myProfile/:user_id
   selectMyProfile = (req, res) => {
     const { user_id } = req.params;
 

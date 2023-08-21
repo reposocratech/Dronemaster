@@ -6,12 +6,10 @@ import { useNavigate } from 'react-router-dom'
 import { CourseCard } from '../../components/CardCourse/CourseCard'
 
 const initialCounterValue = {
-  "TotalTeachers": 0,
-  "TotalStudents": 0,
-  "TotalCourse": 0
-}
-
-
+  TotalTeachers: 0,
+  TotalStudents: 0,
+  TotalCourse: 0,
+};
 
 const HomeApp = () => {
   const [counter, setCounter] = useState(initialCounterValue)
@@ -27,12 +25,14 @@ const HomeApp = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:4000/counter')
+      .get("http://localhost:4000/counter")
       .then((res) => {
         setCounter(res.data[0]);
       })
-      .catch((err) => { console.log(err); })
-  }, [])
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   useEffect(() => {
     axios
@@ -55,28 +55,38 @@ const HomeApp = () => {
   console.log(width);
 
   return (
-    <Container fluid className='home'>
+    <Container fluid className="home">
       <Row>
-        <Col className='homeInfo'>
+        <Col className="homeInfo">
           <div>
-            <h1>COMIENZA EN EL MUNDO DE LOS <span>DRONES</span> CON NUESTROS CURSOS</h1>
+            <h1>
+              COMIENZA EN EL MUNDO DE LOS <span>DRONES</span> CON NUESTROS
+              CURSOS
+            </h1>
             <p>Especializate en el sector mas demandado de Europa</p>
-            <div className='py-4'>
-              <button className='btnNormal' onClick={() => { navigate('/login') }}>Comenzar</button>
+            <div className="py-4">
+              <button
+                className="btnNormal"
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                Comenzar
+              </button>
             </div>
           </div>
-          <div className='allCounter'>
+          <div className="allCounter">
             <div>
-              <h2 className='homeCounter'>{counter.TotalTeachers}</h2>
-              <p className='userCounter'>Docentes</p>
+              <h2 className="homeCounter">{counter.TotalTeachers}</h2>
+              <p className="userCounter">Docentes</p>
             </div>
             <div>
-              <h2 className='homeCounter'>{counter.TotalCourse}</h2>
-              <p className='userCounter'>Cursos</p>
+              <h2 className="homeCounter">{counter.TotalCourse}</h2>
+              <p className="userCounter">Cursos</p>
             </div>
             <div>
-              <h2 className='homeCounter'>{counter.TotalStudents}</h2>
-              <p className='userCounter'>Alumnos</p>
+              <h2 className="homeCounter">{counter.TotalStudents}</h2>
+              <p className="userCounter">Alumnos</p>
             </div>
           </div>
         </Col>
@@ -84,10 +94,6 @@ const HomeApp = () => {
           <div className='orangeCircle'></div>
         </Col>
       </Row>
-
-
-
-
       <Row className='homeMessages'>
         <div className='d-flex justify-content-center justify-content-lg-start text-center text-lg-start'>
           <div className='homeOneMessage'>
@@ -135,7 +141,7 @@ const HomeApp = () => {
         </Col>
       </Row>
     </Container>
-  )
-}
+  );
+};
 
-export default HomeApp
+export default HomeApp;

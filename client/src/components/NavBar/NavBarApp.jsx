@@ -44,8 +44,8 @@ const NavBarApp = () => {
               </Nav>
 
               <div className='d-flex justify-content-center align-items-center gap-2'>
-                <button className='btnOutline2 border-light' onClick={() => { navigate('/login') }}>Iniciar sesión</button>
-                <button className='btnOutline2' onClick={() => { navigate('/register') }}>Registrarse</button>
+                <button onClick={() => navigate('/login')} className='btnOutline2 border-light'>Iniciar sesión</button>
+                <button onClick={() => navigate('/register')} className='btnOutline2'>Registrarse</button>
               </div>
             </div>
 

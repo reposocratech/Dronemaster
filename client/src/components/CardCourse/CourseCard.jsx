@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
+import axios from "axios";
 import './CourseCard.scss'
 import { useNavigate } from "react-router-dom";
 import { StarRating } from "../StarRating/StarRating";
-import axios from "axios";
+import { StarRating } from "../StarRating/StarRating";
+import { useNavigate } from "react-router-dom";
 
 export const CourseCard = ({ oneCourse }) => {
   const navigate = useNavigate();

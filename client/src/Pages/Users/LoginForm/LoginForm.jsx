@@ -1,108 +1,157 @@
-import axios from 'axios'
-import React, { useContext, useState } from 'react'
+import axios from "axios";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import {useNavigate} from 'react-router-dom';
-import { saveLocalStorageDroneMaster } from '../../../helper/localStorageDroneMaster';
-import { DroneMasterContext } from '../../../context/DroneMasterProvider';
-import './LoginForm.scss'
-
-
+import { useNavigate, Link } from "react-router-dom";
+import { saveLocalStorageDroneMaster } from "../../../helper/localStorageDroneMaster";
+import { DroneMasterContext } from "../../../context/DroneMasterProvider";
+import "./LoginForm.scss";
+import { Col, Container, Row } from "react-bootstrap";
 
 const LoginForm = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-    const { 
-      register,
-       handleSubmit,
-       formState: {errors}
-      
-      
-      } = useForm({
-        defaultValues:{
-          email: "", 
-          password: ""
-        }
+  const navigate = useNavigate();
 
-      });
+  const { setUser } = useContext(DroneMasterContext);
 
-      
-
-    const navigate = useNavigate();
-
-   const {setUser} = useContext(DroneMasterContext) 
-    /*    console.log("este es el contexto", useContext(DroneMasterContext))   */
-
-    
-
-    const onSubmit = (data) =>{
-
-        
-        console.log("DARAAAAAAAAAAAAAAAAAAAAAAAAAA", data);
- 
+  const onSubmit2 = (data) => {
     axios
 
-        .post('http://localhost:4000/login', data)
-        .then ((result)=> 
-        console.log(result.data.user),
-        saveLocalStorageDroneMaster("token", result.data.user)
-        
-        )
-        .catch((error) => console.log(error))
- 
+      .post("http://localhost:4000/login", data)
+      .then((res) => {
+        console.log("result.data.user/////////////", res),
+          saveLocalStorageDroneMaster("token", res.data.token);
 
-
-    }
-
-
+        const type = res.data.user.type;
+        if (type === 0) {
+          navigate("/student");
+        } else if (type === 1) {
+          navigate("/teacher");
+        } else if (type === 2) {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
-    <div  className={`prop-egular-small`}>
-   
+    <Container fluid className="main">
+      {/* HOME */}
+      <Row className="homeform">
+        <Col className="homeInfo">
+          <div>
+            <h1>
+              COMIENZA EN EL MUNDO DE LOS <span>DRONES</span> CON NUESTROS
+              CURSOS
+            </h1>
+            <p>Especializate en el sector mas demandado de Europa</p>
+            <div className="py-4">
+              <button
+                className="btnNormal"
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                Comenzar
+              </button>
+            </div>
+          </div>
+          <div className="allCounter">
+            <div>
+              <h2 className="homeCounter">6</h2>
+              <p className="userCounter">Docentes</p>
+            </div>
+            <div>
+              <h2 className="homeCounter">5</h2>
+              <p className="userCounter">Cursos</p>
+            </div>
+            <div>
+              <h2 className="homeCounter">4</h2>
+              <p className="userCounter">Alumnos</p>
+            </div>
+          </div>
+        </Col>
+        <Col className="homeImage">
+          <div className="orangeCircle"></div>
+        </Col>
+      </Row>
 
- <div className="regular-small">
-<form className="regular-small"  onSubmit={handleSubmit(onSubmit)}>
-      <input {...register("email", { required: "Must be completed", maxLength: 200 })} 
-      placeholder='email'
-      autoComplete='off'
-      type="email" 
-     className="input-user" 
+      <Row className="formposition">
+        <Col className="formContainer col-4">
+          <div className="text-group2">
+            <form onSubmit={handleSubmit(onSubmit2)}>
+              <input
+                {...register("email", {
+                  required: "Email must be completed",
+                  maxLength: 200,
+                })}
+                placeholder="email"
+                autoComplete="off"
+                type="email"
+                className="input-user"
+              />
 
-      />
+              <p>{errors.email?.message}</p>
 
-<p>{errors.email?.message}</p>
-      <input {...register("password", { required: "Must be completed", pattern: /^[A-Za-z]+$/i })}
-            placeholder='Contraseña'
-            autoComplete='off'
-            type="password" 
-            className="input-user" 
-      />
+              <input
+                {...register("password", {
+                  required: "Password must be completed",
+                })}
+                placeholder="Contraseña"
+                autoComplete="off"
+                type="password"
+                className="input-user"
+              />
 
-    <p>{errors.password?.message}</p>
+              <p>{errors.password?.message}</p>
 
+              <Col className="d-flex justify-content-center m-3">
+                <button className="btnLogin"> Aceptar</button>
+                <button className="btnLogin" onClick={() => navigate("/")}>
+                  {" "}
+                  Cancelar
+                </button>
+              </Col>
+              <Col>
+                <p className="formas-parte-de gap-2">
+                  <span className="text-wrapper">
+                    ¿Formas parte de nuetra?{" "}
+                  </span>
+                  <Link to="/register" className="span">
+                    Inicia Sesion
+                  </Link>
+                </p>
+              </Col>
+            </form>
+          </div>
 
-      <button className= "prop-egular-small" > Aceptar</button> 
-      <button className= "prop-egular-small" onClick={()=> navigate ('/')}> Cancelar</button> 
-      <p className="formas-parte-de">
-          <span className="text-wrapper">¿Formas parte de nuetra? </span>
-          <span className="span">Inicia Sesion</span>
-      </p>
-    </form>
+          <Col className="text-group col-4">
+            <div className="welcome-title">¡Bienvenido de vuelta!</div>
+            <div className="text-paragraph-cont">
+              <p className="welcome-paragraph">
+                Estamos emocionados por tenerte aqui nuevamente
+              </p>
+              <p className="text-wrapper">
+                Ingresa y disfruta de tu experiencia
+              </p>
+            </div>
+          </Col>
+        </Col>
+      </Row>
+    </Container>
+  );
+};
 
-    </div>
-
-    <div className="text-group" >
-
-    <div className="welcome-title">¡Únete a nosotros!</div>
-<img className="vector" alt="Vector" src="vector-1.svg" />
-<div className="text-paragraph-cont">
-<p className="welcome-paragraph">Estamos encantados de darte la bienvenida.</p>
-<p className="text-wrapper">Regístrate y comienza a ser parte de nuestra comunidad. ¡Esperamos verte pronto!</p>
-</div>
-    </div>
-
-  
-      
-    </div>
-  )
-}
-
-export default LoginForm
+export default LoginForm;
