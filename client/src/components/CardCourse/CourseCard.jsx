@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
 import axios from "axios";
+import './CourseCard.scss'
+import { useNavigate } from "react-router-dom";
+import { StarRating } from "../StarRating/StarRating";
 import { StarRating } from "../StarRating/StarRating";
 import { useNavigate } from "react-router-dom";
 
@@ -13,10 +16,8 @@ export const CourseCard = ({ oneCourse }) => {
       .catch((error) => {
         console.log(error);
       });
-
-    return () => {};
+    return () => { };
   }, [oneCourse]);
-  console.log(tagList);
 
   return (
     <div
@@ -39,7 +40,6 @@ export const CourseCard = ({ oneCourse }) => {
               return <span className="tag">#{e.tag_name}</span>;
             })}
           </div>
-
           {oneCourse?.score != null && (
             <div className="courseScore">
               <h5>{oneCourse.score}</h5>
