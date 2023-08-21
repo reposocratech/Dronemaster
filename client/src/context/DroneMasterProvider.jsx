@@ -1,17 +1,16 @@
-import React, { createContext, useEffect, useState } from 'react'
-import { getLocalStorage } from '../helper/localStorageDroneMaster'
-import jwDecode from 'jwt-decode'
-import axios from 'axios'
 
+import React, { createContext, useEffect, useState } from "react";
+import { getLocalStorage } from "../helper/localStorageDroneMaster";
+import jwDecode from "jwt-decode";
+import axios from "axios";
 
-export const DroneMasterContext = createContext()
+export const DroneMasterContext = createContext();
 
-const DroneMasterProvider = ({children}) => {
-
-
+const DroneMasterProvider = ({ children }) => {
   const [token, setToken] = useState();
   const [user, setUser] = useState();
   const [isLogged, setIsLogged] = useState();
+
 
   useEffect(() =>{
 
@@ -34,39 +33,23 @@ const DroneMasterProvider = ({children}) => {
    }
    
    }, [])
-   
-   console.log("************************* ESTE ES EL", user)
-
 
 
   return (
-
-
-
-
     <div>
-
-      <DroneMasterContext.Provider value ={{
-
-          user, 
+      <DroneMasterContext.Provider
+        value={{
+          user,
           setUser,
           token,
           setToken,  
           isLogged,
           setIsLogged
-
-
       }}>
-
          {children}
-
       </DroneMasterContext.Provider>
-    
-
-       
-      
     </div>
-  )
-}
+  );
+};
 
-export default DroneMasterProvider
+export default DroneMasterProvider;
