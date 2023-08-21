@@ -9,6 +9,8 @@ import { FiSearch } from "react-icons/fi";
 const NavBarApp = () => {
   const navigate = useNavigate();
 
+  const navigate = useNavigate();
+
   return (
     <Navbar key={'lg'} expand={'lg'} className="navBar d-flex justify-content-end" >
       <Container fluid className='navContainer'>
@@ -44,8 +46,10 @@ const NavBarApp = () => {
               </Nav>
 
               <div className='d-flex justify-content-center align-items-center gap-2'>
-                <button className='btnOutline2 border-light' onClick={()=>navigate("/login")}>Iniciar sesión</button>
-                <button className='btnOutline2'>Registrarse</button>
+
+                <button onClick={() => navigate('/login')} className='btnOutline2 border-light'>Iniciar sesión</button>
+                <button onClick={() => navigate('/register')} className='btnOutline2'>Registrarse</button>
+
               </div>
             </div>
 

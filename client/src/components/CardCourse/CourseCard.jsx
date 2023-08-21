@@ -39,6 +39,7 @@ export const CourseCard = ({ oneCourse }) => {
               return <span className="tag">#{e.tag_name}</span>;
             })}
           </div>
+
           {oneCourse?.score != null && (
             <div className="courseScore">
               <h5>{oneCourse.score}</h5>

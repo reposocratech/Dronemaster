@@ -6,7 +6,6 @@ var logger = require("morgan");
 const cors = require("cors")
 const router = express.Router();
 
-
 var adminRouter = require("./routes/admin");
 var teacherRouter = require("./routes/teacher");
 var studentRouter = require("./routes/student");
