@@ -6,15 +6,15 @@ import { saveLocalStorageDroneMaster } from "../../../helper/localStorageDroneMa
 import { DroneMasterContext } from "../../../context/DroneMasterProvider";
 import "../../../../public/styles/registerLoginFormStyle.scss";
 import { Col, Container, Row } from "react-bootstrap";
-const navigate = useNavigate();
-const { setUser, isLogged, openHome, openRegister } =
-    useContext(DroneMasterContext);
+
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+  const { setUser, isLogged, setIsLogged, openHome, openRegister } =
+    useContext(DroneMasterContext);
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -43,7 +43,6 @@ const LoginForm = () => {
           navigate("/");
         }
         isLogged(true);
-        setUser(res.data.user);
       })
       .catch((error) => console.log(error));
   };
