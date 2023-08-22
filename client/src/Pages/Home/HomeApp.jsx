@@ -30,13 +30,9 @@ const HomeApp = () => {
 
   const {
     showLogin,
-    setShowLogin,
     showRegister,
-    setShowRegister,
     openLogin,
-    openRegister,
     filter,
-    setFilter,
   } = useContext(DroneMasterContext);
 
 
@@ -109,6 +105,23 @@ const HomeApp = () => {
 
   return (
     <Container fluid className="home">
+      {showLogin && (
+        <Row>
+          <Col>
+            <LoginForm />
+          </Col>
+        </Row>
+      )
+      }
+      {
+        showRegister && (
+          <Row>
+            <Col>
+              <RegisterForm />
+            </Col>
+          </Row>
+        )
+      }
       {width > 991 && <Row className={filter}>
         <Col className="homeInfo">
           <div>
@@ -145,7 +158,7 @@ const HomeApp = () => {
         </Col>
       </Row>}
 
-      {width < 992 && <Row >
+      {width < 992 && <Row className={filter}>
         <Col className="homeInfoMobile">
           <div className='infoLabel d-flex justify-content-between'>
             <div className=' w-md-50 px-3'>
@@ -185,7 +198,7 @@ const HomeApp = () => {
 
       </Row>}
 
-      <Row className=`homeMessages {filter}`>
+      <div className="homeMessages">
         <div className='d-flex justify-content-center justify-content-lg-start text-center text-lg-start'>
           <div className='homeOneMessage'>
             <h3>Aprende</h3>
@@ -197,17 +210,15 @@ const HomeApp = () => {
               <p>Descubre nuevas posibilidades con la tecnología de drones</p>
             </div>
           </div>
-
-
-        <div className='d-flex justify-content-center justify-content-lg-end text-center text-lg-start'>
-          <div className='homeOneMessage pb-0'>
-            <h3>Eleva tus habilidades</h3>
-            <p>Impulsa tu carrera con formación especializada en drones</p>
+          <div className='d-flex justify-content-center justify-content-lg-end text-center text-lg-start'>
+            <div className='homeOneMessage pb-0'>
+              <h3>Eleva tus habilidades</h3>
+              <p>Impulsa tu carrera con formación especializada en drones</p>
+            </div>
           </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
 
-      <Row className={filter}>
       <div className='allCoursesContainer p-0 px-sm-5'>
         <div className="categoryContainer">
           <h2 className="categoryTitle text-center text-md-start">Últimos cursos</h2>
@@ -245,8 +256,8 @@ const HomeApp = () => {
             }
           </div>
         </div>
-      </Row>
-      <Row className={filter}>
+      </div>
+      <div className='allCoursesContainer p-0 px-sm-5'>
         <div className="categoryContainer pt-4">
           <h2 className="categoryTitle text-center text-md-start">Cursos mejor valorados</h2>
           <div className="courseCardContainerWrapper">
@@ -281,26 +292,13 @@ const HomeApp = () => {
                 />
               </div>
             }
-            </Row>
 
           </div>
         </div>
       </div>
-{showLogin && (
-        <Row>
-          <Col>
-            <LoginForm />
-          </Col>
-        </Row>
-      )}
-      {showRegister && (
-        <Row>
-          <Col>
-            <RegisterForm />
-          </Col>
-        </Row>
-      )}
-    </Container>
+
+
+    </Container >
   );
 };
 

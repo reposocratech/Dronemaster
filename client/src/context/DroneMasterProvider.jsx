@@ -10,21 +10,21 @@ const DroneMasterProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [isLogged, setIsLogged] = useState();
   const [course, setCourse] = useState();
-  let [showLogin, setShowLogin] = useState(false);
-  let [showRegister, setShowRegister] = useState(false);
-  let [filter, setFilter] = useState();
+  const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
+  const [filter, setFilter] = useState();
 
-  let openRegister = () => {
+  const openRegister = () => {
     setShowRegister(!showRegister);
     setShowLogin(false);
   };
 
-  let openLogin = () => {
+  const openLogin = () => {
     setShowLogin(!showLogin);
     setShowRegister(false);
   };
 
-  let openHome = () => {
+  const openHome = () => {
     setShowLogin(false);
     setShowRegister(false);
   };
@@ -40,7 +40,7 @@ const DroneMasterProvider = ({ children }) => {
   useEffect(() => {
     const tokenLocalStorage = getLocalStorage("token");
     setToken(tokenLocalStorage);
- 
+
     if (tokenLocalStorage) {
       const id = jwDecode(tokenLocalStorage).user.user_id;
 
