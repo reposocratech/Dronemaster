@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import "./RegisterForm.scss";
+import "../../../../public/styles/registerLoginFormStyle.scss";
 import { Container, Row, Col } from "react-bootstrap";
+import { DroneMasterContext } from "../../../context/DroneMasterProvider";
+import { saveLocalStorageDroneMaster } from "../../../helper/localStorageDroneMaster";
 
 const RegisterForm = () => {
   const {
@@ -20,99 +22,54 @@ const RegisterForm = () => {
   });
 
   const navigate = useNavigate();
-
-  const [showLogin, setShowLogin] = useState(false);
-  const [showRegister, setShowRegister] = useState(true);
+  const { setUser, isLogged, openHome, openLogin } =
+    useContext(DroneMasterContext);
 
   const onSubmit = (data) => {
     axios
 
       .post("http://localhost:4000/students/registerStudent", data)
-      .then((result) => console.log(result))
+      .then((res) => {
+        console.log("result.data.user/////////////", res);
+        saveLocalStorageDroneMaster("token", res.data.token);
+        navigate("/student");
+        isLogged(true);
+        setUser(res.data.user);
+      })
       .catch((error) => console.log(error));
   };
 
   return (
     <Container fluid className="main">
-      {/* HOME */}
-      <Row className="homeform">
-        <Col className="homeInfo">
-          <div>
-            <h1>
-              COMIENZA EN EL MUNDO DE LOS <span>DRONES</span> CON NUESTROS
-              CURSOS
-            </h1>
-            <p>Especializate en el sector mas demandado de Europa</p>
-            <div className="py-4">
-              <button
-                className="btnNormal"
-                onClick={() => {
-                  navigate("/login");
-                }}
-              >
-                Comenzar
-              </button>
-            </div>
-          </div>
-          <div className="allCounter">
-            <div>
-              <h2 className="homeCounter">6</h2>
-              <p className="userCounter">Docentes</p>
-            </div>
-            <div>
-              <h2 className="homeCounter">5</h2>
-              <p className="userCounter">Cursos</p>
-            </div>
-            <div>
-              <h2 className="homeCounter">4</h2>
-              <p className="userCounter">Alumnos</p>
-            </div>
-          </div>
-        </Col>
-        <Col className="homeImage">
-          <div className="orangeCircle"></div>
-        </Col>
-      </Row>
-
-      {/* FORM DE REGISTER */}
-      <Row className="formposition">
-        <Col className="formContainer ">
-          <div className="text-group col-4">
-            <div className="welcome-title">¡Únete a nosotros!</div>
-            <div className="text-paragraph-cont">
-              <p className="welcome-paragraph">
-                Estamos encantados de darte la bienvenida.
-              </p>
-              <p className="text-wrapper">
-                Regístrate y comienza a ser parte de nuestra comunidad.
-                ¡Esperamos verte pronto!
-              </p>
-            </div>
-          </div>
-
-          <Col className="text-group2 col-4">
+      <Row className="formContainer">
+        <Col className="form1 col-4">
+          <h1>¡Únete a nosotros!</h1>
+          <p>Estamos encantados de darte la bienvenida.</p>
+          <p>
+            Regístrate y comienza a ser parte de nuestra comunidad. ¡Esperamos
+            verte pronto!
+          </p>
+          <Col className="form2 col-4">
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div>
-                <input
-                  {...register("user_name", {
-                    required: "Must be completed",
-                    maxLength: 50,
-                  })}
-                  placeholder="Insert your name"
-                  type="text"
-                  className="input-user"
-                  autoComplete="off"
-                />
-                <p>{errors.firstName?.message}</p>
-              </div>
+              <input
+                {...register("user_name", {
+                  required: "Must be completed",
+                  maxLength: 50,
+                })}
+                placeholder="Nombre"
+                type="text"
+                className="input-user"
+                autoComplete="off"
+              />
+              <p>{errors.firstName?.message}</p>
+
               <input
                 {...register("user_lastname", {
                   required: "Must be completed",
                   maxLength: 1000,
                 })}
-                placeholder="Last Name"
+                placeholder="Apellidos"
                 type="text"
-                className="input-user"
                 autoComplete="off"
               />
 
@@ -125,7 +82,6 @@ const RegisterForm = () => {
                 placeholder="Email"
                 type="email"
                 autoComplete="off"
-                className="input-user"
               />
               <p>{errors.email?.message}</p>
 
@@ -145,21 +101,14 @@ const RegisterForm = () => {
               />
               <p>{errors.password?.message}</p>
 
-              <Col>
-                <button className="btnNormal m-3"> Aceptar</button>
-                <button className="btnNormal" onClick={() => navigate("/")}>
-                  {" "}
-                  Cancelar
-                </button>
-              </Col>
-              <Col>
-                <p>
-                  ¿Ya tienes una cuenta?{" "}
-                  <Link className="span" to="/Login">
-                    Inicia Sesión
-                  </Link>{" "}
-                </p>
-              </Col>
+              <div>
+                <button> Aceptar</button>
+                <button Click={openHome}> Cancelar</button>
+              </div>
+              <p>
+                ¿Ya tienes una cuenta?{" "}
+                <Link onClick={openLogin}>Inicia Sesión</Link>{" "}
+              </p>
             </form>
           </Col>
         </Col>

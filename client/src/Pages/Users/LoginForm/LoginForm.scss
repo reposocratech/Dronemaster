@@ -4,56 +4,15 @@
   min-height: calc(100vh - 80px);
   background-color: $PrimaryDarkColor;
   color: white;
-}
-
-.formposition {
-  position: absolute;
-  top: 20%;
-  left: 20%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }
 
 .formContainer {
-  height: 500px;
-  width: 500px;
-  display: flex;
-  align-content: center;
-}
-
-.btnLogin {
-  align-items: center;
-  color: #ffffff;
-  background-color: #f7ab16;
-  border-radius: 10px;
-  /*  box-shadow: 0px 4px 4px #ffffff; */
-  border-color: #ffffff;
-  display: inline-flex;
-  gap: 10px;
-  padding: 8px 24px;
-  position: relative;
-}
-
-.prop-egular-small {
-  align-items: center;
-  background-color: $PrimaryOrangeColor;
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px #00000040;
-  display: inline-flex;
-  gap: 10px;
-  padding: 8px 24px;
-  position: relative;
-}
-
-.input-user {
-  align-items: center;
-  background-color: #d9d9d9cc;
-  border: 5px none;
-  display: flex;
-  gap: 50px;
-  min-height: 47px;
-  min-width: 380px;
-  padding: 16px 19px;
-  position: relative;
-  width: 100%;
+  height: 70%;
+  width: 300px;
+  position: fixed;
 }
 
 .span {
@@ -65,34 +24,52 @@
   align-items: center;
   background-color: $PrimaryOrangeColor;
   border: 1px none;
-  border-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: 500px;
+  height: 130%;
   justify-content: center;
-  min-width: 500px;
+  align-items: center;
+  width: 50%;
   position: relative;
-  width: 100%;
+  color: $PrimaryDarkColor;
+  padding: 50px;
 }
 
 .text-group2 {
   align-items: center;
-  background-color: #d9d9d982;
-  border-radius: 15px;
+  background-color: #d9d9d9bb;
   border: 1px none;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: 500px;
+  height: 65vh;
   justify-content: center;
-  min-width: 500px;
+  width: 50%;
   position: relative;
-  width: 100%;
+  font-size: 12px;
+  padding: 20px;
 }
+
+.text-group {
+  .welcome-title {
+    font-size: clamp(24px, 2vw, 32px);
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .text-paragraph {
+    font-size: clamp(14px, 1.5vw, 20px);
+  }
+}
+
+/* 
 .text-group .welcome-title {
   align-self: stretch;
-  color: #000000;
   font-family: "Inter-Bold", Helvetica;
   font-size: 32px;
   font-weight: 700;
@@ -104,7 +81,6 @@
 
 .text-group .text-paragraph-cont {
   align-items: center;
-  display: inline-flex;
   flex: 0 0 auto;
   flex-direction: column;
   gap: 5px;
@@ -122,63 +98,112 @@
   position: relative;
   text-align: center;
   width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+} */
+.position {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-// Esto es el estilo del form
-.homeform {
-  min-height: calc(100vh - 80px);
-  background-color: $PrimaryDarkColor;
-  color: white;
-  position: relative;
-  filter: blur(7px);
+.forminput {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 40%;
+  margin-bottom: 15px;
+  border-radius: 20px;
+  border: none;
+  padding: 16px 19px;
+  background-color: #d9d9d9bb;
+  color: black;
+  margin: 0px;
+  font-size: 15px;
+}
 
-  .homeInfo {
-    padding: clamp(8px, 20vw, 150px) clamp(8px, 3vw, 45px);
+// Responsive form
 
-    h1 {
-      margin: 0;
-      padding-bottom: 30px;
-      font-size: clamp(20px, 4rem, 75px);
-
-      span {
-        color: $PrimaryOrangeColor;
-      }
-    }
-
-    p {
-      margin: 0;
-      padding-bottom: 20px;
-    }
-
-    .allCounter {
-      display: flex;
-      justify-content: end;
-      align-items: center;
-      gap: 100px;
-
-      .homeCounter {
-        font-size: 3rem;
-        color: $PrimaryOrangeColor;
-        text-align: center;
-      }
-
-      p {
-        font-size: 1.5rem;
-      }
-    }
+@media (max-width: 750px) {
+  .formContainer {
+    width: 60vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
   }
 
-  .homeImage {
-    padding: clamp(8px, 18vw, 100px) clamp(8px, 3vw, 45px);
+  .input-user {
+    align-items: center;
+    background-color: #d9d9d9cc;
+    border: 5px none;
     display: flex;
-    justify-content: center;
-    align-items: start;
+    gap: 50px;
+    height: 32px;
+    width: 80%;
+    position: relative;
+    width: 100%;
+    padding: 0px;
+  }
 
-    .orangeCircle {
-      width: 550px;
-      height: 550px;
-      background-color: $PrimaryOrangeColor;
-      border-radius: 50%;
-    }
+  .text-group {
+    width: 130%;
+    height: 100%;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+  }
+
+  .text-group2 {
+    width: 130%;
+    height: 100%;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+  }
+}
+
+@media (max-width: 576px) {
+  .formContainer {
+    width: 60vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+  }
+
+  .input-user {
+    align-items: center;
+    background-color: #d9d9d9cc;
+    border: 5px none;
+    display: flex;
+    gap: 50px;
+    height: 32px;
+    width: 80%;
+    position: relative;
+    width: 100%;
+    padding: 0px;
+  }
+
+  .text-group {
+    width: 130%;
+    height: 100%;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+  }
+
+  .text-group2 {
+    width: 130%;
+    height: 100%;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
   }
 }

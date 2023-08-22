@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import './homeApp.scss'
-import { Container, Row, Col } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
-import { CourseCard } from '../../components/CardCourse/CourseCard'
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import "./homeApp.scss";
+import { Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { CourseCard } from "../../components/CardCourse/CourseCard";
+import LoginForm from "../Users/LoginForm/LoginForm";
+import RegisterForm from "../Users/RegisterForm/RegisterForm";
+import { DroneMasterContext } from "../../context/DroneMasterProvider";
 
 const initialCounterValue = {
   TotalTeachers: 0,
@@ -12,16 +15,31 @@ const initialCounterValue = {
 };
 
 const HomeApp = () => {
-  const [counter, setCounter] = useState(initialCounterValue)
-  const [topCourses, setTopCourses] = useState([])
-  const [bestRatedCourses, setBestRatedCourses] = useState([])
-  const [width, setWidth] = useState(0)
-  const navigate = useNavigate()
+  const [counter, setCounter] = useState(initialCounterValue);
+  const [topCourses, setTopCourses] = useState([]);
+  const [bestRatedCourses, setBestRatedCourses] = useState([]);
+  const [width, setWidth] = useState(0);
+  const navigate = useNavigate();
+
+  const {
+    showLogin,
+    setShowLogin,
+    showRegister,
+    setShowRegister,
+    openLogin,
+    openRegister,
+    filter,
+    setFilter,
+  } = useContext(DroneMasterContext);
+
+  console.log(DroneMasterContext);
+
+  console.log(showLogin);
 
   const currentWidth = () => {
-    const widthScreen = document.body.clientWidth
-    setWidth(widthScreen)
-  }
+    const widthScreen = document.body.clientWidth;
+    setWidth(widthScreen);
+  };
 
   useEffect(() => {
     axios
@@ -36,27 +54,27 @@ const HomeApp = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:4000/topCourses')
+      .get("http://localhost:4000/topCourses")
       .then((res) => {
-        setTopCourses(res.data)
+        setTopCourses(res.data);
       })
-      .catch((err) => console.log(err))
-  }, [])
+      .catch((err) => console.log(err));
+  }, []);
 
   useEffect(() => {
     axios
-      .get('http://localhost:4000/bestRatedCourses')
+      .get("http://localhost:4000/bestRatedCourses")
       .then((res) => {
-        setBestRatedCourses(res.data)
+        setBestRatedCourses(res.data);
       })
-      .catch((err) => console.log(err))
-  }, [])
+      .catch((err) => console.log(err));
+  }, []);
 
   console.log(width);
 
   return (
     <Container fluid className="home">
-      <Row>
+      <Row className={filter}>
         <Col className="homeInfo">
           <div>
             <h1>
@@ -65,12 +83,7 @@ const HomeApp = () => {
             </h1>
             <p>Especializate en el sector mas demandado de Europa</p>
             <div className="py-4">
-              <button
-                className="btnNormal"
-                onClick={() => {
-                  navigate("/login");
-                }}
-              >
+              <button className="btnNormal" onClick={openLogin}>
                 Comenzar
               </button>
             </div>
@@ -90,52 +103,67 @@ const HomeApp = () => {
             </div>
           </div>
         </Col>
-        <Col className='homeImage'>
-          <div className='orangeCircle'></div>
+        <Col className="homeImage">
+          <div className="orangeCircle"></div>
         </Col>
       </Row>
-      <Row className='homeMessages'>
-        <div className='d-flex justify-content-center justify-content-lg-start text-center text-lg-start'>
-          <div className='homeOneMessage'>
-            <h3>Aprende</h3>
-            <p>Domina el arte del manejo de drones en diversos sectores</p>
+      {showLogin && (
+        <Row>
+          <Col>
+            <LoginForm />
+          </Col>
+        </Row>
+      )}
+      {showRegister && (
+        <Row>
+          <Col>
+            <RegisterForm />
+          </Col>
+        </Row>
+      )}
+      <Row className={filter}>
+        <Col className="homeMessages">
+          <div className="d-flex justify-content-center justify-content-lg-start text-center text-lg-start">
+            <div className="homeOneMessage">
+              <h3>Aprende</h3>
+              <p>Domina el arte del manejo de drones en diversos sectores</p>
+            </div>
           </div>
-        </div>
-        <div className='d-flex justify-content-center text-center text-lg-start'>
-          <div className='homeOneMessage'>
-            <h3>Explora</h3>
-            <p>Descubre nuevas posibilidades con la tecnología de drones</p>
+          <div className="d-flex justify-content-center text-center text-lg-start">
+            <div className="homeOneMessage">
+              <h3>Explora</h3>
+              <p>Descubre nuevas posibilidades con la tecnología de drones</p>
+            </div>
           </div>
-        </div>
 
-        <div className='d-flex justify-content-center justify-content-lg-end text-center text-lg-start'>
-          <div className='homeOneMessage'>
-            <h3>Eleva tus habilidades</h3>
-            <p>Impulsa tu carrera con formación especializada en drones</p>
+          <div className="d-flex justify-content-center justify-content-lg-end text-center text-lg-start">
+            <div className="homeOneMessage">
+              <h3>Eleva tus habilidades</h3>
+              <p>Impulsa tu carrera con formación especializada en drones</p>
+            </div>
           </div>
-        </div>
-
+        </Col>
       </Row>
-      <Row>
-        <Col className='topCourses'>
-          <h2 className='topCoursesTitle'>Últimos cursos</h2>
-          <div className='d-flex justify-content-center gap-5 py-5'>
+      <Row className={filter}>
+        <Col className="topCourses">
+          <h2 className="topCoursesTitle">Últimos cursos</h2>
+          <div className="d-flex justify-content-center gap-5 py-5">
             {topCourses.map((oneCourse) => {
               return (
                 <CourseCard key={oneCourse.course_id} oneCourse={oneCourse} />
-              )
+              );
             })}
           </div>
         </Col>
       </Row>
-      <Row>
-        <Col className='bestCourses'>
-          <h2 className='bestCoursesTitle'>Cursos mejor valorados</h2>
-          <div className='d-flex justify-content-center gap-5 py-5'>
+      <Row className={filter}>
+        <Col className="bestCourses">
+          <h2 className="bestCoursesTitle">Cursos mejor valorados</h2>
+          <div className="d-flex justify-content-center gap-5 py-5">
             {bestRatedCourses.map((oneCourse) => {
               return (
                 <CourseCard key={oneCourse.course_id} oneCourse={oneCourse} />
-              )
+              );
             })}
           </div>
         </Col>
