@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import "./teacherLandingStyle.scss";
 import { TeacherCard } from "./components/TeacherCard/TeacherCard";
 import { CounterCard } from "./components/CounterCard/CounterCard";
 import { AiFillStar } from "react-icons/ai";
@@ -9,33 +8,37 @@ import { GiClassicalKnowledge } from "react-icons/gi";
 import { TeacherCoursesCard } from "./components/TeacherCoursesCard/TeacherCoursesCard";
 import { TeacherCoursesTableCard } from "./components/TeacherCoursesTableCard/TeacherCoursesTableCard";
 import { TeacherStudentsTableCard } from "./components/TeacherStudentsTableCard/TeacherStudentsTableCard";
-
+import { DroneMasterContext } from "../../../../context/DroneMasterProvider";
+import "./teacherLandingStyle.scss";
+import { UserCardInfo } from "./components/UserCardInfo.jsx/UserCardInfo";
 
 export const TeacherLanding = () => {
-  const {user} = useContext();
+  const { user } = useContext(DroneMasterContext);
   const [myCoursesData, setMyCoursesData] = useState();
   const [myStudentsData, setMyStudentsData] = useState();
-  const [averageRating, setAverageRating] = useState()
+  const [averageRating, setAverageRating] = useState();
 
   //Get all courses of the user
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/showMyCourses/${user.user_id}`)
+      .get(`http://localhost:4000/showMyCourses/${user?.user_id}`)
       .then((res) => {
         setMyCoursesData(res.data);
       })
       .catch((error) => console.log(error));
-  }, []);
+  }, [user]);
 
   //Get all students of the user
   useEffect(() => {
-    axios
-      .get(`http://localhost:4000/teachers/myStudents/${user.user_id}`)
-      .then((res) => {
-        setMyStudentsData(res.data);
-      })
-      .catch((error) => console.log(error));
-  }, []);
+    if (user) {
+      axios
+        .get(`http://localhost:4000/teachers/myStudents/${user?.user_id}`)
+        .then((res) => {
+          setMyStudentsData(res.data);
+        })
+        .catch((error) => console.log(error));
+    }
+  }, [user]);
 
   useEffect(() => {
     let sum = 0;
@@ -46,8 +49,8 @@ export const TeacherLanding = () => {
         counter += 1;
       }
     });
-    if (sum != 0 && counter != 0){
-      setAverageRating(sum / counter)
+    if (sum != 0 && counter != 0) {
+      setAverageRating(sum / counter);
     }
   }, [myCoursesData]);
 
@@ -59,23 +62,30 @@ export const TeacherLanding = () => {
       <aside className="sideContent">
         <TeacherCard user={user} />
 
-        <CounterCard title={"Puntación media"} counter={`${averageRating?.toFixed(1)}/5`}>
-          <AiFillStar />
-        </CounterCard>
+        <div className="counterContainer">
+          <CounterCard
+            title={"Puntación media"}
+            counter={`${averageRating?.toFixed(1)}/5`}
+          >
+            <AiFillStar />
+          </CounterCard>
+          <CounterCard title={"Alumnos totales"} counter={myStudentsData?.length}>
+            <AiOutlineUser />
+          </CounterCard>
+          <CounterCard title={"Cursos totales"} counter={myCoursesData?.length}>
+            <GiClassicalKnowledge />
+          </CounterCard>
+        </div>
+        <UserCardInfo user={user}/>
 
-        <CounterCard title={"Alumnos totales"} counter={myStudentsData?.length}>
-          <AiOutlineUser />
-        </CounterCard>
-
-        <CounterCard title={"Cursos totales"} counter={myCoursesData?.length}>
-          <GiClassicalKnowledge />
-        </CounterCard>
-
-        <TeacherCoursesCard myCoursesData={myCoursesData} />
       </aside>
       <div className="mainContainer">
-        <TeacherCoursesTableCard myCoursesData={myCoursesData}/>
-        <TeacherStudentsTableCard myStudentsData={myStudentsData}/>
+        <TeacherCoursesTableCard
+          myCoursesData={myCoursesData}
+          myStudentsData={myStudentsData}
+          user_id={user?.user_id}
+        />
+        <TeacherStudentsTableCard myStudentsData={myStudentsData} />
       </div>
     </section>
   );

@@ -7,7 +7,7 @@
   padding: 4vh 5vw;
   color: white;
 
-  //Coomon Styles
+  //Common Styles
   .iconContainer {
     width: 40px;
     aspect-ratio: 1/1;
@@ -22,24 +22,22 @@
   //Aside
   .sideContent {
     width: 30%;
-    display: grid;
-    grid-template:
-      "teacherCard teacherCard teacherCard"
-      "counter1 counter2 counter3"
-      "courseListCard courseListCard courseListCard";
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 
     .teacherCard,
     .counterCard,
-    .courseListCard {
+    .courseListCard,
+    .userInfoCard {
       background-color: $CuaternaryDark;
       border-radius: 12px;
       padding: 12px;
     }
 
+    //User Card
     .teacherCard {
-      grid-area: teacherCard;
+      height: fit-content;
       display: flex;
       justify-content: start;
       align-items: center;
@@ -91,28 +89,64 @@
       }
     }
 
-    .counterCard {
+    //3 Counters style
+    .counterContainer {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
+      justify-content: space-between;
 
-      .textContianer {
+      .counterCard {
+        width: 32%;
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 4px;
 
-        .title {
-          color: $TertiaryDarkColor;
-          font-size: 12px;
-          font-weight: 400;
-          text-align: center;
+        .textContianer {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .title {
+            color: $TertiaryDarkColor;
+            font-size: 12px;
+            font-weight: 400;
+            text-align: center;
+          }
         }
       }
     }
 
+    .userInfoCard {
+      grid-area: userInfo;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      .cardTitle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .cardBody {
+        padding: 0 20px;
+        .lineInfo {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          p {
+            margin: 0;
+          }
+
+          .infoIcon {
+            color: $TertiaryDarkColor;
+          }
+        }
+      }
+    }
+
+    //Course List Card
     .courseListCard {
-      grid-area: courseListCard;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -161,20 +195,202 @@
     flex-direction: column;
     gap: 8px;
 
-    .coursesTableCard, .studentsTableCard{
-        background-color: $CuaternaryDark;
-        border-radius: 12px;
-        padding: 12px;
-        color: white;
+    .coursesTableCard,
+    .studentsTableCard {
+      display: flex;
+      flex-direction: column;
+      background-color: $CuaternaryDark;
+      border-radius: 12px;
+      padding: 18px;
+      color: white;
+      gap: 12px;
 
+      .cardTitle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-right: 12px;
+
+        .title {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+
+          .titleText {
+            margin: 0;
+          }
+        }
+
+        .searchBar {
+          border-radius: 20px;
+          border: 2px solid $PrimaryOrangeColor;
+          padding: 0 10px;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+
+          input {
+            width: 100%;
+            border: none;
+            background: transparent;
+          }
+
+          input:focus {
+            border: none;
+            outline: none;
+          }
+        }
+      }
+
+      .cardBody {
+        width: 100%;
+        padding: 0 2vw;
+
+        .coursesTable {
+          width: 100%;
+
+          thead {
+            color: $TertiaryDarkColor;
+            border-bottom: 1px solid $TertiaryDarkColor;
+
+            th {
+              font-weight: 400;
+              text-align: start;
+            }
+
+            @media (max-width: 768px) {
+              .headIcon {
+                margin: auto;
+              }
+            }
+          }
+
+          tbody {
+            width: 100%;
+
+            tr {
+              width: 100%;
+              border-bottom: 1px solid $TertiaryDarkColor;
+              height: 40px;
+
+              .tdImg {
+                .tableImg {
+                  margin: auto;
+                  height: 25px;
+                  width: 25px;
+                  background-color: $PrimaryOrangeColor;
+                  border-radius: 5px;
+                  display: grid;
+                  place-items: center;
+
+                  h6 {
+                    margin: 0;
+                  }
+                }
+              }
+
+              td {
+                text-align: center;
+
+                .tableCell {
+                  display: flex;
+                  align-items: center;
+                  justify-content: start;
+                  gap: 5px;
+
+                  .tableCellContent {
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                    .icon {
+                      color: $PrimaryOrangeColor;
+                      font-size: 20px;
+                    }
+                  }
+                }
+                @media (max-width: 768px) {
+                  .iconCell {
+                    justify-content: center;
+                    padding: 5px;
+                  }
+                }
+              }
+
+              .tableCellName {
+                text-align: start;
+                padding: 0 8px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+//Media Tablet
+@media (max-width: 1200px) {
+  .mainSection {
+    flex-direction: column;
+    .sideContent {
+      width: 100%;
+      display: grid;
+      grid-template:
+        "teacherCard userInfo"
+        "counter userInfo";
+      grid-template-rows: 1fr auto;
+
+      .teacherCard {
+        height: 100%;
+      }
+
+      .counterContainer {
+        gap: 8px;
+        height: 100%;
+        .counterCard {
+          flex-direction: row;
+        }
+      }
     }
 
-    .coursesTableCard{
-        display: flex;
-        flex-direction: column;
-        .cardTitle{
+    .mainContainer {
+      width: 100%;
+    }
+  }
+}
+//Media Tablet Vertical
+@media (max-width: 768px) {
+  .mainSection {
+    flex-direction: column;
+    .sideContent {
+      width: 100%;
+      display: grid;
+      grid-template:
+        "teacherCard counter"
+        "userInfo userInfo";
 
+      .counterContainer {
+        gap: 8px;
+        height: 100%;
+        .counterCard {
+          flex-direction: column;
         }
+      }
+    }
+
+    .mainContainer {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .mainSection {
+    .sideContent {
+      grid-template:
+        "teacherCard"
+        "counter"
+        "userInfo";
     }
   }
 }

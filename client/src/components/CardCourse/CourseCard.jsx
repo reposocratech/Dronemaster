@@ -4,6 +4,7 @@ import "./CourseCard.scss";
 import { StarRating } from "../StarRating/StarRating";
 import { useNavigate } from "react-router-dom";
 
+
 export const CourseCard = ({ oneCourse }) => {
   const navigate = useNavigate();
   const [tagList, setTagList] = useState();
@@ -16,8 +17,6 @@ export const CourseCard = ({ oneCourse }) => {
       });
     return () => {};
   }, [oneCourse]);
-
-  console.log("********************", oneCourse);
 
   return (
     <div
@@ -37,7 +36,7 @@ export const CourseCard = ({ oneCourse }) => {
           <h4 className="courseTitle">{oneCourse.course_name}</h4>
           <div className="tagList">
             {tagList?.map((e) => {
-              return <span className="tag">#{e.tag_name}</span>;
+              return <span key={e.tag_id} className="tag">#{e.tag_name}</span>;
             })}
           </div>
           {oneCourse?.score != null && (

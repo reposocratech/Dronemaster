@@ -18,7 +18,6 @@ const DroneMasterProvider = ({ children }) => {
     setShowLogin(false);
   };
 
-  console.log("------------------------------", token);
 
   let openLogin = () => {
     setShowLogin(!showLogin);
@@ -41,14 +40,13 @@ const DroneMasterProvider = ({ children }) => {
   useEffect(() => {
     const tokenLocalStorage = getLocalStorage("token");
     setToken(tokenLocalStorage);
-    console.log(tokenLocalStorage);
+ 
     if (tokenLocalStorage) {
       const id = jwDecode(tokenLocalStorage).user.user_id;
 
       axios
         .get(`http://localhost:4000/myProfile/${id}`)
         .then((res) => {
-          console.log("La respuesta de CONTEXTOOOOOOOOO", res);
           setUser(res.data[0]);
           setIsLogged(true);
         })
@@ -56,6 +54,7 @@ const DroneMasterProvider = ({ children }) => {
     }
   }, [isLogged]);
 
+  
   return (
     <div>
       <DroneMasterContext.Provider
@@ -75,6 +74,7 @@ const DroneMasterProvider = ({ children }) => {
           filter,
           setFilter,
           openHome,
+
         }}
       >
         {children}
