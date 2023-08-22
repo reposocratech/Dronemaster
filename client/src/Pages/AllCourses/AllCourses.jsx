@@ -5,13 +5,27 @@ import { CategoryContainer } from './allCourseComponents/CategoryContainer/Categ
 import { DroneMasterContext } from '../../context/DroneMasterProvider';
 import { CourseCard } from '../../components/CardCourse/CourseCard';
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
+import { Col, Row } from "react-bootstrap";
+import LoginForm from "../Users/LoginForm/LoginForm";
+import RegisterForm from "../Users/RegisterForm/RegisterForm";
 
 export const AllCourses = () => {
     const [categoryData, setCategoryData] = useState()
     const [courseData, setCourseData] = useState()
     const [counter, setCounter] = useState(0);
     const [counterRatio, setCounterRatio] = useState(1);
-    const { course } = useContext(DroneMasterContext)
+    
+    const {
+    course,
+    showLogin,
+    setShowLogin,
+    showRegister,
+    setShowRegister,
+    openLogin,
+    openRegister,
+    filter,
+    setFilter,
+  } = useContext(DroneMasterContext);
 
     //Gets categories data
     useEffect(() => {
@@ -112,6 +126,20 @@ export const AllCourses = () => {
                 </div>
 
             }
+            {showLogin && (
+        <Row>
+          <Col>
+            <LoginForm />
+          </Col>
+        </Row>
+      )}
+      {showRegister && (
+        <Row>
+          <Col>
+            <RegisterForm />
+          </Col>
+        </Row>
+      )}
         </section>
     )
 }

@@ -8,7 +8,6 @@ import { FiSearch } from "react-icons/fi";
 import { DroneMasterContext } from '../../context/DroneMasterProvider';
 import { useForm } from "react-hook-form";
 
-
 const NavBarApp = () => {
   const [listCourses, setListCourses] = useState();
   const navigate = useNavigate()
@@ -38,25 +37,49 @@ const NavBarApp = () => {
     reset();
   }
 
+
+  let {
+    showLogin,
+    setShowLogin,
+    showRegister,
+    setShowRegister,
+    openLogin,
+    openRegister,
+  } = useContext(DroneMasterContext);
+
+  console.log(showLogin);
+
   return (
-    <Navbar key={'lg'} expand={'lg'} className="navBar d-flex justify-content-end" >
-      <Container fluid className='navContainer'>
+    <Navbar
+      key={"lg"}
+      expand={"lg"}
+      className="navBar d-flex justify-content-end"
+    >
+      <Container fluid className="navContainer">
+        <Navbar.Brand as={Link} to="/">
+          <img className="logo" src={logo_DroneMaster} alt="" />
+        </Navbar.Brand>
 
-        <Navbar.Brand as={Link} to='/'><img className='logo' src={logo_DroneMaster} alt="" /></Navbar.Brand>
-
-        <Navbar.Toggle className='toogle' aria-controls={`offcanvasNavbar-expand-${'lg'}`} />
-        <Navbar.Offcanvas className='navOffCanvas'
-          id={`offcanvasNavbar-expand-${'lg'}`}
-          aria-labelledby={`offcanvasNavbarLabel-expand-${'lg'}`}
+        <Navbar.Toggle
+          className="toogle"
+          aria-controls={`offcanvasNavbar-expand-${"lg"}`}
+        />
+        <Navbar.Offcanvas
+          className="navOffCanvas"
+          id={`offcanvasNavbar-expand-${"lg"}`}
+          aria-labelledby={`offcanvasNavbarLabel-expand-${"lg"}`}
           placement="end"
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title className='text-warning' id={`offcanvasNavbarLabel-expand-${'lg'}`}>
+            <Offcanvas.Title
+              className="text-warning"
+              id={`offcanvasNavbarLabel-expand-${"lg"}`}
+            >
               DroneMaster
             </Offcanvas.Title>
           </Offcanvas.Header>
-          <Offcanvas.Body className='bodyOffCanvas ps-4 gap-3 d-flex-column d-lg-flex justify-content-lg-between align-items-center'>
-            <div className='search d-flex align-items-center gap-1 px-2'>
+          <Offcanvas.Body className="bodyOffCanvas ps-4 gap-3 d-flex-column d-lg-flex justify-content-lg-between align-items-center">
+            <div className="search d-flex align-items-center gap-1 px-2">
               <FiSearch />
               <form onSubmit={handleSubmit(onsubmit)} className='w-100'>
                 <input
@@ -70,8 +93,7 @@ const NavBarApp = () => {
               </form>
             </div>
 
-            <div className='d-flex-column d-lg-flex gap-5'>
-
+            <div className="d-flex-column d-lg-flex gap-5">
               <Nav className="justify-content-end gap-lg-2">
                 <Nav.Link onClick={() => {
                   setCourse()
@@ -80,8 +102,8 @@ const NavBarApp = () => {
               </Nav>
 
               {!token && <div className='d-flex justify-content-center align-items-center gap-2'>
-                <button onClick={() => navigate('/login')} className='btnOutline2 border-light'>Iniciar sesión</button>
-                <button onClick={() => navigate('/register')} className='btnOutline2'>Registrarse</button>
+                <button onClick={openLogin} className='btnOutline2 border-light'>Iniciar sesión</button>
+                <button onClick={openRegister} className='btnOutline2'>Registrarse</button>
               </div>}
 
               {token && <div onClick={() => { navigate("/student") }} className='d-flex justify-content-center align-items-center gap-2'>
@@ -95,14 +117,12 @@ const NavBarApp = () => {
                 </div>
                 <button onClick={() => navigate('/register')} className='btnOutline2'>Cerrar sesión</button>
               </div>}
-
             </div>
-
           </Offcanvas.Body>
         </Navbar.Offcanvas>
       </Container>
     </Navbar>
-  )
-}
+  );
+};
 
-export default NavBarApp
+export default NavBarApp;

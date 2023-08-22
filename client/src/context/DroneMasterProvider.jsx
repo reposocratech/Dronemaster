@@ -1,4 +1,3 @@
-
 import React, { createContext, useEffect, useState } from "react";
 import { getLocalStorage } from "../helper/localStorageDroneMaster";
 import jwDecode from "jwt-decode";
@@ -11,28 +10,49 @@ const DroneMasterProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [isLogged, setIsLogged] = useState();
   const [course, setCourse] = useState();
+  let [showLogin, setShowLogin] = useState(false);
+  let [showRegister, setShowRegister] = useState(false);
+  let [filter, setFilter] = useState();
 
+  let openRegister = () => {
+    setShowRegister(!showRegister);
+    setShowLogin(false);
+  };
 
+  let openLogin = () => {
+    setShowLogin(!showLogin);
+    setShowRegister(false);
+  };
+
+  let openHome = () => {
+    setShowLogin(false);
+    setShowRegister(false);
+  };
 
   useEffect(() => {
+    if (!showLogin && !showRegister) {
+      setFilter();
+    } else {
+      setFilter("blur");
+    }
+  }, [showLogin, showRegister]);
 
+  useEffect(() => {
     const tokenLocalStorage = getLocalStorage("token");
-    setToken(tokenLocalStorage)
-
+    setToken(tokenLocalStorage);
+ 
     if (tokenLocalStorage) {
       const id = jwDecode(tokenLocalStorage).user.user_id;
 
       axios
         .get(`http://localhost:4000/myProfile/${id}`)
         .then((res) => {
-          console.log("La respuesta de CONTEXTOOOOOOOOO", res)
-          setUser(res.data[0])
+          setUser(res.data[0]);
           setIsLogged(true);
-
         })
-        .catch()
+        .catch((err) => console.log(err));
     }
-  }, [isLogged])
+  }, [isLogged]);
 
   return (
     <div>
@@ -46,7 +66,17 @@ const DroneMasterProvider = ({ children }) => {
           setIsLogged,
           course,
           setCourse,
-        }}>
+          showLogin,
+          setShowLogin,
+          showRegister,
+          setShowRegister,
+          openLogin,
+          openRegister,
+          filter,
+          setFilter,
+          openHome,
+        }}
+      >
         {children}
       </DroneMasterContext.Provider>
     </div>
