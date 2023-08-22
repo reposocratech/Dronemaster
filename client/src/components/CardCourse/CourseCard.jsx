@@ -3,8 +3,7 @@ import axios from "axios";
 import './CourseCard.scss'
 import { useNavigate } from "react-router-dom";
 import { StarRating } from "../StarRating/StarRating";
-import { StarRating } from "../StarRating/StarRating";
-import { useNavigate } from "react-router-dom";
+
 
 export const CourseCard = ({ oneCourse }) => {
   const navigate = useNavigate();
@@ -18,7 +17,6 @@ export const CourseCard = ({ oneCourse }) => {
       });
     return () => { };
   }, [oneCourse]);
-
   return (
     <div
       className="courseCard"
@@ -37,7 +35,7 @@ export const CourseCard = ({ oneCourse }) => {
           <h4 className="courseTitle">{oneCourse.course_name}</h4>
           <div className="tagList">
             {tagList?.map((e) => {
-              return <span className="tag">#{e.tag_name}</span>;
+              return <span key={e.tag_id} className="tag">#{e.tag_name}</span>;
             })}
           </div>
           {oneCourse?.score != null && (

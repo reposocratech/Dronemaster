@@ -15,15 +15,18 @@ export const TeacherCard = ({ user }) => {
       </div>
       <div className="textContainer">
         <h6 className="name">
-          {user.user_name} {user.user_lastname}
+          {user?.user_name} {user?.user_lastname}
         </h6>
         <p>
-          {user.type == 1 && "Profesor"}
-          {user.type == 2 && "Admin"}
+          {user?.type == 1 && "Profesor"}
+          {user?.type == 2 && "Admin"}
         </p>
       </div>
       <div className="editionButton">
-        <div className="iconButton" onClick={() => navigate(`/user/editMyProfile/${user.user_id}`)}>
+        <div
+          className="iconButton"
+          onClick={() => navigate(`/user/editMyProfile/${user?.user_id}`)}
+        >
           <FaEdit />
         </div>
       </div>
