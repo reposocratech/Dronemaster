@@ -1,4 +1,3 @@
-
 import React, { createContext, useEffect, useState } from "react";
 import { getLocalStorage } from "../helper/localStorageDroneMaster";
 import jwDecode from "jwt-decode";
@@ -10,30 +9,52 @@ const DroneMasterProvider = ({ children }) => {
   const [token, setToken] = useState();
   const [user, setUser] = useState();
   const [isLogged, setIsLogged] = useState();
+  let [showLogin, setShowLogin] = useState(false);
+  let [showRegister, setShowRegister] = useState(false);
+  let [filter, setFilter] = useState();
 
+  let openRegister = () => {
+    setShowRegister(!showRegister);
+    setShowLogin(false);
+  };
 
-  useEffect(() =>{
+  console.log("------------------------------", token);
 
+  let openLogin = () => {
+    setShowLogin(!showLogin);
+    setShowRegister(false);
+  };
+
+  let openHome = () => {
+    setShowLogin(false);
+    setShowRegister(false);
+  };
+
+  useEffect(() => {
+    if (!showLogin && !showRegister) {
+      setFilter();
+    } else {
+      setFilter("blur");
+    }
+  }, [showLogin, showRegister]);
+
+  useEffect(() => {
     const tokenLocalStorage = getLocalStorage("token");
-    setToken(tokenLocalStorage)
-   
-   if(tokenLocalStorage){
-       const id = jwDecode(tokenLocalStorage).user.id;
-   
-       axios
-       .get(`http://localhost:4000/myProfile/${id}`)
-       .then((res)=>{
-         console.log("La respuesta de CONTEXTOOOOOOOOO", res)
-               setUser(res.data.resultUser[0])
-               setIsLogged(true);
-               
-       })
-       .catch()
-       
-   }
-   
-   }, [])
+    setToken(tokenLocalStorage);
+    console.log(tokenLocalStorage);
+    if (tokenLocalStorage) {
+      const id = jwDecode(tokenLocalStorage).user.user_id;
 
+      axios
+        .get(`http://localhost:4000/myProfile/${id}`)
+        .then((res) => {
+          console.log("La respuesta de CONTEXTOOOOOOOOO", res);
+          setUser(res.data[0]);
+          setIsLogged(true);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [isLogged]);
 
   return (
     <div>
@@ -42,11 +63,21 @@ const DroneMasterProvider = ({ children }) => {
           user,
           setUser,
           token,
-          setToken,  
+          setToken,
           isLogged,
-          setIsLogged
-      }}>
-         {children}
+          setIsLogged,
+          showLogin,
+          setShowLogin,
+          showRegister,
+          setShowRegister,
+          openLogin,
+          openRegister,
+          filter,
+          setFilter,
+          openHome,
+        }}
+      >
+        {children}
       </DroneMasterContext.Provider>
     </div>
   );

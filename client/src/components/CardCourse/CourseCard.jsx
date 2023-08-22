@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import './CourseCard.scss'
-import { useNavigate } from "react-router-dom";
-import { StarRating } from "../StarRating/StarRating";
+import "./CourseCard.scss";
 import { StarRating } from "../StarRating/StarRating";
 import { useNavigate } from "react-router-dom";
 
@@ -16,8 +14,10 @@ export const CourseCard = ({ oneCourse }) => {
       .catch((error) => {
         console.log(error);
       });
-    return () => { };
+    return () => {};
   }, [oneCourse]);
+
+  console.log("********************", oneCourse);
 
   return (
     <div

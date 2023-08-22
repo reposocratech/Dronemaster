@@ -36,7 +36,11 @@
   color: #f7ab16;
 }
 
-.btnOutline1:hover{
-  background-color:  #f7ab16;
+.btnOutline1:hover {
+  background-color: #f7ab16;
   color: black;
+}
+
+.blur {
+  filter: blur(10px);
 }
