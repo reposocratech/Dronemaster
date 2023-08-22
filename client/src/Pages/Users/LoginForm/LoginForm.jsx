@@ -22,7 +22,7 @@ const LoginForm = () => {
 
   const navigate = useNavigate();
 
-  const { setUser } = useContext(DroneMasterContext);
+  const { setUser, setIsLogged } = useContext(DroneMasterContext);
 
   const onSubmit2 = (data) => {
     axios
@@ -31,6 +31,8 @@ const LoginForm = () => {
       .then((res) => {
         console.log("result.data.user/////////////", res),
           saveLocalStorageDroneMaster("token", res.data.token);
+        setUser(res.data.user)
+        setIsLogged(true)
 
         const type = res.data.user.type;
         if (type === 0) {

@@ -10,30 +10,29 @@ const DroneMasterProvider = ({ children }) => {
   const [token, setToken] = useState();
   const [user, setUser] = useState();
   const [isLogged, setIsLogged] = useState();
+  const [course, setCourse] = useState();
 
 
-  useEffect(() =>{
+
+  useEffect(() => {
 
     const tokenLocalStorage = getLocalStorage("token");
     setToken(tokenLocalStorage)
-   
-   if(tokenLocalStorage){
-       const id = jwDecode(tokenLocalStorage).user.id;
-   
-       axios
-       .get(`http://localhost:4000/myProfile/${id}`)
-       .then((res)=>{
-         console.log("La respuesta de CONTEXTOOOOOOOOO", res)
-               setUser(res.data.resultUser[0])
-               setIsLogged(true);
-               
-       })
-       .catch()
-       
-   }
-   
-   }, [])
 
+    if (tokenLocalStorage) {
+      const id = jwDecode(tokenLocalStorage).user.user_id;
+
+      axios
+        .get(`http://localhost:4000/myProfile/${id}`)
+        .then((res) => {
+          console.log("La respuesta de CONTEXTOOOOOOOOO", res)
+          setUser(res.data[0])
+          setIsLogged(true);
+
+        })
+        .catch()
+    }
+  }, [isLogged])
 
   return (
     <div>
@@ -42,11 +41,13 @@ const DroneMasterProvider = ({ children }) => {
           user,
           setUser,
           token,
-          setToken,  
+          setToken,
           isLogged,
-          setIsLogged
-      }}>
-         {children}
+          setIsLogged,
+          course,
+          setCourse,
+        }}>
+        {children}
       </DroneMasterContext.Provider>
     </div>
   );

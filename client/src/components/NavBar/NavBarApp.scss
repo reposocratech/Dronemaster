@@ -6,7 +6,7 @@
     .search {
         border: 2px solid $PrimaryOrangeColor;
         border-radius: 20px;
-        width: 35vw;
+        width: clamp(320px, 50vw, 350px);
         height: 4vh;
         color: white;
         display: flex;
@@ -15,6 +15,33 @@
             border: transparent;
             outline: none;
             font-style: italic;
+        }
+    }
+
+    .avatar {
+        border: 2px solid $PrimaryOrangeColor;
+        border-radius: 50%;
+        width: clamp(41px, 4vw, 43px);
+        height: clamp(41px, 4vw, 43px);
+        background-color: $TertiaryDarkColor;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        cursor: pointer;
+
+        p {
+            margin: 0;
+            font-size: 25px;
+            font-weight: bold;
+            color: $PrimaryDarkColor;
+        }
+
+        img {
+            border-radius: 50%;
+            width: clamp(40px, 4vw, 42px);
+            height: clamp(40px, 4vw, 42px);
         }
     }
 }
@@ -55,5 +82,34 @@
             }
 
         }
+
+        .avatar {
+            border: 2px solid $PrimaryOrangeColor;
+            border-radius: 50%;
+            width: clamp(41px, 4vw, 43px);
+            height: clamp(41px, 4vw, 43px);
+            background-color: $TertiaryDarkColor;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            cursor: pointer;
+
+            p {
+                margin: 0;
+                font-size: 25px;
+                font-weight: bold;
+                color: $PrimaryDarkColor;
+            }
+
+            img {
+                border-radius: 50%;
+                width: clamp(40px, 4vw, 42px);
+                height: clamp(40px, 4vw, 42px);
+            }
+        }
     }
+
+
 }

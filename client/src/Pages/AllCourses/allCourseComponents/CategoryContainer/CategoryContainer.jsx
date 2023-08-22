@@ -9,7 +9,7 @@ export const CategoryContainer = ({
 }) => {
   const [courseByCategory, setCourseByCategory] = useState();
   const [counter, setCounter] = useState(0);
-  const [counterRatio, setCounterRatio] = useState(5);
+  const [counterRatio, setCounterRatio] = useState(1);
 
   useEffect(() => {
     setCourseByCategory(
@@ -17,20 +17,42 @@ export const CategoryContainer = ({
     );
   }, [courseData]);
 
- 
-  console.log(counterRatio, "Couuuuuuuuuunter");
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 900 && window.innerWidth < 1100) {
+        setCounterRatio(1);
+      } else if (window.innerWidth >= 1100 && window.innerWidth < 1400) {
+        setCounterRatio(2);
+      } else if (window.innerWidth >= 1400 && window.innerWidth < 1700) {
+        setCounterRatio(3);
+      } else if (window.innerWidth >= 1700) {
+        setCounterRatio(4);
+      }
+    };
+
+    handleResize(); // Call initially
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <div className="categoryContainer">
-      <h2 className="categoryTitle">{category_name}</h2>
+      <h2 className="categoryTitle text-center text-md-start">{category_name}</h2>
       <div className="courseCardContainerWrapper">
-        {counter !== 0 && (
+        {counter !== 0 ?
           <div className="navigationButtonContainerLeft">
             <MdNavigateBefore
               className="navigationButton"
               onClick={() => setCounter(counter - counterRatio)}
             />
+          </div> : <div className="navigationButtonContainerLeft">
+            <MdNavigateBefore
+              className="navigationButton opacity-0"
+            />
           </div>
-        )}
+        }
         <div className="courseCardContainer">
           {courseByCategory
             ?.slice(counter, counter + counterRatio)
@@ -40,14 +62,18 @@ export const CategoryContainer = ({
               );
             })}
         </div>
-        {counter + counterRatio < courseByCategory?.length && (
+        {counter + counterRatio < courseByCategory?.length ?
           <div className="navigationButtonContainerRight">
             <MdNavigateNext
               className="navigationButton"
               onClick={() => setCounter(counter + counterRatio)}
             />
+          </div> : <div className="navigationButtonContainerRight">
+            <MdNavigateNext
+              className="navigationButton opacity-0"
+            />
           </div>
-        )}
+        }
       </div>
     </div>
   );

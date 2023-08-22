@@ -1,7 +1,7 @@
 @import '../../../public/styles/variables';
 
 .courseCard {
-    width: 330px;
+    width: clamp(220px, 20vw, 330px);
     display: flex;
     flex-direction: column;
     position: relative;
@@ -17,7 +17,7 @@
 
     .courseCardContent {
         .coursePreviewContainer {
-            width: 330px;
+            width: clamp(220px, 20vw, 330px);
 
             .preview {
                 width: 100%;
