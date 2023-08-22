@@ -4,9 +4,11 @@ import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 import { saveLocalStorageDroneMaster } from "../../../helper/localStorageDroneMaster";
 import { DroneMasterContext } from "../../../context/DroneMasterProvider";
-
 import "../../../../public/styles/registerLoginFormStyle.scss";
 import { Col, Container, Row } from "react-bootstrap";
+const navigate = useNavigate();
+const { setUser, isLogged, openHome, openRegister } =
+    useContext(DroneMasterContext);
 
 const LoginForm = () => {
   const {
@@ -21,18 +23,14 @@ const LoginForm = () => {
     },
   });
 
-  const navigate = useNavigate();
-
-  const { setUser, isLogged, openHome, openRegister } =
-    useContext(DroneMasterContext);
-
   const onSubmit2 = (data) => {
     axios
-
       .post("http://localhost:4000/login", data)
       .then((res) => {
         console.log("result.data.user/////////////", res),
           saveLocalStorageDroneMaster("token", res.data.token);
+        setUser(res.data.user)
+        setIsLogged(true)
 
         const type = res.data.user.type;
         if (type === 0) {

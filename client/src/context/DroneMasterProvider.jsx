@@ -9,6 +9,7 @@ const DroneMasterProvider = ({ children }) => {
   const [token, setToken] = useState();
   const [user, setUser] = useState();
   const [isLogged, setIsLogged] = useState();
+  const [course, setCourse] = useState();
   let [showLogin, setShowLogin] = useState(false);
   let [showRegister, setShowRegister] = useState(false);
   let [filter, setFilter] = useState();
@@ -17,7 +18,6 @@ const DroneMasterProvider = ({ children }) => {
     setShowRegister(!showRegister);
     setShowLogin(false);
   };
-
 
   let openLogin = () => {
     setShowLogin(!showLogin);
@@ -54,7 +54,6 @@ const DroneMasterProvider = ({ children }) => {
     }
   }, [isLogged]);
 
-  
   return (
     <div>
       <DroneMasterContext.Provider
@@ -65,6 +64,8 @@ const DroneMasterProvider = ({ children }) => {
           setToken,
           isLogged,
           setIsLogged,
+          course,
+          setCourse,
           showLogin,
           setShowLogin,
           showRegister,
@@ -74,7 +75,6 @@ const DroneMasterProvider = ({ children }) => {
           filter,
           setFilter,
           openHome,
-
         }}
       >
         {children}

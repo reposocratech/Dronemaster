@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./CourseCard.scss";
-import { StarRating } from "../StarRating/StarRating";
+import './CourseCard.scss'
 import { useNavigate } from "react-router-dom";
-
+import { StarRating } from "../StarRating/StarRating";
 
 export const CourseCard = ({ oneCourse }) => {
   const navigate = useNavigate();
   const [tagList, setTagList] = useState();
+
   useEffect(() => {
     axios
       .get(`http://localhost:4000/courses/courseTags/${oneCourse.course_id}`)
