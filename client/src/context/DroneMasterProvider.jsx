@@ -9,24 +9,51 @@ const DroneMasterProvider = ({ children }) => {
   const [token, setToken] = useState();
   const [user, setUser] = useState();
   const [isLogged, setIsLogged] = useState();
+  let [showLogin, setShowLogin] = useState(false);
+  let [showRegister, setShowRegister] = useState(false);
+  let [filter, setFilter] = useState();
+
+  let openRegister = () => {
+    setShowRegister(!showRegister);
+    setShowLogin(false);
+  };
+
+
+  let openLogin = () => {
+    setShowLogin(!showLogin);
+    setShowRegister(false);
+  };
+
+  let openHome = () => {
+    setShowLogin(false);
+    setShowRegister(false);
+  };
+
+  useEffect(() => {
+    if (!showLogin && !showRegister) {
+      setFilter();
+    } else {
+      setFilter("blur");
+    }
+  }, [showLogin, showRegister]);
 
   useEffect(() => {
     const tokenLocalStorage = getLocalStorage("token");
     setToken(tokenLocalStorage);
-
+ 
     if (tokenLocalStorage) {
       const id = jwDecode(tokenLocalStorage).user.user_id;
 
       axios
         .get(`http://localhost:4000/myProfile/${id}`)
         .then((res) => {
-          console.log("La respuesta de CONTEXTOOOOOOOOO", res);
           setUser(res.data[0]);
           setIsLogged(true);
         })
-        .catch();
+        .catch((err) => console.log(err));
     }
-  }, []);
+  }, [isLogged]);
+
   
   return (
     <div>
@@ -38,6 +65,16 @@ const DroneMasterProvider = ({ children }) => {
           setToken,
           isLogged,
           setIsLogged,
+          showLogin,
+          setShowLogin,
+          showRegister,
+          setShowRegister,
+          openLogin,
+          openRegister,
+          filter,
+          setFilter,
+          openHome,
+
         }}
       >
         {children}

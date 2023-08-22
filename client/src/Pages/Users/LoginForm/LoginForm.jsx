@@ -4,7 +4,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 import { saveLocalStorageDroneMaster } from "../../../helper/localStorageDroneMaster";
 import { DroneMasterContext } from "../../../context/DroneMasterProvider";
-import "./LoginForm.scss";
+
+import "../../../../public/styles/registerLoginFormStyle.scss";
 import { Col, Container, Row } from "react-bootstrap";
 
 const LoginForm = () => {
@@ -22,7 +23,8 @@ const LoginForm = () => {
 
   const navigate = useNavigate();
 
-  const { setUser } = useContext(DroneMasterContext);
+  const { setUser, isLogged, openHome, openRegister } =
+    useContext(DroneMasterContext);
 
   const onSubmit2 = (data) => {
     axios
@@ -42,65 +44,27 @@ const LoginForm = () => {
         } else {
           navigate("/");
         }
+        isLogged(true);
+        setUser(res.data.user);
       })
       .catch((error) => console.log(error));
   };
 
   return (
     <Container fluid className="main">
-      {/* HOME */}
-      <Row className="homeform">
-        <Col className="homeInfo">
-          <div>
-            <h1>
-              COMIENZA EN EL MUNDO DE LOS <span>DRONES</span> CON NUESTROS
-              CURSOS
-            </h1>
-            <p>Especializate en el sector mas demandado de Europa</p>
-            <div className="py-4">
-              <button
-                className="btnNormal"
-                onClick={() => {
-                  navigate("/login");
-                }}
-              >
-                Comenzar
-              </button>
-            </div>
-          </div>
-          <div className="allCounter">
-            <div>
-              <h2 className="homeCounter">6</h2>
-              <p className="userCounter">Docentes</p>
-            </div>
-            <div>
-              <h2 className="homeCounter">5</h2>
-              <p className="userCounter">Cursos</p>
-            </div>
-            <div>
-              <h2 className="homeCounter">4</h2>
-              <p className="userCounter">Alumnos</p>
-            </div>
-          </div>
-        </Col>
-        <Col className="homeImage">
-          <div className="orangeCircle"></div>
-        </Col>
-      </Row>
-
       <Row className="formposition">
-        <Col className="formContainer col-4">
+        <Col className="formContainer">
           <div className="text-group2">
-            <form onSubmit={handleSubmit(onSubmit2)}>
+            <form className="position" onSubmit={handleSubmit(onSubmit2)}>
               <input
                 {...register("email", {
                   required: "Email must be completed",
                   maxLength: 200,
                 })}
-                placeholder="email"
+                placeholder="Email"
                 autoComplete="off"
                 type="email"
-                className="input-user"
+                className="forminput"
               />
 
               <p>{errors.email?.message}</p>
@@ -112,40 +76,33 @@ const LoginForm = () => {
                 placeholder="Contraseña"
                 autoComplete="off"
                 type="password"
-                className="input-user"
+                className="forminput"
               />
 
               <p>{errors.password?.message}</p>
 
-              <Col className="d-flex justify-content-center m-3">
-                <button className="btnLogin"> Aceptar</button>
-                <button className="btnLogin" onClick={() => navigate("/")}>
-                  {" "}
+              <Col className="d-flex justify-content-center m-3 gap-3">
+                <button className="btnNormal "> Aceptar</button>
+                <button className="btnNormal" onClick={openHome}>
                   Cancelar
                 </button>
               </Col>
               <Col>
-                <p className="formas-parte-de gap-2">
-                  <span className="text-wrapper">
-                    ¿Formas parte de nuetra?{" "}
-                  </span>
-                  <Link to="/register" className="span">
-                    Inicia Sesion
+                <p className="d-flex flex-column justify-content-center align-content-center mb-2">
+                  <span>¿Aún no formas parte de nuestra comunidad? </span>
+                  <Link onClick={openRegister} className="span">
+                    Registrate
                   </Link>
                 </p>
               </Col>
             </form>
           </div>
 
-          <Col className="text-group col-4">
+          <Col className="text-group">
             <div className="welcome-title">¡Bienvenido de vuelta!</div>
-            <div className="text-paragraph-cont">
-              <p className="welcome-paragraph">
-                Estamos emocionados por tenerte aqui nuevamente
-              </p>
-              <p className="text-wrapper">
-                Ingresa y disfruta de tu experiencia
-              </p>
+            <div className="text-paragraph">
+              <p>Estamos emocionados por tenerte aqui nuevamente</p>
+              <p>Ingresa y disfruta de tu experiencia</p>
             </div>
           </Col>
         </Col>

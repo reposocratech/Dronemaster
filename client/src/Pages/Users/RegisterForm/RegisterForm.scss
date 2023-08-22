@@ -13,16 +13,17 @@
 }
 
 .formContainer {
-  height: 500px;
-  width: 500px;
+  height: 50vh;
+  width: 75vw;
   display: flex;
   align-content: center;
+  position: fixed;
   transition: all 1 ease;
 }
 
 .input-user {
   align-items: center;
-  background-color: #d9d9d9cc;
+  background-color: #d9d9d9bb;
   border: none;
   border-radius: 20px;
   display: flex;
@@ -42,10 +43,12 @@
   text-decoration: none;
 }
 
-.text-group {
+.text-group4 {
   align-items: center;
   background-color: $PrimaryOrangeColor;
   border: 1px none;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -54,12 +57,15 @@
   min-width: 500px;
   position: relative;
   width: 100%;
+  color: $PrimaryDarkColor;
 }
 
-.text-group2 {
+.text-group3 {
   align-items: center;
-  background-color: #d9d9d982;
+  background-color: #d9d9d9bb;
   border: 1px none;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -69,7 +75,7 @@
   position: relative;
   width: 100%;
 }
-.text-group .welcome-title {
+.text-group4 .welcome-title {
   align-self: stretch;
   color: #000000;
   font-family: "Inter-Bold", Helvetica;
@@ -81,7 +87,7 @@
   text-align: center;
 }
 
-.text-group .text-paragraph-cont {
+.text-group4 .text-paragraph-cont {
   align-items: center;
   display: inline-flex;
   flex: 0 0 auto;
@@ -93,7 +99,7 @@
   color: #000000;
 }
 
-.text-group .text-wrapper {
+.text-group4 .text-wrapper {
   color: var(--cuaternary-dark);
   font-family: "Inter-SemiBold", Helvetica;
   font-size: 14px;
@@ -105,61 +111,4 @@
   width: 400px;
 }
 
-// Esto es el estilo del form
-.homeform {
-  min-height: calc(100vh - 80px);
-  background-color: $PrimaryDarkColor;
-  color: white;
-  position: relative;
-  filter: blur(7px);
-
-  .homeInfo {
-    padding: clamp(8px, 20vw, 150px) clamp(8px, 3vw, 45px);
-
-    h1 {
-      margin: 0;
-      padding-bottom: 30px;
-      font-size: clamp(20px, 4rem, 75px);
-
-      span {
-        color: $PrimaryOrangeColor;
-      }
-    }
-
-    p {
-      margin: 0;
-      padding-bottom: 20px;
-    }
-
-    .allCounter {
-      display: flex;
-      justify-content: end;
-      align-items: center;
-      gap: 100px;
-
-      .homeCounter {
-        font-size: 3rem;
-        color: $PrimaryOrangeColor;
-        text-align: center;
-      }
-
-      p {
-        font-size: 1.5rem;
-      }
-    }
-  }
-
-  .homeImage {
-    padding: clamp(8px, 18vw, 100px) clamp(8px, 3vw, 45px);
-    display: flex;
-    justify-content: center;
-    align-items: start;
-
-    .orangeCircle {
-      width: 550px;
-      height: 550px;
-      background-color: $PrimaryOrangeColor;
-      border-radius: 50%;
-    }
-  }
-}
+// Responsive Form

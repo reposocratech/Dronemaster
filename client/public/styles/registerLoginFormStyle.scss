@@ -1,0 +1,32 @@
+@import "../styles/variables";
+
+.main {
+  min-height: calc(100vh - 80px);
+  background-color: $PrimaryDarkColor;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formContainer {
+  border: red 2px solid;
+  width: 50vw;
+  height: 60vh;
+  display: flex;
+}
+
+.form1 {
+  background-color: $PrimaryOrangeColor;
+  width: 50%;
+  height: 50%;
+}
+
+.form2 {
+}
+
+.form3 {
+}
+
+.form4 {
+}
