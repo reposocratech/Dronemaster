@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const adminControllers = require("../controllers/adminControllers");
 const bcrypt = require("bcrypt");
+const multer = require("../middleware/multer");
 
 // 1.- Create teacher or admin
 // http://localhost:4000/admin/createTeacher
@@ -38,5 +39,25 @@ router.put("/passedCourse/:user_id", adminControllers.passedCourse);
 // 9.- Not passed course
 // localhost:4000/admin/notPassedCourse/:user_id
 router.put("/notPassedCourse/:user_id", adminControllers.notPassedCourse);
+
+// 10.- view All Courses (admin)
+// http://localhost:4000/admin/getAllCourses
+router.get("/allCourses", adminControllers.viewAllCourses);
+
+// 11.- Create Lesson (admin)
+// http://localhost:4000/admin/createLesson/:course_id/:unit_id
+router.post("/createLesson/:course_id/:unit_id", adminControllers.createLesson);
+
+// 12.- Create Lesson (admin)
+// http://localhost:4000/admin/createUnit/:course_id
+router.post("/createUnit/:course_id", adminControllers.createUnit);
+
+// 13.- Create Resource (admin)
+// http://localhost:4000/admin/createResource/:user_id/:lesson_id
+router.post(
+  "/createResource/:user_id/:lesson_id",
+  multer("resources"),
+  adminControllers.createResource
+);
 
 module.exports = router;

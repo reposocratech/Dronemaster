@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 const NavBarApp = () => {
   const [listCourses, setListCourses] = useState();
   const navigate = useNavigate()
-  const { setCourse, token, user } = useContext(DroneMasterContext)
+  const { setCourse, token, user , openLogin, openRegister} = useContext(DroneMasterContext)
 
   const {
     register,
@@ -36,18 +36,6 @@ const NavBarApp = () => {
     setCourse(courseFound)
     reset();
   }
-
-
-  let {
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    openLogin,
-    openRegister,
-  } = useContext(DroneMasterContext);
-
-  console.log(showLogin);
 
   return (
     <Navbar

@@ -76,24 +76,24 @@ class adminControllers {
     }
   };
 
-  // 6.- Enable User
+  // 6.- Enable User (admin)
   // http://localhost:4000/admin/enableUser/:user_id
   enableUser = (req, res) => {
     const { user_id } = req.params;
 
-    let sql = `UPDATE user SET is_deleted = 0 WHERE user_id = "${user_id}"`;
+    let sql = `UPDATE user SET is_deleted = 0 WHERE user_id = "${user_id}" AND type IN (0, 1)`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
   };
 
-  // 7.- Disable User
+  // 7.- Disable User (admin)
   // http://localhost:4000/admin/disableUser/:user_id
   disableUser = (req, res) => {
     const { user_id } = req.params;
 
-    let sql = `UPDATE user SET is_deleted = 1 WHERE user_id = "${user_id}"`;
+    let sql = `UPDATE user SET is_deleted = 1 WHERE user_id = "${user_id}" AND type IN (0, 1)`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
@@ -117,11 +117,81 @@ class adminControllers {
   notPassedCourse = (req, res) => {
     const { user_id } = req.params;
 
-    let sql = `UPDATE user_course SET status = 3 WHERE user_id = "${user_id}"`;
+    let sql = `UPDATE user_course SET status = 3 WHERE user_id = ${user_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
+  };
+
+  // 10.- Get All Courses (admin)
+  // http://localhost:4000/admin/getAllCourses
+  viewAllCourses = (req, res) => {
+    let sql = "SELECT * FROM course";
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 11.- Create Lesson (admin)
+  // http://localhost:4000/admin/createLesson/:course_id/:unit_id
+  createLesson = (req, res) => {
+    const { course_id, unit_id } = req.params;
+    const { lesson_title, lesson_content } = req.body;
+
+    let sql = `
+    INSERT INTO lesson (course_id, unit_id, lesson_title, lesson_content) VALUES (${course_id}, ${unit_id}, '${lesson_title}', '${lesson_content}')`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 12.- Create unit (admin)
+  // http://localhost:4000/admin/createUnit/:course_id
+  createUnit = (req, res) => {
+    const { course_id } = req.params;
+    const { unit_title } = req.body;
+
+    let sql = `
+    INSERT INTO unit (course_id, unit_title) VALUES (${course_id}, '${unit_title}')`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 13.- Create Resource (admin y teacher)
+  // http://localhost:4000/admin/createResource/:user_id/:lesson_id
+  createResource = (req, res) => {
+    const { user_id, lesson_id } = req.params;
+
+    let file = "";
+
+    if (req.file != undefined) {
+      file = req.file.filename;
+
+      let sql = `INSERT INTO resource (user_id, resource_name) VALUES (${user_id}, '${file}')`;
+
+      connection.query(sql, (error, result) => {
+        if (error) res.status(400).json({ error });
+
+        let resource_id = result.insertId;
+
+        let sqlLesson = `UPDATE lesson SET resource_id = ${resource_id} WHERE lesson_id = ${lesson_id}`;
+
+        connection.query(sqlLesson, (error, resultLesson) => {
+          error
+            ? res.status(400).json({ error })
+            : res.status(200).json(result);
+        });
+      });
+    } else {
+      res
+        .status(404)
+        .json({ messsage: "Verifique que el archivo se ha adjuntado" });
+    }
   };
 }
 
