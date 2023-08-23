@@ -1,0 +1,426 @@
+@import "../../../../../public/styles/variables";
+
+.mainSection {
+    background-color: $PrimaryDarkColor;
+    display: flex;
+    gap: 8px;
+    padding: 4vh 5vw;
+    color: white;
+
+    //Common Styles
+    .iconContainer {
+        width: 40px;
+        aspect-ratio: 1/1;
+        border-radius: 100%;
+        background-color: $PrimaryDarkColor;
+        display: grid;
+        place-items: center;
+        color: $PrimaryOrangeColor;
+        font-size: 20px;
+    }
+
+    //Aside
+    .sideContent {
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .studentCard,
+        .counterCardStudent,
+        .courseListCard,
+        .userInfoCard {
+            background-color: $CuaternaryDark;
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        //User Card
+        .studentCard {
+            height: fit-content;
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            gap: 20px;
+
+            .imgContainer {
+                width: 60px;
+                aspect-ratio: 1/1;
+                border-radius: 100%;
+                overflow: hidden;
+                display: grid;
+                place-items: center;
+                background-color: $PrimaryDarkColor;
+                color: $PrimaryOrangeColor;
+
+                .avatarText {
+                    margin: 0;
+                }
+            }
+
+            .textContainer {
+                display: flex;
+                flex-direction: column;
+
+                .name {
+                    text-transform: capitalize;
+                    font-size: 16px;
+                }
+
+                p {
+                    margin: 0;
+                    text-transform: uppercase;
+                    font-size: 12px;
+                    color: $TertiaryDarkColor;
+                }
+            }
+
+            .editionButton {
+                color: $TertiaryDarkColor;
+                align-self: start;
+                flex-grow: 1;
+                display: flex;
+                justify-content: end;
+
+                .iconButton:hover {
+                    color: $PrimaryOrangeColor;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        //3 Counters style
+        .counterContainer {
+            display: flex;
+            justify-content: space-between;
+
+            .counterCardStudent {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 4px;
+
+                .textContianer {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+
+                    .title {
+                        color: $TertiaryDarkColor;
+                        font-size: 12px;
+                        font-weight: 400;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+
+        .userInfoCard {
+            grid-area: userInfo;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            .cardTitle {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .cardBody {
+                padding: 0 20px;
+
+                .lineInfo {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+
+                    p {
+                        margin: 0;
+                    }
+
+                    .infoIcon {
+                        color: $TertiaryDarkColor;
+                    }
+                }
+            }
+        }
+
+        //Course List Card
+        .courseListCard {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .cardTitle {
+                display: flex;
+                gap: 20px;
+
+                .textContainer {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+
+                    h6 {
+                        margin: 0;
+                    }
+                }
+            }
+
+            .cardBody {
+                padding: 0 20px;
+
+                .courseList {
+                    padding: 0;
+
+                    .courseListRow {
+                        padding: 8px 0;
+                        font-size: 14px;
+                        border-bottom: 1px solid $TertiaryDarkColor;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        .icon {
+                            color: $PrimaryOrangeColor;
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    //Main
+    .mainContainer {
+        width: calc(70% - 8px);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .topCourses,
+        .courseInfoCard {
+            display: flex;
+            background-color: $CuaternaryDark;
+            border-radius: 12px;
+            padding: 18px;
+            color: white;
+            gap: 12px;
+        }
+
+        .coursesTableCard,
+        .studentsTableCard {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            background-color: $CuaternaryDark;
+            border-radius: 12px;
+            padding: 18px;
+            color: white;
+            gap: 12px;
+
+            .cardTitle {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-right: 12px;
+
+                .title {
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+
+                    .titleText {
+                        margin: 0;
+                    }
+                }
+
+                .searchBar {
+                    border-radius: 20px;
+                    border: 2px solid $PrimaryOrangeColor;
+                    padding: 0 10px;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+
+                    input {
+                        width: 100%;
+                        border: none;
+                        background: transparent;
+                    }
+
+                    input:focus {
+                        border: none;
+                        outline: none;
+                    }
+                }
+            }
+
+            .cardBody {
+                width: 100%;
+                padding: 0 2vw;
+
+                .coursesTable {
+                    width: 100%;
+
+                    thead {
+                        color: $TertiaryDarkColor;
+                        border-bottom: 1px solid $TertiaryDarkColor;
+
+                        th {
+                            font-weight: 400;
+                            text-align: start;
+                        }
+
+                        @media (max-width: 768px) {
+                            .headIcon {
+                                margin: auto;
+                            }
+                        }
+                    }
+
+                    tbody {
+                        width: 100%;
+
+                        tr {
+                            width: 100%;
+                            border-bottom: 1px solid $TertiaryDarkColor;
+                            height: 40px;
+
+                            .tdImg {
+                                .tableImg {
+                                    margin: auto;
+                                    height: 25px;
+                                    width: 25px;
+                                    background-color: $PrimaryOrangeColor;
+                                    border-radius: 5px;
+                                    display: grid;
+                                    place-items: center;
+
+                                    h6 {
+                                        margin: 0;
+                                    }
+                                }
+                            }
+
+
+
+
+
+
+
+                            td {
+                                text-align: center;
+
+                                .tableCell {
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: start;
+                                    gap: 5px;
+
+                                    .tableCellContent {
+                                        display: flex;
+                                        align-items: center;
+                                        gap: 4px;
+
+                                        .icon {
+                                            color: $PrimaryOrangeColor;
+                                            font-size: 20px;
+                                        }
+                                    }
+                                }
+
+                                @media (max-width: 768px) {
+                                    .iconCell {
+                                        justify-content: center;
+                                        padding: 5px;
+                                    }
+                                }
+                            }
+
+                            .tableCellName {
+                                text-align: start;
+                                padding: 0 8px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+//Media Tablet
+@media (max-width: 1200px) {
+    .mainSection {
+        flex-direction: column;
+
+        .sideContent {
+            width: 100%;
+            display: grid;
+            grid-template:
+                "studentCard userInfo"
+                "counter userInfo";
+            grid-template-rows: 1fr auto;
+
+            .studentCard {
+                height: 100%;
+            }
+
+            .counterContainer {
+                gap: 8px;
+                height: 100%;
+
+                .counterCardStudent {
+                    flex-direction: row;
+                }
+            }
+        }
+
+        .mainContainer {
+            width: 100%;
+        }
+    }
+}
+
+//Media Tablet Vertical
+@media (max-width: 768px) {
+    .mainSection {
+        flex-direction: column;
+
+        .sideContent {
+            width: 100%;
+            display: grid;
+            grid-template:
+                "studentCard counter"
+                "userInfo userInfo";
+
+            .counterContainer {
+                gap: 8px;
+                height: 100%;
+
+                .counterCardStudent {
+                    flex-direction: column;
+                }
+            }
+        }
+
+        .mainContainer {
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .mainSection {
+        .sideContent {
+            grid-template:
+                "studentCard"
+                "counter"
+                "userInfo";
+        }
+    }
+}

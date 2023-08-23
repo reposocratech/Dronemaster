@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios'
 import "../AllCourses/allCoursesStyle.scss"
 import './homeApp.scss'
@@ -7,9 +7,6 @@ import { useNavigate } from 'react-router-dom'
 import { CourseCard } from '../../components/CardCourse/CourseCard'
 import drone_home from '../../../public/dashboard_images/drone_home.png'
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
-import LoginForm from "../Users/LoginForm/LoginForm";
-import RegisterForm from "../Users/RegisterForm/RegisterForm";
-import { DroneMasterContext } from "../../context/DroneMasterProvider";
 
 const initialCounterValue = {
   TotalTeachers: 0,
@@ -27,14 +24,6 @@ const HomeApp = () => {
   const [counter1, setCounter1] = useState(0);
   const [counterRatio1, setCounterRatio1] = useState(1);
   const navigate = useNavigate()
-
-  const {
-    showLogin,
-    showRegister,
-    openLogin,
-    filter,
-  } = useContext(DroneMasterContext);
-
 
   const currentWidth = () => {
     const widthScreen = document.body.clientWidth;
@@ -105,24 +94,7 @@ const HomeApp = () => {
 
   return (
     <Container fluid className="home">
-      {showLogin && (
-        <Row>
-          <Col>
-            <LoginForm />
-          </Col>
-        </Row>
-      )
-      }
-      {
-        showRegister && (
-          <Row>
-            <Col>
-              <RegisterForm />
-            </Col>
-          </Row>
-        )
-      }
-      {width > 991 && <Row className={filter}>
+      {width > 991 && <Row>
         <Col className="homeInfo">
           <div>
             <h1>
@@ -131,7 +103,7 @@ const HomeApp = () => {
             </h1>
             <p>Especializate en el sector mas demandado de Europa</p>
             <div className="py-4">
-              <button className="btnNormal" onClick={openLogin}>
+              <button className="btnNormal" onClick={() => { navigate('/login') }}>
                 Comenzar
               </button>
             </div>
@@ -157,8 +129,7 @@ const HomeApp = () => {
           </div>
         </Col>
       </Row>}
-
-      {width < 992 && <Row className={filter}>
+      {width < 992 && <Row>
         <Col className="homeInfoMobile">
           <div className='infoLabel d-flex justify-content-between'>
             <div className=' w-md-50 px-3'>
@@ -179,9 +150,8 @@ const HomeApp = () => {
               </div>
             </div>
           </div>
-
         </Col>
-        <div className="allCounter d-flex justify-content-center px-5 pt-4 pb-5 pb-lg-5">
+        <div className="allCounter d-flex justify-content-center px-5 pt-0 pt-md-4 pb-5 pb-lg-5">
           <div>
             <h2 className="homeCounter">{counterInfo.TotalTeachers}</h2>
             <p className="userCounter">Docentes</p>
@@ -197,28 +167,24 @@ const HomeApp = () => {
         </div>
 
       </Row>}
-
-      <div className="homeMessages">
-        <div className='d-flex justify-content-center justify-content-lg-start text-center text-lg-start'>
-          <div className='homeOneMessage'>
-            <h3>Aprende</h3>
-            <p>Domina el arte del manejo de drones en diversos sectores</p>
+      <div className='homeMessages d-flex-column justify-content-center justify-content-lg-start text-center text-lg-start'>
+        <div className='homeOneMessage'>
+          <h3>Aprende</h3>
+          <p>Domina el arte del manejo de drones en diversos sectores</p>
+        </div>
+        <div className="d-flex justify-content-center text-center text-lg-start">
+          <div className="homeOneMessage">
+            <h3>Explora</h3>
+            <p>Descubre nuevas posibilidades con la tecnología de drones</p>
           </div>
-          <div className="d-flex justify-content-center text-center text-lg-start">
-            <div className="homeOneMessage">
-              <h3>Explora</h3>
-              <p>Descubre nuevas posibilidades con la tecnología de drones</p>
-            </div>
-          </div>
-          <div className='d-flex justify-content-center justify-content-lg-end text-center text-lg-start'>
-            <div className='homeOneMessage pb-0'>
-              <h3>Eleva tus habilidades</h3>
-              <p>Impulsa tu carrera con formación especializada en drones</p>
-            </div>
+        </div>
+        <div className='d-flex justify-content-center justify-content-lg-end text-center text-lg-start'>
+          <div className='homeOneMessage pb-0'>
+            <h3>Eleva tus habilidades</h3>
+            <p>Impulsa tu carrera con formación especializada en drones</p>
           </div>
         </div>
       </div>
-
       <div className='allCoursesContainer p-0 px-sm-5'>
         <div className="categoryContainer">
           <h2 className="categoryTitle text-center text-md-start">Últimos cursos</h2>
@@ -238,7 +204,7 @@ const HomeApp = () => {
             <div className="courseCardContainer">
               {topCourses?.slice(counter, counter + counterRatio).map((elem) => {
                 return (
-                  <CourseCard oneCourse={elem} />
+                  <CourseCard key={elem.course_id} oneCourse={elem} />
                 )
               })}
             </div>
@@ -256,8 +222,6 @@ const HomeApp = () => {
             }
           </div>
         </div>
-      </div>
-      <div className='allCoursesContainer p-0 px-sm-5'>
         <div className="categoryContainer pt-4">
           <h2 className="categoryTitle text-center text-md-start">Cursos mejor valorados</h2>
           <div className="courseCardContainerWrapper">
@@ -276,7 +240,7 @@ const HomeApp = () => {
             <div className="courseCardContainer">
               {bestRatedCourses?.slice(counter1, counter1 + counterRatio1).map((elem) => {
                 return (
-                  <CourseCard oneCourse={elem} />
+                  <CourseCard key={elem.course_id} oneCourse={elem} />
                 )
               })}
             </div>
@@ -292,12 +256,9 @@ const HomeApp = () => {
                 />
               </div>
             }
-
           </div>
         </div>
       </div>
-
-
     </Container >
   );
 };
