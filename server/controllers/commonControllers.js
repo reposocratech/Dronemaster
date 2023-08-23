@@ -71,16 +71,17 @@ class commonControllers {
     const { user_id } = req.params;
 
     const { user_name, user_lastname, passport, address, phone } = JSON.parse(
-      req.body.editUser
+      req.body.editedUser
     );
+    console.log(user_id, "baaaaaaaaaaaaaaaaaaack");
 
     let img = "";
 
-    let sql = `UPDATE user SET user_name = "${user_name}", user_lastname = "${user_lastname}", passport = "${passport}", address = "${address}",  phone = "${phone}"  WHERE user_id = "${user_id}"`;
+    let sql = `UPDATE user SET user_name = "${user_name}", user_lastname = "${user_lastname}", passport = "${passport}", address = "${address}",  phone = "${phone}"  WHERE user_id = ${user_id}`;
 
     if (req.file != undefined) {
       img = req.file.filename;
-      sql = `UPDATE user SET user_name = "${user_name}", user_lastname = "${user_lastname}", passport = "${passport}", address = "${address}",  phone = "${phone}", user_img = ${img}  WHERE user_id = "${user_id}"`;
+      sql = `UPDATE user SET user_name = "${user_name}", user_lastname = "${user_lastname}", passport = "${passport}", address = "${address}",  phone = "${phone}", user_img = "${img}" WHERE user_id = ${user_id}`;
     }
 
     connection.query(sql, (error, result) => {
@@ -183,6 +184,18 @@ class commonControllers {
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
+  };
+
+  // 13.- Delete profile image of a user
+  // http://localhost:4000/myProfile/deleteImage/:user_id
+  deleteProfileImage = (req, res) => {
+    const {user_id} = req.params;
+
+    let sql = `UPDATE user SET user_img = NULL WHERE user_id = ${user_id}`
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    })
   };
 }
 

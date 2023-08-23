@@ -12,7 +12,7 @@ import { delLocalStorage } from '../../helper/localStorageDroneMaster';
 const NavBarApp = () => {
   const [listCourses, setListCourses] = useState();
   const navigate = useNavigate()
-  const { setCourse, setToken, token, setUser, user, setIsLogged, openLogin, openRegister } = useContext(DroneMasterContext)
+  const { setCourse, setToken, token, setUser, user, setIsLogged } = useContext(DroneMasterContext)
 
   const {
     register,

@@ -16,36 +16,43 @@ export const UserCardInfo = ({ user }) => {
           <h6 className="titleText">Mis Datos</h6>
         </div>
       </div>
-      <div className="cardBody">
+      <div className="cardBody d-flex flex-md-column flex-xxl-row">
 
-        <div className="lineInfo">
-          <span className="infoIcon">
-            <HiOutlineMail />
-          </span>
-          <p>{user?.email}</p>
-        </div>
-
-        <div className="lineInfo">
-          <span className="infoIcon">
-            <AiOutlinePhone />
-          </span>
-          <p>{user?.phone ? user.phone : "..."} </p>
+        <div>
+          <div className="lineInfo">
+            <span className="infoIcon">
+              <HiOutlineMail />
+            </span>
+            <p>{user?.email}</p>
+          </div>
+          <div className="lineInfo">
+            <span className="infoIcon">
+              <FiMapPin />
+            </span>
+            <p>{user?.address ? user.address : "..."}</p>
+          </div>
+       
         </div>
 
        
 
+        <div>
         <div className="lineInfo">
-          <span className="infoIcon">
-            <AiOutlineIdcard />
-          </span>
-          <p>{user?.passport ? user.passport : "..."}</p>
-        </div>
+            <span className="infoIcon">
+              <AiOutlinePhone />
+            </span>
+            <p>{user?.phone ? user.phone : "..."} </p>
+          </div>
 
-        <div className="lineInfo">
-          <span className="infoIcon">
-            <FiMapPin />
-          </span>
-          <p>{user?.address ? user.address : "..."}</p>
+          <div className="lineInfo">
+            <span className="infoIcon">
+              <AiOutlineIdcard />
+            </span>
+            <p>{user?.passport ? user.passport : "..."}</p>
+          </div>
+
+
+         
         </div>
       </div>
     </div>

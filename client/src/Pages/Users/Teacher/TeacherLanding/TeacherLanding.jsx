@@ -5,18 +5,20 @@ import { CounterCard } from "./components/CounterCard/CounterCard";
 import { AiFillStar } from "react-icons/ai";
 import { AiOutlineUser } from "react-icons/ai";
 import { GiClassicalKnowledge } from "react-icons/gi";
-import { TeacherCoursesCard } from "./components/TeacherCoursesCard/TeacherCoursesCard";
 import { TeacherCoursesTableCard } from "./components/TeacherCoursesTableCard/TeacherCoursesTableCard";
 import { TeacherStudentsTableCard } from "./components/TeacherStudentsTableCard/TeacherStudentsTableCard";
 import { DroneMasterContext } from "../../../../context/DroneMasterProvider";
 import "./teacherLandingStyle.scss";
 import { UserCardInfo } from "./components/UserCardInfo.jsx/UserCardInfo";
+import { EditMyProfileModal } from "../../../../components/EditMyProfileModal/EditMyProfileModal";
+
 
 export const TeacherLanding = () => {
   const { user } = useContext(DroneMasterContext);
   const [myCoursesData, setMyCoursesData] = useState();
   const [myStudentsData, setMyStudentsData] = useState();
   const [averageRating, setAverageRating] = useState();
+  const [showEditionModal, setShowEditionModal] = useState(false)
 
   //Get all courses of the user
   useEffect(() => {
@@ -54,13 +56,10 @@ export const TeacherLanding = () => {
     }
   }, [myCoursesData]);
 
-  console.log(myCoursesData, "My courses");
-  console.log(myStudentsData, "My students");
-
   return (
     <section className="mainSection">
       <aside className="sideContent">
-        <TeacherCard user={user} />
+        <TeacherCard user={user} setShowEditionModal={setShowEditionModal}/>
 
         <div className="counterContainer">
           <CounterCard
@@ -87,6 +86,8 @@ export const TeacherLanding = () => {
         />
         <TeacherStudentsTableCard myStudentsData={myStudentsData} />
       </div>
+      <EditMyProfileModal showEditionModal={showEditionModal} setShowEditionModal={setShowEditionModal} user={user}/>
+      
     </section>
   );
 };
