@@ -123,6 +123,15 @@ class adminControllers {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
   };
+
+  // 10.- Get All Courses (admin)
+  // http://localhost:4000/admin/getAllCourses
+  viewAllCourses = (req, res) => {
+    let sql = "SELECT * FROM course";
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
 }
 
 module.exports = new adminControllers();

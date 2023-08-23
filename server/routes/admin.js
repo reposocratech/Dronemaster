@@ -39,4 +39,8 @@ router.put("/passedCourse/:user_id", adminControllers.passedCourse);
 // localhost:4000/admin/notPassedCourse/:user_id
 router.put("/notPassedCourse/:user_id", adminControllers.notPassedCourse);
 
+// 10.- Get All Courses (admin)
+// http://localhost:4000/admin/getAllCourses
+router.put("/notPassedCourse/:user_id", adminControllers.notPassedCourse);
+
 module.exports = router;

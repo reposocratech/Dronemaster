@@ -1,14 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import axios from 'axios'
-import "../AllCourses/allCoursesStyle.scss"
-import './homeApp.scss'
-import { Container, Row, Col } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
-import { CourseCard } from '../../components/CardCourse/CourseCard'
-import drone_home from '../../../public/dashboard_images/drone_home.png'
+import axios from "axios";
+import "../AllCourses/allCoursesStyle.scss";
+import "./homeApp.scss";
+import { Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { CourseCard } from "../../components/CardCourse/CourseCard";
+import drone_home from "../../../public/dashboard_images/drone_home.png";
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
-import LoginForm from "../Users/LoginForm/LoginForm";
-import RegisterForm from "../Users/RegisterForm/RegisterForm";
 import { DroneMasterContext } from "../../context/DroneMasterProvider";
 
 const initialCounterValue = {
@@ -18,23 +16,17 @@ const initialCounterValue = {
 };
 
 const HomeApp = () => {
-  const [counterInfo, setCounterInfo] = useState(initialCounterValue)
-  const [topCourses, setTopCourses] = useState([])
-  const [bestRatedCourses, setBestRatedCourses] = useState([])
-  const [width, setWidth] = useState(document.body.clientWidth)
+  const [counterInfo, setCounterInfo] = useState(initialCounterValue);
+  const [topCourses, setTopCourses] = useState([]);
+  const [bestRatedCourses, setBestRatedCourses] = useState([]);
+  const [width, setWidth] = useState(document.body.clientWidth);
   const [counter, setCounter] = useState(0);
   const [counterRatio, setCounterRatio] = useState(1);
   const [counter1, setCounter1] = useState(0);
   const [counterRatio1, setCounterRatio1] = useState(1);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const {
-    showLogin,
-    showRegister,
-    openLogin,
-    filter,
-  } = useContext(DroneMasterContext);
-
+  const { openLogin, filter } = useContext(DroneMasterContext);
 
   const currentWidth = () => {
     const widthScreen = document.body.clientWidth;
@@ -42,13 +34,12 @@ const HomeApp = () => {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", currentWidth)
+    window.addEventListener("resize", currentWidth);
 
     return () => {
-      window.removeEventListener("resize", currentWidth)
-    }
-
-  }, [width])
+      window.removeEventListener("resize", currentWidth);
+    };
+  }, [width]);
 
   useEffect(() => {
     axios
@@ -105,38 +96,70 @@ const HomeApp = () => {
 
   return (
     <Container fluid className="home">
-      {showLogin && (
-        <Row>
-          <Col>
-            <LoginForm />
+      {width > 991 && (
+        <Row className={filter}>
+          <Col className="homeInfo">
+            <div>
+              <h1>
+                COMIENZA EN EL MUNDO DE LOS <span>DRONES</span> CON NUESTROS
+                CURSOS
+              </h1>
+              <p>Especializate en el sector mas demandado de Europa</p>
+              <div className="py-4">
+                <button className="btnNormal" onClick={openLogin}>
+                  Comenzar
+                </button>
+              </div>
+            </div>
+            <div className="allCounter pe-4 py-5">
+              <div>
+                <h2 className="homeCounter">{counterInfo.TotalTeachers}</h2>
+                <p className="userCounter">Docentes</p>
+              </div>
+              <div>
+                <h2 className="homeCounter">{counterInfo.TotalCourse}</h2>
+                <p className="userCounter">Cursos</p>
+              </div>
+              <div>
+                <h2 className="homeCounter">{counterInfo.TotalStudents}</h2>
+                <p className="userCounter">Alumnos</p>
+              </div>
+            </div>
+          </Col>
+          <Col className="homeImage">
+            <div className="orangeCircle d-flex justify-content-center align-items-center">
+              <img className="drone_img" src={drone_home} alt="" />
+            </div>
           </Col>
         </Row>
-      )
-      }
-      {
-        showRegister && (
-          <Row>
-            <Col>
-              <RegisterForm />
-            </Col>
-          </Row>
-        )
-      }
-      {width > 991 && <Row className={filter}>
-        <Col className="homeInfo">
-          <div>
-            <h1>
-              COMIENZA EN EL MUNDO DE LOS <span>DRONES</span> CON NUESTROS
-              CURSOS
-            </h1>
-            <p>Especializate en el sector mas demandado de Europa</p>
-            <div className="py-4">
-              <button className="btnNormal" onClick={openLogin}>
-                Comenzar
-              </button>
+      )}
+
+      {width < 992 && (
+        <Row className={filter}>
+          <Col className="homeInfoMobile">
+            <div className="infoLabel d-flex justify-content-between">
+              <div className=" w-md-50 px-3">
+                <h1 className="text-center">
+                  COMIENZA EN EL MUNDO DE LOS <span>DRONES</span> CON NUESTROS
+                  CURSOS
+                </h1>
+                <p className="text-center">
+                  Especializate en el sector mas demandado de Europa
+                </p>
+                <div className="pt-4 text-center">
+                  <button
+                    className="btnNormal bg-dark"
+                    onClick={() => {
+                      navigate("/login");
+                    }}
+                  >
+                    Comenzar
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="allCounter pe-4 py-5">
+          </Col>
+          <div className="allCounter d-flex justify-content-center px-5 pt-4 pb-5 pb-lg-5">
             <div>
               <h2 className="homeCounter">{counterInfo.TotalTeachers}</h2>
               <p className="userCounter">Docentes</p>
@@ -150,57 +173,12 @@ const HomeApp = () => {
               <p className="userCounter">Alumnos</p>
             </div>
           </div>
-        </Col>
-        <Col className='homeImage'>
-          <div className='orangeCircle d-flex justify-content-center align-items-center'>
-            <img className='drone_img' src={drone_home} alt="" />
-          </div>
-        </Col>
-      </Row>}
-
-      {width < 992 && <Row className={filter}>
-        <Col className="homeInfoMobile">
-          <div className='infoLabel d-flex justify-content-between'>
-            <div className=' w-md-50 px-3'>
-              <h1 className='text-center'>
-                COMIENZA EN EL MUNDO DE LOS <span>DRONES</span> CON NUESTROS
-                CURSOS
-              </h1>
-              <p className='text-center'>Especializate en el sector mas demandado de Europa</p>
-              <div className="pt-4 text-center">
-                <button
-                  className="btnNormal bg-dark"
-                  onClick={() => {
-                    navigate("/login");
-                  }}
-                >
-                  Comenzar
-                </button>
-              </div>
-            </div>
-          </div>
-
-        </Col>
-        <div className="allCounter d-flex justify-content-center px-5 pt-4 pb-5 pb-lg-5">
-          <div>
-            <h2 className="homeCounter">{counterInfo.TotalTeachers}</h2>
-            <p className="userCounter">Docentes</p>
-          </div>
-          <div>
-            <h2 className="homeCounter">{counterInfo.TotalCourse}</h2>
-            <p className="userCounter">Cursos</p>
-          </div>
-          <div>
-            <h2 className="homeCounter">{counterInfo.TotalStudents}</h2>
-            <p className="userCounter">Alumnos</p>
-          </div>
-        </div>
-
-      </Row>}
+        </Row>
+      )}
 
       <div className="homeMessages">
-        <div className='d-flex justify-content-center justify-content-lg-start text-center text-lg-start'>
-          <div className='homeOneMessage'>
+        <div className="d-flex justify-content-center justify-content-lg-start text-center text-lg-start">
+          <div className="homeOneMessage">
             <h3>Aprende</h3>
             <p>Domina el arte del manejo de drones en diversos sectores</p>
           </div>
@@ -210,8 +188,8 @@ const HomeApp = () => {
               <p>Descubre nuevas posibilidades con la tecnología de drones</p>
             </div>
           </div>
-          <div className='d-flex justify-content-center justify-content-lg-end text-center text-lg-start'>
-            <div className='homeOneMessage pb-0'>
+          <div className="d-flex justify-content-center justify-content-lg-end text-center text-lg-start">
+            <div className="homeOneMessage pb-0">
               <h3>Eleva tus habilidades</h3>
               <p>Impulsa tu carrera con formación especializada en drones</p>
             </div>
@@ -219,86 +197,87 @@ const HomeApp = () => {
         </div>
       </div>
 
-      <div className='allCoursesContainer p-0 px-sm-5'>
+      <div className="allCoursesContainer p-0 px-sm-5">
         <div className="categoryContainer">
-          <h2 className="categoryTitle text-center text-md-start">Últimos cursos</h2>
+          <h2 className="categoryTitle text-center text-md-start">
+            Últimos cursos
+          </h2>
           <div className="courseCardContainerWrapper">
-            {counter !== 0 ?
+            {counter !== 0 ? (
               <div className="navigationButtonContainerLeft">
                 <MdNavigateBefore
                   className="navigationButton"
                   onClick={() => setCounter(counter - counterRatio)}
                 />
-              </div> : <div className="navigationButtonContainerLeft">
-                <MdNavigateBefore
-                  className="navigationButton opacity-0"
-                />
               </div>
-            }
+            ) : (
+              <div className="navigationButtonContainerLeft">
+                <MdNavigateBefore className="navigationButton opacity-0" />
+              </div>
+            )}
             <div className="courseCardContainer">
-              {topCourses?.slice(counter, counter + counterRatio).map((elem) => {
-                return (
-                  <CourseCard oneCourse={elem} />
-                )
-              })}
+              {topCourses
+                ?.slice(counter, counter + counterRatio)
+                .map((elem) => {
+                  return <CourseCard oneCourse={elem} />;
+                })}
             </div>
-            {counter + counterRatio < topCourses?.length ?
+            {counter + counterRatio < topCourses?.length ? (
               <div className="navigationButtonContainerRight">
                 <MdNavigateNext
                   className="navigationButton"
                   onClick={() => setCounter(counter + counterRatio)}
                 />
-              </div> : <div className="navigationButtonContainerRight">
-                <MdNavigateNext
-                  className="navigationButton opacity-0"
-                />
               </div>
-            }
+            ) : (
+              <div className="navigationButtonContainerRight">
+                <MdNavigateNext className="navigationButton opacity-0" />
+              </div>
+            )}
           </div>
         </div>
       </div>
-      <div className='allCoursesContainer p-0 px-sm-5'>
+      <div className="allCoursesContainer p-0 px-sm-5">
         <div className="categoryContainer pt-4">
-          <h2 className="categoryTitle text-center text-md-start">Cursos mejor valorados</h2>
+          <h2 className="categoryTitle text-center text-md-start">
+            Cursos mejor valorados
+          </h2>
           <div className="courseCardContainerWrapper">
-            {counter1 !== 0 ?
+            {counter1 !== 0 ? (
               <div className="navigationButtonContainerLeft">
                 <MdNavigateBefore
                   className="navigationButton"
                   onClick={() => setCounter1(counter1 - counterRatio1)}
                 />
-              </div> : <div className="navigationButtonContainerLeft">
-                <MdNavigateBefore
-                  className="navigationButton opacity-0"
-                />
               </div>
-            }
+            ) : (
+              <div className="navigationButtonContainerLeft">
+                <MdNavigateBefore className="navigationButton opacity-0" />
+              </div>
+            )}
             <div className="courseCardContainer">
-              {bestRatedCourses?.slice(counter1, counter1 + counterRatio1).map((elem) => {
-                return (
-                  <CourseCard oneCourse={elem} />
-                )
-              })}
+              {bestRatedCourses
+                ?.slice(counter1, counter1 + counterRatio1)
+                .map((elem) => {
+                  return <CourseCard oneCourse={elem} />;
+                })}
             </div>
-            {counter1 + counterRatio1 < bestRatedCourses?.length ?
+            {counter1 + counterRatio1 < bestRatedCourses?.length ? (
               <div className="navigationButtonContainerRight">
                 <MdNavigateNext
                   className="navigationButton"
                   onClick={() => setCounter1(counter1 + counterRatio1)}
                 />
-              </div> : <div className="navigationButtonContainerRight">
-                <MdNavigateNext
-                  className="navigationButton opacity-0"
-                />
               </div>
-            }
-
+            ) : (
+              <div className="navigationButtonContainerRight">
+                <MdNavigateNext className="navigationButton opacity-0" />
+              </div>
+            )}
           </div>
         </div>
       </div>
-
-
-    </Container >
+    </Container>
   );
 };
 
