@@ -71,6 +71,10 @@
                     color: $TertiaryDarkColor;
                 }
 
+                svg {
+                    width: clamp(18px, 2vw, 20px);
+                }
+
                 .ratingCounter {
                     margin-bottom: 10px;
                     font-size: small;
@@ -84,6 +88,7 @@
                 align-items: center;
 
                 h4 {
+                    font-size: clamp(18px, 2vw, 24px);
                     margin: 0;
                 }
 

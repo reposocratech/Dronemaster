@@ -9,11 +9,10 @@ import { AllCourses } from "../Pages/AllCourses/AllCourses";
 import { AboutApp } from "../Pages/About/AboutApp";
 import { FooterApp } from "../components/Footer/FooterApp";
 import AdminLanding from "../Pages/Users/Admin/AdminLanding/AdminLanding";
-import StudentLanding from "../Pages/Users/Student/StudentLanding";
+import StudentLanding from "../Pages/Users/Student/StudentLanding/StudentLanding";
 import { TeacherLanding } from "../Pages/Users/Teacher/TeacherLanding/TeacherLanding";
 import { CourseInfo } from "../Pages/CourseInfo/CourseInfo";
 import { TeacherMyCourse } from "../Pages/Users/Teacher/TeacherMyCourse/TeacherMyCourse";
-import { EditMyProfile } from "../Pages/Users/EditMyProfile/EditMyProfile";
 
 const AppRoutes = () => {
   return (
@@ -37,10 +36,7 @@ const AppRoutes = () => {
             path="/teacher/MyCourse/:course_id"
             element={<TeacherMyCourse />}
           />
-          <Route
-            path="/user/editMyProfile/:user_id"
-            element={<EditMyProfile />}
-          />
+         
         </Routes>
         <FooterApp />
       </BrowserRouter>

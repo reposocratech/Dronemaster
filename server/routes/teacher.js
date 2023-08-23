@@ -8,9 +8,6 @@ router.get("/myStudents/:user_id", teacherControllers.selectMyStudents);
 
 // 1.- Count all students (not deleted) of a course
 // http://localhost:4000/teachers/myCourses/studentCounter/:user_id
-router.get(
-  "/myCourses/studentCounter/:user_id",
-  teacherControllers.countMyStudentsFromCourse
-);
+router.get("/myCourses/studentCounter/:user_id", teacherControllers.countMyStudentsFromCourse);
 
 module.exports = router;

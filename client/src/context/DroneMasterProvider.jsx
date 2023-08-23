@@ -5,6 +5,12 @@ import axios from "axios";
 
 export const DroneMasterContext = createContext();
 
+const initialCourseInfo = {
+  course_name: "",
+  unit_tittle: [],
+  lesson_title: []
+}
+
 const DroneMasterProvider = ({ children }) => {
   const [token, setToken] = useState();
   const [user, setUser] = useState();
@@ -13,6 +19,9 @@ const DroneMasterProvider = ({ children }) => {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [filter, setFilter] = useState();
+  const [courseMaterial, setCourseMaterial] = useState(initialCourseInfo)
+  const [resetData, setResetData] = useState(false)
+
 
   const openRegister = () => {
     setShowRegister(!showRegister);
@@ -52,7 +61,7 @@ const DroneMasterProvider = ({ children }) => {
         })
         .catch((err) => console.log(err));
     }
-  }, [isLogged]);
+  }, [isLogged, resetData]);
 
   return (
     <div>
@@ -75,6 +84,10 @@ const DroneMasterProvider = ({ children }) => {
           filter,
           setFilter,
           openHome,
+          courseMaterial,
+          setCourseMaterial,
+          resetData,
+          setResetData
         }}
       >
         {children}

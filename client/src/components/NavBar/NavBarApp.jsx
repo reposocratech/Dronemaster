@@ -9,16 +9,20 @@ import { DroneMasterContext } from "../../context/DroneMasterProvider";
 import { useForm } from "react-hook-form";
 import LoginModal from "../../Pages/Users/LoginForm/LoginModal";
 import RegisterModal from "../../Pages/Users/RegisterForm/RegisterModal";
+import { delLocalStorage } from '../../helper/localStorageDroneMaster';
+
 
 const NavBarApp = () => {
   const [listCourses, setListCourses] = useState();
   const navigate = useNavigate();
-  const { setCourse, token, user } = useContext(DroneMasterContext);
+  const { setCourse, setToken, token, setUser, user, setIsLogged, openRegister } = useContext(DroneMasterContext)
   const { register, handleSubmit, reset } = useForm();
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
 
-  const onsubmit = (data) => {
+
+
+  const onSubmit = (data) => {
     axios
       .get("http://localhost:4000/courses/allCourses")
       .then((res) => {
@@ -27,19 +31,15 @@ const NavBarApp = () => {
       .catch((err) => console.log(err));
 
     let name = data.course_name;
-
-    navigate("/allCourses");
+    reset();
 
     let courseFound = listCourses.filter((elem) =>
       elem.course_name.toLowerCase().includes(name.toLowerCase())
-    );
-
-    setCourse(courseFound);
-    reset();
+      setCourse(courseFound);
+     navigate('/allCourses')
   };
-
-  let { openRegister } = useContext(DroneMasterContext);
-
+     
+  
   const closeLoginModal = () => {
     setShowLoginModal(false);
   };
@@ -53,6 +53,28 @@ const NavBarApp = () => {
   const openRegisterModal = () => {
     setShowRegisterModal(true);
   };
+
+  const logoutUser = () => {
+    delLocalStorage("token")
+    setUser()
+    setToken()
+    navigate('/')
+    setIsLogged(false)
+  }
+
+  const routeType = (user) => {
+    let route = "";
+
+    if (user?.type === 0) {
+      route = "student";
+    } else if (user?.type === 1) {
+      route = "teacher";
+    } else if (user?.type === 2) {
+      route = "admin";
+    }
+
+    return route;
+  }
 
   return (
     <Navbar
@@ -121,7 +143,6 @@ const NavBarApp = () => {
                   About
                 </Nav.Link>
               </Nav>
-
               {!token && (
                 <div className="d-flex justify-content-center align-items-center gap-2">
                   <button
@@ -135,35 +156,17 @@ const NavBarApp = () => {
                   </button>
                 </div>
               )}
+              {token && <div onClick={() => { navigate(`/${routeType(user)}`) }} className='d-flex justify-content-center align-items-center gap-2'>
+                <div className='avatar'>
+                  {user?.user_img ? <>
+                    <img src={`http://localhost:4000/images/users/${user?.user_img}`} alt="" />
+                  </> : <>
+                    <p className='initalName'>{user?.user_name.at(0).toUpperCase()}</p>
+                  </>}
 
-              {token && (
-                <div
-                  onClick={() => {
-                    navigate("/student");
-                  }}
-                  className="d-flex justify-content-center align-items-center gap-2"
-                >
-                  <div className="avatar">
-                    {user?.user_img ? (
-                      <>
-                        <img src="" alt="" />
-                      </>
-                    ) : (
-                      <>
-                        <p className="initalName">
-                          {user?.user_name.at(0).toUpperCase()}
-                        </p>
-                      </>
-                    )}
-                  </div>
-                  <button
-                    onClick={() => navigate("/register")}
-                    className="btnOutline2"
-                  >
-                    Cerrar sesión
-                  </button>
                 </div>
-              )}
+                <button onClick={() => { logoutUser() }} className='btnOutline2'>Cerrar sesión</button>
+              </div>}
             </div>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
