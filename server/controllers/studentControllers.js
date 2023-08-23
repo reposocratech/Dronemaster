@@ -22,6 +22,32 @@ class studentControllers {
       });
     });
   };
+
+  // 2.- Get course units
+  // http://localhost:4000/students/units/course_id
+  getCourseUnits = (req, res) => {
+    const { course_id } = req.params;
+    console.log(course_id);
+
+    let sql = `SELECT unit_id, unit_tittle FROM unit WHERE course_id = ${course_id} ORDER BY unit_id ASC`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(201).json(result);
+    });
+  };
+
+  // 3.- Get course units
+  // http://localhost:4000/students/lessons/:course_id
+  getUnitLessons = (req, res) => {
+    const { course_id } = req.params;
+    console.log(course_id);
+
+    let sql = `SELECT lesson_id, lesson_title, lesson_content FROM lesson WHERE course_id = ${course_id} ORDER BY lesson_id ASC`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(201).json(result);
+    });
+  };
 }
 
 module.exports = new studentControllers();

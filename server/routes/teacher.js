@@ -11,5 +11,4 @@ router.get("/myStudents/:user_id", teacherControllers.selectMyStudents);
 router.get("/myCourses/studentCounter/:user_id", teacherControllers.countMyStudentsFromCourse);
 
 
-
 module.exports = router;

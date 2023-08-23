@@ -7,11 +7,12 @@ import logo_DroneMaster from '../../../public/dashboard_images/logo_DroneMaster.
 import { FiSearch } from "react-icons/fi";
 import { DroneMasterContext } from '../../context/DroneMasterProvider';
 import { useForm } from "react-hook-form";
+import { delLocalStorage } from '../../helper/localStorageDroneMaster';
 
 const NavBarApp = () => {
   const [listCourses, setListCourses] = useState();
   const navigate = useNavigate()
-  const { setCourse, token, user , openLogin, openRegister} = useContext(DroneMasterContext)
+  const { setCourse, setToken, token, setUser, user, setIsLogged } = useContext(DroneMasterContext)
 
   const {
     register,
@@ -19,7 +20,7 @@ const NavBarApp = () => {
     reset
   } = useForm()
 
-  const onsubmit = (data) => {
+  const onSubmit = (data) => {
     axios
       .get("http://localhost:4000/courses/allCourses")
       .then((res) => {
@@ -28,13 +29,34 @@ const NavBarApp = () => {
       .catch((err) => console.log(err))
 
     let name = data.course_name;
-
-    navigate('/allCourses')
+    reset();
 
     let courseFound = listCourses.filter(elem => elem.course_name.toLowerCase().includes(name.toLowerCase()))
 
     setCourse(courseFound)
-    reset();
+    navigate('/allCourses')
+  }
+
+  const logoutUser = () => {
+    delLocalStorage("token")
+    setUser()
+    setToken()
+    navigate('/')
+    setIsLogged(false)
+  }
+
+  const routeType = (user) => {
+    let route = "";
+
+    if (user?.type === 0) {
+      route = "student";
+    } else if (user?.type === 1) {
+      route = "teacher";
+    } else if (user?.type === 2) {
+      route = "admin";
+    }
+
+    return route;
   }
 
   return (
@@ -69,7 +91,7 @@ const NavBarApp = () => {
           <Offcanvas.Body className="bodyOffCanvas ps-4 gap-3 d-flex-column d-lg-flex justify-content-lg-between align-items-center">
             <div className="search d-flex align-items-center gap-1 px-2">
               <FiSearch />
-              <form onSubmit={handleSubmit(onsubmit)} className='w-100'>
+              <form onSubmit={handleSubmit(onSubmit)} className='w-100'>
                 <input
                   {...register("course_name", {
                     maxLength: 200,
@@ -94,16 +116,16 @@ const NavBarApp = () => {
                 <button onClick={openRegister} className='btnOutline2'>Registrarse</button>
               </div>}
 
-              {token && <div onClick={() => { navigate("/student") }} className='d-flex justify-content-center align-items-center gap-2'>
+              {token && <div onClick={() => { navigate(`/${routeType(user)}`) }} className='d-flex justify-content-center align-items-center gap-2'>
                 <div className='avatar'>
                   {user?.user_img ? <>
-                    <img src="" alt="" />
+                    <img src={`http://localhost:4000/images/users/${user?.user_img}`} alt="" />
                   </> : <>
                     <p className='initalName'>{user?.user_name.at(0).toUpperCase()}</p>
                   </>}
 
                 </div>
-                <button onClick={() => navigate('/register')} className='btnOutline2'>Cerrar sesión</button>
+                <button onClick={() => { logoutUser() }} className='btnOutline2'>Cerrar sesión</button>
               </div>}
             </div>
           </Offcanvas.Body>
