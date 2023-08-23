@@ -93,7 +93,7 @@ class courseControllers {
             }
 
             // Sending a success response
-            res.status(200).json({ message: "Course created successfully" });
+            res.status(200).json({ course_id });
           });
         });
       } else {

@@ -2,13 +2,13 @@ import React from "react";
 import { FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-export const TeacherCard = ({ user }) => {
-  const navigate = useNavigate();
+export const TeacherCard = ({ user, setShowEditionModal }) => {
+
   return (
     <div className="teacherCard">
       <div className="imgContainer">
-        {user?.img ? (
-          <img src={`http://localhost:4000/images/user/${user.img}`} />
+        {user?.user_img ? (
+          <img src={`http://localhost:4000/images/users/${user.user_img}`} />
         ) : (
           <h2 className="avatarText">{user?.user_name.at(0).toUpperCase()}</h2>
         )}
@@ -25,7 +25,7 @@ export const TeacherCard = ({ user }) => {
       <div className="editionButton">
         <div
           className="iconButton"
-          onClick={() => navigate(`/user/editMyProfile/${user?.user_id}`)}
+          onClick={()=>setShowEditionModal(true)}
         >
           <FaEdit />
         </div>

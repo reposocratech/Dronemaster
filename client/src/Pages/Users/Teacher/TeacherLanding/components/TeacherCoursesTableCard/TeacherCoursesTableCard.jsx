@@ -101,7 +101,7 @@ export const TeacherCoursesTableCard = ({
                 <span className=" d-none d-md-flex">Nº Alumnos</span>
               </th>
 
-              <th className="iconHeadName d-none d-md-flex">Puntuación</th>
+              <th className="d-none d-md-flex">Puntuación</th>
               <th className="text-center text-md-start">Más info</th>
             </tr>
           </thead>
