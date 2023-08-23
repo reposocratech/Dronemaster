@@ -9,18 +9,23 @@ import { DroneMasterContext } from "../../context/DroneMasterProvider";
 import { useForm } from "react-hook-form";
 import LoginModal from "../../Pages/Users/LoginForm/LoginModal";
 import RegisterModal from "../../Pages/Users/RegisterForm/RegisterModal";
-import { delLocalStorage } from '../../helper/localStorageDroneMaster';
-
+import { delLocalStorage } from "../../helper/localStorageDroneMaster";
 
 const NavBarApp = () => {
   const [listCourses, setListCourses] = useState();
   const navigate = useNavigate();
-  const { setCourse, setToken, token, setUser, user, setIsLogged, openRegister } = useContext(DroneMasterContext)
+  const {
+    setCourse,
+    setToken,
+    token,
+    setUser,
+    user,
+    setIsLogged,
+    openRegister,
+  } = useContext(DroneMasterContext);
   const { register, handleSubmit, reset } = useForm();
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
-
-
 
   const onSubmit = (data) => {
     axios
@@ -33,13 +38,13 @@ const NavBarApp = () => {
     let name = data.course_name;
     reset();
 
-    let courseFound = listCourses.filter((elem) =>
-      elem.course_name.toLowerCase().includes(name.toLowerCase())
-      setCourse(courseFound);
-     navigate('/allCourses')
+    let courseFound = listCourses.filter((elem) => {
+      elem.course_name.toLowerCase().includes(name.toLowerCase());
+    });
+    setCourse(courseFound);
+    navigate("/allCourses");
   };
-     
-  
+
   const closeLoginModal = () => {
     setShowLoginModal(false);
   };
@@ -55,12 +60,12 @@ const NavBarApp = () => {
   };
 
   const logoutUser = () => {
-    delLocalStorage("token")
-    setUser()
-    setToken()
-    navigate('/')
-    setIsLogged(false)
-  }
+    delLocalStorage("token");
+    setUser();
+    setToken();
+    navigate("/");
+    setIsLogged(false);
+  };
 
   const routeType = (user) => {
     let route = "";
@@ -74,7 +79,7 @@ const NavBarApp = () => {
     }
 
     return route;
-  }
+  };
 
   return (
     <Navbar
@@ -156,17 +161,39 @@ const NavBarApp = () => {
                   </button>
                 </div>
               )}
-              {token && <div onClick={() => { navigate(`/${routeType(user)}`) }} className='d-flex justify-content-center align-items-center gap-2'>
-                <div className='avatar'>
-                  {user?.user_img ? <>
-                    <img src={`http://localhost:4000/images/users/${user?.user_img}`} alt="" />
-                  </> : <>
-                    <p className='initalName'>{user?.user_name.at(0).toUpperCase()}</p>
-                  </>}
-
+              {token && (
+                <div
+                  onClick={() => {
+                    navigate(`/${routeType(user)}`);
+                  }}
+                  className="d-flex justify-content-center align-items-center gap-2"
+                >
+                  <div className="avatar">
+                    {user?.user_img ? (
+                      <>
+                        <img
+                          src={`http://localhost:4000/images/users/${user?.user_img}`}
+                          alt=""
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <p className="initalName">
+                          {user?.user_name.at(0).toUpperCase()}
+                        </p>
+                      </>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => {
+                      logoutUser();
+                    }}
+                    className="btnOutline2"
+                  >
+                    Cerrar sesión
+                  </button>
                 </div>
-                <button onClick={() => { logoutUser() }} className='btnOutline2'>Cerrar sesión</button>
-              </div>}
+              )}
             </div>
           </Offcanvas.Body>
         </Navbar.Offcanvas>

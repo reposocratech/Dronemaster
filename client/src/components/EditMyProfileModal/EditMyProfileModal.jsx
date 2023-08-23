@@ -14,9 +14,9 @@ export const EditMyProfileModal = ({
   user,
 }) => {
   const [file, setFile] = useState();
-  const { resetData, setResetData } = useContext(DroneMasterContext)
+  const { resetData, setResetData } = useContext(DroneMasterContext);
   const { register, setValue, handleSubmit } = useForm();
-  const [profileImg, setProfileImg] = useState()
+  const [profileImg, setProfileImg] = useState();
 
   const handleClose = () => {
     setShowEditionModal(false);
@@ -24,9 +24,8 @@ export const EditMyProfileModal = ({
 
   useEffect(() => {
     user &&
-    setProfileImg(`http://localhost:4000/images/users/${user?.user_img}`)
-  }, [user])
-  
+      setProfileImg(`http://localhost:4000/images/users/${user?.user_img}`);
+  }, [user]);
 
   useEffect(() => {
     //Set values of a user Data
@@ -39,24 +38,19 @@ export const EditMyProfileModal = ({
     setFile(e.target.files[0]);
   };
 
-
   const handleDeleteButton = () => {
-    
     axios
       .put(`http://localhost:4000/myProfile/deleteImage/${user.user_id}`)
       .then((res) => {
-        setResetData(!resetData)
-        setFile()
-
+        setResetData(!resetData);
+        setFile();
       })
-      .catch((err) => console.log(err))
+      .catch((err) => console.log(err));
 
-    
-    setProfileImg()
-  }
+    setProfileImg();
+  };
   const onSubmit = (data) => {
     const newFormData = new FormData();
-
 
     newFormData.append("editedUser", JSON.stringify(data));
 
@@ -67,13 +61,12 @@ export const EditMyProfileModal = ({
     axios
       .put(`http://localhost:4000/editMyProfile/${user.user_id}`, newFormData)
       .then((res) => {
-        console.log(res)
-        setResetData(!resetData)
+        console.log(res);
+        setResetData(!resetData);
       })
       .catch((err) => console.log(err));
 
-      setShowEditionModal(false)
-      
+    setShowEditionModal(false);
   };
 
   return (
@@ -97,39 +90,41 @@ export const EditMyProfileModal = ({
       <form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body className="modalBody">
           <div className="imgGridContainer">
-           <div className="imgContainer">
-            
-            {user?.user_img ? (<>
-              <img
-              src={profileImg}
-              alt=""
-              />
-              <Button variant="outline-danger" className="deleteImgButton" onClick={handleDeleteButton}>
-                <PiTrashBold />
-              </Button>
-              </>
-            ) : (
-              <div className="defaultImg">
-                
-                <div className="defaultText">
-                  <h1 className="mb-0">{user?.user_name.at(0).toUpperCase()}</h1>
-
+            <div className="imgContainer">
+              {user?.user_img ? (
+                <>
+                  <img src={profileImg} alt="" />
+                  <Button
+                    variant="outline-danger"
+                    className="deleteImgButton"
+                    onClick={handleDeleteButton}
+                  >
+                    <PiTrashBold />
+                  </Button>
+                </>
+              ) : (
+                <div className="defaultImg">
+                  <div className="defaultText">
+                    <h1 className="mb-0">
+                      {user?.user_name.at(0).toUpperCase()}
+                    </h1>
+                  </div>
                 </div>
-              </div>
-            )}
-           </div>
+              )}
+            </div>
 
             {/* Image Input Group */}
-              <input
-                type="file"
-                onChange={handleImgChange}
-                className="inputFile"
-                id="inputFile"
-              />
-          
-          <label htmlFor="inputFile" className="inputImageLabel btnNormal">Selecciona Imagen</label>
-          </div>
+            <input
+              type="file"
+              onChange={handleImgChange}
+              className="inputFile"
+              id="inputFile"
+            />
 
+            <label htmlFor="inputFile" className="inputImageLabel btnNormal">
+              Selecciona Imagen
+            </label>
+          </div>
 
           {/* Name Input Group */}
           <div className="d-flex flex-column align-items-start gap-1 inputName">
