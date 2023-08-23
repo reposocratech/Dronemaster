@@ -41,15 +41,21 @@ const RegisterForm = () => {
 
   return (
     <Container fluid className="main">
-      <Row className="formContainer">
-        <Col className="form1 col-4">
-          <h1>¡Únete a nosotros!</h1>
-          <p>Estamos encantados de darte la bienvenida.</p>
-          <p>
-            Regístrate y comienza a ser parte de nuestra comunidad. ¡Esperamos
-            verte pronto!
-          </p>
-          <Col className="form2 col-4">
+      <Row>
+        <Col className="formContainer">
+          <div className="form1">
+            <div className="text-group">
+              <h1 className="welcome-title">¡Únete a nosotros!</h1>
+              <p className="text-paragraph">
+                Estamos encantados de darte la bienvenida.
+              </p>
+              <p className="text-paragraph">
+                Regístrate y comienza a ser parte de nuestra comunidad.
+                ¡Esperamos verte pronto!
+              </p>
+            </div>
+          </div>
+          <Col className="form2">
             <form onSubmit={handleSubmit(onSubmit)}>
               <input
                 {...register("user_name", {
@@ -58,8 +64,8 @@ const RegisterForm = () => {
                 })}
                 placeholder="Nombre"
                 type="text"
-                className="input-user"
                 autoComplete="off"
+                className="forminput"
               />
               <p>{errors.firstName?.message}</p>
 
@@ -71,6 +77,7 @@ const RegisterForm = () => {
                 placeholder="Apellidos"
                 type="text"
                 autoComplete="off"
+                className="forminput"
               />
 
               <p>{errors.lastName?.message}</p>
@@ -82,6 +89,7 @@ const RegisterForm = () => {
                 placeholder="Email"
                 type="email"
                 autoComplete="off"
+                className="forminput"
               />
               <p>{errors.email?.message}</p>
 
@@ -97,17 +105,22 @@ const RegisterForm = () => {
                 placeholder="Contraseña"
                 type="password"
                 autoComplete="off"
-                className="input-user"
+                className="forminput"
               />
               <p>{errors.password?.message}</p>
 
-              <div>
-                <button> Aceptar</button>
-                <button Click={openHome}> Cancelar</button>
+              <div className="d-flex m-3">
+                <button className="btnNormal me-3"> Aceptar</button>
+                <button className="btnNormal" Click={openHome}>
+                  {" "}
+                  Cancelar
+                </button>
               </div>
               <p>
                 ¿Ya tienes una cuenta?{" "}
-                <Link onClick={openLogin}>Inicia Sesión</Link>{" "}
+                <Link className="span" onClick={openLogin}>
+                  Inicia Sesión
+                </Link>{" "}
               </p>
             </form>
           </Col>

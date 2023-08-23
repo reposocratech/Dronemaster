@@ -68,15 +68,17 @@ export const TeacherLanding = () => {
           >
             <AiFillStar />
           </CounterCard>
-          <CounterCard title={"Alumnos totales"} counter={myStudentsData?.length}>
+          <CounterCard
+            title={"Alumnos totales"}
+            counter={myStudentsData?.length}
+          >
             <AiOutlineUser />
           </CounterCard>
           <CounterCard title={"Cursos totales"} counter={myCoursesData?.length}>
             <GiClassicalKnowledge />
           </CounterCard>
         </div>
-        <UserCardInfo user={user}/>
-
+        <UserCardInfo user={user} />
       </aside>
       <div className="mainContainer">
         <TeacherCoursesTableCard

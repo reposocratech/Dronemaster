@@ -8,7 +8,7 @@ import LoginForm from "../Pages/Users/LoginForm/LoginForm";
 import { AllCourses } from "../Pages/AllCourses/AllCourses";
 import { AboutApp } from "../Pages/About/AboutApp";
 import { FooterApp } from "../components/Footer/FooterApp";
-import AdminLanding from "../Pages/Users/Admin/AdminLanding";
+import AdminLanding from "../Pages/Users/Admin/AdminLanding/AdminLanding";
 import StudentLanding from "../Pages/Users/Student/StudentLanding/StudentLanding";
 import { TeacherLanding } from "../Pages/Users/Teacher/TeacherLanding/TeacherLanding";
 import { CourseInfo } from "../Pages/CourseInfo/CourseInfo";

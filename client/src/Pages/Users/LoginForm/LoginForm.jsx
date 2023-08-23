@@ -7,7 +7,6 @@ import { DroneMasterContext } from "../../../context/DroneMasterProvider";
 import "../../../../public/styles/registerLoginFormStyle.scss";
 import { Col, Container, Row } from "react-bootstrap";
 
-
 const LoginForm = () => {
   const navigate = useNavigate();
   const { setUser, isLogged, setIsLogged, openHome, openRegister } =
@@ -29,8 +28,8 @@ const LoginForm = () => {
       .then((res) => {
         console.log("result.data.user/////////////", res),
           saveLocalStorageDroneMaster("token", res.data.token);
-        setUser(res.data.user)
-        setIsLogged(true)
+        setUser(res.data.user);
+        setIsLogged(true);
 
         const type = res.data.user.type;
         if (type === 0) {
@@ -49,9 +48,9 @@ const LoginForm = () => {
 
   return (
     <Container fluid className="main">
-      <Row className="formposition">
+      <Row>
         <Col className="formContainer">
-          <div className="text-group2">
+          <div className="form3">
             <form className="position" onSubmit={handleSubmit(onSubmit2)}>
               <input
                 {...register("email", {
@@ -78,30 +77,32 @@ const LoginForm = () => {
 
               <p>{errors.password?.message}</p>
 
-              <Col className="d-flex justify-content-center m-3 gap-3">
-                <button className="btnNormal "> Aceptar</button>
+              <Col className="d-flex m-3">
+                <button className="btnNormal me-3"> Aceptar</button>
                 <button className="btnNormal" onClick={openHome}>
                   Cancelar
                 </button>
               </Col>
-              <Col>
-                <p className="d-flex flex-column justify-content-center align-content-center mb-2">
-                  <span>¿Aún no formas parte de nuestra comunidad? </span>
-                  <Link onClick={openRegister} className="span">
-                    Registrate
-                  </Link>
-                </p>
+              <Col className="LI">
+                <span>¿Aún no formas parte de nuestra comunidad? </span>
+                <Link className="span" onClick={openRegister}>
+                  Registrate
+                </Link>
               </Col>
             </form>
           </div>
 
-          <Col className="text-group">
-            <div className="welcome-title">¡Bienvenido de vuelta!</div>
-            <div className="text-paragraph">
-              <p>Estamos emocionados por tenerte aqui nuevamente</p>
-              <p>Ingresa y disfruta de tu experiencia</p>
+          <div className="form4">
+            <div className="text-group">
+              <h1 className="welcome-title">¡Bienvenido de vuelta!</h1>
+              <p className="text-paragraph">
+                Estamos emocionados por tenerte aqui nuevamente
+              </p>
+              <p className="text-paragraph">
+                Ingresa y disfruta de tu experiencia
+              </p>
             </div>
-          </Col>
+          </div>
         </Col>
       </Row>
     </Container>

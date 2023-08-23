@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import axios from 'axios'
-import "../AllCourses/allCoursesStyle.scss"
-import './homeApp.scss'
-import { Container, Row, Col } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
-import { CourseCard } from '../../components/CardCourse/CourseCard'
-import drone_home from '../../../public/dashboard_images/drone_home.png'
+
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import "../AllCourses/allCoursesStyle.scss";
+import "./homeApp.scss";
+import { Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { CourseCard } from "../../components/CardCourse/CourseCard";
+import drone_home from "../../../public/dashboard_images/drone_home.png";
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 
 const initialCounterValue = {
@@ -15,15 +16,16 @@ const initialCounterValue = {
 };
 
 const HomeApp = () => {
-  const [counterInfo, setCounterInfo] = useState(initialCounterValue)
-  const [topCourses, setTopCourses] = useState([])
-  const [bestRatedCourses, setBestRatedCourses] = useState([])
-  const [width, setWidth] = useState(document.body.clientWidth)
+  const [counterInfo, setCounterInfo] = useState(initialCounterValue);
+  const [topCourses, setTopCourses] = useState([]);
+  const [bestRatedCourses, setBestRatedCourses] = useState([]);
+  const [width, setWidth] = useState(document.body.clientWidth);
   const [counter, setCounter] = useState(0);
   const [counterRatio, setCounterRatio] = useState(1);
   const [counter1, setCounter1] = useState(0);
   const [counterRatio1, setCounterRatio1] = useState(1);
   const navigate = useNavigate()
+
 
   const currentWidth = () => {
     const widthScreen = document.body.clientWidth;
@@ -31,13 +33,12 @@ const HomeApp = () => {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", currentWidth)
+    window.addEventListener("resize", currentWidth);
 
     return () => {
-      window.removeEventListener("resize", currentWidth)
-    }
-
-  }, [width])
+      window.removeEventListener("resize", currentWidth);
+    };
+  }, [width]);
 
   useEffect(() => {
     axios
@@ -165,7 +166,6 @@ const HomeApp = () => {
             <p className="userCounter">Alumnos</p>
           </div>
         </div>
-
       </Row>}
       <div className='homeMessages d-flex-column justify-content-center justify-content-lg-start text-center text-lg-start'>
         <div className='homeOneMessage'>
@@ -261,6 +261,6 @@ const HomeApp = () => {
       </div>
     </Container >
   );
-};
 
 export default HomeApp;
+

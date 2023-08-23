@@ -10,5 +10,4 @@ router.get("/myStudents/:user_id", teacherControllers.selectMyStudents);
 // http://localhost:4000/teachers/myCourses/studentCounter/:user_id
 router.get("/myCourses/studentCounter/:user_id", teacherControllers.countMyStudentsFromCourse);
 
-
 module.exports = router;
