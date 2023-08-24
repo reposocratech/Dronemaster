@@ -34,7 +34,6 @@ const NavBarApp = () => {
         setListCourses(res.data);
       })
       .catch((err) => console.log(err));
-
     let name = data.course_name;
     reset();
 
@@ -45,25 +44,19 @@ const NavBarApp = () => {
     navigate("/allCourses");
   };
 
-  const closeLoginModal = () => {
-    setShowLoginModal(false);
-  };
   const openLoginModal = () => {
     setShowLoginModal(true);
   };
 
-  const closeRegisterModal = () => {
-    setShowRegisterModal(false);
-  };
   const openRegisterModal = () => {
     setShowRegisterModal(true);
   };
 
   const logoutUser = () => {
+    navigate("/");
     delLocalStorage("token");
     setUser();
     setToken();
-    navigate("/");
     setIsLogged(false);
   };
 
@@ -163,12 +156,11 @@ const NavBarApp = () => {
               )}
 
               {token && (
-                <div
-                  className="d-flex justify-content-center align-items-center gap-2"
-                >
+                <div className="d-flex justify-content-center align-items-center gap-2">
                   <div className="avatar" onClick={() => {
                     navigate(`/${routeType(user)}`);
                   }}>
+
                     {user?.user_img ? (
                       <>
                         <img

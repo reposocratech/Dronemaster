@@ -3,13 +3,13 @@ import { GiClassicalKnowledge } from "react-icons/gi";
 import { BiRightArrowAlt } from "react-icons/bi";
 import axios from "axios";
 import { DroneMasterContext } from "../../../../../../context/DroneMasterProvider";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export const TeacherCoursesCard = ({ myCoursesData }) => {
   const { courseMaterial, setCourseMaterial } = useContext(DroneMasterContext)
 
 
   const showCourse = (course_id) => {
-
     axios
       .get(`http://localhost:4000/students/courseMaterial/${course_id}`)
       .then((res) => {
@@ -17,9 +17,7 @@ export const TeacherCoursesCard = ({ myCoursesData }) => {
 
       })
       .catch((err) => console.log(err))
-
   }
-
 
   return (
     <div className="courseListCard">
@@ -37,7 +35,13 @@ export const TeacherCoursesCard = ({ myCoursesData }) => {
         <ul className="courseList">
           {myCoursesData?.map((course) => {
             return (
-              <li key={course.course_id} className="courseListRow" onClick={() => { showCourse(course?.course_id) }}>
+              <li
+                key={course.course_id}
+                className="courseListRow"
+                onClick={() => {
+                  showCourse(course?.course_id);
+                }}
+              >
                 {course.course_name} <BiRightArrowAlt className="icon" />
               </li>
             );
