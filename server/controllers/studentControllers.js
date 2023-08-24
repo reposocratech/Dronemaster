@@ -48,6 +48,18 @@ class studentControllers {
       error ? res.status(400).json({ error }) : res.status(201).json(result);
     });
   };
+
+  // 3.- Get course material
+  // http://localhost:4000/students/courseMaterial/:course:id
+  getCourseMaterial = (req, res) => {
+    const { course_id } = req.params;
+
+    let sql = `SELECT course.course_id, unit.unit_id, lesson.lesson_id, resource.resource_id, course.course_name, unit.unit_tittle, lesson.lesson_title from (course) JOIN unit ON unit.course_id = course.course_id JOIN lesson ON lesson.unit_id = unit.unit_id JOIN resource ON resource.resource_id = lesson.resource_id WHERE course.course_id = ${course_id} ORDER BY unit.unit_id, lesson_id`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(201).json(result);
+    });
+  };
 }
 
 module.exports = new studentControllers();

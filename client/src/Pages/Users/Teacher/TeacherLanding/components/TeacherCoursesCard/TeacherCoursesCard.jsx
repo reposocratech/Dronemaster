@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { GiClassicalKnowledge } from "react-icons/gi";
 import { BiRightArrowAlt } from "react-icons/bi";
 import axios from "axios";
@@ -7,29 +7,19 @@ import { DroneMasterContext } from "../../../../../../context/DroneMasterProvide
 export const TeacherCoursesCard = ({ myCoursesData }) => {
   const { courseMaterial, setCourseMaterial } = useContext(DroneMasterContext)
 
-  const showCourse = (id) => {
-    let name = myCoursesData?.find(item => item.course_id === parseInt(id)).course_name
-    let unit = [];
-    let lesson = []
+
+  const showCourse = (course_id) => {
 
     axios
-      .get(`http://localhost:4000/students/units/${id}`)
+      .get(`http://localhost:4000/students/courseMaterial/${course_id}`)
       .then((res) => {
-        unit = res.data
+        setCourseMaterial({ course_name: myCoursesData?.find(item => item.course_id === parseInt(course_id)).course_name, course_info: res.data })
+
       })
       .catch((err) => console.log(err))
 
-    axios
-      .get(`http://localhost:4000/students/lessons/${id}`)
-      .then((res) => {
-        lesson = res.data
-      })
-      .catch((err) => console.log(err))
-
-    setCourseMaterial({ ...courseMaterial, course_name: name, unit_tittle: unit, lesson_title: lesson })
   }
 
-  console.log(courseMaterial);
 
   return (
     <div className="courseListCard">

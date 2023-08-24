@@ -5,11 +5,6 @@ import axios from "axios";
 
 export const DroneMasterContext = createContext();
 
-const initialCourseInfo = {
-  course_name: "",
-  unit_tittle: [],
-  lesson_title: []
-}
 
 const DroneMasterProvider = ({ children }) => {
   const [token, setToken] = useState();
@@ -19,7 +14,7 @@ const DroneMasterProvider = ({ children }) => {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [filter, setFilter] = useState();
-  const [courseMaterial, setCourseMaterial] = useState(initialCourseInfo)
+  const [courseMaterial, setCourseMaterial] = useState()
   const [resetData, setResetData] = useState(false)
 
 
