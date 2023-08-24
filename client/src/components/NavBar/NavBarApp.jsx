@@ -34,13 +34,11 @@ const NavBarApp = () => {
         setListCourses(res.data);
       })
       .catch((err) => console.log(err));
-
     let name = data.course_name;
     reset();
-
-    let courseFound = listCourses.filter((elem) => {
-      elem.course_name.toLowerCase().includes(name.toLowerCase());
-    });
+    let courseFound = listCourses?.filter((elem) =>
+      elem.course_name.toLowerCase().includes(name.toLowerCase())
+    );
     setCourse(courseFound);
     navigate("/allCourses");
   };
@@ -98,6 +96,8 @@ const NavBarApp = () => {
         <RegisterModal
           showRegisterModal={showRegisterModal}
           setShowRegisterModal={setShowRegisterModal}
+          showLoginModal={showLoginModal}
+          setShowLoginModal={setShowLoginModal}
         />
         <Navbar.Toggle
           className="toogle"
@@ -120,7 +120,7 @@ const NavBarApp = () => {
           <Offcanvas.Body className="bodyOffCanvas ps-4 gap-3 d-flex-column d-lg-flex justify-content-lg-between align-items-center">
             <div className="search d-flex align-items-center gap-1 px-2">
               <FiSearch />
-              <form onSubmit={handleSubmit(onsubmit)} className="w-100">
+              <form onSubmit={handleSubmit(onSubmit)} className="w-100">
                 <input
                   {...register("course_name", {
                     maxLength: 200,

@@ -12,13 +12,12 @@ import "./teacherLandingStyle.scss";
 import { UserCardInfo } from "./components/UserCardInfo.jsx/UserCardInfo";
 import { EditMyProfileModal } from "../../../../components/EditMyProfileModal/EditMyProfileModal";
 
-
 export const TeacherLanding = () => {
   const { user } = useContext(DroneMasterContext);
   const [myCoursesData, setMyCoursesData] = useState();
   const [myStudentsData, setMyStudentsData] = useState();
   const [averageRating, setAverageRating] = useState();
-  const [showEditionModal, setShowEditionModal] = useState(false)
+  const [showEditionModal, setShowEditionModal] = useState(false);
 
   //Get all courses of the user
   useEffect(() => {
@@ -59,7 +58,7 @@ export const TeacherLanding = () => {
   return (
     <section className="mainSection">
       <aside className="sideContent">
-        <TeacherCard user={user} setShowEditionModal={setShowEditionModal}/>
+        <TeacherCard user={user} setShowEditionModal={setShowEditionModal} />
 
         <div className="counterContainer">
           <CounterCard
@@ -88,8 +87,11 @@ export const TeacherLanding = () => {
         />
         <TeacherStudentsTableCard myStudentsData={myStudentsData} />
       </div>
-      <EditMyProfileModal showEditionModal={showEditionModal} setShowEditionModal={setShowEditionModal} user={user}/>
-      
+      <EditMyProfileModal
+        showEditionModal={showEditionModal}
+        setShowEditionModal={setShowEditionModal}
+        user={user}
+      />
     </section>
   );
 };

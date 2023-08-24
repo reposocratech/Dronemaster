@@ -49,8 +49,15 @@ export const TeacherStudentsTableCard = ({ myStudentsData }) => {
             <tr>
               <th colSpan={2}>Nombre</th>
               <th>Primer Apellido</th>
-              <th className="iconHeadName"> <HiOutlineMail className="headIcon d-md-none d-flex fs-2"/> <span className=" d-none d-md-flex">Email</span></th>
-              <th className="iconHeadName"><AiOutlinePhone className="headIcon d-md-none d-flex fs-2"/> <span className=" d-none d-md-flex">Telefono</span></th>
+              <th className="iconHeadName">
+                {" "}
+                <HiOutlineMail className="headIcon d-md-none d-flex fs-2" />{" "}
+                <span className=" d-none d-md-flex">Email</span>
+              </th>
+              <th className="iconHeadName">
+                <AiOutlinePhone className="headIcon d-md-none d-flex fs-2" />{" "}
+                <span className=" d-none d-md-flex">Telefono</span>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -87,7 +94,9 @@ export const TeacherStudentsTableCard = ({ myStudentsData }) => {
                           <td>
                             <div className="tableCell iconCell">
                               <div className="tableCellContent">
-                                <span className="d-none d-md-inline ">{student.student_email}</span>
+                                <span className="d-none d-md-inline ">
+                                  {student.student_email}
+                                </span>
                                 <HiOutlineMail className="icon" />
                               </div>
                             </div>
@@ -97,7 +106,9 @@ export const TeacherStudentsTableCard = ({ myStudentsData }) => {
                             <div className="tableCell iconCell">
                               <div className="tableCellContent">
                                 <AiOutlinePhone className="icon" />
-                                <span className="d-none d-md-inline ">{student.student_phone}</span>
+                                <span className="d-none d-md-inline ">
+                                  {student.student_phone}
+                                </span>
                               </div>
                             </div>
                           </td>
@@ -113,17 +124,17 @@ export const TeacherStudentsTableCard = ({ myStudentsData }) => {
                   return (
                     <tr key={student.student_id}>
                       <td className="tdImg">
-                      <div className="tableImg">
-                              {student?.student_img ? (
-                                <img
-                                  src={`http://localhost:4000/images/user/${student.student_img}`}
-                                />
-                              ) : (
-                                <h6 className="avatarText">
-                                  {student?.student_name.at(0).toUpperCase()}
-                                </h6>
-                              )}
-                            </div>
+                        <div className="tableImg">
+                          {student?.student_img ? (
+                            <img
+                              src={`http://localhost:4000/images/user/${student.student_img}`}
+                            />
+                          ) : (
+                            <h6 className="avatarText">
+                              {student?.student_name.at(0).toUpperCase()}
+                            </h6>
+                          )}
+                        </div>
                       </td>
                       <td className="tableCellName">{student.student_name}</td>
                       <td>
@@ -135,7 +146,9 @@ export const TeacherStudentsTableCard = ({ myStudentsData }) => {
                         <div className="tableCell iconCell">
                           <div className="tableCellContent">
                             <HiOutlineMail className="icon" />
-                            <span className="d-none d-md-inline ">{student.student_email}</span>
+                            <span className="d-none d-md-inline ">
+                              {student.student_email}
+                            </span>
                           </div>
                         </div>
                       </td>
@@ -143,7 +156,9 @@ export const TeacherStudentsTableCard = ({ myStudentsData }) => {
                         <div className="tableCell iconCell">
                           <div className="tableCellContent">
                             <AiOutlinePhone className="icon" />
-                            <span className="d-none d-md-inline ">{student.student_phone}</span>
+                            <span className="d-none d-md-inline ">
+                              {student.student_phone}
+                            </span>
                           </div>
                         </div>
                       </td>

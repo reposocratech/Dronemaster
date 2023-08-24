@@ -17,7 +17,6 @@ export const UserCardInfo = ({ user }) => {
         </div>
       </div>
       <div className="cardBody d-flex flex-md-column flex-xxl-row">
-
         <div>
           <div className="lineInfo">
             <span className="infoIcon">
@@ -31,13 +30,10 @@ export const UserCardInfo = ({ user }) => {
             </span>
             <p>{user?.address ? user.address : "..."}</p>
           </div>
-       
         </div>
 
-       
-
         <div>
-        <div className="lineInfo">
+          <div className="lineInfo">
             <span className="infoIcon">
               <AiOutlinePhone />
             </span>
@@ -50,9 +46,6 @@ export const UserCardInfo = ({ user }) => {
             </span>
             <p>{user?.passport ? user.passport : "..."}</p>
           </div>
-
-
-         
         </div>
       </div>
     </div>
