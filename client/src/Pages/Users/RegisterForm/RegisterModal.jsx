@@ -10,7 +10,12 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
-const RegisterModal = ({ showRegisterModal, setShowRegisterModal }) => {
+const RegisterModal = ({
+  showRegisterModal,
+  setShowRegisterModal,
+  showLoginModal,
+  setShowLoginModal,
+}) => {
   const closeRegisterModal = () => {
     setShowRegisterModal(false);
   };
@@ -19,6 +24,7 @@ const RegisterModal = ({ showRegisterModal, setShowRegisterModal }) => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     defaultValues: {
       user_name: "",
@@ -28,8 +34,7 @@ const RegisterModal = ({ showRegisterModal, setShowRegisterModal }) => {
     },
   });
 
-  const navigate = useNavigate();
-  const { setUser, isLogged, openHome, openLogin } =
+  const { setUser, isLogged, openLogin, resetData, setResetData } =
     useContext(DroneMasterContext);
 
   const onSubmit = (data) => {
@@ -38,18 +43,16 @@ const RegisterModal = ({ showRegisterModal, setShowRegisterModal }) => {
       .post("http://localhost:4000/students/registerStudent", data)
       .then((res) => {
         console.log("result.data.user/////////////", res);
-        saveLocalStorageDroneMaster("token", res.data.token);
-        navigate("/student");
-        isLogged(true);
-        setUser(res.data.user);
+        setShowLoginModal(true);
         setShowRegisterModal(false);
+        reset();
       })
       .catch((error) => console.log(error));
   };
 
   return (
     <Modal show={showRegisterModal} onHide={closeRegisterModal}>
-      <Modal.Body>
+      <Modal.Body className="bckModal">
         <Row>
           <Col className="formContainer">
             <div className="form1">
@@ -120,7 +123,7 @@ const RegisterModal = ({ showRegisterModal, setShowRegisterModal }) => {
 
                 <div className="d-flex m-3">
                   <button className="btnNormal me-3"> Aceptar</button>
-                  <button className="btnNormal" Click={closeRegisterModal}>
+                  <button className="btnNormal" onClick={closeRegisterModal}>
                     {" "}
                     Cancelar
                   </button>

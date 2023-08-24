@@ -16,11 +16,12 @@ const LoginModal = ({ setShowLoginModal, showLoginModal }) => {
   };
 
   const navigate = useNavigate();
-  const { setUser, isLogged, setIsLogged, openHome, openRegister } =
+  const { setUser, isLogged, setIsLogged, openRegister } =
     useContext(DroneMasterContext);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -37,8 +38,11 @@ const LoginModal = ({ setShowLoginModal, showLoginModal }) => {
           saveLocalStorageDroneMaster("token", res.data.token);
         setUser(res.data.user);
         setIsLogged(true);
+        reset();
+        setShowLoginModal(false);
 
         const type = res.data.user.type;
+        console.log("**********************", res.data.user.type);
         if (type === 0) {
           navigate("/student");
         } else if (type === 1) {
@@ -48,17 +52,13 @@ const LoginModal = ({ setShowLoginModal, showLoginModal }) => {
         } else {
           navigate("/");
         }
-        setShowLoginModal(false);
       })
       .catch((error) => console.log(error));
   };
 
   return (
-    <Modal className="main" show={showLoginModal} onHide={closeLoginModal}>
-      {/*       <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
-      </Modal.Header> */}
-      <Modal.Body>
+    <Modal className="main lg" show={showLoginModal} onHide={closeLoginModal}>
+      <Modal.Body className="bckModal">
         <Row>
           <Col className="formContainer">
             <div className="form3">

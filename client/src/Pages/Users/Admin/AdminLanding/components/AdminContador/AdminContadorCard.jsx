@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { AiOutlineUser } from "react-icons/ai";
+import { BsBook } from "react-icons/bs";
 
 const initialUserCounter = {
   TotalTeachers: 0,
@@ -21,14 +23,34 @@ const AdminContadorCard = () => {
   }, []);
 
   return (
-    <div>
-      <h6>Contador</h6>
-      <span>Profesores</span>
-      <p>{counter.TotalTeachers}</p>
-      <span>Alumnos</span>
-      <p>{counter.TotalStudents}</p>
-      <span>Cursos</span>
-      <p>{counter.TotalCourse}</p>
+    <div className="sideContent">
+      <div className="title">
+        <h6 className="titleText">Contador</h6>
+      </div>
+
+      <div className="cardBody d-flex">
+        <div className="lineInfo">
+          <span className="iconContainer">
+            <AiOutlineUser />
+          </span>
+          <h6>Profesores</h6>
+          <p>{counter.TotalTeachers}</p>
+        </div>
+        <div className="lineInfo">
+          <span className="iconContainer">
+            <AiOutlineUser />
+          </span>
+          <h6>Alumnos</h6>
+          <p>{counter.TotalStudents}</p>
+        </div>
+        <div className="lineInfo">
+          <span className="iconContainer">
+            <BsBook />
+          </span>
+          <h6>Cursos</h6>
+          <p>{counter.TotalCourse}</p>
+        </div>
+      </div>
     </div>
   );
 };
