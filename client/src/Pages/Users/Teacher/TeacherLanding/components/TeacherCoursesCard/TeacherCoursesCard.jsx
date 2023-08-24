@@ -6,24 +6,19 @@ import { DroneMasterContext } from "../../../../../../context/DroneMasterProvide
 import { Navigate, useNavigate } from "react-router-dom";
 
 export const TeacherCoursesCard = ({ myCoursesData }) => {
-  const { courseMaterial, setCourseMaterial } = useContext(DroneMasterContext);
-  const navigate = useNavigate();
+  const { courseMaterial, setCourseMaterial } = useContext(DroneMasterContext)
+
 
   const showCourse = (course_id) => {
     axios
-      .get(`http://localhost:4000/teachers/myCourses/courseInfo/${course_id}`)
+      .get(`http://localhost:4000/students/courseMaterial/${course_id}`)
       .then((res) => {
-        setCourseContent({
-          course_name: myCoursesData?.find(
-            (item) => item.course_id === parseInt(course_id)
-          ).course_name,
-          course_info: res.data,
-        });
-      })
-      .catch((err) => console.log(err));
+        setCourseMaterial({ course_name: myCoursesData?.find(item => item.course_id === parseInt(course_id)).course_name, course_info: res.data })
 
-      navigate(`/teacher/MyCourse/${course_id}`)
-  };
+      })
+      .catch((err) => console.log(err))
+  }
+
   return (
     <div className="courseListCard">
       {/* Card Title */}

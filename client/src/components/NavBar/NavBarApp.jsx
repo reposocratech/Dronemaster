@@ -36,6 +36,7 @@ const NavBarApp = () => {
       .catch((err) => console.log(err));
     let name = data.course_name;
     reset();
+
     let courseFound = listCourses?.filter((elem) =>
       elem.course_name.toLowerCase().includes(name.toLowerCase())
     );
@@ -153,14 +154,13 @@ const NavBarApp = () => {
                   </button>
                 </div>
               )}
+
               {token && (
-                <div
-               
-                  className="d-flex justify-content-center align-items-center gap-2"
-                >
-                  <div className="avatar"    onClick={() => {
+                <div className="d-flex justify-content-center align-items-center gap-2">
+                  <div className="avatar" onClick={() => {
                     navigate(`/${routeType(user)}`);
-                  }} >
+                  }}>
+
                     {user?.user_img ? (
                       <>
                         <img
@@ -177,9 +177,7 @@ const NavBarApp = () => {
                     )}
                   </div>
                   <button
-                    onClick={() => {
-                      logoutUser();
-                    }}
+                    onClick={logoutUser}
                     className="btnOutline2"
                   >
                     Cerrar sesión
