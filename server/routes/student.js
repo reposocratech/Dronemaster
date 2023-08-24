@@ -14,4 +14,8 @@ router.get("/units/:course_id", studentControllers.getCourseUnits);
 // http://localhost:4000/students/lessons/:course_id
 router.get("/lessons/:course_id", studentControllers.getUnitLessons);
 
+// 3.- Get course material
+// http://localhost:4000/students/courseMaterial/:course_id
+router.get("/courseMaterial/:course_id", studentControllers.getCourseMaterial);
+
 module.exports = router;

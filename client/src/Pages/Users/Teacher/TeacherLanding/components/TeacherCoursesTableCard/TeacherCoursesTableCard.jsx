@@ -129,7 +129,7 @@ export const TeacherCoursesTableCard = ({
                           <td>
                             <div className="tableCell iconCell">
                               <div className="tableCellContent">
-                                <AiOutlineFolderOpen className="icon" />{" "}
+                                <AiOutlineFolderOpen className="icon" />
                                 {course.num_units}
                               </div>
                             </div>
@@ -146,7 +146,7 @@ export const TeacherCoursesTableCard = ({
                           <td className="d-none d-md-block py-2">
                             <div className="tableCell iconCell">
                               <div className="tableCellContent">
-                                <AiOutlineStar className="icon" />{" "}
+                                <AiOutlineStar className="icon" />
                                 {course.score}
                               </div>
                             </div>
@@ -156,7 +156,7 @@ export const TeacherCoursesTableCard = ({
                               className="btnOutline1 "
                               onClick={() => {
                                 navigate(
-                                  `/courses/courseInfo/${course.course_id}}`
+                                  `/teacher/MyCourse/${course.course_id}`
                                 );
                               }}
                             >
@@ -214,7 +214,7 @@ export const TeacherCoursesTableCard = ({
                           className="btnOutline1"
                           onClick={() => {
                             navigate(
-                              `/courses/courseInfo/${course.course_id}}`
+                              `/teacher/MyCourse/${course.course_id}`
                             );
                           }}
                         >

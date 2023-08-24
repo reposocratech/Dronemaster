@@ -36,6 +36,7 @@ const NavBarApp = () => {
       .catch((err) => console.log(err));
     let name = data.course_name;
     reset();
+    
     let courseFound = listCourses?.filter((elem) =>
       elem.course_name.toLowerCase().includes(name.toLowerCase())
     );
@@ -43,25 +44,19 @@ const NavBarApp = () => {
     navigate("/allCourses");
   };
 
-  const closeLoginModal = () => {
-    setShowLoginModal(false);
-  };
   const openLoginModal = () => {
     setShowLoginModal(true);
   };
 
-  const closeRegisterModal = () => {
-    setShowRegisterModal(false);
-  };
   const openRegisterModal = () => {
     setShowRegisterModal(true);
   };
 
   const logoutUser = () => {
+    navigate("/");
     delLocalStorage("token");
     setUser();
     setToken();
-    navigate("/");
     setIsLogged(false);
   };
 
@@ -161,14 +156,13 @@ const NavBarApp = () => {
                   </button>
                 </div>
               )}
+
               {token && (
-                <div
-                  onClick={() => {
+                <div className="d-flex justify-content-center align-items-center gap-2">
+                  <div className="avatar" onClick={() => {
                     navigate(`/${routeType(user)}`);
-                  }}
-                  className="d-flex justify-content-center align-items-center gap-2"
-                >
-                  <div className="avatar">
+                  }}>
+
                     {user?.user_img ? (
                       <>
                         <img
@@ -185,9 +179,7 @@ const NavBarApp = () => {
                     )}
                   </div>
                   <button
-                    onClick={() => {
-                      logoutUser();
-                    }}
+                    onClick={logoutUser}
                     className="btnOutline2"
                   >
                     Cerrar sesión

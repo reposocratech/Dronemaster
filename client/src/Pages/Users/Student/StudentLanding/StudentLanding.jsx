@@ -9,6 +9,7 @@ import "../../Teacher/TeacherLanding/teacherLandingStyle.scss";
 import "../../../AllCourses/allCoursesStyle.scss";
 import { DroneMasterContext } from "../../../../context/DroneMasterProvider";
 import { StudentCourseTableInfo } from "./components/CourseInfo/StudentCourseTableInfo";
+import { ProgressCard } from "./components/ProgressCard/ProgressCard";
 
 const StudentLanding = () => {
   const { user } = useContext(DroneMasterContext);
@@ -40,6 +41,8 @@ const StudentLanding = () => {
         <StudentCard user={user} />
         <UserCardInfo user={user} />
         <TeacherCoursesCard myCoursesData={myCoursesData} />
+        <ProgressCard user={user} />
+
       </aside>
       <div className="mainContainer">
         {myCoursesData?.length === 0 && (
@@ -54,7 +57,7 @@ const StudentLanding = () => {
 
         {myCoursesData?.length > 0 && (
           <div>
-            <StudentCourseTableInfo myCoursesData={myCoursesData} />
+            <StudentCourseTableInfo myCoursesData={myCoursesData} bestRatedCourses={bestRatedCourses} />
           </div>
         )}
       </div>
