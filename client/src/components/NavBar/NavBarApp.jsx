@@ -34,36 +34,28 @@ const NavBarApp = () => {
         setListCourses(res.data);
       })
       .catch((err) => console.log(err));
-
     let name = data.course_name;
     reset();
-
-    let courseFound = listCourses.filter((elem) => {
-      elem.course_name.toLowerCase().includes(name.toLowerCase());
-    });
+    let courseFound = listCourses?.filter((elem) =>
+      elem.course_name.toLowerCase().includes(name.toLowerCase())
+    );
     setCourse(courseFound);
     navigate("/allCourses");
   };
 
-  const closeLoginModal = () => {
-    setShowLoginModal(false);
-  };
   const openLoginModal = () => {
     setShowLoginModal(true);
   };
 
-  const closeRegisterModal = () => {
-    setShowRegisterModal(false);
-  };
   const openRegisterModal = () => {
     setShowRegisterModal(true);
   };
 
   const logoutUser = () => {
+    navigate("/");
     delLocalStorage("token");
     setUser();
     setToken();
-    navigate("/");
     setIsLogged(false);
   };
 
@@ -120,7 +112,7 @@ const NavBarApp = () => {
           <Offcanvas.Body className="bodyOffCanvas ps-4 gap-3 d-flex-column d-lg-flex justify-content-lg-between align-items-center">
             <div className="search d-flex align-items-center gap-1 px-2">
               <FiSearch />
-              <form onSubmit={handleSubmit(onsubmit)} className="w-100">
+              <form onSubmit={handleSubmit(onSubmit)} className="w-100">
                 <input
                   {...register("course_name", {
                     maxLength: 200,
@@ -163,12 +155,12 @@ const NavBarApp = () => {
               )}
               {token && (
                 <div
-                  onClick={() => {
-                    navigate(`/${routeType(user)}`);
-                  }}
+               
                   className="d-flex justify-content-center align-items-center gap-2"
                 >
-                  <div className="avatar">
+                  <div className="avatar"    onClick={() => {
+                    navigate(`/${routeType(user)}`);
+                  }} >
                     {user?.user_img ? (
                       <>
                         <img

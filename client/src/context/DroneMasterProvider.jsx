@@ -23,6 +23,7 @@ const DroneMasterProvider = ({ children }) => {
   const [resetData, setResetData] = useState(false)
 
 
+
   const openRegister = () => {
     setShowRegister(!showRegister);
     setShowLogin(false);

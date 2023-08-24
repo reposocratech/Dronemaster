@@ -1,6 +1,6 @@
 @import "../../../../../public/styles/variables";
 
-.mainSection {
+.mainSectionOneCourse {
   background-color: $PrimaryDarkColor;
   display: flex;
   gap: 8px;
@@ -102,9 +102,9 @@
       justify-content: space-between;
 
       .counterCard {
-        width: 32%;
+        width: calc(50% - 4px);
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         gap: 4px;
 
@@ -137,7 +137,7 @@
       .cardBody {
         padding: 0 20px;
         justify-content: space-evenly;
-      
+
         .lineInfo {
           display: flex;
           align-items: center;
@@ -154,7 +154,47 @@
       }
     }
 
-   
+    //Course List Card
+    .courseListCard {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .cardTitle {
+        display: flex;
+        gap: 20px;
+
+        .textContainer {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          h6 {
+            margin: 0;
+          }
+        }
+      }
+
+      .cardBody {
+        padding: 0 20px;
+
+        .courseList {
+          padding: 0;
+          .courseListRow {
+            font-size: 14px;
+            border-bottom: 1px solid $TertiaryDarkColor;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .icon {
+              color: $PrimaryOrangeColor;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
   }
 
   //Main
@@ -276,6 +316,25 @@
                       font-size: 20px;
                     }
                   }
+
+                  .inputCell {
+                    justify-content: center;
+                    width: 100%;
+                    align-items: center;
+
+                    .btnOutline2 {
+                      padding-top: 0;
+                      padding-bottom: 0;
+                      width: 140px;
+                      text-align: center;
+                      padding: 0;
+
+                      option {
+                        background-color: $PrimaryDarkColor;
+                        text-align: center;
+                      }
+                    }
+                  }
                 }
                 @media (max-width: 768px) {
                   .iconCell {
@@ -294,12 +353,111 @@
         }
       }
     }
+
+    .allUnitsLessonCard {
+      display: flex;
+      flex-direction: column;
+      background-color: $CuaternaryDark;
+      border-radius: 12px;
+      padding: 18px;
+      color: white;
+      gap: 12px;
+
+      .cardTitle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-right: 12px;
+
+        .title {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+
+          .titleText {
+            margin: 0;
+          }
+        }
+      }
+
+      .listContainer {
+        padding: 0 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+
+        .listHeadline {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 10px;
+          border-bottom: 2px solid $TertiaryDarkColor;
+
+          h6 {
+            margin: 4px;
+          }
+        }
+
+        .unitList {
+          padding: 0 12px;
+
+          .unitTitle {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid $PrimaryOrangeColor;
+
+            h6 {
+              margin: 0;
+              align-self: end;
+            }
+
+            .dropdownContainer {
+              font-size: 20px;
+            }
+          }
+          ul {
+            overflow: hidden;
+            margin: 0;
+
+            .listedLesson {
+              display: grid;
+
+              .lessonTitle {
+                border-bottom: 1px solid $TertiaryDarkColor;
+                display: flex;
+                justify-content: space-between;
+                align-items: end;
+
+                .resourceContainer {
+                  padding: 0 16px;
+                  display: flex;
+                  gap: 12px;
+
+                  .downloadIcon {
+                    color: #018001;
+                  }
+                  .uploadIcon {
+                    color: #007bb0;
+                  }
+                  .deleteIcon {
+                    color: #b85450;
+                  }
+                  .downloadIcon:hover, .uploadIcon:hover,.deleteIcon:hover{ 
+                    transform: scale(1.2);
+                    cursor: pointer;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 
 //Media Tablet
 @media (max-width: 1200px) {
-  .mainSection {
+  .mainSectionOneCourse {
     flex-direction: column;
     .sideContent {
       width: 100%;
@@ -329,7 +487,7 @@
 }
 //Media Tablet Vertical
 @media (max-width: 768px) {
-  .mainSection {
+  .mainSectionOneCourse {
     flex-direction: column;
     .sideContent {
       width: 100%;
