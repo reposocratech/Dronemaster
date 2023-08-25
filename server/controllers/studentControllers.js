@@ -60,6 +60,70 @@ class studentControllers {
       error ? res.status(400).json({ error }) : res.status(201).json(result);
     });
   };
+
+  // 3.- register all lessons viewed by student
+  // http://localhost:4000/students/registerLessonViewed/:user_id/:lesson_id/:course_id
+  registerLessonViewedByStudent = (req, res) => {
+    const { user_id, lesson_id, course_id } = req.params;
+
+    let sql1 = `SELECT lesson_id FROM lesson_viewed WHERE user_id = ${user_id} AND lesson_id = ${lesson_id} AND course_id = ${course_id}`;
+
+    connection.query(sql1, (error, result) => {
+      console.log(result);
+      if (error) {
+        res.status(500).json({ error });
+      } else {
+        if (result.length === 0) {
+          let sql2 = `INSERT INTO lesson_Viewed (user_id, lesson_id, course_id) VALUES (${user_id}, ${lesson_id}, ${course_id})`;
+
+          connection.query(sql2, (error, result2) => {
+            console.log(result2);
+            error
+              ? res.status(400).json({ error })
+              : res.status(201).json(result2);
+          });
+        } else {
+          res.status(200).json({ error });
+        }
+      }
+    });
+  };
+
+  // 3.- Get all lessons viewed by student
+  // http://localhost:4000/students/lessonViewed/:user_id/:course_id
+  selectLessonViewedByStudent = (req, res) => {
+    const { user_id, course_id } = req.params;
+
+    let sql = `SELECT lesson_id FROM lesson_viewed WHERE user_id = ${user_id} AND course_id = ${course_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(201).json(result);
+    });
+  };
+
+  // 3.- Get count all lessons viewed by student per course
+  // http://localhost:4000/students/lessonViewed/:user_id/:course_id
+  selectCountLessonViewedByCourse = (req, res) => {
+    const { user_id, course_id } = req.params;
+
+    let sql = `SELECT COUNT(lesson_id) AS count_lessons_viewed FROM lesson_viewed WHERE user_id = ${user_id} AND course_id = ${course_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(201).json(result);
+    });
+  };
+
+  // 3.- Get count all lessons course
+  // http://localhost:4000/students/countLessonscourse/:user_id/:course_id
+  selectCountLessonCourse = (req, res) => {
+    const { course_id } = req.params;
+
+    let sql = `SELECT COUNT(lesson_id) AS count_lessons_Course from lesson where course_id = ${course_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(201).json(result);
+    });
+  };
 }
 
 module.exports = new studentControllers();
