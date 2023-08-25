@@ -3,18 +3,25 @@ import axios from "axios";
 import { StudentCard } from "./components/StudentCard/StudentCard";
 import { UserCardInfo } from "../../Teacher/TeacherLanding/components/UserCardInfo.jsx/UserCardInfo";
 import { CourseCard } from "../../../../components/CardCourse/CourseCard";
-import { TeacherCoursesCard } from "../../Teacher/TeacherLanding/components/TeacherCoursesCard/TeacherCoursesCard";
+import { StudentCoursesCard } from "../StudentLanding/components/StudentCoursesCard/StudentCoursesCard";
 import "./studentLandingStyle.scss";
 import "../../Teacher/TeacherLanding/teacherLandingStyle.scss";
 import "../../../AllCourses/allCoursesStyle.scss";
 import { DroneMasterContext } from "../../../../context/DroneMasterProvider";
 import { StudentCourseTableInfo } from "./components/CourseInfo/StudentCourseTableInfo";
-import { ProgressCard } from "./components/ProgressCard/ProgressCard";
+import { CircularBarProgress } from "./components/CircularBarProgress/CircularBarProgress";
 
 const StudentLanding = () => {
   const { user } = useContext(DroneMasterContext);
   const [myCoursesData, setMyCoursesData] = useState();
   const [bestRatedCourses, setBestRatedCourses] = useState([]);
+  const [lessonsViewedByStudent, setLessonsViewedByStudent] = useState()
+  const [lessonsOneCourse, setLessonsOneCourse] = useState(0)
+  const [courseId, setCourseId] = useState(0)
+
+  // console.log("total un curso", lessonsOneCourse);
+  // console.log("vistas por user", lessonsViewedByStudent);
+
 
   //Get all courses of the user
   useEffect(() => {
@@ -24,7 +31,7 @@ const StudentLanding = () => {
         setMyCoursesData(res.data);
       })
       .catch((error) => console.log(error));
-  }, [user]);
+  }, [user, setLessonsOneCourse, setLessonsViewedByStudent]);
 
   useEffect(() => {
     axios
@@ -40,9 +47,8 @@ const StudentLanding = () => {
       <aside className="sideContent">
         <StudentCard user={user} />
         <UserCardInfo user={user} />
-        <TeacherCoursesCard myCoursesData={myCoursesData} />
-        <ProgressCard user={user} />
-
+        <StudentCoursesCard myCoursesData={myCoursesData} setCourseId={setCourseId} />
+        {courseId !== 0 && <CircularBarProgress lessonsOneCourse={lessonsOneCourse} lessonsViewedByStudent={lessonsViewedByStudent} courseId={courseId} myCoursesData={myCoursesData} />}
       </aside>
       <div className="mainContainer">
         {myCoursesData?.length === 0 && (
@@ -57,7 +63,8 @@ const StudentLanding = () => {
 
         {myCoursesData?.length > 0 && (
           <div>
-            <StudentCourseTableInfo myCoursesData={myCoursesData} bestRatedCourses={bestRatedCourses} />
+            <StudentCourseTableInfo myCoursesData={myCoursesData} setLessonsViewedByStudent={setLessonsViewedByStudent} setLessonsOneCourse={setLessonsOneCourse}
+              courseId={courseId} />
           </div>
         )}
       </div>

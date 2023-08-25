@@ -128,6 +128,7 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
+
       .cardTitle {
         display: flex;
         align-items: center;
@@ -137,7 +138,7 @@
       .cardBody {
         padding: 0 20px;
         justify-content: space-evenly;
-      
+
         .lineInfo {
           display: flex;
           align-items: center;
@@ -154,7 +155,7 @@
       }
     }
 
-   
+
   }
 
   //Main
@@ -271,12 +272,14 @@
                     display: flex;
                     align-items: center;
                     gap: 4px;
+
                     .icon {
                       color: $PrimaryOrangeColor;
                       font-size: 20px;
                     }
                   }
                 }
+
                 @media (max-width: 768px) {
                   .iconCell {
                     justify-content: center;
@@ -301,6 +304,7 @@
 @media (max-width: 1200px) {
   .mainSection {
     flex-direction: column;
+
     .sideContent {
       width: 100%;
       display: grid;
@@ -316,6 +320,7 @@
       .counterContainer {
         gap: 8px;
         height: 100%;
+
         .counterCard {
           flex-direction: row;
         }
@@ -327,10 +332,12 @@
     }
   }
 }
+
 //Media Tablet Vertical
 @media (max-width: 768px) {
   .mainSection {
     flex-direction: column;
+
     .sideContent {
       width: 100%;
       display: grid;
@@ -341,6 +348,7 @@
       .counterContainer {
         gap: 8px;
         height: 100%;
+
         .counterCard {
           flex-direction: column;
         }
@@ -349,6 +357,119 @@
 
     .mainContainer {
       width: 100%;
+    }
+  }
+}
+
+.mainSectionOneCourse {
+  background-color: $PrimaryDarkColor;
+  display: flex;
+  gap: 8px;
+  padding: 4vh 5vw;
+  color: white;
+
+  .allUnitsLessonCard {
+    display: flex;
+    flex-direction: column;
+    background-color: $CuaternaryDark;
+    border-radius: 12px;
+    padding: 18px;
+    color: white;
+    gap: 12px;
+
+    .cardTitle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-right: 12px;
+
+      .title {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        .titleText {
+          margin: 0;
+        }
+      }
+    }
+
+    .listContainer {
+      padding: 0 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+
+      .listHeadline {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        border-bottom: 2px solid $TertiaryDarkColor;
+
+        h6 {
+          margin: 4px;
+        }
+      }
+
+      .unitList {
+        padding: 0 12px;
+
+        .unitTitle {
+          display: flex;
+          justify-content: space-between;
+          border-bottom: 1px solid $PrimaryOrangeColor;
+
+          h6 {
+            margin: 0;
+            align-self: end;
+          }
+
+          .dropdownContainer {
+            font-size: 20px;
+          }
+        }
+
+        ul {
+          overflow: hidden;
+          margin: 0;
+
+          .listedLesson {
+            display: grid;
+
+            .lessonTitle {
+              border-bottom: 1px solid $TertiaryDarkColor;
+              display: flex;
+              justify-content: space-between;
+              align-items: end;
+
+              .resourceContainer {
+                padding: 0 16px;
+                display: flex;
+                gap: 12px;
+
+                .downloadIcon {
+                  color: #018001;
+                }
+
+                .uploadIcon {
+                  color: #007bb0;
+                }
+
+                .deleteIcon {
+                  color: #b85450;
+                }
+
+                .downloadIcon:hover,
+                .uploadIcon:hover,
+                .deleteIcon:hover {
+                  transform: scale(1.2);
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

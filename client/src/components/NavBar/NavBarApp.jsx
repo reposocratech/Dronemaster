@@ -22,6 +22,7 @@ const NavBarApp = () => {
     user,
     setIsLogged,
     openRegister,
+    setCourseMaterial
   } = useContext(DroneMasterContext);
   const { register, handleSubmit, reset } = useForm();
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -36,7 +37,7 @@ const NavBarApp = () => {
       .catch((err) => console.log(err));
     let name = data.course_name;
     reset();
-    
+
     let courseFound = listCourses?.filter((elem) =>
       elem.course_name.toLowerCase().includes(name.toLowerCase())
     );
@@ -58,6 +59,7 @@ const NavBarApp = () => {
     setUser();
     setToken();
     setIsLogged(false);
+    setCourseMaterial()
   };
 
   const routeType = (user) => {
