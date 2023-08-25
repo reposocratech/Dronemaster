@@ -101,7 +101,7 @@ export const TeacherCoursesTableCard = ({
                 <span className=" d-none d-md-flex">Nº Alumnos</span>
               </th>
 
-              <th className="d-none d-md-flex">Puntuación</th>
+              <th className="d-none d-md-flex ">Puntuación</th>
               <th className="text-center text-md-start">Más info</th>
             </tr>
           </thead>
@@ -160,7 +160,7 @@ export const TeacherCoursesTableCard = ({
                                 );
                               }}
                             >
-                              <span className="d-none d-md-flex">Mas info</span>
+                              <span className="d-none d-md-flex">Info</span>
                               <span className="d-md-none d-flex">
                                 <AiOutlineArrowRight />
                               </span>
@@ -218,7 +218,7 @@ export const TeacherCoursesTableCard = ({
                             );
                           }}
                         >
-                          <span className="d-none d-md-flex">Mas info</span>
+                          <span className="d-none d-md-flex">Info</span>
                           <span className="d-md-none d-flex">
                             <AiOutlineArrowRight />
                           </span>

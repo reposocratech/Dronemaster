@@ -95,6 +95,40 @@
         }
       }
     }
+    //Chart Card
+    .chartCard {
+      grid-area: chart1;
+      background-color: $CuaternaryDark;
+      border-radius: 12px;
+      padding: 18px;
+      color: white;
+      transition: all 0s ease;
+
+      .cardTitle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-right: 12px;
+        margin-bottom: 10px;
+
+        .title {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+
+          .titleText {
+            margin: 0;
+          }
+        }
+      }
+      .chartContainer {
+        width: 100%;
+
+        .grafica {
+          width: 100% !important ;
+        }
+      }
+    }
 
     //3 Counters style
     .counterContainer {
@@ -118,37 +152,6 @@
             font-size: 12px;
             font-weight: 400;
             text-align: center;
-          }
-        }
-      }
-    }
-
-    .userInfoCard {
-      grid-area: userInfo;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      .cardTitle {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .cardBody {
-        padding: 0 20px;
-        justify-content: space-evenly;
-
-        .lineInfo {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-
-          p {
-            margin: 3px;
-          }
-
-          .infoIcon {
-            color: $TertiaryDarkColor;
           }
         }
       }
@@ -186,6 +189,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 8px 0;
 
             .icon {
               color: $PrimaryOrangeColor;
@@ -298,19 +302,33 @@
                 }
               }
 
+              .buttonCell {
+                .tableCell {
+                  width: 100%;
+                }
+                select {
+                  align-self: center;
+                }
+              }
+
               td {
                 text-align: center;
+                height: 100%;
 
                 .tableCell {
                   display: flex;
                   align-items: center;
                   justify-content: start;
+                  width: fit-content;
                   gap: 5px;
 
                   .tableCellContent {
                     display: flex;
                     align-items: center;
+                    height: 100%;
+
                     gap: 4px;
+
                     .icon {
                       color: $PrimaryOrangeColor;
                       font-size: 20px;
@@ -325,9 +343,9 @@
                     .btnOutline2 {
                       padding-top: 0;
                       padding-bottom: 0;
-                      width: 140px;
+                      width: clamp(60px, 10vw, 120px);
                       text-align: center;
-                      padding: 0;
+                      padding: 0 3px;
 
                       option {
                         background-color: $PrimaryDarkColor;
@@ -338,8 +356,14 @@
                 }
                 @media (max-width: 768px) {
                   .iconCell {
+                    width: 100%;
                     justify-content: center;
                     padding: 5px;
+                  }
+                }
+                @media (max-width: 768px) {
+                  .headIcon {
+                    margin: auto;
                   }
                 }
               }
@@ -408,6 +432,10 @@
             h6 {
               margin: 0;
               align-self: end;
+              overflow: hidden;
+              display: -webkit-box;
+              -webkit-line-clamp: 1;
+              -webkit-box-orient: vertical;
             }
 
             .dropdownContainer {
@@ -416,6 +444,7 @@
           }
           ul {
             overflow: hidden;
+            padding-inline-start: clamp(10px, 2vw, 40px);
             margin: 0;
 
             .listedLesson {
@@ -426,6 +455,14 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: end;
+
+                .lessonText {
+                  width: calc(100% - 104px);
+                  overflow: hidden;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 1;
+                  -webkit-box-orient: vertical;
+                }
 
                 .resourceContainer {
                   padding: 0 16px;
@@ -441,7 +478,9 @@
                   .deleteIcon {
                     color: #b85450;
                   }
-                  .downloadIcon:hover, .uploadIcon:hover,.deleteIcon:hover{ 
+                  .downloadIcon:hover,
+                  .uploadIcon:hover,
+                  .deleteIcon:hover {
                     transform: scale(1.2);
                     cursor: pointer;
                   }
@@ -453,6 +492,21 @@
       }
     }
   }
+  .overflowText {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+  }
+
+  .visible {
+    display: none !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .ocultado {
+  }
 }
 
 //Media Tablet
@@ -463,20 +517,30 @@
       width: 100%;
       display: grid;
       grid-template:
-        "teacherCard userInfo"
-        "counter userInfo";
-      grid-template-rows: 1fr auto;
+        "teacher counter"
+        "list chart";
+      grid-template-rows: auto auto;
+      grid-template-columns: 1fr 1fr;
 
       .teacherCard {
+        grid-area: teacher;
         height: 100%;
       }
 
       .counterContainer {
+        grid-area: counter;
         gap: 8px;
         height: 100%;
         .counterCard {
           flex-direction: row;
         }
+      }
+
+      .courseListCard {
+        grid-area: list;
+      }
+      .chartCard {
+        grid-area: chart;
       }
     }
 
@@ -488,13 +552,13 @@
 //Media Tablet Vertical
 @media (max-width: 768px) {
   .mainSectionOneCourse {
-    flex-direction: column;
     .sideContent {
       width: 100%;
       display: grid;
       grid-template:
-        "teacherCard counter"
-        "userInfo userInfo";
+        "teacher counter"
+        "list list"
+        "chart chart";
 
       .counterContainer {
         gap: 8px;
@@ -512,12 +576,20 @@
 }
 
 @media (max-width: 576px) {
-  .mainSection {
+  .mainSectionOneCourse {
+    .visible {
+      display: flex !important;
+    }
+    .ocultado {
+      display: none !important;
+      height: 100%;
+    }
     .sideContent {
       grid-template:
-        "teacherCard"
+        "teacher"
         "counter"
-        "userInfo";
+        "list"
+        "chart";
     }
   }
 }
