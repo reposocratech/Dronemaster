@@ -10,10 +10,11 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
-const LoginModal = ({ setShowLoginModal, showLoginModal }) => {
+const LoginModal = ({ setShowLoginModal, showLoginModal, openRegisterModal }) => {
   const closeLoginModal = () => {
     setShowLoginModal(false);
   };
+
 
   const navigate = useNavigate();
   const { setUser, isLogged, setIsLogged, openRegister } =
@@ -90,15 +91,15 @@ const LoginModal = ({ setShowLoginModal, showLoginModal }) => {
 
                 <Col className="d-flex m-3">
                   <button className="btnNormal me-3"> Aceptar</button>
-                  <button className="btnNormal" onClick={closeLoginModal}>
+                  <button className="btnNormal" onClick={() => { closeLoginModal() }}>
                     Cancelar
                   </button>
                 </Col>
                 <Col className="LI">
                   <span>¿Aún no formas parte de nuestra comunidad? </span>
-                  <Link className="span" onClick={openRegister}>
+                  <button className="span" onClick={(e) => { e.preventDefault(), openRegisterModal() }}>
                     Registrate
-                  </Link>
+                  </button>
                 </Col>
               </form>
             </div>
