@@ -40,4 +40,6 @@ router.get("/allCategories", courseControllers.selectAllCourseCategories);
 router.get("/courseTags/:course_id", courseControllers.selectAllCourseTags);
 
 
+
+
 module.exports = router;

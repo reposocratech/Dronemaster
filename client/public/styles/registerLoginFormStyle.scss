@@ -1,5 +1,9 @@
 @import "../styles/variables";
 
+.modal-content {
+  border: none
+}
+
 .main {
   min-height: calc(100vh - 80px);
   background-color: $PrimaryDarkColor;
@@ -38,6 +42,7 @@
 }
 
 .bckModal {
+  border: none;
   background: #2b2a29;
   padding: 0 !important;
   width: 50vw !important;

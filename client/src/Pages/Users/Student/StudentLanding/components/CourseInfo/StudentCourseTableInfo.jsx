@@ -1,112 +1,141 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { GiClassicalKnowledge } from "react-icons/gi";
 import { DroneMasterContext } from "../../../../../../context/DroneMasterProvider";
-import { CourseCard } from "../../../../../../components/CardCourse/CourseCard";
 import { AiFillEye, AiFillFile } from "react-icons/ai";
-import "../../studentLandingStyle.scss";
-
-export const StudentCourseTableInfo = ({ myCourseData, bestRatedCourses }) => {
-  const { courseMaterial, user } = useContext(DroneMasterContext);
-  console.log(courseMaterial);
-
-  const unit = [
-    ...new Set(courseMaterial?.course_info.map((elem) => elem.unit_tittle)),
-  ];
-
-  const lesson = [
-    ...new Set(
-      courseMaterial?.course_info.map((elem) => {
-        return {
-          unit_id: elem.unit_id,
-          lesson_id: elem.lesson_id,
-          lesson_title: elem.lesson_title,
-        };
-      })
-    ),
-  ];
-
-  const lessonOrdered = lesson.sort((a, b) => a.lesson_id - b.lesson_id);
-
-  const prueba = [];
-  lessonOrdered.forEach((e) => {
-    if (!prueba[e.unit_id]) {
-      prueba[e.unit_id] = [e.lesson_title];
-    } else {
-      prueba[e.unit_id].push(e.lesson_title);
+import '../../studentLandingStyle.scss'
+import axios from "axios";
+export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOneCourse, courseId }) => {
+    const { courseMaterial, user } = useContext(DroneMasterContext);
+    const [unitsName, setUnitsName] = useState([]);
+    const [lessonViewed, setLessonViewed] = useState([])
+    const [resetUseEffect, setResetUseEffect] = useState(false)
+    const [selectedLessons, setSelectedLessons] = useState([]);
+    const uniqueUnitNames = Array.from(
+        new Set(courseMaterial?.map((item) => item.unit_tittle))
+    );
+    useEffect(() => {
+        setUnitsName(uniqueUnitNames);
+    }, [courseMaterial]);
+    useEffect(() => {
+        if (courseId) {
+            axios
+                .get(`http://localhost:4000/students/countLessonsViewed/${user.user_id}/${courseId}`)
+                .then((res) => {
+                    setLessonsViewedByStudent(res.data[0].count_lessons_viewed)
+                })
+                .catch((err) => console.log(err))
+        }
+    }, [resetUseEffect, courseId])
+    useEffect(() => {
+        if (courseId) {
+            axios
+                .get(`http://localhost:4000/students/countLessonscourse/${courseId}`)
+                .then((res) => {
+                    setLessonsOneCourse(res.data[0].count_lessons_Course)
+                })
+                .catch((err) => console.log(err))
+        }
+    }, [resetUseEffect, courseId])
+    useEffect(() => {
+        if (courseId) {
+            axios
+                .get(`http://localhost:4000/students/lessonViewed/${user.user_id}/${courseId}`)
+                .then((res) => {
+                    setLessonViewed(res.data.map(elem => elem.lesson_id))
+                })
+                .catch((err) => console.log(err))
+        }
+    }, [resetUseEffect, user, courseId])
+    useEffect(() => {
+        setSelectedLessons(lessonViewed);
+    }, [resetUseEffect, user, lessonViewed, selectedLessons])
+    console.log(selectedLessons);
+    //console.log("el selected", lessonViewed);
+    const toggleLesson = (lessonId) => {
+        if (selectedLessons.includes(lessonId)) {
+            setSelectedLessons(selectedLessons.filter((id) => id !== lessonId));
+        } else {
+            setSelectedLessons([...selectedLessons, lessonId]);
+        }
+    };
+    const downloadResource = (lesson_id) => {
+        axios
+            .post(`http://localhost:4000/students/registerLessonViewed/${user.user_id}/${lesson_id}/${courseId}`)
+            .then((res) => {
+                toggleLesson(lesson_id)
+                setResetUseEffect(!resetUseEffect);
+            })
+            .catch((err) => console.log(err))
     }
-  });
-  const groupedArray = Object.values(prueba);
-
-  console.log(groupedArray);
-  return (
-    <>
-      {!courseMaterial && (
-        <div className="coursesTableCard">
-          <div className="cardTitle justify-content-center">
-            <div className="titleStudent">
-              <h3 className="titleText text-center text-warning">
-                Bienvenido de vuelta {user.user_name}
-              </h3>
+    return (<>
+        {!courseMaterial && <div className="coursesTableCard">
+            <div className="cardTitle justify-content-center">
+                <div className="titleStudent">
+                    <h3 className="titleText text-center text-warning">Bienvenido de vuelta {user.user_name}</h3>
+                </div>
             </div>
-          </div>
-          <div className="cardBody">
-            <h6 className="text-center fst-italic">
-              Vaya a mis cursos si quieres seguir con el progreso de estos
-            </h6>
-          </div>
+            <div className="cardBody">
+                <h6 className="text-center fst-italic">Vaya a mis cursos si quieres seguir con el progreso de estos</h6>
+            </div>
         </div>
-      )}
-      {courseMaterial && (
-        <div className="coursesTableCard">
-          <div className="cardTitle">
-            <div className="title">
-              <div className="iconContainer">
-                <GiClassicalKnowledge />
-              </div>
-              <h5 className="titleText">
-                {courseMaterial && courseMaterial.course_name}
-              </h5>
+        }
+        {courseMaterial && <div className="coursesTableCard">
+            <div className="cardTitle">
+                <div className="title w-100 d-flex">
+                    <div className="iconContainer">
+                        <GiClassicalKnowledge />
+                    </div>
+                    <div className="d-flex justify-content-between w-100">
+                        <h5 className="titleText">{courseMaterial && courseMaterial[0]?.course_name}</h5>
+                        <button className="btnOutline1">ver más</button>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div className="cardBody">
-            {unit &&
-              unit.map((elem, idx) => {
-                return (
-                  <table className="coursesTableStudent mb-4">
-                    <thead>
-                      <tr key={idx} style={{ paddingTop: "10px" }}>
-                        <th className="textReduce text-warning w-75">
-                          <div className="oculto">{elem}</div>
-                        </th>
-                        <th className="text-warning text-center">Estado</th>
-                        <th className="text-warning text-center">Recursos</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {groupedArray &&
-                        groupedArray[idx].map((elem2) => {
-                          console.log(elem2);
-                          return (
-                            <tr>
-                              <td className="textReduce text-start w-75 ps-3">
-                                <div className="oculto">{elem2}</div>
-                              </td>
-                              <td>
-                                <AiFillEye />
-                              </td>
-                              <td className=" text-center">
-                                <AiFillFile />
-                              </td>
+            <div className="cardBody">
+                {unitsName.map((unitName, unitIdx) => (
+                    <table className="coursesTableStudent mb-4" key={unitIdx}>
+                        <thead>
+                            <tr style={{ paddingTop: '10px' }}>
+                                <th className="textReduce text-warning w-75">
+                                    <div className="oculto">{unitName}</div>
+                                </th>
+                                <th className="text-warning text-center">Estado</th>
+                                <th className="text-warning text-center">Recursos</th>
                             </tr>
-                          );
-                        })}
-                    </tbody>
-                  </table>
-                );
-              })}
-          </div>
+                        </thead>
+                        <tbody>
+                            {courseMaterial
+                                .filter((elem) => elem.unit_tittle === unitName)
+                                .map((lesson, lessonIdx) => (
+                                    <tr key={lessonIdx}>
+                                        <td className="textReduce text-start w-75 ps-3">
+                                            <div className="oculto">{lesson.lesson_title}</div>
+                                        </td>
+                                        <td>
+                                            <AiFillEye
+                                                style={{ color: selectedLessons.includes(lesson.lesson_id) ? 'green' : 'white' }}
+                                            />
+                                        </td>
+                                        <td>
+                                            <AiFillFile
+                                                role="button"
+                                                className="text-success"
+                                                onClick={() => downloadResource(lesson.lesson_id)}
+                                            />
+                                        </td>
+                                    </tr>
+                                ))}
+                        </tbody>
+                    </table>
+                ))}
+            </div>
         </div>
-      )}
+        }
     </>
-  );
+    )
 };
+
+
+
+
+
