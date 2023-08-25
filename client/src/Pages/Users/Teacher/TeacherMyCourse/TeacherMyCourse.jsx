@@ -6,18 +6,18 @@ import { EditMyProfileModal } from "../../../../components/EditMyProfileModal/Ed
 import { DroneMasterContext } from "../../../../context/DroneMasterProvider";
 import { AiFillStar } from "react-icons/ai";
 import { AiOutlineUser } from "react-icons/ai";
-import { TeacherCoursesCard } from "../TeacherLanding/components/TeacherCoursesCard/TeacherCoursesCard";
 import { TeacherOnecourseContent } from "./components/TeacherOnecourseContent/TeacherOnecourseContent";
 import { CourseStatsChart } from "./components/CourseStatsChart/CourseStatsChart";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
 import "./teacherMyCourse.scss";
+import { TeacherCourseList } from "./components/TeacherCourseList/TeacherCourseList";
 
 
 
 export const TeacherMyCourse = () => {
-  const { user, setCourseMaterial } = useContext(DroneMasterContext);
+  const { user } = useContext(DroneMasterContext);
   const { course_id } = useParams();
   const [myCourseInfo, setMyCourseInfo] = useState();
   const [myOneCourseStudentsData, setMyOneCourseStudentsData] = useState();
@@ -30,7 +30,6 @@ export const TeacherMyCourse = () => {
     .get(`http://localhost:4000/teachers/myCourses/inscriptionDates/${course_id}`)
     .then((res) => {
       setInscriptionDates(res.data)
-      console.log(res.data,  "aaaaaaaaaaaaaaaaaaaaaaaaaa");;
     })
     .catch((error) => console.log(error));
 
@@ -48,6 +47,7 @@ export const TeacherMyCourse = () => {
   }, [user]);
 
   useEffect(() => {
+    
     //Get all students info from a course
     axios
       .get(`http://localhost:4000/teachers/myCourses/students/${course_id}`)
@@ -87,16 +87,21 @@ export const TeacherMyCourse = () => {
             <AiOutlineUser />
           </CounterCard>
         </div>
-        <TeacherCoursesCard myCoursesData={myCoursesData} />
+
+        <TeacherCourseList myCoursesData={myCoursesData} />
+
+        <CourseStatsChart inscriptionDates={inscriptionDates} />
       </aside>
       <div className="mainContainer">
+        <TeacherOnecourseContent myCourseInfo={myCourseInfo} />
+
+       
+
         <TeacherOneCourseStudentsTable
           myOneCourseStudentsData={myOneCourseStudentsData} 
         />
 
-        <TeacherOnecourseContent myCourseInfo={myCourseInfo} />
-
-        {/* <CourseStatsChart inscriptionDates={inscriptionDates} /> */}
+     
       
       </div>
       <EditMyProfileModal

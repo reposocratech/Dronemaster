@@ -215,7 +215,7 @@ class courseControllers {
   // http://localhost:4000/courses/allCategories
   selectAllCourseCategories = (req, res) => {
     const sql =
-      "SELECT DISTINCT category.category_id, category.category_name FROM category  INNER JOIN course ON category.category_id = course.category_id AND course.course_is_hidden = 0";
+      "SELECT DISTINCT category.category_id, category.category_name FROM category  INNER JOIN course ON category.category_id = course.category_id AND course.course_is_hidden = 0 AND category_is_deleted = 0";
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
