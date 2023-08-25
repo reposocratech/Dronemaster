@@ -41,6 +41,7 @@ class teacherControllers {
   // http://localhost:4000/teachers/myCourses/courseInfo/:course_id
   selectMyCourseInfo = (req, res) => {
     const { course_id } = req.params;
+    console.log(course_id);
 
     let sql = `SELECT course.score AS course_score, course.course_id, unit.unit_id, lesson.lesson_id, resource.resource_id, course.course_name, unit.unit_tittle, lesson.lesson_title FROM course INNER JOIN unit ON course.course_id = unit.course_id INNER JOIN lesson ON unit.course_id = lesson.course_id AND unit.unit_id = lesson.unit_id LEFT JOIN resource ON lesson.resource_id = resource.resource_id WHERE course.course_id = ${course_id}`;
 
