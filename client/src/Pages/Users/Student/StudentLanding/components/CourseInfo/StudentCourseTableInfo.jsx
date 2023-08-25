@@ -4,22 +4,18 @@ import { DroneMasterContext } from "../../../../../../context/DroneMasterProvide
 import { AiFillEye, AiFillFile } from "react-icons/ai";
 import '../../studentLandingStyle.scss'
 import axios from "axios";
-
 export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOneCourse, courseId }) => {
     const { courseMaterial, user } = useContext(DroneMasterContext);
     const [unitsName, setUnitsName] = useState([]);
     const [lessonViewed, setLessonViewed] = useState([])
     const [resetUseEffect, setResetUseEffect] = useState(false)
     const [selectedLessons, setSelectedLessons] = useState([]);
-
     const uniqueUnitNames = Array.from(
         new Set(courseMaterial?.map((item) => item.unit_tittle))
     );
-
     useEffect(() => {
         setUnitsName(uniqueUnitNames);
     }, [courseMaterial]);
-
     useEffect(() => {
         if (courseId) {
             axios
@@ -29,9 +25,7 @@ export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOn
                 })
                 .catch((err) => console.log(err))
         }
-
     }, [resetUseEffect, courseId])
-
     useEffect(() => {
         if (courseId) {
             axios
@@ -41,9 +35,7 @@ export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOn
                 })
                 .catch((err) => console.log(err))
         }
-
     }, [resetUseEffect, courseId])
-
     useEffect(() => {
         if (courseId) {
             axios
@@ -54,14 +46,11 @@ export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOn
                 .catch((err) => console.log(err))
         }
     }, [resetUseEffect, user, courseId])
-
     useEffect(() => {
         setSelectedLessons(lessonViewed);
     }, [resetUseEffect, user, lessonViewed, selectedLessons])
-
     console.log(selectedLessons);
     //console.log("el selected", lessonViewed);
-
     const toggleLesson = (lessonId) => {
         if (selectedLessons.includes(lessonId)) {
             setSelectedLessons(selectedLessons.filter((id) => id !== lessonId));
@@ -69,19 +58,15 @@ export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOn
             setSelectedLessons([...selectedLessons, lessonId]);
         }
     };
-
     const downloadResource = (lesson_id) => {
-
         axios
             .post(`http://localhost:4000/students/registerLessonViewed/${user.user_id}/${lesson_id}/${courseId}`)
             .then((res) => {
                 toggleLesson(lesson_id)
                 setResetUseEffect(!resetUseEffect);
-
             })
             .catch((err) => console.log(err))
     }
-
     return (<>
         {!courseMaterial && <div className="coursesTableCard">
             <div className="cardTitle justify-content-center">
@@ -93,7 +78,6 @@ export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOn
                 <h6 className="text-center fst-italic">Vaya a mis cursos si quieres seguir con el progreso de estos</h6>
             </div>
         </div>
-
         }
         {courseMaterial && <div className="coursesTableCard">
             <div className="cardTitle">
@@ -105,7 +89,6 @@ export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOn
                         <h5 className="titleText">{courseMaterial && courseMaterial[0]?.course_name}</h5>
                         <button className="btnOutline1">ver más</button>
                     </div>
-
                 </div>
             </div>
             <div className="cardBody">
@@ -129,12 +112,6 @@ export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOn
                                             <div className="oculto">{lesson.lesson_title}</div>
                                         </td>
                                         <td>
-                                            {/* {lessonViewed[lessonIdx]?.lesson_id === lesson.lesson_id ? <AiFillEye
-                                                style={{ color: 'green' }}
-                                            /> : <AiFillEye
-                                                style={{ color: 'white' }}
-                                            />} */}
-
                                             <AiFillEye
                                                 style={{ color: selectedLessons.includes(lesson.lesson_id) ? 'green' : 'white' }}
                                             />
@@ -151,48 +128,14 @@ export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOn
                         </tbody>
                     </table>
                 ))}
-                {/* {unitsName.map((unitName, unitIdx) => {
-                    return (
-                        <table className="coursesTableStudent mb-4">
-                            <thead>
-                                <tr key={unitIdx} style={{ paddingTop: '10px' }}>
-                                    <th className="textReduce text-warning w-75">
-                                        <div className="oculto">{unitName}</div>
-                                    </th>
-                                    <th className="text-warning text-center">Estado</th>
-                                    <th className="text-warning text-center">Recursos</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {courseMaterial.filter((elem) => elem.unit_tittle === unitName).map((lesson,
-                                    idx) => (
-                                    <tr key={idx}>
-                                        <td className="textReduce text-start w-75 ps-3">
-                                            <div className="oculto">{lesson.lesson_title}</div>
-                                        </td>
-
-                                        {lessonViewed[idx]?.lesson_id === lesson.lesson_id && <td>
-                                            <AiFillEye />
-                                        </td>}
-                                        {lessonViewed[idx]?.lesson_id !== lesson.lesson_id && <td>
-                                            <AiFillEye />
-                                        </td>}
-                                        <td >
-                                            <AiFillFile role="button" className="text-success" onClick={() => { downloadResource(lesson.lesson_id) }} />
-                                        </td>
-                                    </tr>
-                                ))
-                                }
-                            </tbody>
-                        </table>
-                    );
-                })} */}
             </div>
         </div>
         }
-
     </>
-
     )
-
 };
+
+
+
+
+

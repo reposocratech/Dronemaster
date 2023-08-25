@@ -24,31 +24,31 @@ const AdminContadorCard = () => {
 
   return (
     <div className="sideContent">
-      <div className="title">
-        <h6 className="titleText">Contador</h6>
-      </div>
-
       <div className="cardBody d-flex">
-        <div className="lineInfo">
+        <div className="counterCard">
           <span className="iconContainer">
             <AiOutlineUser />
           </span>
           <h6>Profesores</h6>
           <p>{counter.TotalTeachers}</p>
         </div>
-        <div className="lineInfo">
+        <div className="counterCard">
           <span className="iconContainer">
             <AiOutlineUser />
           </span>
-          <h6>Alumnos</h6>
-          <p>{counter.TotalStudents}</p>
+          <div className="textContianer">
+            <h6 className="title">Alumnos</h6>
+            <p>{counter.TotalStudents}</p>
+          </div>
         </div>
-        <div className="lineInfo">
+        <div className="counterCard">
           <span className="iconContainer">
             <BsBook />
           </span>
-          <h6>Cursos</h6>
-          <p>{counter.TotalCourse}</p>
+          <div className="textContianer">
+            <h6 className="title">Cursos</h6>
+            <p>{counter.TotalCourse}</p>
+          </div>
         </div>
       </div>
     </div>

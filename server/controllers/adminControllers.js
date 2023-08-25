@@ -125,10 +125,10 @@ class adminControllers {
   };
 
   // 10.- Get All Courses (admin)
-  // http://localhost:4000/admin/getAllCourses
+  // http://localhost:4000/admin/allCourses
   viewAllCourses = (req, res) => {
     let sql = "SELECT * FROM course";
-    
+
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
@@ -194,6 +194,15 @@ class adminControllers {
     }
   };
 
+  // 14.- Select all units, lessons and resource from a course
+  // http://localhost:4000/admin/courseInfo
+  ViewCourseInfo = (req, res) => {
+    let sql = `SELECT course.score AS course_score, course.course_id, unit.unit_id, lesson.lesson_id, resource.resource_id, course.course_name, unit.unit_tittle, lesson.lesson_title FROM course LEFT JOIN unit ON course.course_id = unit.course_id LEFT JOIN lesson ON unit.course_id = lesson.course_id AND unit.unit_id = lesson.unit_id LEFT JOIN resource ON lesson.resource_id = resource.resource_id`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
 }
 
 module.exports = new adminControllers();
