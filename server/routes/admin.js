@@ -40,9 +40,8 @@ router.put("/passedCourse/:user_id", adminControllers.passedCourse);
 // localhost:4000/admin/notPassedCourse/:user_id
 router.put("/notPassedCourse/:user_id", adminControllers.notPassedCourse);
 
-
 // 10.- view All Courses (admin)
-// http://localhost:4000/admin/getAllCourses
+// http://localhost:4000/admin/allCourses
 router.get("/allCourses", adminControllers.viewAllCourses);
 
 // 11.- Create Lesson (admin)
@@ -60,5 +59,10 @@ router.post(
   multer("resources"),
   adminControllers.createResource
 );
+
+// 14.- Select all units, lessons and resource from a course
+// http://localhost:4000/admin/courseInfo
+
+router.get("/courseInfo", multer("resources"), adminControllers.ViewCourseInfo);
 
 module.exports = router;

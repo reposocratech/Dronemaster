@@ -57,7 +57,7 @@ const AdminLanding = () => {
     <Container fluid className="mainAdmin">
       <aside className="sideContent">
         <AdminCard />
-        <div className="counterContainer d-flex">
+        <div>
           <AdminContadorCard />
         </div>
 

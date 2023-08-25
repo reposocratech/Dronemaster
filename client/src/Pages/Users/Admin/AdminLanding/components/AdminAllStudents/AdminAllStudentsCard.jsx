@@ -9,6 +9,9 @@ import { HiOutlineMail } from "react-icons/hi";
 import { AiOutlinePhone } from "react-icons/ai";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { Container } from "react-bootstrap";
+import { BsPencil } from "react-icons/bs";
+import { BsEye } from "react-icons/bs";
+import { BsEyeSlash } from "react-icons/bs";
 
 const AdminAllStudentsCard = () => {
   const [students, setStudents] = useState();
@@ -28,7 +31,7 @@ const AdminAllStudentsCard = () => {
   }, []);
 
   return (
-    <Container className="studentsTableCard">
+    <Container className="adminTableCard">
       <div className="cardTitle">
         <div className="title">
           <div className="iconContainer">
@@ -40,41 +43,71 @@ const AdminAllStudentsCard = () => {
 
       {students?.map((student) => {
         return (
-          <tr key={student?.user_id}>
-            {/*  <td className="tdImg">
-              <div className="tableImg">
-                {student?.student_img ? (
-                  <img
-                    src={`http://localhost:4000/images/user/${student.student_img}`}
-                  />
-                ) : (
-                  <h6 className="avatarText">
-                    {student?.student_name.at(0).toUpperCase()}
-                  </h6>
-                )}
-              </div>
-            </td> */}
-            <td className="tableCellName">{student?.user_name}</td>
-            <td>
-              <div className="tableCell">{student?.user_lastname}</div>
-            </td>
-            <td>
-              <div className="tableCell iconCell">
-                <div className="tableCellContent">
-                  <HiOutlineMail className="icon" />
-                  <span className="d-none d-md-inline ">{student?.email}</span>
+          <tbody>
+            <tr key={student?.user_id}>
+              <td className="tdImg">
+                <div className="tableImg">
+                  {student?.user_img ? (
+                    <img
+                      src={`http://localhost:4000/images/user/${student?.user_img}`}
+                    />
+                  ) : (
+                    <h6 className="avatarText">
+                      {student?.user_name.at(0).toUpperCase()}
+                    </h6>
+                  )}
                 </div>
-              </div>
-            </td>
-            <td>
-              <div className="tableCell iconCell">
-                <div className="tableCellContent">
-                  <AiOutlinePhone className="icon" />
-                  <span className="d-none d-md-inline ">{student?.phone}</span>
+              </td>
+              <td className="tableCellName">{student?.user_name}</td>
+              <td>
+                <div className="tableCell">{student?.user_lastname}</div>
+              </td>
+              <td>
+                <div className="tableCell iconCell">
+                  <div className="tableCellContent">
+                    <HiOutlineMail className="icon" />
+                    <span className="d-none d-md-inline ">
+                      {student?.email}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </td>
-          </tr>
+              </td>
+              <td>
+                <div className="tableCell iconCell">
+                  <div className="tableCellContent">
+                    <AiOutlinePhone className="icon" />
+                    <span className="d-none d-md-inline ">
+                      {student?.phone}
+                    </span>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div className="tableCell iconCell">
+                  <div className="tableCellContent">
+                    <BsPencil className="icon" />
+                    {/* <span className="d-none d-md-inline ">Editar</span> */}
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div className="tableCell iconCell">
+                  <div className="tableCellContent">
+                    <BsEye className="icon" />
+                    {/* <span className="d-none d-md-inline ">Habilitar</span> */}
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div className="tableCell iconCell">
+                  <div className="tableCellContent">
+                    <BsEyeSlash className="icon" />
+                    {/* <span className="d-none d-md-inline ">Deshabilitar</span> */}
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
         );
       })}
     </Container>

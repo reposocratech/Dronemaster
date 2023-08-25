@@ -198,7 +198,7 @@
   gap: 8px;
 
   .coursesTableCard,
-  .studentsTableCard {
+  .adminTableCard {
     display: flex;
     flex-direction: column;
     background-color: $CuaternaryDark;
@@ -248,10 +248,10 @@
       width: 100%;
       padding: 0 2vw;
 
-      .coursesTable {
+      .adTable {
         width: 100%;
 
-        thead {
+        tr {
           color: $TertiaryDarkColor;
           border-bottom: 1px solid $TertiaryDarkColor;
 
@@ -267,29 +267,31 @@
           }
         }
 
-        tbody {
+        .tableStyle {
           width: 100%;
+          border-bottom: 1px solid $TertiaryDarkColor;
+          height: 40px;
+          display: flex;
+          justify-content: space-between;
 
-          tr {
-            width: 100%;
-            border-bottom: 1px solid $TertiaryDarkColor;
-            height: 40px;
+          .tdImg {
+            .tableImg {
+              margin: auto;
+              height: 25px;
+              width: 25px;
+              background-color: $PrimaryOrangeColor;
+              border-radius: 5px;
+              display: grid;
+              place-items: center;
 
-            .tdImg {
-              .tableImg {
-                margin: auto;
-                height: 25px;
-                width: 25px;
-                background-color: $PrimaryOrangeColor;
-                border-radius: 5px;
-                display: grid;
-                place-items: center;
-
-                h6 {
-                  margin: 0;
-                }
+              h6 {
+                margin: 0;
               }
             }
+          }
+
+          tbody {
+            width: 100%;
 
             td {
               text-align: center;
