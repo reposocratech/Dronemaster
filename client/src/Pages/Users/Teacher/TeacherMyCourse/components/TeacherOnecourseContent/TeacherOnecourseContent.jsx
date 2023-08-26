@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { GiClassicalKnowledge } from "react-icons/gi";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMdArrowDropup } from "react-icons/io";
-import { BsFillFileEarmarkArrowDownFill, BsFillFileArrowUpFill , BsFillFileEarmarkExcelFill } from "react-icons/bs";
+import {
+  BsFillFileEarmarkArrowDownFill,
+  BsFillFileArrowUpFill,
+  BsFillFileEarmarkExcelFill,
+} from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
 export const TeacherOnecourseContent = ({ myCourseInfo }) => {
@@ -43,7 +47,14 @@ export const TeacherOnecourseContent = ({ myCourseInfo }) => {
             {[myCourseInfo && myCourseInfo[0].course_name]}
           </h5>
         </div>
-          <button className="btnOutline1" onClick={()=>navigate(`/courses/courseInfo/${myCourseInfo[0].course_id}`)}>Ver más</button>
+        <button
+          className="btnOutline1"
+          onClick={() =>
+            navigate(`/courses/courseInfo/${myCourseInfo[0].course_id}`)
+          }
+        >
+          Ver más
+        </button>
       </div>
 
       <div className="listContainer">
@@ -83,9 +94,9 @@ export const TeacherOnecourseContent = ({ myCourseInfo }) => {
                     <div className="lessonTitle">
                       <div className="lessonText">{lesson.lesson_title}</div>
                       <div className="resourceContainer">
-                        <BsFillFileEarmarkArrowDownFill className="downloadIcon"/>
-                        <BsFillFileArrowUpFill  className="uploadIcon"/>
-                        <BsFillFileEarmarkExcelFill  className="deleteIcon"/>
+                        <BsFillFileEarmarkArrowDownFill className="downloadIcon" />
+                        <BsFillFileArrowUpFill className="uploadIcon" />
+                        <BsFillFileEarmarkExcelFill className="deleteIcon" />
                       </div>
                     </div>
                   </li>

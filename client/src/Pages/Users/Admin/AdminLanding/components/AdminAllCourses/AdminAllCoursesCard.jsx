@@ -16,10 +16,14 @@ import AdminViewOneCourse from "../AdminViewOneCourse/AdminViewOneCourse";
 import { BsBook } from "react-icons/bs";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMdArrowDropup } from "react-icons/io";
+import { useForm } from "react-hook-form";
+import { FiSearch } from "react-icons/fi";
 
 const AdminAllCoursesCard = () => {
   const [allCourses, setAllCourses] = useState();
   const [openUnits, setOpenUnits] = useState([]);
+  const [closeUnits, setCloseUnits] = useState([]);
+  const { register, handleSubmit, reset } = useForm();
 
   useEffect(() => {
     axios
@@ -33,81 +37,198 @@ const AdminAllCoursesCard = () => {
   //DROPDOWN
 
   const closedHeight = "0px";
-  const openedHeight = "35px";
+  const openedHeight = "300px";
 
-  const toggleUnit = (allCourses) => {
-    if (openUnits.includes(allCourses)) {
-      setOpenUnits(openUnits.filter((index) => index !== allCourses));
+  const toggleUnit = (course) => {
+    if (openUnits.includes(course)) {
+      setOpenUnits(openUnits.filter((index) => index !== course));
     } else {
-      setOpenUnits([...openUnits, allCourses]);
+      setOpenUnits([...openUnits, course]);
     }
+  };
+
+  const onSubmit = (data) => {
+    setSearchResultData(
+      courses.filter((course) =>
+        course.course_name
+          .toLowerCase()
+          .includes(data.courseSearch.toLowerCase())
+      )
+    );
+    reset();
   };
 
   return (
     <Container className="adminTableCard">
       <div className="cardTitle">
-        <div className="titleAdmin">
+        <div className="title">
           <div className="iconContainer">
-            <BsBook />
+            <AiOutlineUser />{" "}
           </div>
-          <h5 className="titleText m-3">Todos los Cursos</h5>
+          <div>
+            <h5 className="titleText">Todos los Cursos</h5>
+          </div>
         </div>
-        <button className="btnOutline3">Añadir nuevo curso</button>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="searchBar">
+            <FiSearch />
+            <input
+              type="text"
+              placeholder="Buscar Curso..."
+              {...register("courseSearch")}
+            />
+          </div>
+        </form>
       </div>
-      {/*       <div className="dropdownContainer" onClick={() => toggleUnit(allCourses)}>
-        {openUnits.includes(allCourses) ? (
-          <IoMdArrowDropup />
-        ) : (
-          <IoMdArrowDropdown />
-        )}
-      </div> */}
-      <div>
-        <div>Contenido</div>
 
-        <div>Recursos</div>
-      </div>
-      <hr />
+      <div className="cardBody">
+        <table className="adTable">
+          <thead>
+            <tr>
+              <th colSpan={2}>Material</th>
 
-      {allCourses?.map((course) => {
-        return (
-          <table className="coursesTableStudent mb-4">
-            <tbody>
-              <th className="textReduce text-warning w-75">
-                <div className="oculto">{course?.course_name}</div>
+              {/*               <th className="iconHeadName">
+                {" "}
+                <HiOutlineMail className="headIcon d-md-none d-flex fs-2" />{" "}
+                <span className=" d-none d-md-flex"></span>
               </th>
-              <th>
-                <AiOutlineClockCircle className="icon" />
-                {course?.course_length}h
-              </th>
-              <th>
-                <AiOutlineStar className="icon" /> {course?.score}
-              </th>
-              <th>
-                <BsPencil className="icon" />
-              </th>
-              <th>
-                <BsEye className="icon" />
-              </th>
-              <th>
-                <BsEyeSlash className="icon" />
-              </th>
-              <hr className="text-warning" />
-              {/* DROPDOWN */}
-              <div
-                className="dropdownContainer"
-                onClick={() => toggleUnit(allCourses)}
-              >
-                {openUnits.includes(allCourses) ? (
-                  <IoMdArrowDropup />
+              <th className="iconHeadName">
+                <AiOutlinePhone className="headIcon d-md-none d-flex fs-2" />{" "}
+                <span className=" d-none d-md-flex"></span>
+              </th> */}
+            </tr>
+          </thead>
+          <tbody>
+            {allCourses ? (
+              <>
+                {allCourses.length == 0 ? (
+                  <p>Sin resultados de busqueda</p>
                 ) : (
-                  <IoMdArrowDropdown />
+                  <>
+                    {allCourses?.map((course) => {
+                      return (
+                        <tr key={course.course_id}>
+                          <td className="tableCellName">
+                            {course.course_name}
+                          </td>
+                          {/* <td>
+                            <div className="tableCell iconCell">
+                              <div className="tableCellContent">
+                                <HiOutlineMail className="icon text-warning" />
+                                <span className="d-none d-md-inline ">
+                                  {course.email}
+                                </span>
+                              </div>
+                            </div>
+                          </td>
+
+                          <td>
+                            <div className="tableCell iconCell">
+                              <div className="tableCellContent">
+                                <AiOutlinePhone className="icon text-warning" />
+                                <span className="d-none d-md-inline ">
+                                  {course.phone}
+                                </span>
+                              </div>
+                            </div>
+                          </td> */}
+                        </tr>
+                      );
+                    })}
+                  </>
                 )}
+              </>
+            ) : (
+              <>
+                {allCourses?.map((course) => {
+                  return (
+                    <tr key={course.course_id}>
+                      <td className="tableCellName">{course.course_name}</td>
+                      {/*  <td>
+                        <div className="tableCell iconCell">
+                          <div className="tableCellContent">
+                            <HiOutlineMail className="icon" />
+                            <span className="d-none d-md-inline ">
+                              {course.user_email}
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="tableCell iconCell">
+                          <div className="tableCellContent">
+                            <AiOutlinePhone className="icon" />
+                            <span className="d-none d-md-inline ">
+                              {course.user_phone}
+                            </span>
+                          </div>
+                        </div>
+                      </td> */}
+                    </tr>
+                  );
+                })}
+              </>
+            )}
+          </tbody>
+        </table>
+
+        {/*  {allCourses?.map((course) => {
+          return (
+            <table className="tableCellName mb-4">
+              <tbody>
+                <th className="tableCell w-75">
+                  <div className="oculto">{course?.course_name}</div>
+                </th>
+                <th>
+                  <AiOutlineClockCircle className="icon" />
+                  {course?.course_length}h
+                </th>
+                <th>
+                  <AiOutlineStar className="icon" /> {course?.score}
+                </th>
+                <th>
+                  <BsPencil className="icon" />
+                </th>
+                <th>
+                  <BsEye className="icon" />
+                </th>
+                <span className="d-none d-md-inline "></span>
+                <th>
+                  <BsEyeSlash className="icon" />
+                </th>
+                <hr className="text-warning" />
+              </tbody>
+
+              
+              <tbody>
+               <div key={course}>
+                <div
+                  className="dropdownContainer"
+                  onClick={() => toggleUnit(course)}
+                >
+                  {openUnits.includes(course) ? (
+                    <IoMdArrowDropup />
+                  ) : (
+                    <IoMdArrowDropdown />
+                  )}
+                </div>
               </div>
-              <AdminViewOneCourse course_id={course.course_id} />
-            </tbody>
-          </table>
-        );
-      })}
+              <div
+                className="listedLesson"
+                style={{
+                  height: openUnits.includes(course)
+                    ? openedHeight
+                    : closedHeight,
+                  transition: "height 0.75s ease-in-out",
+                }}
+              > 
+                <AdminViewOneCourse course_id={course.course_id} />
+              
+              </tbody>
+            </table>
+          );
+        })} */}
+      </div>
     </Container>
   );
 };

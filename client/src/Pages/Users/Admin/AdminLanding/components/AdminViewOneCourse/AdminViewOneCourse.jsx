@@ -8,20 +8,15 @@ import {
   BsFillFileArrowUpFill,
   BsFillFileEarmarkExcelFill,
 } from "react-icons/bs";
-
 import { BsPencil } from "react-icons/bs";
 import { BsEye } from "react-icons/bs";
 import { BsEyeSlash } from "react-icons/bs";
-
 const AdminViewOneCourse = ({ course_id }) => {
   const [allInformation, setAllInformation] = useState();
   const [unitsName, setUnitsName] = useState([]);
   const [openUnits, setOpenUnits] = useState([]);
-
   console.log("333333333333333333333333333333", course_id);
-
   /* console.log("todos los cursooooooos", allCourses); */
-
   useEffect(() => {
     axios
       .get(`http://localhost:4000/teachers/myCourses/courseInfo/${course_id}`)
@@ -31,27 +26,19 @@ const AdminViewOneCourse = ({ course_id }) => {
       })
       .catch((err) => console.log(err));
   }, [course_id]);
-
   console.log("*********************************", allInformation);
-
   const uniqueUnitNames = Array.from(
     new Set(allInformation?.map((item) => item.unit_tittle))
   );
-
   console.log(uniqueUnitNames);
-
   useEffect(() => {
     setUnitsName(uniqueUnitNames);
   }, [allInformation]);
-
   console.log("1111111111111111111111111111111111111", course_id);
   console.log("2222222222222222222222222222222", allInformation);
-
   //DROPDOWN
-
   const closedHeight = "0px";
   const openedHeight = "35px";
-
   const toggleUnit = (unitIndex) => {
     if (openUnits.includes(unitIndex)) {
       // Si el índice ya está en el array, lo eliminamos
@@ -61,9 +48,8 @@ const AdminViewOneCourse = ({ course_id }) => {
       setOpenUnits([...openUnits, unitIndex]);
     }
   };
-
   return (
-    <tr className="coursesTableStudent mb-4">
+    <tr className="coursesTableCard mb-4">
       {unitsName.map((unitName, unitIndex) => (
         <div key={unitIndex}>
           <td className="d-flex me-4">
@@ -84,7 +70,6 @@ const AdminViewOneCourse = ({ course_id }) => {
               .map((lesson) => (
                 <div className="d-flex">
                   <div>{lesson.lesson_title}</div>
-
                   <div className="resourceContainer">
                     <BsPencil className="icon  text-warning" />
                     <BsEye className="icon  text-warning" />
@@ -98,7 +83,6 @@ const AdminViewOneCourse = ({ course_id }) => {
                 .map((resource) => (
                   <div className="d-flex">
                     <div> Recurso: {resource.resource_id}</div>
-
                     <div className="resourceContainer"></div>
                   </div>
                 ))}
@@ -109,5 +93,4 @@ const AdminViewOneCourse = ({ course_id }) => {
     </tr>
   );
 };
-
 export default AdminViewOneCourse;
