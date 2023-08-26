@@ -39,6 +39,10 @@ router.get("/allCategories", courseControllers.selectAllCourseCategories);
 // http://localhost:4000/courses/courseTags/:course_id
 router.get("/courseTags/:course_id", courseControllers.selectAllCourseTags);
 
+// 9.- Get info for course edition info
+// http://localhost:4000/courses/courseInfoEdition/:course_id
+router.get("/courseInfoEdition/:course_id", courseControllers.selectCourseEditionInfo);
+
 
 
 

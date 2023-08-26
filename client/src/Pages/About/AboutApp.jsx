@@ -2,6 +2,7 @@ import React from 'react'
 import './AboutApp.scss'
 import { Container } from 'react-bootstrap'
 import { CourseCreationModal } from '../Courses/components/CourseCreationModal/CourseCreationModal'
+import { CourseEditionModal } from '../Courses/components/CourseEditionModal/CourseEditionModal'
 
 export const AboutApp = () => {
     return (
@@ -38,6 +39,7 @@ export const AboutApp = () => {
             <p className='text-center text-warning fs-6 pt-4'>¡Explora, Aprende, Lidera con DroneMaster!</p>
 
             <CourseCreationModal/>
+            <CourseEditionModal/>
 
         </Container>
     )

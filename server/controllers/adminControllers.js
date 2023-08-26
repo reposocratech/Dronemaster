@@ -203,6 +203,18 @@ class adminControllers {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
   };
+
+  // 15.- Delete a Tag from a course
+  // http://localhost:4000/admin/deleteCourseTag/:tag_id/:course_id
+  deleteTagCourse = (req, res) => {
+    const { course_id, tag_id } = req.params;
+
+    let sql = `DELETE FROM tag_course WHERE tag_id = ${tag_id} AND course_id = ${course_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
 }
 
 module.exports = new adminControllers();

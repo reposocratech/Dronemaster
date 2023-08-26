@@ -97,9 +97,12 @@ const LoginModal = ({ setShowLoginModal, showLoginModal, openRegisterModal }) =>
                 </Col>
                 <Col className="LI">
                   <span>¿Aún no formas parte de nuestra comunidad? </span>
-                  <button className="span" onClick={(e) => { e.preventDefault(), openRegisterModal() }}>
+                  <span className="span" onClick={()=> {
+                    closeLoginModal()
+                    openRegisterModal()} }>
+                  
                     Registrate
-                  </button>
+                  </span>
                 </Col>
               </form>
             </div>
