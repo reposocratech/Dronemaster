@@ -10,6 +10,7 @@ import "../../../AllCourses/allCoursesStyle.scss";
 import { DroneMasterContext } from "../../../../context/DroneMasterProvider";
 import { StudentCourseTableInfo } from "./components/CourseInfo/StudentCourseTableInfo";
 import { CircularBarProgress } from "./components/CircularBarProgress/CircularBarProgress";
+import { EditMyProfileModal } from "../../../../components/EditMyProfileModal/EditMyProfileModal";
 
 const StudentLanding = () => {
   const { user } = useContext(DroneMasterContext);
@@ -18,10 +19,7 @@ const StudentLanding = () => {
   const [lessonsViewedByStudent, setLessonsViewedByStudent] = useState()
   const [lessonsOneCourse, setLessonsOneCourse] = useState(0)
   const [courseId, setCourseId] = useState(0)
-
-  // console.log("total un curso", lessonsOneCourse);
-  // console.log("vistas por user", lessonsViewedByStudent);
-
+  const [showEditionModal, setShowEditionModal] = useState(false);
 
   //Get all courses of the user
   useEffect(() => {
@@ -45,7 +43,7 @@ const StudentLanding = () => {
   return (
     <div className="mainSection">
       <aside className="sideContent">
-        <StudentCard user={user} />
+        <StudentCard user={user} setShowEditionModal={setShowEditionModal} />
         <UserCardInfo user={user} />
         <StudentCoursesCard myCoursesData={myCoursesData} setCourseId={setCourseId} />
         {courseId !== 0 && <CircularBarProgress lessonsOneCourse={lessonsOneCourse} lessonsViewedByStudent={lessonsViewedByStudent} courseId={courseId} myCoursesData={myCoursesData} />}
@@ -68,6 +66,11 @@ const StudentLanding = () => {
           </div>
         )}
       </div>
+      <EditMyProfileModal
+        showEditionModal={showEditionModal}
+        setShowEditionModal={setShowEditionModal}
+        user={user}
+      />
     </div>
   );
 };

@@ -10,12 +10,10 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
-const LoginModal = ({ setShowLoginModal, showLoginModal, openRegisterModal }) => {
+const LoginModal = ({ setShowLoginModal, showLoginModal, setShowRegisterModal, openRegisterModal }) => {
   const closeLoginModal = () => {
     setShowLoginModal(false);
   };
-
-
   const navigate = useNavigate();
   const { setUser, isLogged, setIsLogged, openRegister } =
     useContext(DroneMasterContext);
@@ -30,7 +28,6 @@ const LoginModal = ({ setShowLoginModal, showLoginModal, openRegisterModal }) =>
       password: "",
     },
   });
-
   const onSubmit2 = (data) => {
     axios
       .post("http://localhost:4000/login", data)
@@ -41,6 +38,7 @@ const LoginModal = ({ setShowLoginModal, showLoginModal, openRegisterModal }) =>
         setIsLogged(true);
         reset();
         setShowLoginModal(false);
+        setShowRegisterModal(false)
 
         const type = res.data.user.type;
         console.log("**********************", res.data.user.type);
@@ -56,9 +54,8 @@ const LoginModal = ({ setShowLoginModal, showLoginModal, openRegisterModal }) =>
       })
       .catch((error) => console.log(error));
   };
-
   return (
-    <Modal className="main lg" show={showLoginModal} onHide={closeLoginModal}>
+    <Modal className="main lg" show={showLoginModal} onHide={closeLoginModal} animation={false}>
       <Modal.Body className="bckModal">
         <Row>
           <Col className="formContainer">
@@ -74,9 +71,7 @@ const LoginModal = ({ setShowLoginModal, showLoginModal, openRegisterModal }) =>
                   type="email"
                   className="forminput"
                 />
-
                 <p>{errors.email?.message}</p>
-
                 <input
                   {...register("password", {
                     required: "Password must be completed",
@@ -86,9 +81,7 @@ const LoginModal = ({ setShowLoginModal, showLoginModal, openRegisterModal }) =>
                   type="password"
                   className="forminput"
                 />
-
                 <p>{errors.password?.message}</p>
-
                 <Col className="d-flex m-3">
                   <button className="btnNormal me-3"> Aceptar</button>
                   <button className="btnNormal" onClick={() => { closeLoginModal() }}>
@@ -97,16 +90,16 @@ const LoginModal = ({ setShowLoginModal, showLoginModal, openRegisterModal }) =>
                 </Col>
                 <Col className="LI">
                   <span>¿Aún no formas parte de nuestra comunidad? </span>
-                  <span className="span" onClick={()=> {
+                  <span role="button" className="span" onClick={() => {
                     closeLoginModal()
-                    openRegisterModal()} }>
-                  
+                    openRegisterModal()
+                  }}>
+
                     Registrate
                   </span>
                 </Col>
               </form>
             </div>
-
             <div className="form4">
               <div className="text-group">
                 <h1 className="welcome-title">¡Bienvenido de vuelta!</h1>
@@ -124,5 +117,4 @@ const LoginModal = ({ setShowLoginModal, showLoginModal, openRegisterModal }) =>
     </Modal>
   );
 };
-
 export default LoginModal;

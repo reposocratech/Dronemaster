@@ -68,10 +68,10 @@ export const CircularBarProgress = ({ lessonsOneCourse, lessonsViewedByStudent, 
             <div className='d-flex justify-content-center p-3 position-relative'>
                 <Doughnut className='progressDoughnut position-relative' data={data} options={options}>
                 </Doughnut>
-                {courseId !== 0 && <div className='percentageText d-flex justify-content-center pb-2'><h4>{percentage}<span style={{ color: '#f7ab16' }}>%</span></h4></div>}
+                <div className='percentageText d-flex justify-content-center pb-2'><h4>{percentage}<span style={{ color: '#f7ab16' }}>%</span></h4></div>
             </div>
 
-        </div>
+        </div >
 
 
     )

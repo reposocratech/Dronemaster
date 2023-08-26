@@ -9,7 +9,6 @@ import { Col, Container, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-
 const RegisterModal = ({
   showRegisterModal,
   setShowRegisterModal,
@@ -20,7 +19,6 @@ const RegisterModal = ({
   const closeRegisterModal = () => {
     setShowRegisterModal(false);
   };
-
   const {
     register,
     handleSubmit,
@@ -35,10 +33,8 @@ const RegisterModal = ({
     },
   });
 
-
   const onSubmit = (data) => {
     axios
-
       .post("http://localhost:4000/students/registerStudent", data)
       .then((res) => {
         console.log("result.data.user/////////////", res);
@@ -48,9 +44,8 @@ const RegisterModal = ({
       })
       .catch((error) => console.log(error));
   };
-
   return (
-    <Modal show={showRegisterModal} onHide={closeRegisterModal}>
+    <Modal show={showRegisterModal} onHide={closeRegisterModal} animation={false}>
       <Modal.Body className="bckModal">
         <Row>
           <Col className="formContainer">
@@ -79,7 +74,6 @@ const RegisterModal = ({
                   className="forminput"
                 />
                 <p>{errors.firstName?.message}</p>
-
                 <input
                   {...register("user_lastname", {
                     required: "Must be completed",
@@ -90,7 +84,6 @@ const RegisterModal = ({
                   autoComplete="off"
                   className="forminput"
                 />
-
                 <p>{errors.lastName?.message}</p>
                 <input
                   {...register("email", {
@@ -103,7 +96,6 @@ const RegisterModal = ({
                   className="forminput"
                 />
                 <p>{errors.email?.message}</p>
-
                 <input
                   {...register("password", {
                     required: "Must be completed",
@@ -119,7 +111,6 @@ const RegisterModal = ({
                   className="forminput"
                 />
                 <p>{errors.password?.message}</p>
-
                 <div className="d-flex m-3">
                   <button className="btnNormal me-3"> Aceptar</button>
                   <button className="btnNormal" onClick={closeRegisterModal}>
@@ -141,5 +132,4 @@ const RegisterModal = ({
     </Modal>
   );
 };
-
 export default RegisterModal;

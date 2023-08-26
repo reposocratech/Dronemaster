@@ -18,6 +18,8 @@ export const EditMyProfileModal = ({
   const { register, setValue, handleSubmit } = useForm();
   const [profileImg, setProfileImg] = useState();
 
+  console.log("fgfdsghdfhfgdhdfghdfhsisisisisisisi", user?.user_id);
+
   const handleClose = () => {
     setShowEditionModal(false);
   };

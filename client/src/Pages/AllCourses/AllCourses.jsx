@@ -8,11 +8,11 @@ import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 
 export const AllCourses = () => {
 
-    const [categoryData, setCategoryData] = useState()
-    const [courseData, setCourseData] = useState()
-    const [counter, setCounter] = useState(0);
-    const [counterRatio, setCounterRatio] = useState(1);
-    const { course } = useContext(DroneMasterContext);
+  const [categoryData, setCategoryData] = useState()
+  const [courseData, setCourseData] = useState()
+  const [counter, setCounter] = useState(0);
+  const [counterRatio, setCounterRatio] = useState(1);
+  const { course } = useContext(DroneMasterContext);
 
 
   //Gets categories data
@@ -55,17 +55,15 @@ export const AllCourses = () => {
     };
   }, []);
 
-    return (
-        <section className='allCoursesContainer px-sm-5'>
-            {!course && categoryData?.map((cat) => {
-                return (
-                    <CategoryContainer key={cat.category_id} category_id={cat.category_id} category_name={cat.category_name} courseData={courseData} />
-                )
-            })}
+  return (
+    <section className='allCoursesContainer px-sm-5'>
+      {!course && categoryData?.map((cat) => {
+        return (
+          <CategoryContainer key={cat.category_id} category_id={cat.category_id} category_name={cat.category_name} courseData={courseData} />
+        )
+      })}
 
-
-
-      {course?.length === 0 && (
+      {course === 0 && (
         <>
           <div className="categoryContainer">
             <h2 className="categoryTitle text-center text-md-start">

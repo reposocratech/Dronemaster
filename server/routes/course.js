@@ -39,11 +39,16 @@ router.get("/allCategories", courseControllers.selectAllCourseCategories);
 // http://localhost:4000/courses/courseTags/:course_id
 router.get("/courseTags/:course_id", courseControllers.selectAllCourseTags);
 
-// 9.- Get info for course edition info
+// 9.- Suscribe into a course
+// http://localhost:4000/courses/payACourse/:user_id/:course_id
+router.post(
+  "/payACourse/:user_id/:course_id",
+  courseControllers.suscribeIntoACourse
+);
+
+// 10.- Get info for course edition info
 // http://localhost:4000/courses/courseInfoEdition/:course_id
 router.get("/courseInfoEdition/:course_id", courseControllers.selectCourseEditionInfo);
-
-
 
 
 module.exports = router;
