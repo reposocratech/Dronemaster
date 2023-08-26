@@ -94,6 +94,7 @@ const LoginModal = ({ setShowLoginModal, showLoginModal, setShowRegisterModal, o
                     closeLoginModal()
                     openRegisterModal()
                   }}>
+
                     Registrate
                   </span>
                 </Col>

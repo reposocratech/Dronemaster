@@ -1,6 +1,6 @@
 @import "../../../../../public/styles/variables";
 
-.courseCreationModalContainer {
+.courseEditionModalContainer{
   backdrop-filter: blur(4px);
   background-color: none;
   .modalHeader{
@@ -164,6 +164,22 @@
     .tagsList,
     .inputDescription {
       height: 100%;
+        p{
+            margin: 0;
+            .deleteIcon{
+                background-color: red;
+                margin-bottom: 4px;
+                display: none;
+                cursor: pointer;
+            }
+      }
+      p:hover{
+        text-decoration: line-through;
+        .deleteIcon{
+            display: inline;
+        }
+
+      }
     }
 
     .inputTags {
@@ -193,7 +209,7 @@
     }
   }
 
-  .modalFooter {
+  .modalFooter { 
     justify-content: space-evenly;
 
     .btnNormal {
@@ -215,7 +231,7 @@
 }
 
 @media (max-width: 992px) {
-  .courseCreationModalContainer {
+  .courseEditionModalContainer {
     .modalBody {
 
       display: flex;
@@ -231,7 +247,7 @@
 }
 
 @media (max-width: 576px) {
-  .courseCreationModalContainer {
+  .courseEditionModalContainer {
     .modalBody {
       display: flex;
       flex-direction: column;

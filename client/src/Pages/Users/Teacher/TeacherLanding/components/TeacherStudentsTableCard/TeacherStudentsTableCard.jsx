@@ -95,9 +95,9 @@ export const TeacherStudentsTableCard = ({ myStudentsData }) => {
                             <div className="tableCell iconCell">
                               <div className="tableCellContent">
                                 <span className="d-none d-md-inline ">
-                                  {student.student_email}
+                                  {student.email}
                                 </span>
-                                <HiOutlineMail className="icon" />
+                                <HiOutlineMail className="icon text-warning" />
                               </div>
                             </div>
                           </td>
@@ -105,9 +105,9 @@ export const TeacherStudentsTableCard = ({ myStudentsData }) => {
                           <td>
                             <div className="tableCell iconCell">
                               <div className="tableCellContent">
-                                <AiOutlinePhone className="icon" />
+                                <AiOutlinePhone className="icon text-warning" />
                                 <span className="d-none d-md-inline ">
-                                  {student.student_phone}
+                                  {student.phone}
                                 </span>
                               </div>
                             </div>

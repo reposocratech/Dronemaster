@@ -32,6 +32,7 @@ const RegisterModal = ({
       password: "",
     },
   });
+
   const onSubmit = (data) => {
     axios
       .post("http://localhost:4000/students/registerStudent", data)

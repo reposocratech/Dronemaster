@@ -46,4 +46,9 @@ router.post(
   courseControllers.suscribeIntoACourse
 );
 
+// 10.- Get info for course edition info
+// http://localhost:4000/courses/courseInfoEdition/:course_id
+router.get("/courseInfoEdition/:course_id", courseControllers.selectCourseEditionInfo);
+
+
 module.exports = router;
