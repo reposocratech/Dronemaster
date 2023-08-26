@@ -22,7 +22,7 @@ const NavBarApp = () => {
     user,
     setIsLogged,
     openRegister,
-    setCourseMaterial
+    setCourseMaterial,
   } = useContext(DroneMasterContext);
   const { register, handleSubmit, reset } = useForm();
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -59,7 +59,7 @@ const NavBarApp = () => {
     setUser();
     setToken();
     setIsLogged(false);
-    setCourseMaterial()
+    setCourseMaterial();
   };
 
   const routeType = (user) => {
@@ -161,10 +161,12 @@ const NavBarApp = () => {
 
               {token && (
                 <div className="d-flex justify-content-center align-items-center gap-2">
-                  <div className="avatar" onClick={() => {
-                    navigate(`/${routeType(user)}`);
-                  }}>
-
+                  <div
+                    className="avatar"
+                    onClick={() => {
+                      navigate(`/${routeType(user)}`);
+                    }}
+                  >
                     {user?.user_img ? (
                       <>
                         <img
@@ -180,10 +182,7 @@ const NavBarApp = () => {
                       </>
                     )}
                   </div>
-                  <button
-                    onClick={logoutUser}
-                    className="btnOutline2"
-                  >
+                  <button onClick={logoutUser} className="btnOutline2">
                     Cerrar sesión
                   </button>
                 </div>

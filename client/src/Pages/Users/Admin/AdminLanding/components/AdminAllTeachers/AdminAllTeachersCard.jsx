@@ -10,13 +10,15 @@ import { AiOutlineUser } from "react-icons/ai";
 import { BsPencil } from "react-icons/bs";
 import { BsEye } from "react-icons/bs";
 import { BsEyeSlash } from "react-icons/bs";
+import { FiSearch } from "react-icons/fi";
+import { useForm } from "react-hook-form";
 
 const AdminAllTeachersCard = () => {
   const [teachers, setTeachers] = useState();
-
+  const { register, handleSubmit, reset } = useForm();
   const { user } = useContext(DroneMasterContext);
-
   const navigate = useNavigate();
+  const [searchResultData, setSearchResultData] = useState();
 
   useEffect(() => {
     axios
@@ -29,87 +31,162 @@ const AdminAllTeachersCard = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  const onSubmit = (data) => {
+    setSearchResultData(
+      teachers.filter((teacher) =>
+        teacher.user_name
+          .toLowerCase()
+          .includes(data.teacherSearch.toLowerCase())
+      )
+    );
+    reset();
+  };
+
   return (
-    <Container className="adminTableCard">
+    <div className="adminTableCard">
       <div className="cardTitle">
-        <div className="titleAdmin">
+        <div className="title">
           <div className="iconContainer">
             <AiOutlineUser />
           </div>
           <h5 className="titleText">Todos los Profesores</h5>
         </div>
-      </div>
 
-      {teachers?.map((teacher) => {
-        return (
-          <tr className="cardBody" key={teacher?.user_id}>
-            <div className="adTable">
-              <td className="tdImg">
-                <div className="tableImg">
-                  {teacher?.user_img ? (
-                    <img
-                      src={`http://localhost:4000/images/user/${teacher?.user_img}`}
-                    />
-                  ) : (
-                    <h6 className="avatarText">
-                      {teacher?.user_name.at(0).toUpperCase()}
-                    </h6>
-                  )}
-                </div>
-              </td>
-              <td className="tableCellName">{teacher?.user_name}</td>
-              <td>
-                <div className="tableCell">{teacher?.user_lastname}</div>
-              </td>
-              <td>
-                <div className="tableCell iconCell">
-                  <div className="tableCellContent">
-                    <HiOutlineMail className="icon" />
-                    <span className="d-none d-md-inline ">
-                      {teacher?.email}
-                    </span>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div className="tableCell iconCell">
-                  <div className="tableCellContent">
-                    <AiOutlinePhone className="icon" />
-                    <span className="d-none d-md-inline ">
-                      {teacher?.phone}
-                    </span>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div className="tableCell iconCell">
-                  <div className="tableCellContent">
-                    <BsPencil className="icon" />
-                    {/* <span className="d-none d-md-inline ">Editar</span> */}
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div className="tableCell iconCell">
-                  <div className="tableCellContent">
-                    <BsEye className="icon" />
-                    {/* <span className="d-none d-md-inline ">Habilitar</span> */}
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div className="tableCell iconCell">
-                  <div className="tableCellContent">
-                    <BsEyeSlash className="icon" />
-                    {/* <span className="d-none d-md-inline ">Deshabilitar</span> */}
-                  </div>
-                </div>
-              </td>
-            </div>
-          </tr>
-        );
-      })}
-    </Container>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="searchBar">
+            <FiSearch />
+            <input
+              type="text"
+              placeholder="Buscar Profesor..."
+              {...register("teacherSearch")}
+            />
+          </div>
+        </form>
+      </div>
+      <div className="cardBody">
+        <table className="adTable">
+          <thead>
+            <tr>
+              <th colSpan={2}>Nombre</th>
+              <th>Primer Apellido</th>
+              <th className="iconHeadName">
+                {" "}
+                <HiOutlineMail className="headIcon d-md-none d-flex fs-2" />{" "}
+                <span className=" d-none d-md-flex">Email</span>
+              </th>
+              <th className="iconHeadName">
+                <AiOutlinePhone className="headIcon d-md-none d-flex fs-2" />{" "}
+                <span className=" d-none d-md-flex">Telefono</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {teachers ? (
+              <>
+                {teachers.length == 0 ? (
+                  <p>Sin resultados de busqueda</p>
+                ) : (
+                  <>
+                    {teachers?.map((teacher) => {
+                      return (
+                        <tr key={teacher.user_id}>
+                          <td>
+                            <div className="tableImg">
+                              {teacher?.user_img ? (
+                                <img
+                                  src={`http://localhost:4000/images/user/${teacher.user_img}`}
+                                />
+                              ) : (
+                                <h6 className="avatarText">
+                                  {teacher?.user_name.at(0).toUpperCase()}
+                                </h6>
+                              )}
+                            </div>
+                          </td>
+                          <td className="tableCellName">{teacher.user_name}</td>
+                          <td>
+                            <div className="tableCell">
+                              {teacher.user_lastname}
+                            </div>
+                          </td>
+                          <td>
+                            <div className="tableCell iconCell">
+                              <div className="tableCellContent">
+                                <HiOutlineMail className="icon  text-warning" />
+                                <span className="d-none d-md-inline ">
+                                  {teacher.email}
+                                </span>
+                              </div>
+                            </div>
+                          </td>
+
+                          <td>
+                            <div className="tableCell iconCell">
+                              <div className="tableCellContent">
+                                <AiOutlinePhone className="icon  text-warning" />
+                                <span className="d-none d-md-inline ">
+                                  {teacher.phone}
+                                </span>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                {teachers?.map((teacher) => {
+                  return (
+                    <tr key={teacher.user_id}>
+                      <td className="tdImg">
+                        <div className="tableImg">
+                          {teacher?.teacher_img ? (
+                            <img
+                              src={`http://localhost:4000/images/user/${teacher.user_img}`}
+                            />
+                          ) : (
+                            <h6 className="avatarText">
+                              {teacher?.user_name.at(0).toUpperCase()}
+                            </h6>
+                          )}
+                        </div>
+                      </td>
+                      <td className="tableCellName">{teacher.user_name}</td>
+                      <td>
+                        <div className="tableCell">{teacher.user_lastname}</div>
+                      </td>
+                      <td>
+                        <div className="tableCell iconCell">
+                          <div className="tableCellContent">
+                            <HiOutlineMail className="icon text-warning" />
+                            <span className="d-none d-md-inline ">
+                              {teacher.user_email}
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="tableCell iconCell">
+                          <div className="tableCellContent">
+                            <AiOutlinePhone className="icon text-warning" />
+                            <span className="d-none d-md-inline ">
+                              {teacher.phone}
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 };
 
