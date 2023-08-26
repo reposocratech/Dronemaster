@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Navbar, Nav, Offcanvas, Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
@@ -28,13 +28,16 @@ const NavBarApp = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
 
-  const onSubmit = (data) => {
+  useEffect(() => {
     axios
       .get("http://localhost:4000/courses/allCourses")
       .then((res) => {
         setListCourses(res.data);
       })
       .catch((err) => console.log(err));
+  }, [])
+
+  const onSubmit = (data) => {
     let name = data.course_name;
     reset();
 
@@ -50,7 +53,8 @@ const NavBarApp = () => {
   };
 
   const openRegisterModal = () => {
-    setShowRegisterModal(true);
+    setShowRegisterModal(true)
+    setShowLoginModal(false)
   };
 
   const logoutUser = () => {
@@ -89,12 +93,15 @@ const NavBarApp = () => {
         <LoginModal
           showLoginModal={showLoginModal}
           setShowLoginModal={setShowLoginModal}
+          setShowRegisterModal={setShowRegisterModal}
+          openRegisterModal={openRegisterModal}
         />
         <RegisterModal
           showRegisterModal={showRegisterModal}
           setShowRegisterModal={setShowRegisterModal}
           showLoginModal={showLoginModal}
           setShowLoginModal={setShowLoginModal}
+          openLoginModal={openLoginModal}
         />
         <Navbar.Toggle
           className="toogle"
@@ -128,7 +135,6 @@ const NavBarApp = () => {
                 />
               </form>
             </div>
-
             <div className="d-flex-column d-lg-flex gap-5">
               <Nav className="justify-content-end gap-lg-2">
                 <Nav.Link
@@ -158,13 +164,11 @@ const NavBarApp = () => {
                   </button>
                 </div>
               )}
-
               {token && (
                 <div className="d-flex justify-content-center align-items-center gap-2">
                   <div className="avatar" onClick={() => {
                     navigate(`/${routeType(user)}`);
                   }}>
-
                     {user?.user_img ? (
                       <>
                         <img

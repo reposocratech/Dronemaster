@@ -4,7 +4,9 @@ import { DroneMasterContext } from "../../../../../../context/DroneMasterProvide
 import { AiFillEye, AiFillFile } from "react-icons/ai";
 import '../../studentLandingStyle.scss'
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOneCourse, courseId }) => {
+    const navigate = useNavigate()
     const { courseMaterial, user } = useContext(DroneMasterContext);
     const [unitsName, setUnitsName] = useState([]);
     const [lessonViewed, setLessonViewed] = useState([])
@@ -87,7 +89,7 @@ export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOn
                     </div>
                     <div className="d-flex justify-content-between w-100">
                         <h5 className="titleText">{courseMaterial && courseMaterial[0]?.course_name}</h5>
-                        <button className="btnOutline1">ver más</button>
+                        <button className="btnOutline1" onClick={() => { navigate(`/courses/courseInfo/${courseMaterial[0]?.course_id}`) }}>ver más</button>
                     </div>
                 </div>
             </div>

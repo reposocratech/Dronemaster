@@ -232,6 +232,21 @@ class courseControllers {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
   };
+
+  // 9.- Suscribe into a course
+  // http://localhost:4000/courses/payACourse/:user_id/:course_id
+  suscribeIntoACourse = (req, res) => {
+    const { user_id, course_id } = req.params;
+
+    let dateNow = new Date();
+    let formatedDate = `${dateNow.getFullYear()}-${dateNow.getMonth()}-${dateNow.getDate()}`;
+
+    let sql = `INSERT INTO user_course (user_id, course_id, start_date) VALUES (${user_id}, ${course_id}, "${formatedDate}")`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
 }
 
 module.exports = new courseControllers();

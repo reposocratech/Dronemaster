@@ -39,7 +39,11 @@ router.get("/allCategories", courseControllers.selectAllCourseCategories);
 // http://localhost:4000/courses/courseTags/:course_id
 router.get("/courseTags/:course_id", courseControllers.selectAllCourseTags);
 
-
-
+// 9.- Suscribe into a course
+// http://localhost:4000/courses/payACourse/:user_id/:course_id
+router.post(
+  "/payACourse/:user_id/:course_id",
+  courseControllers.suscribeIntoACourse
+);
 
 module.exports = router;

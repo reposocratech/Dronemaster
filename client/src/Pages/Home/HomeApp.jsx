@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { CourseCard } from "../../components/CardCourse/CourseCard";
 import drone_home from "../../../public/dashboard_images/drone_home.png";
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
+import { DroneMasterContext } from "../../context/DroneMasterProvider";
 
 const initialCounterValue = {
   TotalTeachers: 0,
@@ -102,16 +103,6 @@ const HomeApp = () => {
                 CURSOS
               </h1>
               <p>Especializate en el sector mas demandado de Europa</p>
-              <div className="py-4">
-                <button
-                  className="btnNormal"
-                  onClick={() => {
-                    navigate("/login");
-                  }}
-                >
-                  Comenzar
-                </button>
-              </div>
             </div>
             <div className="allCounter pe-4 py-5">
               <div>
@@ -144,19 +135,9 @@ const HomeApp = () => {
                   COMIENZA EN EL MUNDO DE LOS <span>DRONES</span> CON NUESTROS
                   CURSOS
                 </h1>
-                <p className="text-center">
+                <p className="text-center p-0">
                   Especializate en el sector mas demandado de Europa
                 </p>
-                <div className="pt-4 text-center">
-                  <button
-                    className="btnNormal bg-dark"
-                    onClick={() => {
-                      navigate("/login");
-                    }}
-                  >
-                    Comenzar
-                  </button>
-                </div>
               </div>
             </div>
           </Col>
@@ -176,7 +157,7 @@ const HomeApp = () => {
           </div>
         </Row>
       )}
-      <div className="homeMessages d-flex-column justify-content-center justify-content-lg-start text-center text-lg-start">
+      <div className="homeMessages d-flex-column justify-content-center justify-content-lg-start text-center text-lg-start pt-0 py-ms-5">
         <div className="homeOneMessage">
           <h3>Aprende</h3>
           <p>Domina el arte del manejo de drones en diversos sectores</p>
