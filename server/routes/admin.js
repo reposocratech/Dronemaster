@@ -65,4 +65,9 @@ router.post(
 
 router.get("/courseInfo", multer("resources"), adminControllers.ViewCourseInfo);
 
+
+
+// 15.- Delete a Tag from a course
+// http://localhost:4000/admin/deleteCourseTag/:tag_id/:course_id
+router.put("/deleteCourseTag/:tag_id/:course_id", adminControllers.deleteTagCourse);
 module.exports = router;

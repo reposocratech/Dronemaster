@@ -15,6 +15,7 @@ const RegisterModal = ({
   setShowRegisterModal,
   showLoginModal,
   setShowLoginModal,
+  openLoginModal
 }) => {
   const closeRegisterModal = () => {
     setShowRegisterModal(false);
@@ -34,8 +35,6 @@ const RegisterModal = ({
     },
   });
 
-  const { setUser, isLogged, openLogin, resetData, setResetData } =
-    useContext(DroneMasterContext);
 
   const onSubmit = (data) => {
     axios
@@ -130,7 +129,7 @@ const RegisterModal = ({
                 </div>
                 <p>
                   ¿Ya tienes una cuenta?{" "}
-                  <Link className="span" onClick={openLogin}>
+                  <Link className="span" onClick={openLoginModal}>
                     Inicia Sesión
                   </Link>{" "}
                 </p>

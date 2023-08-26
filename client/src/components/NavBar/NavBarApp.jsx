@@ -47,10 +47,13 @@ const NavBarApp = () => {
 
   const openLoginModal = () => {
     setShowLoginModal(true);
+    setShowRegisterModal(false)
   };
 
   const openRegisterModal = () => {
-    setShowRegisterModal(true);
+  
+    setShowRegisterModal(true)
+    setShowLoginModal(false)
   };
 
   const logoutUser = () => {
@@ -89,12 +92,14 @@ const NavBarApp = () => {
         <LoginModal
           showLoginModal={showLoginModal}
           setShowLoginModal={setShowLoginModal}
+          openRegisterModal={openRegisterModal}
         />
         <RegisterModal
           showRegisterModal={showRegisterModal}
           setShowRegisterModal={setShowRegisterModal}
           showLoginModal={showLoginModal}
           setShowLoginModal={setShowLoginModal}
+          openLoginModal={openLoginModal}
         />
         <Navbar.Toggle
           className="toogle"

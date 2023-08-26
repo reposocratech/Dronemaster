@@ -2,33 +2,57 @@ import React, { useContext, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-
+import { MdOutlineDeleteOutline } from "react-icons/md";
 import { GiClassicalKnowledge } from "react-icons/gi";
-import "./courseCreationModal.scss";
+import "./courseEditionModalStyle.scss";
 import { DroneMasterContext } from "../../../../context/DroneMasterProvider";
 
-export const CourseCreationModal = ({
-  setShowCourseCreationModal,
-  showCourseCreationModal,
+export const CourseEditionModal = ({
+  setShowCourseEditionModal,
+  showCourseEditionModal,
+  //   course_id,
 }) => {
   const [teachersList, setTeachersList] = useState();
   const [categoriesList, setCategoriesList] = useState();
   const [tag, setTag] = useState();
   const [tagsList, setTagsList] = useState([]);
+  const [courseData, setCourseData] = useState();
   const { user } = useContext(DroneMasterContext);
+
+  const course_id = 23;
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
 
-  
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/courses/courseInfoEdition/21`)
+      .then((res) => {
+        setCourseData(res.data);
+        console.log(res.data, "dataaaaaaaaaaaaa");
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/courses/courseTags/21`)
+      .then((res) => {
+        console.log(res.data);
+        setTagsList(res.data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   useEffect(() => {
     axios
       .get(`http://localhost:4000/admin/allTeachers`)
       .then((res) => {
-
+        console.log(res.data);
         setTeachersList(res.data);
       })
       .catch((err) => console.log(err));
@@ -38,30 +62,33 @@ export const CourseCreationModal = ({
     axios
       .get(`http://localhost:4000/courses/allCategories`)
       .then((res) => {
-  
+        console.log(res.data);
         setCategoriesList(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
 
   const handleClose = () => {
-    setShowCourseCreationModal(false);
+    setShowCourseEditionModal(false);
   };
 
   const handleTagsChange = (e) => {
     setTag(e.target.value);
   };
-
+  console.log(tag);
 
   const handleTagButton = () => {
-    setTagsList([...tagsList, tag]);
+    setTagsList([...tagsList,{"tag_name": tag}]);
     setTag("");
   };
+  console.log(tagsList);
 
-  const onSubmit =  (data) => {
-
+  const onSubmit = (data) => {
     axios
-      .post(`http://localhost:4000/courses/createCourse/${user.user_id}`, { data, tagsList })
+      .post(`http://localhost:4000/courses/createCourse/${user.user_id}`, {
+        data,
+        tagsList,
+      })
       .then((res) => {
         console.log(res);
       })
@@ -70,14 +97,42 @@ export const CourseCreationModal = ({
       });
   };
 
+  useEffect(() => {
+   
+
+    if (courseData && Object.keys(courseData).length > 0) {
+      setValue("course_name", courseData[0].course_name || "");
+      setValue("course_length", courseData[0].course_length || "");
+      setValue("price", courseData[0].price || "");
+      setValue("category_id", courseData[0].category_id || "");
+      setValue("start_date", courseData[0].start_date || "");
+      setValue("teacher_id", courseData[0].teacher_id || "");
+     
+    }
+  }, [courseData, setValue]);
+
+  const handleDeleteTag = (tagId) => {
+    axios
+      .put(`http://localhost:4000/admin/deleteCourseTag/${tagId}/${course_id}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    const updatedTagsList = tagsList.filter((tag) => tag.tag_id !== tagId);
+    setTagsList(updatedTagsList);
+  };
+
   return (
     <Modal
-      show={showCourseCreationModal}
+      show={showCourseEditionModal ? setShowCourseEditionModal : true}
       onHide={handleClose}
       centered={true}
       size="xl"
       fullscreen="false"
-      className="courseCreationModalContainer"
+      className="courseEditionModalContainer"
     >
       <Modal.Header closeButton className="modalHeader">
         <div className="cardTitle">
@@ -85,7 +140,7 @@ export const CourseCreationModal = ({
             <GiClassicalKnowledge />
           </div>
 
-          <h4 className="titleText">Creacion de un nuevo curso</h4>
+          <h4 className="titleText">Edición de curso</h4>
         </div>
       </Modal.Header>
 
@@ -100,7 +155,7 @@ export const CourseCreationModal = ({
               placeholder="Nombre del Curso"
               {...register("course_name", {
                 required: "Debes rellenar el nombre del curso",
-                minLength: { value: 3, message: "Minimo de 3 letras" }, 
+                minLength: { value: 3, message: "Minimo de 3 letras" },
                 maxLength: { value: 100, message: "Maximo 100 caracteres" },
               })}
               className="input1"
@@ -144,12 +199,15 @@ export const CourseCreationModal = ({
             <input
               placeholder="Duración estimada"
               {...register("course_length", {
-                required: "Debes rellenar este campo"})}
+                required: "Debes rellenar este campo",
+              })}
               id="course_length"
               className="input1"
               type="number"
             />
-             <span className="errorMessage">{errors.course_length?.message}</span>
+            <span className="errorMessage">
+              {errors.course_length?.message}
+            </span>
           </div>
 
           {/* Teacher Input Group */}
@@ -163,7 +221,6 @@ export const CourseCreationModal = ({
               id="teacher_id"
               className="input2"
             >
-              <option value={user?.user_id}> Seleccione un profesor </option>
               {teachersList?.map((teacher) => {
                 return (
                   <option key={teacher.user_id} value={teacher.user_id}>
@@ -184,17 +241,18 @@ export const CourseCreationModal = ({
               placeholder="Precio"
               {...register("price", {
                 required: "Valor erroneo",
-                maxLength: { value: 8, message: "Maximo 99999'99 €" }})}
+                maxLength: { value: 8, message: "Maximo 99999'99 €" },
+              })}
               id="price"
               className="input1"
             />
-             <span className="errorMessage">{errors.price?.message}</span>
+            <span className="errorMessage">{errors.price?.message}</span>
           </div>
 
-             {/* Date Input Group */}
-             <div className="d-flex flex-column align-items-start gap-1  inputDate">
+          {/* Date Input Group */}
+          <div className="d-flex flex-column align-items-start gap-1  inputDate">
             <label htmlFor="start_date" className="ps-3">
-            Fecha de inicio 
+              Fecha de inicio
             </label>
             <input
               type="date"
@@ -229,10 +287,17 @@ export const CourseCreationModal = ({
           </div>
 
           <div className="d-flex flex-column align-items-start gap-1 tagsList">
-   
             <div className="tagListContainer d-flex flex-wrap align-items-center ">
               {tagsList?.map((tag, index) => {
-                return <p key={index} className="me-1 mb-0 ">#{tag}</p>;
+                return (
+                  <p key={index} className="me-1 mb-0 ">
+                    <MdOutlineDeleteOutline
+                      className="deleteIcon"
+                      onClick={() => handleDeleteTag(tag.tag_id)}
+                    />{" "}
+                    #{tag.tag_name}
+                  </p>
+                );
               })}
             </div>
           </div>
@@ -244,7 +309,7 @@ export const CourseCreationModal = ({
             </label>
 
             <textarea
-              placeholder="#Descripcíon"
+              placeholder="Descripcíon"
               {...register("course_description")}
               id="course_description"
               className="input3"
