@@ -51,7 +51,6 @@ export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOn
     useEffect(() => {
         setSelectedLessons(lessonViewed);
     }, [resetUseEffect, user, lessonViewed, selectedLessons])
-    console.log(selectedLessons);
     //console.log("el selected", lessonViewed);
     const toggleLesson = (lessonId) => {
         if (selectedLessons.includes(lessonId)) {
@@ -94,7 +93,7 @@ export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOn
                 </div>
             </div>
             <div className="cardBody">
-                {unitsName.map((unitName, unitIdx) => (
+                {unitsName[0] !== null && unitsName.map((unitName, unitIdx) => (
                     <table className="coursesTableStudent mb-4" key={unitIdx}>
                         <thead>
                             <tr style={{ paddingTop: '10px' }}>

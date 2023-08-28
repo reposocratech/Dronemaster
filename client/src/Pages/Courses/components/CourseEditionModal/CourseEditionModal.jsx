@@ -19,7 +19,7 @@ export const CourseEditionModal = ({
   const [courseData, setCourseData] = useState();
   const { user } = useContext(DroneMasterContext);
 
-  const course_id = 23;
+  const course_id = 1;
 
   const {
     register,
@@ -30,7 +30,7 @@ export const CourseEditionModal = ({
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/courses/courseInfoEdition/21`)
+      .get(`http://localhost:4000/courses/courseInfoEdition/1`)
       .then((res) => {
         setCourseData(res.data);
         console.log(res.data, "dataaaaaaaaaaaaa");
@@ -40,7 +40,7 @@ export const CourseEditionModal = ({
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/courses/courseTags/21`)
+      .get(`http://localhost:4000/courses/courseTags/1`)
       .then((res) => {
         console.log(res.data);
         setTagsList(res.data);
@@ -78,7 +78,7 @@ export const CourseEditionModal = ({
   console.log(tag);
 
   const handleTagButton = () => {
-    setTagsList([...tagsList,{"tag_name": tag}]);
+    setTagsList([...tagsList, { "tag_name": tag }]);
     setTag("");
   };
   console.log(tagsList);
@@ -98,7 +98,7 @@ export const CourseEditionModal = ({
   };
 
   useEffect(() => {
-   
+
 
     if (courseData && Object.keys(courseData).length > 0) {
       setValue("course_name", courseData[0].course_name || "");
@@ -107,7 +107,7 @@ export const CourseEditionModal = ({
       setValue("category_id", courseData[0].category_id || "");
       setValue("start_date", courseData[0].start_date || "");
       setValue("teacher_id", courseData[0].teacher_id || "");
-     
+
     }
   }, [courseData, setValue]);
 

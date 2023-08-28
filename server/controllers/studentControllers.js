@@ -124,6 +124,49 @@ class studentControllers {
       error ? res.status(400).json({ error }) : res.status(201).json(result);
     });
   };
+
+  // 4.- Upload student exam
+  // http://localhost:4000/students/uploadExam/:user_id/:course_id
+  uploadStudentExam = (req, res) => {
+    const { user_id, course_id } = req.params;
+    let pdf = req.file.filename;
+
+    let sql1 = `SELECT user_id, course_id FROM student_exam WHERE user_id = ${user_id} AND course_id = ${course_id}`;
+
+    connection.query(sql1, (error, result1) => {
+      if (result1.length === 0) {
+        if (req.file !== undefined) {
+          let sql2 = `INSERT INTO student_exam (user_id, course_id, student_exam_file) VALUES (${user_id}, ${course_id}, "${pdf}")`;
+
+          connection.query(sql2, (error, result2) => {
+            if (result2) {
+              let sql3 = `UPDATE user_course SET status = 2 WHERE user_id = ${user_id} AND course_id = ${course_id}`;
+
+              connection.query(sql3, (error, result3) => {
+                error
+                  ? res.status(400).json({ error })
+                  : res.status(201).json(result3);
+              });
+            } else {
+              res.status(500).json({ error });
+            }
+          });
+        }
+      }
+    });
+  };
+
+  // 5.- Get student status
+  // http://localhost:4000/students/studentStatus/:user_id/:course_id
+  getStudentStatus = (req, res) => {
+    const { user_id, course_id } = req.params;
+
+    let sql = `SELECT status FROM user_course WHERE user_id = ${user_id} AND course_id = ${course_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(201).json(result);
+    });
+  };
 }
 
 module.exports = new studentControllers();

@@ -5,6 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const cors = require("cors");
 const router = express.Router();
+const nodemailer = require("nodemailer");
 
 var adminRouter = require("./routes/admin");
 var teacherRouter = require("./routes/teacher");
@@ -14,23 +15,50 @@ var commonRouter = require("./routes/common");
 
 var app = express();
 
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
-
 app.use(
   cors({
     origin: "*",
   })
 );
 
+app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
+
 app.use("/admin", adminRouter);
 app.use("/teachers", teacherRouter);
 app.use("/students", studentRouter);
 app.use("/courses", courseRouter);
 app.use("/", commonRouter);
+
+// Configuration nodemailer to contact form
+const transporter = nodemailer.createTransport({
+  service: "Gmail",
+  auth: {
+    user: "javiergranadosmartin@gmail.com",
+    pass: "czljtozzgifcewxf",
+  },
+});
+
+app.post("/infoEmail", async (req, res) => {
+  try {
+    const { user_name, phone, email, description } = req.body;
+
+    await transporter.sendMail({
+      from: email,
+      to: "javiergranadosmartin@gmail.com",
+      subject: `Contactar con ${user_name}`,
+      text: `Nombre: ${user_name}\nTeléfono: ${phone}\nEmail: ${email}\nDescripción: ${description}`,
+    });
+
+    res.json({ message: "Correo enviado exitosamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Ocurrió un error" });
+  }
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

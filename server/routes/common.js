@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const multer = require("../middleware/multer")
+const multer = require("../middleware/multer");
 
 const commonControllers = require("../controllers/commonControllers");
 
@@ -14,7 +14,11 @@ router.get("/counter", commonControllers.viewCounter);
 
 // 4.- Edit user info
 // http://localhost:4000/editMyProfile/:user_id
-router.put("/editMyProfile/:user_id", multer("users"),commonControllers.editMyProfile);
+router.put(
+  "/editMyProfile/:user_id",
+  multer("users"),
+  commonControllers.editMyProfile
+);
 
 // 5.- Add commentary
 // http://localhost:4000/addCommentary/:user_id/:course_id/:unit_id/:lesson_id
@@ -56,6 +60,13 @@ router.get("/bestRatedCourses", commonControllers.selectBestRatedCourses);
 
 // 13.- Delete profile image of a user
 // http://localhost:4000/myProfile/deleteImage/:user_id
-router.put("/myProfile/deleteImage/:user_id", commonControllers.deleteProfileImage);
+router.put(
+  "/myProfile/deleteImage/:user_id",
+  commonControllers.deleteProfileImage
+);
+
+// 14.- Download exam
+// http://localhost:4000/downloadExam/:course_id
+router.get("/downloadExam/:course_id", commonControllers.downloadExam);
 
 module.exports = router;
