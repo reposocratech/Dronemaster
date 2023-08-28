@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './footerApp.scss'
 import { Container, Row } from 'react-bootstrap'
 import logo_DroneMaster from '../../../public/dashboard_images/logo_DroneMaster.png'
 import { AiOutlineWhatsApp, AiOutlineTwitter, AiOutlineInstagram, AiOutlineLinkedin, AiOutlineYoutube } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { FormMailModal } from './FormMail/FormMailModal';
 
 
 export const FooterApp = () => {
     const navigate = useNavigate()
+    const [showMailModal, setShowMailModal] = useState(false)
     return (
         <Container fluid className='footer'>
             <Row className='d-flex-column justify-content-center'>
@@ -18,7 +19,7 @@ export const FooterApp = () => {
                     <h2>Solicita más información</h2>
                     <hr />
                     <p>Explora los cielos con confianza. Aprende a pilotar drones de manera segura y profesional con nuestros cursos especializados. ¡Eleva tus habilidades con nosotros!</p>
-                    <button className='btnNormal'>Contáctanos</button>
+                    <button onClick={() => setShowMailModal(true)} className='btnNormal'>Contáctanos</button>
                     <p>© 2023 DorneMaster SL</p>
                 </div>
                 <hr className='footerLine' />
@@ -37,6 +38,7 @@ export const FooterApp = () => {
                         <AiOutlineYoutube />
                     </div>
                 </div>
+                <FormMailModal showMailModal={showMailModal} setShowMailModal={setShowMailModal} />
             </Row>
 
 

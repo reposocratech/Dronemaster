@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+const multer = require("../middleware/multer");
 const studentControllers = require("../controllers/studentControllers");
 
 // 1.- Register student: Gets the information from the register form and creates and new student
@@ -44,6 +45,21 @@ router.get(
 router.get(
   "/countLessonscourse/:course_id",
   studentControllers.selectCountLessonCourse
+);
+
+// 4.- Upload student exam and change the student status
+// http://localhost:4000/students/uploadExam/:user_id/:course_id
+router.post(
+  "/uploadExam/:user_id/:course_id",
+  multer("exams"),
+  studentControllers.uploadStudentExam
+);
+
+// 5.- Get student status
+// http://localhost:4000/students/studentStatus/:user_id/:course_id
+router.get(
+  "/studentStatus/:user_id/:course_id",
+  studentControllers.getStudentStatus
 );
 
 module.exports = router;

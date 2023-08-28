@@ -18,8 +18,6 @@ export const EditMyProfileModal = ({
   const { register, setValue, handleSubmit } = useForm();
   const [profileImg, setProfileImg] = useState();
 
-  console.log("fgfdsghdfhfgdhdfghdfhsisisisisisisi", user?.user_id);
-
   const handleClose = () => {
     setShowEditionModal(false);
   };
@@ -51,10 +49,12 @@ export const EditMyProfileModal = ({
 
     setProfileImg();
   };
+  
   const onSubmit = (data) => {
     const newFormData = new FormData();
 
     newFormData.append("editedUser", JSON.stringify(data));
+
 
     if (file !== undefined) {
       newFormData.append("file", file);

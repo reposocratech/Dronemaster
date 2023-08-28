@@ -53,26 +53,28 @@ export const CircularBarProgress = ({ lessonsOneCourse, lessonsViewedByStudent, 
     };
 
     const percentage = data.datasets[0].data[0].toFixed(0)
+    console.log(parseInt(percentage));
 
     return (
-
-        <div className="userInfoCard">
-            <div className="cardTitle">
-                <div className="iconContainer">
-                    <BiSolidDoughnutChart />
+        <>
+            {percentage !== "NaN" && <div className="userInfoCard">
+                <div className="cardTitle">
+                    <div className="iconContainer">
+                        <BiSolidDoughnutChart />
+                    </div>
+                    <div className="title">
+                        <h6 className="titleText text-center m-0">{course_name}</h6>
+                    </div>
                 </div>
-                <div className="title">
-                    <h6 className="titleText text-center m-0">{course_name}</h6>
+                <div className='d-flex justify-content-center p-3 position-relative'>
+                    <Doughnut className='progressDoughnut position-relative' data={data} options={options}>
+                    </Doughnut>
+                    <div className='percentageText d-flex justify-content-center pb-2'><h4>{percentage}<span style={{ color: '#f7ab16' }}>%</span></h4></div>
                 </div>
-            </div>
-            <div className='d-flex justify-content-center p-3 position-relative'>
-                <Doughnut className='progressDoughnut position-relative' data={data} options={options}>
-                </Doughnut>
-                <div className='percentageText d-flex justify-content-center pb-2'><h4>{percentage}<span style={{ color: '#f7ab16' }}>%</span></h4></div>
-            </div>
-
-        </div >
 
 
+            </div >}
+
+        </>
     )
 }

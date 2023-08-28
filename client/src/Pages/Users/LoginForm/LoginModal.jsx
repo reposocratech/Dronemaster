@@ -10,11 +10,9 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
-const LoginModal = ({
-  setShowLoginModal,
-  showLoginModal,
-  openRegisterModal,
-}) => {
+
+const LoginModal = ({ setShowLoginModal, showLoginModal, openRegisterModal }) => {
+  
   const closeLoginModal = () => {
     setShowLoginModal(false);
   };
