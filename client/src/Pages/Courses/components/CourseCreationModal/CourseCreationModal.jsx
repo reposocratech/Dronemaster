@@ -15,7 +15,9 @@ export const CourseCreationModal = ({
   const [categoriesList, setCategoriesList] = useState();
   const [tag, setTag] = useState();
   const [tagsList, setTagsList] = useState([]);
+  const [file, setFile] = useState()
   const { user } = useContext(DroneMasterContext);
+
   const {
     register,
     handleSubmit,
@@ -72,7 +74,7 @@ export const CourseCreationModal = ({
 
   return (
     <Modal
-      show={showCourseCreationModal}
+      show={showCourseCreationModal ? showCourseCreationModal : false}
       onHide={handleClose}
       centered={true}
       size="xl"

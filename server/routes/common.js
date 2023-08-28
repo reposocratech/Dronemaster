@@ -69,4 +69,11 @@ router.put(
 // http://localhost:4000/downloadExam/:course_id
 router.get("/downloadExam/:course_id", commonControllers.downloadExam);
 
+// 13.- Gets info from a user at user_course
+// http://localhost:4000/myProfile/myCourse/:user_id/:course_id
+router.get("/myProfile/myCourse/:user_id/:course_id", commonControllers.getUserCourseInfo);
+
+
+
+
 module.exports = router;

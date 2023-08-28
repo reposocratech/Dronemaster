@@ -26,7 +26,7 @@ class courseControllers {
       }
 
       // Insert into course table
-      let courseInsertQuery = `INSERT INTO course (course_name, course_length, price, course_description, category_id, created_by_user_id, start_date) VALUES ('${course_name}', ${course_length}, ${price}, '${course_description}', ${category_id}, ${user_id}, "${start_date}")`;
+      let courseInsertQuery = `INSERT INTO course (course_name, course_length, price, course_description, category_id, created_by_user_id, start_date , course_img) VALUES ('${course_name}', ${course_length}, ${price}, '${course_description}', ${category_id}, ${user_id}, "${start_date}", "courseDefaultImg.jpg")`;
 
       if (start_date === "") {
         courseInsertQuery = `INSERT INTO course (course_name, course_length, price, course_description, category_id, created_by_user_id, start_date) VALUES ('${course_name}', ${course_length}, ${price}, '${course_description}', ${category_id}, ${user_id}, "1900-1-1")`;
@@ -149,41 +149,109 @@ class courseControllers {
   };
 
   // 5.- Edit course
-  // http://localhost:4000/courses/editCourse/:course_id
+  // http://localhost:4000/courses/editCourse/:course_id/:teacherPrev_id
   editCourse = (req, res) => {
+    const { course_id, teacherPrev_id } = req.params;
+
     const {
       course_name,
-      category_id,
       course_length,
-      teacher_id,
-      course_description,
       price,
-    } = req.body;
+      course_description,
+      teacher_id,
+      category_id,
+      start_date,
+    } = req.body.data;
 
-    const { course_id } = req.params;
+    const tagsList = req.body.tagsList || []; // In case tagsList is not present
 
-    let sql = `UPDATE course SET course_name="${course_name}" ,category_id=${category_id} ,course_length=${course_length}  ,course_description="${course_description}" ,price=${price} WHERE course_id = ${course_id}`;
+    // Begin a database transaction
+    // connection.beginTransaction((error) => {
+    //   if (error) {
+    //     console.error(error);
+    //     return res.status(500).json("Internal Server Error");
+    //   }
 
-    connection.query(sql, (error, result) => {
-      if (error) res.status(400).json({ error });
-    });
+    // Update course table
+    let courseUpdateQuery = `UPDATE course SET course_name='${course_name}', course_length=${course_length}, price=${price}, course_description='${course_description}', category_id=${category_id}, start_date="${start_date}" WHERE course_id = ${course_id}`;
 
-    //Check if user_course relationship already exist
-    let sqlGetUser_course = `Select user_id FROM user_course WHERE course_id = ${course_id}  ORDER BY start_date DESC LIMIT 1`;
-
-    connection.query(sqlGetUser_course, (error, user_courseResult) => {
+    connection.query(courseUpdateQuery, (error) => {
       if (error) {
-        res.status(400).json({ error });
+        connection.rollback(() => {
+          console.error(error);
+          res.status(500).json("Internal Server Error");
+        });
       } else {
-        let sqlTeacher = `UPDATE user_course SET user_id=${teacher_id} WHERE course_id = ${course_id} and user_id = ${user_courseResult[0].user_id}`;
+        let dateNow = new Date();
+        let formatedDate = `${dateNow.getFullYear()}-${dateNow.getMonth()}-${dateNow.getDate()}`;
 
-        connection.query(sqlTeacher, (error, result) => {
-          error
-            ? res.status(404).json({ error })
-            : res.status(200).json(result);
+        // Update user_course table
+        const userCourseUpdateQuery = `UPDATE user_course SET user_id=${teacher_id}, start_date="${formatedDate}" WHERE course_id = ${course_id} AND user_id = ${teacherPrev_id}`;
+
+        connection.query(userCourseUpdateQuery, (error) => {
+          if (error) {
+            connection.rollback(() => {
+              console.error(error);
+              res.status(500).json("Internal Server Error");
+            });
+          } else {
+            res.status(200).json("Updated successfully");
+            // // Insert new tags into tag table and tag_course table if not already exist
+            // const tagInsertQuery = `INSERT IGNORE INTO tag (tag_name) VALUES (?)`;
+            // const tagCourseInsertQuery = `INSERT INTO tag_course (tag_id, course_id) VALUES (?, ?)`;
+
+            // const tagInsertPromises = tagsList.map((tagName) => {
+            //   return new Promise((resolve, reject) => {
+            //     connection.query(
+            //       tagInsertQuery,
+            //       [tagName],
+            //       (error, resultTag) => {
+            //         if (error) {
+            //           reject(error);
+            //         } else {
+            //           const tag_id = resultTag.insertId;
+            //           connection.query(
+            //             tagCourseInsertQuery,
+            //             [tag_id, course_id],
+            //             (error) => {
+            //               if (error) {
+            //                 reject(error);
+            //               } else {
+            //                 resolve();
+            //               }
+            //             }
+            //           );
+            //         }
+            //       }
+            //     );
+            //   });
+            // });
+
+            // Promise.all(tagInsertPromises)
+            //   .then(() => {
+            //     // Commit the transaction
+            //     connection.commit((error) => {
+            //       if (error) {
+            //         connection.rollback(() => {
+            //           console.error(error);
+            //           res.status(500).json("Internal Server Error");
+            //         });
+            //       } else {
+            //         res.status(200).json({ course_id });
+            //       }
+            //     });
+            //   })
+            //   .catch((error) => {
+            //     connection.rollback(() => {
+            //       console.error(error);
+            //       res.status(500).json("Internal Server Error");
+            //     });
+            //   });
+          }
         });
       }
     });
+    // });
   };
 
   // 6.- Create course category
@@ -263,7 +331,47 @@ class courseControllers {
   selectCourseEditionInfo = (req, res) => {
     const { course_id } = req.params;
 
-    let sql = `SELECT course.course_name, course.course_length, course.price, course.course_description,user.user_name, user.user_id AS teacher_id, course.category_id, course.start_date, course.created_by_user_id FROM course JOIN user_course ON course.course_id = user_course.course_id JOIN user ON user_course.user_id = user.user_id WHERE course.course_id = ${course_id} AND user.type != 0;`;
+    let sql = `SELECT course.course_id, course.course_img, course.course_name, course.course_length, course.price, course.course_description,user.user_name, user.user_id AS teacher_id, course.category_id, course.start_date, course.created_by_user_id FROM course JOIN user_course ON course.course_id = user_course.course_id JOIN user ON user_course.user_id = user.user_id WHERE course.course_id = ${course_id} AND user.type != 0;`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 11.- Uplaod course image
+  // http://localhost:4000/courses/uploadCourseImage/:course_id
+  uploadCourseImage = (req, res) => {
+    const { course_id } = req.params;
+
+    const course_img = req.file.filename;
+
+    console.log(req.file, "reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeq");
+
+    let sql = `UPDATE course SET course_img = "${course_img}" WHERE course_id = ${course_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 12.- Get info for course info
+  // http://localhost:4000/courses/courseInfo/:course_id
+  selectCourseInfo = (req, res) => {
+    const { course_id } = req.params;
+
+    let sql = `SELECT course.course_img, course.course_name, course.course_length, course.price, course.course_description, course.category_id, course.counter_rating, course.start_date, course.score FROM course course WHERE course.course_id = ${course_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 13.- Get info of a lesson from a course
+  // http://localhost:4000/courses/courseInfo/lessonInfo/:course_id/:unit_id/:lesson_id
+  selectLessonInfo = (req, res) => {
+    const { course_id, unit_id, lesson_id } = req.params;
+
+    let sql = `SELECT unit.unit_tittle AS unit_title, lesson.* FROM lesson JOIN unit ON lesson.course_id = unit.course_id AND lesson.unit_id = unit.unit_id WHERE lesson.course_id = ${course_id} AND lesson.unit_id = ${unit_id} AND lesson.lesson_id = ${lesson_id};`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);

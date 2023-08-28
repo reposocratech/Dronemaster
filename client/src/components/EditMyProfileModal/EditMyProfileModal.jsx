@@ -49,10 +49,12 @@ export const EditMyProfileModal = ({
 
     setProfileImg();
   };
+  
   const onSubmit = (data) => {
     const newFormData = new FormData();
 
     newFormData.append("editedUser", JSON.stringify(data));
+
 
     if (file !== undefined) {
       newFormData.append("file", file);
