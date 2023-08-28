@@ -13,6 +13,7 @@ import StudentLanding from "../Pages/Users/Student/StudentLanding/StudentLanding
 import { TeacherLanding } from "../Pages/Users/Teacher/TeacherLanding/TeacherLanding";
 import { CourseInfo } from "../Pages/CourseInfo/CourseInfo";
 import { TeacherMyCourse } from "../Pages/Users/Teacher/TeacherMyCourse/TeacherMyCourse";
+import { CourseOneLesson } from "../Pages/CourseInfo/components/CourseOneLesson/CourseOneLesson";
 
 const AppRoutes = () => {
   return (
@@ -31,12 +32,16 @@ const AppRoutes = () => {
             path="/courses/courseInfo/:course_id"
             element={<CourseInfo />}
           />
+
+          <Route
+            path="/courses/courseInfo/lessonInfo/:course_id/:unit_id/:lesson_id"
+            element={<CourseOneLesson />}
+          />
           <Route path="/teacher" element={<TeacherLanding />} />
           <Route
             path="/teacher/MyCourse/:course_id"
             element={<TeacherMyCourse />}
           />
-         
         </Routes>
         <FooterApp />
       </BrowserRouter>

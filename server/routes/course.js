@@ -24,8 +24,8 @@ router.put(
 router.get("/allCourses", courseControllers.selectAllCourses);
 
 // 5.- Edit course
-// http://localhost:4000/courses/editCourse/:course_id
-router.put("/editCourse/:course_id", courseControllers.editCourse);
+// http://localhost:4000/courses/editCourse/:course_id/:teacherPrev_id
+router.put("/editCourse/:course_id/:teacherPrev_id", courseControllers.editCourse);
 
 // 6.- Create course category
 // http://localhost:4000/courses/createCategory
@@ -50,5 +50,16 @@ router.post(
 // http://localhost:4000/courses/courseInfoEdition/:course_id
 router.get("/courseInfoEdition/:course_id", courseControllers.selectCourseEditionInfo);
 
+// 11.- Uplaod course image
+// http://localhost:4000/courses/uploadCourseImage/:course_id
+router.put("/uploadCourseImage/:course_id", multer("courses"), courseControllers.uploadCourseImage);
+
+// 12.- Get info of a course
+// http://localhost:4000/courses/courseInfo/:course_id
+router.get("/courseInfo/:course_id", courseControllers.selectCourseInfo);
+
+// 13.- Get info of a lesson from a course
+// http://localhost:4000/courses/courseInfo/lessonInfo/:course_id/:unit_id/:lesson_id
+router.get("/courseInfo/lessonInfo/:course_id/:unit_id/:lesson_id", courseControllers.selectLessonInfo);
 
 module.exports = router;

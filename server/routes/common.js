@@ -58,4 +58,11 @@ router.get("/bestRatedCourses", commonControllers.selectBestRatedCourses);
 // http://localhost:4000/myProfile/deleteImage/:user_id
 router.put("/myProfile/deleteImage/:user_id", commonControllers.deleteProfileImage);
 
+// 13.- Gets info from a user at user_course
+// http://localhost:4000/myProfile/myCourse/:user_id/:course_id
+router.get("/myProfile/myCourse/:user_id/:course_id", commonControllers.getUserCourseInfo);
+
+
+
+
 module.exports = router;

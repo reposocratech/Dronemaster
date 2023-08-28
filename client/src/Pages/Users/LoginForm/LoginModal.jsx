@@ -10,7 +10,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
-const LoginModal = ({ setShowLoginModal, showLoginModal, setShowRegisterModal, openRegisterModal }) => {
+const LoginModal = ({ setShowLoginModal, showLoginModal, openRegisterModal }) => {
   const closeLoginModal = () => {
     setShowLoginModal(false);
   };
@@ -38,7 +38,7 @@ const LoginModal = ({ setShowLoginModal, showLoginModal, setShowRegisterModal, o
         setIsLogged(true);
         reset();
         setShowLoginModal(false);
-        setShowRegisterModal(false)
+   
 
         const type = res.data.user.type;
         console.log("**********************", res.data.user.type);
