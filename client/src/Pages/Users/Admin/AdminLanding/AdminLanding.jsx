@@ -9,11 +9,23 @@ import AdminContadorCard from "./components/AdminContador/AdminContadorCard";
 import AdminAllCoursesCard from "./components/AdminAllCourses/AdminAllCoursesCard";
 import AdminAllTeachersCard from "./components/AdminAllTeachers/AdminAllTeachersCard";
 import AdminAllStudentsCard from "./components/AdminAllStudents/AdminAllStudentsCard";
+import AdminChartCard from "./components/AdminChart/AdminChartCard";
+import AdminNewUserCard from "./components/AdminNewUser/AdminNewUserCard";
 
 const AdminLanding = () => {
   const [allCourses, setAllCourses] = useState();
   const [allStudents, setAllStudents] = useState();
   const [allTeachers, setAllTeachers] = useState();
+  const [inscriptionDates, setInscriptionDates] = useState();
+
+  useEffect((data) => {
+    axios
+      .get("http://localhost:4000/admin/inscriptionDates", data)
+      .then((res) => {
+        setInscriptionDates(res.data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   //get all Courses - Pending
 
@@ -54,14 +66,16 @@ const AdminLanding = () => {
   }, []);
 
   return (
-    <Container fluid className="mainAdmin">
+    <section className="mainSection">
       <aside className="sideContent">
         <AdminCard />
-        <div>
-          <AdminContadorCard />
-        </div>
-
+        <AdminContadorCard />
         <AdminInfoCard />
+        <AdminChartCard
+          inscriptionDates={inscriptionDates}
+          setInscriptionDates={setInscriptionDates}
+        />
+        <AdminNewUserCard />
       </aside>
 
       <div className="mainContainer">
@@ -69,7 +83,7 @@ const AdminLanding = () => {
         <AdminAllTeachersCard />
         <AdminAllStudentsCard />
       </div>
-    </Container>
+    </section>
   );
 };
 

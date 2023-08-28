@@ -243,7 +243,6 @@ class courseControllers {
     });
   };
 
-
   // 9.- Suscribe into a course
   // http://localhost:4000/courses/payACourse/:user_id/:course_id
   suscribeIntoACourse = (req, res) => {
@@ -257,17 +256,18 @@ class courseControllers {
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
+  };
 
   // 10.- Get info for course edition info
   // http://localhost:4000/courses/courseInfoEdition/:course_id
   selectCourseEditionInfo = (req, res) => {
     const { course_id } = req.params;
-    
-    let sql = `SELECT course.course_name, course.course_length, course.price, course.course_description,user.user_name, user.user_id AS teacher_id, course.category_id, course.start_date, course.created_by_user_id FROM course JOIN user_course ON course.course_id = user_course.course_id JOIN user ON user_course.user_id = user.user_id WHERE course.course_id = ${course_id} AND user.type != 0;`
 
-    connection.query(sql , (error, result) => {
+    let sql = `SELECT course.course_name, course.course_length, course.price, course.course_description,user.user_name, user.user_id AS teacher_id, course.category_id, course.start_date, course.created_by_user_id FROM course JOIN user_course ON course.course_id = user_course.course_id JOIN user ON user_course.user_id = user.user_id WHERE course.course_id = ${course_id} AND user.type != 0;`;
+
+    connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
-    })
+    });
   };
 }
 

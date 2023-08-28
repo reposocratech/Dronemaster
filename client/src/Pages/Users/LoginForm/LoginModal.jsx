@@ -10,7 +10,11 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
-const LoginModal = ({ setShowLoginModal, showLoginModal, setShowRegisterModal, openRegisterModal }) => {
+const LoginModal = ({
+  setShowLoginModal,
+  showLoginModal,
+  openRegisterModal,
+}) => {
   const closeLoginModal = () => {
     setShowLoginModal(false);
   };
@@ -38,7 +42,6 @@ const LoginModal = ({ setShowLoginModal, showLoginModal, setShowRegisterModal, o
         setIsLogged(true);
         reset();
         setShowLoginModal(false);
-        setShowRegisterModal(false)
 
         const type = res.data.user.type;
         console.log("**********************", res.data.user.type);
@@ -55,7 +58,12 @@ const LoginModal = ({ setShowLoginModal, showLoginModal, setShowRegisterModal, o
       .catch((error) => console.log(error));
   };
   return (
-    <Modal className="main lg" show={showLoginModal} onHide={closeLoginModal} animation={false}>
+    <Modal
+      className="main lg"
+      show={showLoginModal}
+      onHide={closeLoginModal}
+      animation={false}
+    >
       <Modal.Body className="bckModal">
         <Row>
           <Col className="formContainer">
@@ -84,17 +92,25 @@ const LoginModal = ({ setShowLoginModal, showLoginModal, setShowRegisterModal, o
                 <p>{errors.password?.message}</p>
                 <Col className="d-flex m-3">
                   <button className="btnNormal me-3"> Aceptar</button>
-                  <button className="btnNormal" onClick={() => { closeLoginModal() }}>
+                  <button
+                    className="btnNormal"
+                    onClick={() => {
+                      closeLoginModal();
+                    }}
+                  >
                     Cancelar
                   </button>
                 </Col>
                 <Col className="LI">
                   <span>¿Aún no formas parte de nuestra comunidad? </span>
-                  <span role="button" className="span" onClick={() => {
-                    closeLoginModal()
-                    openRegisterModal()
-                  }}>
-
+                  <span
+                    role="button"
+                    className="span"
+                    onClick={() => {
+                      closeLoginModal();
+                      openRegisterModal();
+                    }}
+                  >
                     Registrate
                   </span>
                 </Col>

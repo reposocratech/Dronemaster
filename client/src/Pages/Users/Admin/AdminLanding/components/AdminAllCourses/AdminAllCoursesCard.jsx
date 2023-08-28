@@ -79,6 +79,8 @@ const AdminAllCoursesCard = () => {
             />
           </div>
         </form>
+
+        <button className="btnOutline1"> Añadir Curso</button>
       </div>
 
       <div className="cardBody">
@@ -108,30 +110,9 @@ const AdminAllCoursesCard = () => {
                     {allCourses?.map((course) => {
                       return (
                         <tr key={course.course_id}>
-                          <td className="tableCellName">
-                            {course.course_name}
-                          </td>
-                          {/* <td>
-                            <div className="tableCell iconCell">
-                              <div className="tableCellContent">
-                                <HiOutlineMail className="icon text-warning" />
-                                <span className="d-none d-md-inline ">
-                                  {course.email}
-                                </span>
-                              </div>
-                            </div>
-                          </td>
-
-                          <td>
-                            <div className="tableCell iconCell">
-                              <div className="tableCellContent">
-                                <AiOutlinePhone className="icon text-warning" />
-                                <span className="d-none d-md-inline ">
-                                  {course.phone}
-                                </span>
-                              </div>
-                            </div>
-                          </td> */}
+                          <th className="textReduce text-warning w-75">
+                            <div className="oculto">{course.course_name}</div>
+                          </th>
                         </tr>
                       );
                     })}
@@ -143,7 +124,7 @@ const AdminAllCoursesCard = () => {
                 {allCourses?.map((course) => {
                   return (
                     <tr key={course.course_id}>
-                      <td className="tableCellName">{course.course_name}</td>
+                      <th className="textReduce ">{course.course_name}</th>
                       {/*  <td>
                         <div className="tableCell iconCell">
                           <div className="tableCellContent">

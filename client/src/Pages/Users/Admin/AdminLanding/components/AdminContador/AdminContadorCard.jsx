@@ -23,8 +23,15 @@ const AdminContadorCard = () => {
   }, []);
 
   return (
-    <div className="sideContent">
-      <div className="cardBody d-flex">
+    <div className="counterCard">
+      <div className="cardBody d-flex justify-content-center align-content-center">
+        <div className="counterCard">
+          <span className="iconContainer">
+            <AiOutlineUser />
+          </span>
+          <h6>Profesores</h6>
+          <p>{counter.TotalTeachers}</p>
+        </div>
         <div className="counterCard">
           <span className="iconContainer">
             <AiOutlineUser />

@@ -62,6 +62,7 @@ const AdminAllStudentsCard = () => {
             />
           </div>
         </form>
+        <button className="btnOutline1"> Añadir Estudiante</button>
       </div>
       <div className="cardBody">
         <table className="adTable">

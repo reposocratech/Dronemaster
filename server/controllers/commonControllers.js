@@ -58,7 +58,7 @@ class commonControllers {
   //http://localhost:4000/counter
   viewCounter = (req, res) => {
     let sql =
-      "SELECT (SELECT COUNT(*) FROM user WHERE type = 1 ) AS TotalTeachers,(SELECT COUNT(*) FROM user WHERE type = 0) AS TotalStudents, (SELECT COUNT(*) FROM course) AS TotalCourse;";
+      "SELECT (SELECT COUNT(*) FROM user WHERE type = 1 ) AS TotalTeachers,(SELECT COUNT(*) FROM user WHERE type = 0) AS TotalStudents, (SELECT COUNT(*) FROM user WHERE type = 2 ) AS TotalAdmin, (SELECT COUNT(*) FROM course) AS TotalCourse;";
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
@@ -189,13 +189,13 @@ class commonControllers {
   // 13.- Delete profile image of a user
   // http://localhost:4000/myProfile/deleteImage/:user_id
   deleteProfileImage = (req, res) => {
-    const {user_id} = req.params;
+    const { user_id } = req.params;
 
-    let sql = `UPDATE user SET user_img = NULL WHERE user_id = ${user_id}`
+    let sql = `UPDATE user SET user_img = NULL WHERE user_id = ${user_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
-    })
+    });
   };
 }
 
