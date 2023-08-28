@@ -1,9 +1,9 @@
 const connection = require("../config/db");
 
 class adminControllers {
-  // 1.- Create teacher
-  // http://localhost:4000/admin/createTeacher
-  createTeacherOrAdmin = (req, res) => {
+  // 1.- Create newUser
+  // http://localhost:4000/admin/createUser
+  createUser = (req, res) => {
     const { user_name, user_lastname, email, password, type } = req.body;
 
     let saltRounds = 10;
@@ -11,7 +11,7 @@ class adminControllers {
       bcrypt.hash(password, saltRounds, function (err, hash) {
         err && res.status(401).json({ err });
 
-        let sql = `INSERT INTO user (user_name, user_lastname, email, password, type, national_id, address, phone, user_img) VALUES ('${user_name}', '${user_lastname}', '${email}', '${hash}', '${type}')`;
+        let sql = `INSERT INTO user (user_name, user_lastname, email, password, type) VALUES ('${user_name}', '${user_lastname}', '${email}', '${hash}', '${type}')`;
 
         connection.query(sql, (error, result) => {
           error
@@ -211,6 +211,16 @@ class adminControllers {
 
     let sql = `DELETE FROM tag_course WHERE tag_id = ${tag_id} AND course_id = ${course_id}`;
     
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 16.- Start dates
+  // http://localhost:4000/admin/inscriptionDates
+  viewInscriptionDates = (req, res) => {
+    let sql = "select * from user_course";
+
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });

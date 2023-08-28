@@ -95,6 +95,7 @@ export const CourseInfo = () => {
   return (
     <section className="courseInfoMainSection">
         {/* Course name title */}
+
         <div className="courseNameCard">
           <div className="cardTitle">
             <div className="title">
@@ -222,9 +223,7 @@ export const CourseInfo = () => {
           </div>
         </div>}
 
-        
       </aside>
-      
     </section>
   );
 };

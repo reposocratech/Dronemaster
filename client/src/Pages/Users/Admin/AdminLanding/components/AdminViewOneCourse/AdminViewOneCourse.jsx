@@ -56,38 +56,37 @@ const AdminViewOneCourse = ({ course_id }) => {
             <h6>
               Unidad {unitIndex + 1}: {unitName}
             </h6>
-            <button className="btnOutline1">Editar</button>
-            <button className="btnOutline1">Habilitado</button>
-            {/*           <div className="resourceContainer ">
+            <div className="resourceContainer ">
               <BsPencil className="icon  text-warning" />
               <BsEye className="icon  text-warning" />
               <BsEyeSlash className="icon  text-warning" />
-            </div> */}
+            </div>
           </td>
-          <div>
+          <tr>
             {allInformation
               .filter((item) => item.unit_tittle === unitName)
               .map((lesson) => (
-                <div className="d-flex">
-                  <div>{lesson.lesson_title}</div>
-                  <div className="resourceContainer">
+                <td className="d-flex me-4">
+                  <h6>{lesson.lesson_title}</h6>
+                  <div className="resourceContainer ">
                     <BsPencil className="icon  text-warning" />
                     <BsEye className="icon  text-warning" />
                     <BsEyeSlash className="icon  text-warning" />
                   </div>
-                </div>
+                </td>
               ))}
+
             <div>
               {allInformation
                 .filter((item) => item.unit_tittle === unitName)
                 .map((resource) => (
-                  <div className="d-flex">
+                  <tr className="coursesTableCard mb-4">
                     <div> Recurso: {resource.resource_id}</div>
                     <div className="resourceContainer"></div>
-                  </div>
+                  </tr>
                 ))}
             </div>
-          </div>
+          </tr>
         </div>
       ))}
     </tr>

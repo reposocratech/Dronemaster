@@ -4,9 +4,9 @@ const adminControllers = require("../controllers/adminControllers");
 const bcrypt = require("bcrypt");
 const multer = require("../middleware/multer");
 
-// 1.- Create teacher or admin
-// http://localhost:4000/admin/createTeacher
-router.post("/createTeacherOrAdmin", adminControllers.createTeacherOrAdmin);
+// 1.- Create newUser
+// http://localhost:4000/admin/createUser
+router.post("/createUser", adminControllers.createUser);
 
 // 2.- View all teachers
 // http://localhost:4000/admin/allTeachers
@@ -65,9 +65,15 @@ router.post(
 
 router.get("/courseInfo", multer("resources"), adminControllers.ViewCourseInfo);
 
-
-
 // 15.- Delete a Tag from a course
 // http://localhost:4000/admin/deleteCourseTag/:tag_id/:course_id
-router.put("/deleteCourseTag/:tag_id/:course_id", adminControllers.deleteTagCourse);
+router.put(
+  "/deleteCourseTag/:tag_id/:course_id",
+  adminControllers.deleteTagCourse
+);
+
+// 16.- Start dates
+// http://localhost:4000/admin/inscriptionDates
+router.get("/inscriptionDates", adminControllers.viewInscriptionDates);
+
 module.exports = router;
