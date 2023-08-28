@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Modal } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
+import { DroneMasterContext } from "../../../../context/DroneMasterProvider";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { GiClassicalKnowledge } from "react-icons/gi";
+import { PiTrashBold } from "react-icons/pi";
+
 import "./courseEditionModalStyle.scss";
-import { DroneMasterContext } from "../../../../context/DroneMasterProvider";
 
 export const CourseEditionModal = ({
   setShowCourseEditionModal,
@@ -17,9 +19,14 @@ export const CourseEditionModal = ({
   const [tag, setTag] = useState();
   const [tagsList, setTagsList] = useState([]);
   const [courseData, setCourseData] = useState();
-  const { user } = useContext(DroneMasterContext);
+  const [courseImg, setCourseImg] = useState();
+  const [file, setFile] = useState();
+  const [teacherPrev_id, setTeacherPrev_id] = useState();
 
-  const course_id = 23;
+  const { user, resetData, setResetData } = useContext(DroneMasterContext);
+
+  const course_id = 2;
+
 
   const {
     register,
@@ -30,19 +37,21 @@ export const CourseEditionModal = ({
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/courses/courseInfoEdition/21`)
+      .get(`http://localhost:4000/courses/courseInfoEdition/${course_id}`)
       .then((res) => {
-        setCourseData(res.data);
-        console.log(res.data, "dataaaaaaaaaaaaa");
+        setCourseData(res.data[0]);
+        setTeacherPrev_id(res.data[0].teacher_id);
+        setCourseImg(
+          `http://localhost:4000/images/courses/${res.data[0].course_img}`
+        );
       })
       .catch((error) => console.log(error));
-  }, []);
+  }, [courseImg, course_id]);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/courses/courseTags/21`)
+      .get(`http://localhost:4000/courses/courseTags/${course_id}`)
       .then((res) => {
-        console.log(res.data);
         setTagsList(res.data);
       })
       .catch((error) => console.log(error));
@@ -52,7 +61,6 @@ export const CourseEditionModal = ({
     axios
       .get(`http://localhost:4000/admin/allTeachers`)
       .then((res) => {
-        console.log(res.data);
         setTeachersList(res.data);
       })
       .catch((err) => console.log(err));
@@ -62,11 +70,14 @@ export const CourseEditionModal = ({
     axios
       .get(`http://localhost:4000/courses/allCategories`)
       .then((res) => {
-        console.log(res.data);
         setCategoriesList(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
+
+  const handleImgChange = (e) => {
+    setFile(e.target.files[0]);
+  };
 
   const handleClose = () => {
     setShowCourseEditionModal(false);
@@ -75,53 +86,73 @@ export const CourseEditionModal = ({
   const handleTagsChange = (e) => {
     setTag(e.target.value);
   };
-  console.log(tag);
 
   const handleTagButton = () => {
-    setTagsList([...tagsList,{"tag_name": tag}]);
+    setTagsList([...tagsList, { tag_name: tag }]);
     setTag("");
   };
-  console.log(tagsList);
 
   const onSubmit = (data) => {
     axios
-      .post(`http://localhost:4000/courses/createCourse/${user.user_id}`, {
-        data,
-        tagsList,
-      })
+      .put(
+        `http://localhost:4000/courses/editCourse/${course_id}/${teacherPrev_id}`,
+        {
+          data,
+          tagsList,
+        }
+      )
       .then((res) => {
         console.log(res);
       })
       .catch((err) => {
         console.log(err);
       });
+
+    if (file) {
+      const newFormData = new FormData();
+
+      newFormData.append("file", file);
+
+      axios
+        .put(
+          `http://localhost:4000/courses/uploadCourseImage/${course_id}`,
+          newFormData
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => console.log(error));
+    }
   };
+  console.log(courseData);
 
   useEffect(() => {
-   
-
-    if (courseData && Object.keys(courseData).length > 0) {
-      setValue("course_name", courseData[0].course_name || "");
-      setValue("course_length", courseData[0].course_length || "");
-      setValue("price", courseData[0].price || "");
-      setValue("category_id", courseData[0].category_id || "");
-      setValue("start_date", courseData[0].start_date || "");
-      setValue("teacher_id", courseData[0].teacher_id || "");
-     
-    }
+    
+     courseData?.course_name && setValue("course_name", courseData.course_name || "");
+     courseData?.course_length && setValue("course_length", courseData.course_length || "");
+     courseData?.price && setValue("price", courseData.price || "");
+     courseData?.category_id && setValue("category_id", courseData.category_id || "");
+     courseData?.teacher_id && setValue("teacher_id", courseData.teacher_id || "");
+     courseData?.start_date && setValue("start_date", courseData.start_date.slice(0, 10) || "");
+    
   }, [courseData, setValue]);
 
-  const handleDeleteTag = (tagId) => {
-    axios
-      .put(`http://localhost:4000/admin/deleteCourseTag/${tagId}/${course_id}`)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleDeleteTag = (tagId, tagName) => {
+    let url = "";
+    if (tagId != undefined) {
+      axios
+        .put(
+          `http://localhost:4000/admin/deleteCourseTag/${tagId}/${course_id}`
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
 
-    const updatedTagsList = tagsList.filter((tag) => tag.tag_id !== tagId);
+    const updatedTagsList = tagsList.filter((tag) => tag.tag_name !== tagName);
     setTagsList(updatedTagsList);
   };
 
@@ -146,6 +177,26 @@ export const CourseEditionModal = ({
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body className="modalBody">
+          {/* Image Container */}
+
+          <div className="imgContainer">
+            {courseData && <img src={courseImg} alt="" />}
+          </div>
+
+          {/* Image Input Group */}
+          <div className="inputFileContainer">
+            <input
+              name="file"
+              type="file"
+              onChange={handleImgChange}
+              className="inputFile"
+              id="inputFile"
+            />
+            <label htmlFor="inputFile" className="inputImageLabel btnNormal">
+              Selecciona Imagen
+            </label>
+          </div>
+
           {/* Name Input Group */}
           <div className="d-flex flex-column align-items-start gap-1 inputName">
             <label htmlFor="course_name" className="ps-3">
@@ -287,14 +338,14 @@ export const CourseEditionModal = ({
           </div>
 
           <div className="d-flex flex-column align-items-start gap-1 tagsList">
-            <div className="tagListContainer d-flex flex-wrap align-items-center ">
+            <div className="tagListContainer d-flex flex-wrap ">
               {tagsList?.map((tag, index) => {
                 return (
-                  <p key={index} className="me-1 mb-0 ">
+                  <p key={index} className="m-0 me-3 ">
                     <MdOutlineDeleteOutline
                       className="deleteIcon"
-                      onClick={() => handleDeleteTag(tag.tag_id)}
-                    />{" "}
+                      onClick={() => handleDeleteTag(tag.tag_id, tag.tag_name)}
+                    />
                     #{tag.tag_name}
                   </p>
                 );

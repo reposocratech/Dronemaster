@@ -13,12 +13,12 @@ class teacherControllers {
     });
   };
 
-  // 2.- Count all students (not deleted) of a course
+  // 2.- Count all students (not deleted) and UNITS of a course
   // http://localhost:4000/teachers/myCourses/studentCounter/:user_id
   countMyStudentsFromCourse = (req, res) => {
     const { user_id } = req.params;
 
-    let sql = `SELECT user_course.course_id, COUNT(DISTINCT user_course.user_id) AS num_students, COUNT(DISTINCT unit.unit_id) AS num_units FROM user_course JOIN user ON user_course.user_id = user.user_id JOIN unit ON user_course.course_id = unit.course_id WHERE user.type = 0 AND user.is_deleted = FALSE AND user_course.course_id IN ( SELECT course_id FROM user_course WHERE user_id = ${user_id} ) GROUP BY user_course.course_id;`;
+    let sql = `SELECT course.course_id, COUNT(DISTINCT unit.unit_id) AS num_units, COUNT(DISTINCT user2.user_id) AS num_students FROM user_course JOIN course ON user_course.course_id = course.course_id LEFT JOIN unit ON course.course_id = unit.course_id LEFT JOIN user_course user_course2 ON course.course_id = user_course2.course_id LEFT JOIN user user2 ON user_course2.user_id = user2.user_id AND user2.type = 0 WHERE user_course.user_id = ${user_id} GROUP BY course.course_id`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(201).json(result);

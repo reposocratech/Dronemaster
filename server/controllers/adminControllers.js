@@ -210,7 +210,7 @@ class adminControllers {
     const { course_id, tag_id } = req.params;
 
     let sql = `DELETE FROM tag_course WHERE tag_id = ${tag_id} AND course_id = ${course_id}`;
-
+    
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });

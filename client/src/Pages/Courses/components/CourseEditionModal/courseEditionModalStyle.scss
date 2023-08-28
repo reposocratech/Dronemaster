@@ -1,11 +1,10 @@
 @import "../../../../../public/styles/variables";
 
-.courseEditionModalContainer{
+.courseEditionModalContainer {
   backdrop-filter: blur(4px);
   background-color: none;
-  .modalHeader{
+  .modalHeader {
     background-color: $CuaternaryDark;
-
   }
   .modalFooter {
     background-color: $CuaternaryDark;
@@ -41,7 +40,7 @@
     .btn-close {
       margin: 4px;
       border-radius: 100%;
-      background-color:$PrimaryOrangeColor;
+      background-color: $PrimaryOrangeColor;
       opacity: 0.8;
     }
 
@@ -56,6 +55,8 @@
     width: 100%;
     display: grid;
     grid-template:
+      "imgContainer imgContainer"
+      "inputFileContainer inputFileContainer"
       "inputName inputName"
       "inputCategory inputLength"
       "inputTeacher  inputTags"
@@ -64,11 +65,17 @@
       "inputDescription inputDescription";
 
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 2fr;
+    grid-template-rows: 3fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr;
     align-items: center;
     place-items: center;
     grid-gap: 6px;
 
+    .imgContainer {
+      grid-area: imgContainer;
+    }
+    .inputFileContainer {
+      grid-area: inputFileContainer;
+    }
     .inputName {
       grid-area: inputName;
     }
@@ -97,7 +104,7 @@
     .tagsList {
       grid-area: tagsList;
     }
-    .inputDate{
+    .inputDate {
       grid-area: inputDate;
     }
 
@@ -137,6 +144,66 @@
       border: 2px solid $PrimaryOrangeColor;
     }
 
+    .imgContainer{
+      max-height: 230px;
+      min-width: 300px;
+      aspect-ratio: 16/9;
+      border-radius: 10px;
+      border-style: solid;
+      background-color: rgba(255, 255, 255, 0.181);
+      color: $CuaternaryDark;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+      .deleteImgButton {
+        display: none;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        aspect-ratio: 1/1;
+        padding: 4px;
+        background-color: red;
+        color: white;
+      }
+      .deleteImgButton:hover {
+        background-color: rgb(128, 3, 3);
+      }
+    }
+    .imgContainer:hover {
+
+      .deleteImgButton {
+        display: flex;
+      }
+    }
+
+    .inputImageLabel {
+      width: 150px;
+      background-color: transparent;
+      text-align: center;
+      font-size: small;
+      padding: 4px;
+      border: 2px solid $PrimaryOrangeColor;
+      font-weight: 400;
+      margin-bottom: 5px;
+      cursor: pointer;
+    }
+
+    .inputImageLabel:hover{
+      color: black;
+    }
+
+
+    input[type="file"].inputFile {
+      display: none;
+    }
+
     .input2 {
       option {
         background-color: rgba(82, 82, 82, 0.6);
@@ -148,37 +215,49 @@
     .input3 {
       height: 100%;
     }
-    .tagListContainer{
-      p{height: fit-content;}
-      row-gap: 0;
+    .tagListContainer {
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      
+      p {
+        margin: 0 ;
+        margin-right: 40px;
+        height: 24px;
+      }
     }
 
     input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button{
+    input[type="number"]::-webkit-outer-spin-button {
       -webkit-appearance: none;
-    };
-
-
-   
+    }
 
     .tagsList,
     .inputDescription {
       height: 100%;
-        p{
-            margin: 0;
-            .deleteIcon{
-                background-color: red;
-                margin-bottom: 4px;
-                display: none;
-                cursor: pointer;
-            }
-      }
-      p:hover{
-        text-decoration: line-through;
-        .deleteIcon{
-            display: inline;
+      p {
+        position: relative;
+        margin: 0;
+        .deleteIcon {
+          left: -9px;
+          color: black;
+          top:2px;
+          position: absolute;
+          background-color: red;
+          height: 20px;
+          width: 18px;
+          border: 0.5px solid black;
+          border-radius: 2px;
+          margin-bottom: 4px;
+          display: none;
+          cursor: pointer;
         }
-
+      }
+      p:hover {
+        text-decoration: line-through;
+        .deleteIcon {
+          display: inline;
+        }
       }
     }
 
@@ -202,14 +281,14 @@
       }
     }
 
-    .errorMessage{
+    .errorMessage {
       font-weight: bold;
       color: $PrimaryOrangeColor;
       padding-left: 10px;
     }
   }
 
-  .modalFooter { 
+  .modalFooter {
     justify-content: space-evenly;
 
     .btnNormal {
@@ -233,16 +312,13 @@
 @media (max-width: 992px) {
   .courseEditionModalContainer {
     .modalBody {
-
       display: flex;
       flex-direction: column;
 
       .tagsList {
         height: 120px;
       }
-   
     }
-   
   }
 }
 
@@ -255,7 +331,6 @@
       .tagsList {
         height: 120px;
       }
-   
     }
   }
 }
