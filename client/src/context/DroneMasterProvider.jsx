@@ -13,6 +13,8 @@ const DroneMasterProvider = ({ children }) => {
   const [filter, setFilter] = useState();
   const [courseMaterial, setCourseMaterial] = useState()
   const [resetData, setResetData] = useState(false)
+
+
   const openRegister = () => {
     setShowRegister(!showRegister);
     setShowLogin(false);
@@ -70,7 +72,8 @@ const DroneMasterProvider = ({ children }) => {
           courseMaterial,
           setCourseMaterial,
           resetData,
-          setResetData
+          setResetData,
+
         }}
       >
         {children}

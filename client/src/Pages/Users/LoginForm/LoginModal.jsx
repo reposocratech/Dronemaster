@@ -38,7 +38,6 @@ const LoginModal = ({ setShowLoginModal, showLoginModal, openRegisterModal }) =>
         setIsLogged(true);
         reset();
         setShowLoginModal(false);
-   
 
         const type = res.data.user.type;
         console.log("**********************", res.data.user.type);

@@ -27,7 +27,6 @@ export const CourseEditionModal = ({
 
   const course_id = 2;
 
-
   const {
     register,
     handleSubmit,
@@ -37,6 +36,7 @@ export const CourseEditionModal = ({
 
   useEffect(() => {
     axios
+
       .get(`http://localhost:4000/courses/courseInfoEdition/${course_id}`)
       .then((res) => {
         setCourseData(res.data[0]);
@@ -126,15 +126,13 @@ export const CourseEditionModal = ({
   };
   console.log(courseData);
 
-  useEffect(() => {
-    
+  useEffect(() => {    
      courseData?.course_name && setValue("course_name", courseData.course_name || "");
      courseData?.course_length && setValue("course_length", courseData.course_length || "");
      courseData?.price && setValue("price", courseData.price || "");
      courseData?.category_id && setValue("category_id", courseData.category_id || "");
      courseData?.teacher_id && setValue("teacher_id", courseData.teacher_id || "");
      courseData?.start_date && setValue("start_date", courseData.start_date.slice(0, 10) || "");
-    
   }, [courseData, setValue]);
 
   const handleDeleteTag = (tagId, tagName) => {

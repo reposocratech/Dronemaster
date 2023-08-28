@@ -189,13 +189,25 @@ class commonControllers {
   // 13.- Delete profile image of a user
   // http://localhost:4000/myProfile/deleteImage/:user_id
   deleteProfileImage = (req, res) => {
-    const {user_id} = req.params;
+    const { user_id } = req.params;
 
-    let sql = `UPDATE user SET user_img = NULL WHERE user_id = ${user_id}`
+    let sql = `UPDATE user SET user_img = NULL WHERE user_id = ${user_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
-    })
+    });
+  };
+
+  // 14.- Download exam
+  // http://localhost:4000/downloadExam/:course_id
+  downloadExam = (req, res) => {
+    const { course_id } = req.params;
+
+    let sql = `SELECT exam_file FROM course WHERE course_id = ${course_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
   };
 
   // 13.- Gets info from a user at user_course

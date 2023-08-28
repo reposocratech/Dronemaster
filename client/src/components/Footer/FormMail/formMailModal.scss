@@ -1,4 +1,4 @@
-@import "../../../public/styles/variables";
+@import "../../../../public/styles/variables.scss";
 
 .editionModalContainer {
   backdrop-filter: blur(4px);
@@ -47,17 +47,19 @@
     }
   }
 
-  .modalBody {
+  .modalBodyMail {
 
     background-color: #9d9d9d;
 
     display: grid;
     grid-template:
-      "inputImage inputName inputLastname"
-      "inputImage inputPassport inputPhone"
-      "inputImage inputAddress inputAddress";
+      "question"
+      "inputName"
+      "inputPhone"
+      "inputEmail";
 
-    grid-template-columns: 1fr 1fr 1fr;
+
+    grid-template-columns: 1fr;
     align-items: center;
     place-items: center;
     grid-gap: 10px;
@@ -78,6 +80,10 @@
       grid-area: inputPhone;
     }
 
+    .inputEmail {
+      grid-area: inputEmail;
+    }
+
     .inputAddress {
       grid-area: inputAddress;
     }
@@ -86,7 +92,9 @@
     .inputLastname,
     .inputPassport,
     .inputPhone,
-    .inputAddress {
+    .inputAddress,
+    .inputEmail,
+    .inputDescription {
       padding: 0 8px;
       width: 100%;
     }

@@ -11,15 +11,17 @@ import { DroneMasterContext } from "../../../../context/DroneMasterProvider";
 import { StudentCourseTableInfo } from "./components/CourseInfo/StudentCourseTableInfo";
 import { CircularBarProgress } from "./components/CircularBarProgress/CircularBarProgress";
 import { EditMyProfileModal } from "../../../../components/EditMyProfileModal/EditMyProfileModal";
+import { ExamCard } from "./components/ExamCard/ExamCard";
 
 const StudentLanding = () => {
-  const { user } = useContext(DroneMasterContext);
+  const { user, courseMaterial } = useContext(DroneMasterContext);
   const [myCoursesData, setMyCoursesData] = useState();
   const [bestRatedCourses, setBestRatedCourses] = useState([]);
   const [lessonsViewedByStudent, setLessonsViewedByStudent] = useState()
   const [lessonsOneCourse, setLessonsOneCourse] = useState(0)
   const [courseId, setCourseId] = useState(0)
   const [showEditionModal, setShowEditionModal] = useState(false);
+  console.log(courseMaterial);
 
   //Get all courses of the user
   useEffect(() => {
@@ -29,7 +31,7 @@ const StudentLanding = () => {
         setMyCoursesData(res.data);
       })
       .catch((error) => console.log(error));
-  }, [user, setLessonsOneCourse, setLessonsViewedByStudent]);
+  }, [user]);
 
   useEffect(() => {
     axios
@@ -39,6 +41,9 @@ const StudentLanding = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+
+  const examAvailable = lessonsViewedByStudent / lessonsOneCourse;
 
   return (
     <div className="mainSection">
@@ -65,6 +70,13 @@ const StudentLanding = () => {
               courseId={courseId} />
           </div>
         )}
+
+        {courseMaterial && <div>
+          {examAvailable === 1 && <ExamCard />}
+
+
+        </div>}
+
       </div>
       <EditMyProfileModal
         showEditionModal={showEditionModal}
