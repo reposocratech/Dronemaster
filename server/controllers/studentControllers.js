@@ -27,7 +27,6 @@ class studentControllers {
   // http://localhost:4000/students/units/course_id
   getCourseUnits = (req, res) => {
     const { course_id } = req.params;
-    console.log(course_id);
 
     let sql = `SELECT unit_id, unit_tittle FROM unit WHERE course_id = ${course_id} ORDER BY unit_id ASC`;
 
@@ -40,7 +39,6 @@ class studentControllers {
   // http://localhost:4000/students/lessons/:course_id
   getUnitLessons = (req, res) => {
     const { course_id } = req.params;
-    console.log(course_id);
 
     let sql = `SELECT lesson_id, lesson_title, lesson_content FROM lesson WHERE course_id = ${course_id} ORDER BY lesson_id ASC`;
 
@@ -69,7 +67,6 @@ class studentControllers {
     let sql1 = `SELECT lesson_id FROM lesson_viewed WHERE user_id = ${user_id} AND lesson_id = ${lesson_id} AND course_id = ${course_id}`;
 
     connection.query(sql1, (error, result) => {
-      console.log(result);
       if (error) {
         res.status(500).json({ error });
       } else {
@@ -77,7 +74,6 @@ class studentControllers {
           let sql2 = `INSERT INTO lesson_Viewed (user_id, lesson_id, course_id) VALUES (${user_id}, ${lesson_id}, ${course_id})`;
 
           connection.query(sql2, (error, result2) => {
-            console.log(result2);
             error
               ? res.status(400).json({ error })
               : res.status(201).json(result2);
@@ -178,8 +174,6 @@ class studentControllers {
     const { course_id } = req.params;
 
     const { score, counter_rating } = req.body;
-
-    console.log(req.body);
 
     let sql = `UPDATE course SET score = ${score}, counter_rating = ${counter_rating} WHERE course_id = ${course_id}`;
 

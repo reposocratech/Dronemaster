@@ -73,7 +73,6 @@ class commonControllers {
     const { user_name, user_lastname, passport, address, phone } = JSON.parse(
       req.body.editedUser
     );
-    console.log(user_id, "baaaaaaaaaaaaaaaaaaack");
 
     let img = "";
 
@@ -246,12 +245,9 @@ class commonControllers {
     });
   };
 
-
-
   // 16.- Gets original comments  of a lesson
   // http://localhost:4000/myCourse/myLesson/comments/:course_id/unit_id/:lesson_id
   getAllComments = (req, res) => {
-
     const { unit_id, course_id, lesson_id } = req.params;
 
     let sql = `SELECT comment.comment_id, comment.comment_content, comment.comment_is_hidden,user.user_id, user.user_name, user.user_lastname, user.user_img FROM comment JOIN user ON comment.user_id = user.user_id WHERE comment.course_id = ${course_id} AND comment.unit_id = ${unit_id} AND comment.lesson_id = ${lesson_id} AND comment.parent_comment_id IS NULL ORDER BY comment.comment_id DESC`;
@@ -292,15 +288,12 @@ class commonControllers {
   uploadResource = (req, res) => {
     const { user_id } = req.params;
     let file = req.file.filename;
-    console.log(file);
 
     let sql = `INSERT INTO resource (user_id, resource_name) VALUES (${user_id}, "${file}")`;
-  connection.query(sql, (error, result) => {
-
+    connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
   };
-
 
   // 20 Get the information of one User
   // http://localhost:4000/userInformation/:user_id
@@ -340,12 +333,11 @@ class commonControllers {
   // 21.- Gets responses  of a lesson
   // http://localhost:4000/myCourse/myLesson/responses/:course_id/unit_id/:lesson_id
   getAllResponses = (req, res) => {
-    
     const { unit_id, course_id, lesson_id } = req.params;
 
     let sql = `SELECT comment.comment_id, comment.comment_content, comment.comment_is_hidden, comment.parent_comment_id,user.user_id, user.user_name, user.user_lastname, user.user_img FROM comment JOIN user ON comment.user_id = user.user_id WHERE comment.parent_comment_id IS NOT NULL AND comment.course_id = ${course_id} AND comment.unit_id = ${unit_id} AND comment.lesson_id = ${lesson_id} AND comment.parent_comment_id IS NOT NULL ORDER BY comment.comment_id DESC`;
 
-     connection.query(sql, (error, result) => {
+    connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
   };

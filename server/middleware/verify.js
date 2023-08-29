@@ -1,10 +1,6 @@
 const jwt = require("jsonwebtoken");
 
 const verify = (req, res, next) => {
-  // console.log("esttooooyy en verifyyyy")
-  // console.log("estooo eesss ellll reqqqqq", req);
-
-  /* console.log("headersssss",req.headers); */
   const auth = req.headers.authorization;
   if (!auth) {
     return res.status(401).json("NO ESTAS AUTORIZADO A ENTRAR!!!!!");

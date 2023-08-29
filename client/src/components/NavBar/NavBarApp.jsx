@@ -22,7 +22,6 @@ const NavBarApp = () => {
     setUser,
     user,
     setIsLogged,
-    openRegister,
     setCourseMaterial,
   } = useContext(DroneMasterContext);
   const { register, handleSubmit, reset } = useForm();
@@ -36,7 +35,7 @@ const NavBarApp = () => {
         setListCourses(res.data);
       })
       .catch((err) => console.log(err));
-  }, [])
+  }, []);
 
   const onSubmit = (data) => {
     let name = data.course_name;
@@ -48,16 +47,15 @@ const NavBarApp = () => {
     setCourse(courseFound);
     navigate("/allCourses");
   };
-  console.log(course);
+
   const openLoginModal = () => {
     setShowLoginModal(true);
-    setShowRegisterModal(false)
+    setShowRegisterModal(false);
   };
 
   const openRegisterModal = () => {
-
-    setShowRegisterModal(true)
-    setShowLoginModal(false)
+    setShowRegisterModal(true);
+    setShowLoginModal(false);
   };
 
   const logoutUser = () => {
@@ -168,10 +166,12 @@ const NavBarApp = () => {
               )}
               {token && (
                 <div className="d-flex justify-content-center align-items-center gap-2">
-                  <div className="avatar" onClick={() => {
-                    navigate(`/${routeType(user)}`);
-                  }}>
-
+                  <div
+                    className="avatar"
+                    onClick={() => {
+                      navigate(`/${routeType(user)}`);
+                    }}
+                  >
                     {user?.user_img ? (
                       <>
                         <img

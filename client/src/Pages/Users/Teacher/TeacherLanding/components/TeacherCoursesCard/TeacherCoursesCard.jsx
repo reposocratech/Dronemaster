@@ -3,21 +3,23 @@ import { GiClassicalKnowledge } from "react-icons/gi";
 import { BiRightArrowAlt } from "react-icons/bi";
 import axios from "axios";
 import { DroneMasterContext } from "../../../../../../context/DroneMasterProvider";
-import { Navigate, useNavigate } from "react-router-dom";
 
 export const TeacherCoursesCard = ({ myCoursesData }) => {
-  const { courseMaterial, setCourseMaterial } = useContext(DroneMasterContext)
-
+  const { setCourseMaterial } = useContext(DroneMasterContext);
 
   const showCourse = (course_id) => {
     axios
       .get(`http://localhost:4000/students/courseMaterial/${course_id}`)
       .then((res) => {
-        setCourseMaterial({ course_name: myCoursesData?.find(item => item.course_id === parseInt(course_id)).course_name, course_info: res.data })
-
+        setCourseMaterial({
+          course_name: myCoursesData?.find(
+            (item) => item.course_id === parseInt(course_id)
+          ).course_name,
+          course_info: res.data,
+        });
       })
-      .catch((err) => console.log(err))
-  }
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="courseListCard">

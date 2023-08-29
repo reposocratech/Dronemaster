@@ -36,7 +36,6 @@ export const CourseContentDropDownList = ({
       setOpenUnits([...openUnits, unitIndex]);
     }
   };
-  console.log(myCourseInfo);
   return (
     <div className="allUnitsLessonCard">
       <div className="listContainer">

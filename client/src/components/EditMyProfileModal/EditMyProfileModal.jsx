@@ -62,7 +62,6 @@ export const EditMyProfileModal = ({
     axios
       .put(`http://localhost:4000/editMyProfile/${user.user_id}`, newFormData)
       .then((res) => {
-        console.log(res);
         setResetData(!resetData);
       })
       .catch((err) => console.log(err));

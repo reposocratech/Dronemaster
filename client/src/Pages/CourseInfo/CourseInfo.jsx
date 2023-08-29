@@ -36,7 +36,6 @@ export const CourseInfo = () => {
       .get(`http://localhost:4000/teachers/myCourses/courseInfo/${course_id}`)
       .then((res) => {
         setCourseUnitsLessons(res.data);
-        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, [course_id]);
@@ -52,7 +51,7 @@ export const CourseInfo = () => {
         console.log(error);
       });
   }, [course_id]);
-  console.log(courseGeneralInfo, "courseeedata");
+
   //Gets tags of a course
   useEffect(() => {
     axios
@@ -67,7 +66,6 @@ export const CourseInfo = () => {
   //Check if user has already boy a course
   useEffect(() => {
     user &&
-
       axios
         .get(
           `http://localhost:4000/myProfile/myCourse/${user.user_id}/${course_id}`
@@ -75,8 +73,6 @@ export const CourseInfo = () => {
         .then((res) => setUserCourseRelationship(res.data))
         .catch((err) => console.log(err));
   }, [course_id, user]);
-
-
 
   useEffect(() => {
     if (course_id) {
@@ -126,12 +122,14 @@ export const CourseInfo = () => {
 
   const onSubmit = () => {
     axios
-      .post(`http://localhost:4000/courses/payACourse/${user.user_id}/${course_id}/${courseGeneralInfo.price}`,)
+      .post(
+        `http://localhost:4000/courses/payACourse/${user.user_id}/${course_id}/${courseGeneralInfo.price}`
+      )
       .then((res) => console.log(res))
-      .catch((err) => console.log(err))
+      .catch((err) => console.log(err));
 
-    setResetData(!resetData)
-  }
+    setResetData(!resetData);
+  };
 
   return (
     <section className="courseInfoMainSection">
@@ -153,8 +151,8 @@ export const CourseInfo = () => {
 
         <div className="introMultimedia">
           <img
-            src="http://localhost:4000/images/courses/courseDefaultImg.jpg"      
-          alt="Course image"
+            src="http://localhost:4000/images/courses/courseDefaultImg.jpg"
+            alt="Course image"
           />
           <img
             className="watermarkImg"
@@ -193,7 +191,6 @@ export const CourseInfo = () => {
                 }
                 alt="Course image"
               />
-
             </div>
             <div className="courseDataContent">
               <h6 className="courseTitle">{courseGeneralInfo?.course_name}</h6>
@@ -249,9 +246,16 @@ export const CourseInfo = () => {
                 </div>
               )}
 
-              {user && <button className="btnNormal" onClick={onSubmit}>INSCRIBETE</button>}
-              {!user && <p className="fst-italic" style={{ color: '#f7ab16' }}>Inicia sesión o regístrate para inscribirte en el curso</p>}
-
+              {user && (
+                <button className="btnNormal" onClick={onSubmit}>
+                  INSCRIBETE
+                </button>
+              )}
+              {!user && (
+                <p className="fst-italic" style={{ color: "#f7ab16" }}>
+                  Inicia sesión o regístrate para inscribirte en el curso
+                </p>
+              )}
             </div>
           </div>
         )}

@@ -14,8 +14,6 @@ import axios from "axios";
 import "./teacherMyCourse.scss";
 import { TeacherCourseList } from "./components/TeacherCourseList/TeacherCourseList";
 
-
-
 export const TeacherMyCourse = () => {
   const { user } = useContext(DroneMasterContext);
   const { course_id } = useParams();
@@ -23,18 +21,19 @@ export const TeacherMyCourse = () => {
   const [myOneCourseStudentsData, setMyOneCourseStudentsData] = useState();
   const [showEditionModal, setShowEditionModal] = useState(false);
   const [myCoursesData, setMyCoursesData] = useState();
-  const [inscriptionDates, setInscriptionDates] = useState()
-  const [resetUseEffect, setResetUseEffect] = useState(false)
+  const [inscriptionDates, setInscriptionDates] = useState();
+  const [resetUseEffect, setResetUseEffect] = useState(false);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/teachers/myCourses/inscriptionDates/${course_id}`)
+      .get(
+        `http://localhost:4000/teachers/myCourses/inscriptionDates/${course_id}`
+      )
       .then((res) => {
-        setInscriptionDates(res.data)
+        setInscriptionDates(res.data);
       })
       .catch((error) => console.log(error));
-
-  }, [course_id, resetUseEffect])
+  }, [course_id, resetUseEffect]);
 
   //Get all courses of the user
   useEffect(() => {
@@ -47,7 +46,6 @@ export const TeacherMyCourse = () => {
   }, [user, resetUseEffect]);
 
   useEffect(() => {
-
     //Get all students info from a course
     axios
       .get(`http://localhost:4000/teachers/myCourses/students/${course_id}`)
@@ -62,7 +60,6 @@ export const TeacherMyCourse = () => {
       .get(`http://localhost:4000/teachers/myCourses/courseInfo/${course_id}`)
       .then((res) => {
         setMyCourseInfo(res.data);
-        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, [course_id, resetUseEffect]);
@@ -89,15 +86,20 @@ export const TeacherMyCourse = () => {
 
         <TeacherCourseList myCoursesData={myCoursesData} />
 
-        {inscriptionDates?.length !== 0 && <CourseStatsChart inscriptionDates={inscriptionDates} />}
+        {inscriptionDates?.length !== 0 && (
+          <CourseStatsChart inscriptionDates={inscriptionDates} />
+        )}
       </aside>
       <div className="mainContainer">
-        <TeacherOnecourseContent myCourseInfo={myCourseInfo} setResetUseEffect={setResetUseEffect} resetUseEffect={resetUseEffect} />
+        <TeacherOnecourseContent
+          myCourseInfo={myCourseInfo}
+          setResetUseEffect={setResetUseEffect}
+          resetUseEffect={resetUseEffect}
+        />
 
         <TeacherOneCourseStudentsTable
           myOneCourseStudentsData={myOneCourseStudentsData}
         />
-
       </div>
       <EditMyProfileModal
         showEditionModal={showEditionModal}

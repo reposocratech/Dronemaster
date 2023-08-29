@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { AiOutlineEyeInvisible, AiOutlineEye  } from "react-icons/ai";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 
 export const CommentsAndResponsesList = ({
   allComments,
@@ -27,7 +27,6 @@ export const CommentsAndResponsesList = ({
         { responseContent }
       )
       .then((res) => {
-        console.log(res);
         setResponseInputForComment(-1);
         setResetComments(!resetComments);
       })
@@ -35,129 +34,175 @@ export const CommentsAndResponsesList = ({
   };
 
   const handleCommentDisable = (commentId) => {
-    axios.put(`http://localhost:4000/admin/disableComment/${commentId}`)
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err))
-    setResetComments(!resetComments)
-  }
+    axios
+      .put(`http://localhost:4000/admin/disableComment/${commentId}`)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+    setResetComments(!resetComments);
+  };
 
-  const handleCommentEnable = (commentId) =>{
-    axios.put(`http://localhost:4000/admin/enableComment/${commentId}`)
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err))
+  const handleCommentEnable = (commentId) => {
+    axios
+      .put(`http://localhost:4000/admin/enableComment/${commentId}`)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
 
-    setResetComments(!resetComments)
-
-  }
+    setResetComments(!resetComments);
+  };
 
   return (
     <div className="commentsResponsesList">
       {allComments?.map((comment, commentIndex) => (
         <>
-        {(user.type === 2 || comment.comment_is_hidden === 0) &&
-       
-        <div key={comment.comment_id} className="commentCont"  style={{  filter: `${comment.comment_is_hidden === 0 ? "brightness(1)" : "brightness(0.5)"}` }} >
-          <div className="commentTitle">
-            <div className="userImgContainer">
-              {comment?.user_img ? (
-                <img
-                  src={`http://localhost:4000/images/users/${comment.user_img}`}
-                />
-              ) : (
-                <h6 className="avatarText">
-                  {comment.user_name.at(0).toUpperCase()}
-                </h6>
-              )}
-            </div>
-            <p className="mb-0 text-capitalize">
-              {comment.user_name} {comment?.user_lastname}
-            </p>
-            {(user?.user_id == comment.user_id || user?.type === 2) && (
-              <div className="deleteButtonCont">
-                {comment.comment_is_hidden === 0 ? <AiOutlineEyeInvisible  className="visible"  onClick={()=> handleCommentDisable(comment.comment_id)}/> : <AiOutlineEye className="hide"  onClick={()=> handleCommentEnable(comment.comment_id)}/> } 
-              </div>
-            )}
-          </div>
-          <p>{comment.comment_content}</p>
-          <button
-            className="responseButton"
-            onClick={() => setResponseInputForComment(commentIndex)}
-          >
-            Responder
-          </button>
-
-          {responseInputForComment === commentIndex && (
-            <div className="commentInputContainer">
-              <div className="userImgContainer">
-                <img
-                  src={
-                    user?.user_img &&
-                    `http://localhost:4000/images/users/${user?.user_img}`
-                  }
-                />
-                <p className="mb-0">
-                  {user?.user_name} {user?.user_lastname}
+          {(user.type === 2 || comment.comment_is_hidden === 0) && (
+            <div
+              key={comment.comment_id}
+              className="commentCont"
+              style={{
+                filter: `${
+                  comment.comment_is_hidden === 0
+                    ? "brightness(1)"
+                    : "brightness(0.5)"
+                }`,
+              }}
+            >
+              <div className="commentTitle">
+                <div className="userImgContainer">
+                  {comment?.user_img ? (
+                    <img
+                      src={`http://localhost:4000/images/users/${comment.user_img}`}
+                    />
+                  ) : (
+                    <h6 className="avatarText">
+                      {comment.user_name.at(0).toUpperCase()}
+                    </h6>
+                  )}
+                </div>
+                <p className="mb-0 text-capitalize">
+                  {comment.user_name} {comment?.user_lastname}
                 </p>
-              </div>
-              <textarea
-                className="commentInput"
-                type="text"
-                onChange={handleResponseInputChange}
-              />
-              <div className="buttonContainer">
-                <button
-                  className="commentButton"
-                  onClick={() => setResponseInputForComment(false)}
-                >
-                  Cancelar
-                </button>
-                <button
-                  className="commentButton"
-                  onClick={() => onSubmit(comment.comment_id)}
-                >
-                  Enviar
-                </button>
-              </div>
-            </div>
-          )}
-
-          {allResponses
-            ?.filter((response) => response.parent_comment_id === comment.comment_id).map((response) => (
-            <>
-            
-              {(user.type === 2 || response.comment_is_hidden === 0) && 
-              <div key={response.comment_id} className="responseCont"  style={{  filter: `${response.comment_is_hidden === 0 ? "brightness(1)" : "brightness(0.5)"}` }}>
-                <div className="commentTitle">
-                  <div className="userImgContainer">
-                    {response.user_img ? (
-                      <img
-                        src={`http://localhost:4000/images/users/${response.user_img}`}
+                {(user?.user_id == comment.user_id || user?.type === 2) && (
+                  <div className="deleteButtonCont">
+                    {comment.comment_is_hidden === 0 ? (
+                      <AiOutlineEyeInvisible
+                        className="visible"
+                        onClick={() => handleCommentDisable(comment.comment_id)}
                       />
                     ) : (
-                      <h6 className="avatarText">
-                        {response?.user_name.at(0).toUpperCase()}
-                      </h6>
+                      <AiOutlineEye
+                        className="hide"
+                        onClick={() => handleCommentEnable(comment.comment_id)}
+                      />
                     )}
                   </div>
-                  <p className="mb-0 text-capitalize">
-                    {response?.user_name} {response?.user_lastname}
-                  </p>
-                  {(user?.user_id == response.user_id || user?.type === 2) && (
-              <div className="deleteButtonCont">
-                {response.comment_is_hidden === 0 ? <AiOutlineEyeInvisible  className="visible"  onClick={()=> handleCommentDisable(response.comment_id)}/> : <AiOutlineEye className="hide"  onClick={()=> handleCommentEnable(response.comment_id)}/> } 
+                )}
               </div>
-            )}
+              <p>{comment.comment_content}</p>
+              <button
+                className="responseButton"
+                onClick={() => setResponseInputForComment(commentIndex)}
+              >
+                Responder
+              </button>
+
+              {responseInputForComment === commentIndex && (
+                <div className="commentInputContainer">
+                  <div className="userImgContainer">
+                    <img
+                      src={
+                        user?.user_img &&
+                        `http://localhost:4000/images/users/${user?.user_img}`
+                      }
+                    />
+                    <p className="mb-0">
+                      {user?.user_name} {user?.user_lastname}
+                    </p>
+                  </div>
+                  <textarea
+                    className="commentInput"
+                    type="text"
+                    onChange={handleResponseInputChange}
+                  />
+                  <div className="buttonContainer">
+                    <button
+                      className="commentButton"
+                      onClick={() => setResponseInputForComment(false)}
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      className="commentButton"
+                      onClick={() => onSubmit(comment.comment_id)}
+                    >
+                      Enviar
+                    </button>
+                  </div>
                 </div>
-                <p>{response.comment_content}</p>
-              </div>
-              }
-             
-              </>
-            ))
-            }
-        </div>
-      }
-      </>
+              )}
+
+              {allResponses
+                ?.filter(
+                  (response) =>
+                    response.parent_comment_id === comment.comment_id
+                )
+                .map((response) => (
+                  <>
+                    {(user.type === 2 || response.comment_is_hidden === 0) && (
+                      <div
+                        key={response.comment_id}
+                        className="responseCont"
+                        style={{
+                          filter: `${
+                            response.comment_is_hidden === 0
+                              ? "brightness(1)"
+                              : "brightness(0.5)"
+                          }`,
+                        }}
+                      >
+                        <div className="commentTitle">
+                          <div className="userImgContainer">
+                            {response.user_img ? (
+                              <img
+                                src={`http://localhost:4000/images/users/${response.user_img}`}
+                              />
+                            ) : (
+                              <h6 className="avatarText">
+                                {response?.user_name.at(0).toUpperCase()}
+                              </h6>
+                            )}
+                          </div>
+                          <p className="mb-0 text-capitalize">
+                            {response?.user_name} {response?.user_lastname}
+                          </p>
+                          {(user?.user_id == response.user_id ||
+                            user?.type === 2) && (
+                            <div className="deleteButtonCont">
+                              {response.comment_is_hidden === 0 ? (
+                                <AiOutlineEyeInvisible
+                                  className="visible"
+                                  onClick={() =>
+                                    handleCommentDisable(response.comment_id)
+                                  }
+                                />
+                              ) : (
+                                <AiOutlineEye
+                                  className="hide"
+                                  onClick={() =>
+                                    handleCommentEnable(response.comment_id)
+                                  }
+                                />
+                              )}
+                            </div>
+                          )}
+                        </div>
+                        <p>{response.comment_content}</p>
+                      </div>
+                    )}
+                  </>
+                ))}
+            </div>
+          )}
+        </>
       ))}
     </div>
   );
