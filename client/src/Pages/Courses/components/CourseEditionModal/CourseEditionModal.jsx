@@ -5,14 +5,12 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { GiClassicalKnowledge } from "react-icons/gi";
-import { PiTrashBold } from "react-icons/pi";
 
 import "./courseEditionModalStyle.scss";
 
 export const CourseEditionModal = ({
   setShowCourseEditionModal,
   showCourseEditionModal,
-  course,
   course_id,
 }) => {
   const [teachersList, setTeachersList] = useState();
@@ -24,13 +22,10 @@ export const CourseEditionModal = ({
   const [file, setFile] = useState();
   const [teacherPrev_id, setTeacherPrev_id] = useState();
 
-  const { user, resetData, setResetData } = useContext(DroneMasterContext);
-
   const closeEditModal = () => {
     setShowCourseEditionModal(false);
   };
 
-  console.log(showCourseEditionModal);
   const {
     register,
     handleSubmit,
@@ -105,9 +100,7 @@ export const CourseEditionModal = ({
           tagsList,
         }
       )
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => {})
       .catch((err) => {
         console.log(err);
       });
@@ -122,13 +115,10 @@ export const CourseEditionModal = ({
           `http://localhost:4000/courses/uploadCourseImage/${course_id}`,
           newFormData
         )
-        .then((res) => {
-          console.log(res);
-        })
+        .then((res) => {})
         .catch((error) => console.log(error));
     }
   };
-  console.log(courseData);
 
   useEffect(() => {
     courseData?.course_name &&
@@ -144,7 +134,6 @@ export const CourseEditionModal = ({
       courseData.start_date != null &&
       setValue("start_date", courseData.start_date.slice(0, 10) || "");
   }, [courseData, setValue]);
-  console.log(courseData?.start_date);
 
   const handleDeleteTag = (tagId, tagName) => {
     let url = "";
@@ -153,9 +142,7 @@ export const CourseEditionModal = ({
         .put(
           `http://localhost:4000/admin/deleteCourseTag/${tagId}/${course_id}`
         )
-        .then((res) => {
-          console.log(res);
-        })
+        .then((res) => {})
         .catch((error) => {
           console.log(error);
         });

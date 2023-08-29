@@ -5,20 +5,20 @@ import { useNavigate, Link } from "react-router-dom";
 import { saveLocalStorageDroneMaster } from "../../../helper/localStorageDroneMaster";
 import { DroneMasterContext } from "../../../context/DroneMasterProvider";
 import "../../../../public/styles/registerLoginFormStyle.scss";
-import { Col, Container, Row } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import { Col, Row } from "react-bootstrap";
+
 import Modal from "react-bootstrap/Modal";
 
-
-const LoginModal = ({ setShowLoginModal, showLoginModal, openRegisterModal }) => {
-  
+const LoginModal = ({
+  setShowLoginModal,
+  showLoginModal,
+  openRegisterModal,
+}) => {
   const closeLoginModal = () => {
     setShowLoginModal(false);
   };
   const navigate = useNavigate();
-  const { setUser, isLogged, setIsLogged, openRegister } =
-    useContext(DroneMasterContext);
+  const { setUser, setIsLogged } = useContext(DroneMasterContext);
   const {
     register,
     handleSubmit,
@@ -34,15 +34,13 @@ const LoginModal = ({ setShowLoginModal, showLoginModal, openRegisterModal }) =>
     axios
       .post("http://localhost:4000/login", data)
       .then((res) => {
-        console.log("result.data.user/////////////", res),
-          saveLocalStorageDroneMaster("token", res.data.token);
+        saveLocalStorageDroneMaster("token", res.data.token);
         setUser(res.data.user);
         setIsLogged(true);
         reset();
         setShowLoginModal(false);
 
         const type = res.data.user.type;
-        console.log("**********************", res.data.user.type);
         if (type === 0) {
           navigate("/student");
         } else if (type === 1) {

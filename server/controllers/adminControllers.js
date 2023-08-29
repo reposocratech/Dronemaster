@@ -8,8 +8,6 @@ class adminControllers {
   createUser = (req, res) => {
     const { user_name, user_lastname, email, password, type } = req.body;
 
-    console.log(req.body);
-
     let saltRounds = 10;
     bcrypt.genSalt(saltRounds, function (err, saltRounds) {
       bcrypt.hash(password, saltRounds, function (err, hash) {
@@ -50,33 +48,30 @@ class adminControllers {
   // http://localhost:4000/admin/enableComment/:comment_id
   enableComment = (req, res) => {
     const { comment_id } = req.params;
-  
-      let updateSql = `UPDATE comment SET comment_is_hidden = 0 WHERE comment_id = ${comment_id}`;
 
-      connection.query(updateSql, (error, result) => {
-        error ? res.status(400).json({ error }) : res.status(201).json(result);
-      });
-    
+    let updateSql = `UPDATE comment SET comment_is_hidden = 0 WHERE comment_id = ${comment_id}`;
+
+    connection.query(updateSql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(201).json(result);
+    });
   };
 
   // 5.- Disable comment
   // http://localhost:4000/admin/disableComment/:coment_id
   disableComment = (req, res) => {
     const { comment_id } = req.params;
-    
-      let sql = `UPDATE comment SET comment_is_hidden = 1 WHERE comment_id = ${comment_id}`;
 
-      connection.query(sql, (error, result) => {
-        error ? res.status(400).json({ error }) : res.status(200).json(result);
-      });
-    
+    let sql = `UPDATE comment SET comment_is_hidden = 1 WHERE comment_id = ${comment_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
   };
 
   // 6.- Enable User (admin)
   // http://localhost:4000/admin/enableUser/:user_id
   enableUser = (req, res) => {
     const { user_id } = req.params;
-    console.log(user_id);
 
     let sql = `UPDATE user SET is_deleted = 0 WHERE user_id = ${user_id}`;
 
@@ -151,7 +146,6 @@ class adminControllers {
     const { course_id } = req.params;
 
     const { unit_tittle } = req.body;
-    console.log(unit_tittle);
 
     let sql = `INSERT INTO unit (course_id, unit_tittle) VALUES (${course_id}, "${unit_tittle}")`;
 

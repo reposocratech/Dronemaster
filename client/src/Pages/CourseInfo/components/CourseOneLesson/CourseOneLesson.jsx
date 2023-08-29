@@ -25,7 +25,6 @@ export const CourseOneLesson = () => {
       )
       .then((res) => {
         setLessonData(res.data[0]);
-        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, [course_id]);
@@ -35,7 +34,6 @@ export const CourseOneLesson = () => {
       .get(`http://localhost:4000/teachers/myCourses/courseInfo/${course_id}`)
       .then((res) => {
         setCourseUnitsLessons(res.data);
-        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, [course_id]);
@@ -52,7 +50,6 @@ export const CourseOneLesson = () => {
       .catch((err) => console.log(err));
   };
 
-  console.log(courseUnitsLessons);
   return (
     <section className="lessonInfoMainSection">
       {/* Course name title */}
@@ -78,10 +75,8 @@ export const CourseOneLesson = () => {
       </div>
 
       <div className="courseTextInfoCard">
-        
         {/* Course Description */}
         <CourseDescription description={lessonData?.lesson_content} />
-
       </div>
 
       {/* Side section */}
@@ -90,9 +85,9 @@ export const CourseOneLesson = () => {
         course_id={course_id}
         unit_id={unit_id}
         lesson_id={lesson_id}
-        />
+      />
 
-        {/* Course Units & Lessons List */}
+      {/* Course Units & Lessons List */}
       <UnitsLessonList
         myCourseInfo={courseUnitsLessons}
         course_id={course_id}

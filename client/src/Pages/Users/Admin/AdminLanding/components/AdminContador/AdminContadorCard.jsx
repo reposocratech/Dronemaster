@@ -18,7 +18,6 @@ const AdminContadorCard = () => {
       .get("http://localhost:4000/counter")
       .then((res) => {
         setCounter(res.data[0]);
-        console.log(counter);
       })
       .catch((err) => console.log(err));
   }, []);

@@ -1,18 +1,10 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
-import { DroneMasterContext } from "../../../../../../context/DroneMasterProvider";
-import { useNavigate } from "react-router-dom";
-import { Container } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
 import { HiOutlineMail } from "react-icons/hi";
 import { AiOutlinePhone } from "react-icons/ai";
-import { AiOutlineArrowRight } from "react-icons/ai";
 import { AiOutlineUser } from "react-icons/ai";
-import { BsPencil } from "react-icons/bs";
-import { BsEye } from "react-icons/bs";
-import { BsEyeSlash } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
 import { useForm } from "react-hook-form";
-import UserMoreInfoCard from "../UserMoreInfoCard/userMoreInfoCard";
 import TeacherMoreInforCard from "./AdminMoreInforCard/TeacherMoreInforCard";
 
 const AdminAllTeachersCard = ({
@@ -20,10 +12,7 @@ const AdminAllTeachersCard = ({
   moreInformationTeacher,
 }) => {
   const [teachers, setTeachers] = useState();
-  const { register, handleSubmit, reset } = useForm();
-  const { user } = useContext(DroneMasterContext);
-  const navigate = useNavigate();
-  const [searchResultData, setSearchResultData] = useState();
+  const { register, handleSubmit } = useForm();
   const [oneTeacher, setOneTeacher] = useState();
 
   useEffect(() => {
@@ -41,16 +30,12 @@ const AdminAllTeachersCard = ({
       .get(`http://localhost:4000/userInformation/${userId}`)
       .then((res) => {
         setOneTeacher(res.data[0]);
-        console.log("****************", res.data);
       })
       .catch((err) => console.log(err));
     setMoreInformationTeacher(true);
   };
 
-  const closeTeacher = () => {
-    setMoreInformationTeacher(false);
-  };
-
+  // Buscador
   const onSubmit = () => {
     /*     setMoreInformationTeacher(true);
     useEffect(() => {

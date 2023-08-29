@@ -7,13 +7,13 @@ import { CommentsAndResponsesList } from "./CommentsAndResponsesList";
 export const LessonComments = ({ user, course_id, unit_id, lesson_id }) => {
   const [allComments, setAllComments] = useState();
   const [allResponses, setAllResponses] = useState();
-  const [resetComments, setResetComments] = useState(false)
+  const [resetComments, setResetComments] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
   } = useForm();
 
   useEffect(() => {
@@ -35,13 +35,12 @@ export const LessonComments = ({ user, course_id, unit_id, lesson_id }) => {
         `http://localhost:4000/myCourse/myLesson/responses/${course_id}/${unit_id}/${lesson_id}`
       )
       .then((res) => {
-        console.log(res.data, "All comments");
         setAllResponses(res.data);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [lesson_id, unit_id, course_id, resetComments])
+  }, [lesson_id, unit_id, course_id, resetComments]);
 
   const onSubmit = (data) => {
     axios
@@ -50,14 +49,11 @@ export const LessonComments = ({ user, course_id, unit_id, lesson_id }) => {
         data
       )
       .then((res) => {
-        console.log(res)
-        reset()
-        setResetComments(!resetComments)
+        reset();
+        setResetComments(!resetComments);
       })
       .catch((error) => console.log(error));
   };
-
-
 
   return (
     <div className="commentsCard">
@@ -102,10 +98,13 @@ export const LessonComments = ({ user, course_id, unit_id, lesson_id }) => {
         </form>
         <hr className="w-100" />
 
-        {allResponses?.length === 0 && 
-        <div className="noCommnetsContainer">
-          <p className="noCommentsText">Sé el primero en <br /> comentar tu experiancia</p>
-        </div> }
+        {allResponses?.length === 0 && (
+          <div className="noCommnetsContainer">
+            <p className="noCommentsText">
+              Sé el primero en <br /> comentar tu experiancia
+            </p>
+          </div>
+        )}
 
         <CommentsAndResponsesList
           course_id={course_id}

@@ -1,45 +1,35 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { GiClassicalKnowledge } from "react-icons/gi";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMdArrowDropup } from "react-icons/io";
-import {
-  BsFillFileEarmarkArrowDownFill,
-  BsFillFileArrowUpFill,
-  BsFillFileEarmarkExcelFill,
-} from "react-icons/bs";
-import { BsPlusCircleFill } from "react-icons/bs"
+import { BsPlusCircleFill } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
 import { BsEye } from "react-icons/bs";
 import { BsEyeSlash } from "react-icons/bs";
 import AdminUnitEdirForm from "../AdminUnitEditForm/AdminUnitEdirForm";
 import { LessonCreationModal } from "../../../../../Courses/components/CourseCreationModal/LessonCreationModal/LessonCreationModal";
 
-
 const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
   const [allInformation, setAllInformation] = useState();
   const [unitsName, setUnitsName] = useState([]);
   const [openUnits, setOpenUnits] = useState([]);
-   const [unitEditForm, setUnitEditForm] = useState(false);
+  const [unitEditForm, setUnitEditForm] = useState(false);
   const [showLessonCreationModal, setShowLessonCreationModal] = useState(false);
-  const [unitId, setUnitId] = useState()
-  
+  const [unitId, setUnitId] = useState();
+
   const OpenLessonCreateModal = (u_id) => {
-    setUnitId(u_id)
-    setShowLessonCreationModal(true)
-  }
+    setUnitId(u_id);
+    setShowLessonCreationModal(true);
+  };
 
   useEffect(() => {
     axios
       .get(`http://localhost:4000/teachers/myCourses/courseInfo/${course_id}`)
       .then((res) => {
         setAllInformation(res.data);
-        console.log(res.data);
       })
       .catch((err) => console.log(err));
-
   }, [course_id, resEffect]);
-  
 
   const uniqueUnitNames = Array.from(
     new Set(allInformation?.map((item) => item.unit_tittle))
@@ -47,8 +37,6 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
   const unit_id = Array.from(
     new Set(allInformation?.map((item) => item.unit_id))
   );
-  console.log("el uninini", unit_id)
-  console.log(uniqueUnitNames);
 
   useEffect(() => {
     setUnitsName(uniqueUnitNames);
@@ -71,7 +59,6 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
     }
   };
 
-
   const enableUnit = (unitId, isHidden) => {
     axios
       .put(`http://localhost:4000/disableUnit/${unitId}`)
@@ -86,7 +73,6 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
       .catch((err) => console.log(err));
   };
 
-
   return (
     <div>
       {unitsName.map((unitName, unitIndex) => (
@@ -97,7 +83,10 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
             </h6>
 
             <div>
-              <BsPlusCircleFill className="icon" onClick={() => OpenLessonCreateModal(unit_id[unitIndex])} />
+              <BsPlusCircleFill
+                className="icon"
+                onClick={() => OpenLessonCreateModal(unit_id[unitIndex])}
+              />
               <BsPencil onClick={openUnitEditForm} />
               {allInformation
                 .filter((item) => item.unit_tittle === unitName)
@@ -106,7 +95,6 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
               ) : (
                 <BsEye onClick={() => disableUnit(unitIndex)} />
               )}
-
             </div>
           </div>
           <AdminUnitEdirForm
@@ -127,11 +115,9 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
             {allInformation
               .filter((item) => item.unit_tittle === unitName)
               .map((lesson) => (
-
                 <div className="listedLesson">
                   <div className="lessonText">
                     <h6 className="lessonText">{lesson.lesson_title}</h6>
-
                   </div>
                   <div>
                     <BsPencil />
@@ -153,8 +139,7 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
           </div>
         </div>
       ))}
-      
-      
+
       <LessonCreationModal
         setShowLessonCreationModal={setShowLessonCreationModal}
         showLessonCreationModal={showLessonCreationModal}
@@ -162,10 +147,8 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
         resEffect={resEffect}
         setResEffect={setResEffect}
         unitId={unitId}
-
       />
-   </div>
-
+    </div>
   );
 };
 export default AdminViewOneCourse;

@@ -1,17 +1,11 @@
 import axios from "axios";
-import React, { useContext, useEffect, useId, useState } from "react";
-import { DroneMasterContext } from "../../../../../../context/DroneMasterProvider";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiSearch } from "react-icons/fi";
 import { AiOutlineUser } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
 import { AiOutlinePhone } from "react-icons/ai";
-import { AiOutlineArrowRight } from "react-icons/ai";
 import { Container } from "react-bootstrap";
-import { BsPencil } from "react-icons/bs";
-import { BsEye } from "react-icons/bs";
-import { BsEyeSlash } from "react-icons/bs";
 import UserMoreInfoCard from "../UserMoreInfoCard/userMoreInfoCard";
 
 const AdminAllStudentsCard = ({
@@ -19,10 +13,7 @@ const AdminAllStudentsCard = ({
   moreInformationStudent,
 }) => {
   const [students, setStudents] = useState();
-  const { register, handleSubmit, reset } = useForm();
-  const { user } = useContext(DroneMasterContext);
-  const navigate = useNavigate();
-  const [searchResultData, setSearchResultData] = useState();
+  const { register, handleSubmit } = useForm();
   const [oneStudent, setOneStudent] = useState();
 
   useEffect(() => {
@@ -36,21 +27,16 @@ const AdminAllStudentsCard = ({
   }, [oneStudent, moreInformationStudent]);
 
   const openInfoForm2 = (userId) => {
-    console.log("IDDDDDDDDDDDDDDDDDD", useId);
     axios
       .get(`http://localhost:4000/userInformation/${userId}`)
       .then((res) => {
         setOneStudent(res.data[0]);
-        console.log("****************", res.data);
       })
       .catch((err) => console.log(err));
     setMoreInformationStudent(true);
   };
 
-  /*   useEffect(() => {
-    openInfoForm2();
-  }, []); */
-
+  // Buscador
   const onSubmit = () => {};
 
   return (

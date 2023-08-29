@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
-
 import { FiSearch } from "react-icons/fi";
 import { AiOutlineUser } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
@@ -10,9 +8,6 @@ import { AiOutlinePhone } from "react-icons/ai";
 export const TeacherStudentsTableCard = ({ myStudentsData }) => {
   const { register, handleSubmit, reset } = useForm();
   const [searchResultData, setSearchResultData] = useState();
-  const navigate = useNavigate();
-
-  console.log("el student dataaa", myStudentsData);
 
   const onSubmit = (data) => {
     setSearchResultData(
@@ -24,7 +19,6 @@ export const TeacherStudentsTableCard = ({ myStudentsData }) => {
     );
     reset();
   };
-
 
   return (
     <div className="studentsTableCard">
@@ -116,7 +110,6 @@ export const TeacherStudentsTableCard = ({ myStudentsData }) => {
                               </div>
                             </div>
                           </td>
-
                         </tr>
                       );
                     })}
@@ -167,7 +160,6 @@ export const TeacherStudentsTableCard = ({ myStudentsData }) => {
                           </div>
                         </div>
                       </td>
-
                     </tr>
                   );
                 })}

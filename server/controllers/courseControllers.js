@@ -207,14 +207,12 @@ class courseControllers {
                     ArrayProv.push(element.tag_name);
                   }
                 });
-                console.log(ArrayProv);
 
                 let sqlTags2 = `SELECT * FROM tag`;
 
                 connection.query(sqlTags2, (error4, result4) => {
                   if (error4) {
                   } else {
-                    console.log(ArrayProv, "rewsult4444444444444444");
                     ArrayProv.forEach((element) => {
                       result4.forEach((element2) => {
                         if (element2.tag_name === element) {
@@ -295,8 +293,6 @@ class courseControllers {
   suscribeIntoACourse = (req, res) => {
     const { user_id, course_id, price } = req.params;
 
-    console.log(price);
-
     let dateNow = new Date();
     let formatedDate = `${dateNow.getFullYear()}-${dateNow.getMonth()}-${dateNow.getDate()}`;
 
@@ -325,8 +321,6 @@ class courseControllers {
     const { course_id } = req.params;
 
     const course_img = req.file.filename;
-
-    console.log(req.file, "reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeq");
 
     let sql = `UPDATE course SET course_img = "${course_img}" WHERE course_id = ${course_id}`;
 

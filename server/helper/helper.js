@@ -9,12 +9,10 @@ const insertTags = (data) => {
 };
 
 const insertRelationshipTag = (tagId, courseID) => {
-    console.log(tagId, "taaag ",  courseID, "course");
-    let sql = `INSERT INTO tag_course (tag_id, course_id) VALUES (${tagId} , ${courseID})`;
-    console.log("holaa");
-    connection.query(sql, (error, result2) => {
-        if (error) throw error;
-      });  
-}
+  let sql = `INSERT INTO tag_course (tag_id, course_id) VALUES (${tagId} , ${courseID})`;
+  connection.query(sql, (error, result2) => {
+    if (error) throw error;
+  });
+};
 
 module.exports = { insertTags, insertRelationshipTag };

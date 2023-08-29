@@ -11,11 +11,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { AiOutlineStar } from "react-icons/ai";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
-export const TeacherCoursesTableCard = ({
-  myCoursesData,
-  myStudentsData,
-  user_id,
-}) => {
+export const TeacherCoursesTableCard = ({ myCoursesData, user_id }) => {
   const { register, handleSubmit, reset } = useForm();
   const [searchResultData, setSearchResultData] = useState();
   const [studentsNumber, setStudentsNumber] = useState();
@@ -213,9 +209,7 @@ export const TeacherCoursesTableCard = ({
                         <button
                           className="btnOutline1"
                           onClick={() => {
-                            navigate(
-                              `/teacher/MyCourse/${course.course_id}`
-                            );
+                            navigate(`/teacher/MyCourse/${course.course_id}`);
                           }}
                         >
                           <span className="d-none d-md-flex">Info</span>

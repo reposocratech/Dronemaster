@@ -6,29 +6,28 @@ import {
   BsFillFileEarmarkArrowDownFill,
   BsFillFileArrowUpFill,
   BsFillFileEarmarkExcelFill,
-  BsFillEyeFill
+  BsFillEyeFill,
 } from "react-icons/bs";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { DroneMasterContext } from "../../../../../../context/DroneMasterProvider";
 
-
-export const TeacherOnecourseContent = ({ myCourseInfo, setResetUseEffect, resetUseEffect }) => {
-  const { course_id } = useParams()
-  const { user } = useContext(DroneMasterContext)
+export const TeacherOnecourseContent = ({
+  myCourseInfo,
+  setResetUseEffect,
+  resetUseEffect,
+}) => {
+  const { course_id } = useParams();
+  const { user } = useContext(DroneMasterContext);
   const [unitsName, setUnitsName] = useState([]);
   const [openUnits, setOpenUnits] = useState([]);
   const navigate = useNavigate();
-  const [teacherResource, setTeacherResource] = useState([])
-
-  console.log(teacherResource);
+  const [teacherResource, setTeacherResource] = useState([]);
 
   // Takes uniques unit_title
   const uniqueUnitNames = Array.from(
     new Set(myCourseInfo?.map((item) => item.unit_tittle))
   );
-
-  console.log("los recursos del profee", teacherResource);
 
   useEffect(() => {
     setUnitsName(uniqueUnitNames);
@@ -36,25 +35,24 @@ export const TeacherOnecourseContent = ({ myCourseInfo, setResetUseEffect, reset
     axios
       .get(`http://localhost:4000/teachers/teacherResources/${user?.user_id}`)
       .then((res) => setTeacherResource(res.data))
-      .catch((err) => console.log(err))
+      .catch((err) => console.log(err));
   }, [myCourseInfo]);
 
   const closedHeight = "0px";
   const openedHeight = "35px";
 
   const uploadResource = (e, lesson_id, unit_id) => {
+    const newFormData = new FormData();
 
-    console.log(lesson_id);
-
-    const newFormData = new FormData()
-
-    newFormData.append("file", e.target.files[0])
+    newFormData.append("file", e.target.files[0]);
     axios
-      .post(`http://localhost:4000/uploadResource/${user.user_id}/${course_id}/${unit_id}/${lesson_id}`, newFormData)
+      .post(
+        `http://localhost:4000/uploadResource/${user.user_id}/${course_id}/${unit_id}/${lesson_id}`,
+        newFormData
+      )
       .then((res) => console.log(res))
-      .catch((err) => console.log(err))
-
-  }
+      .catch((err) => console.log(err));
+  };
 
   const toggleUnit = (unitIndex) => {
     if (openUnits.includes(unitIndex)) {
@@ -70,31 +68,36 @@ export const TeacherOnecourseContent = ({ myCourseInfo, setResetUseEffect, reset
     axios
       .put(`http://localhost:4000/enableLessons/${lesson_id}`)
       .then((res) => setResetUseEffect(!resetUseEffect))
-      .catch((err) => console.log(err))
-  }
+      .catch((err) => console.log(err));
+  };
 
   const disableLesson = (lesson_id) => {
     axios
       .put(`http://localhost:4000/disableLessons/${lesson_id}`)
       .then((res) => setResetUseEffect(!resetUseEffect))
-      .catch((err) => console.log(err))
-
-  }
+      .catch((err) => console.log(err));
+  };
 
   const downloadResource = (lesson_id) => {
     axios
       .get(`http://localhost:4000/resourceName/${lesson_id}`)
-      .then((res) => saveAs(`http://localhost:4000/images/resources/${res.data[0].resource_name}`, `${res.data[0].resource_name}`))
-      .catch((err) => console.log(err))
-  }
-
+      .then((res) =>
+        saveAs(
+          `http://localhost:4000/images/resources/${res.data[0].resource_name}`,
+          `${res.data[0].resource_name}`
+        )
+      )
+      .catch((err) => console.log(err));
+  };
 
   const deleteResource = (resource_id) => {
     axios
-      .delete(`http://localhost:4000/teachers/deleteResource/${user.user_id}/${resource_id}`)
+      .delete(
+        `http://localhost:4000/teachers/deleteResource/${user.user_id}/${resource_id}`
+      )
       .then((res) => console.log(res))
-      .catch((err) => console.log(err))
-  }
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="allUnitsLessonCard">
@@ -152,30 +155,45 @@ export const TeacherOnecourseContent = ({ myCourseInfo, setResetUseEffect, reset
                     }}
                   >
                     <div className="lessonTitle">
-                      <div className="lessonText">
-
-                        {lesson.lesson_title}</div>
+                      <div className="lessonText">{lesson.lesson_title}</div>
                       <div className="resourceContainer">
-                        {lesson?.lesson_is_hidden === 1 && <BsFillEyeFill className="deleteIcon" onClick={() => enableLesson(lesson.lesson_id)} />}
-                        {lesson?.lesson_is_hidden === 0 && <BsFillEyeFill className="downloadIcon"
-                          onClick={() => disableLesson(lesson.lesson_id)} />}
+                        {lesson?.lesson_is_hidden === 1 && (
+                          <BsFillEyeFill
+                            className="deleteIcon"
+                            onClick={() => enableLesson(lesson.lesson_id)}
+                          />
+                        )}
+                        {lesson?.lesson_is_hidden === 0 && (
+                          <BsFillEyeFill
+                            className="downloadIcon"
+                            onClick={() => disableLesson(lesson.lesson_id)}
+                          />
+                        )}
                         <BsFillFileEarmarkArrowDownFill
                           className="downloadIcon"
                           onClick={() => downloadResource(lesson.lesson_id)}
                         />
 
-                        <label htmlFor="inputFile" className="d-inline"><BsFillFileArrowUpFill className="uploadIcon"
-                        /></label>
+                        <label htmlFor="inputFile" className="d-inline">
+                          <BsFillFileArrowUpFill className="uploadIcon" />
+                        </label>
                         <input
                           type="file"
-                          onChange={(e) => uploadResource(e, lesson.lesson_id, lesson.unit_id)}
+                          onChange={(e) =>
+                            uploadResource(e, lesson.lesson_id, lesson.unit_id)
+                          }
                           className="d-none"
                           id="inputFile"
                         />
 
-                        {teacherResource.filter(elem => elem.resource_id === lesson.lesson_id) && < BsFillFileEarmarkExcelFill className="deleteIcon"
-                          onClick={() => deleteResource(lesson.resource_id)}
-                        />}
+                        {teacherResource.filter(
+                          (elem) => elem.resource_id === lesson.lesson_id
+                        ) && (
+                          <BsFillFileEarmarkExcelFill
+                            className="deleteIcon"
+                            onClick={() => deleteResource(lesson.resource_id)}
+                          />
+                        )}
                       </div>
                     </div>
                   </li>
@@ -184,6 +202,6 @@ export const TeacherOnecourseContent = ({ myCourseInfo, setResetUseEffect, reset
           </div>
         ))}
       </div>
-    </div >
+    </div>
   );
 };

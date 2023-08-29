@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 
@@ -7,31 +6,9 @@ const TeacherMoreInforCard = ({
   setMoreInformationTeacher,
   moreInformationTeacher,
   teacher,
-  setResetEffect,
-  resetEffect,
 }) => {
-  const [value, setValue] = useState();
   const [profileImg, setProfileImg] = useState();
-  const [oneTeacher, setOneTeacher] = useState();
-  const [status, setStatus] = useState(0);
 
-  /* useEffect(() => {
-      for (const fieldName in teacher) {
-        setValue(fieldName, teacher[fieldName]);
-      }
-    }, [moreInformation]);
-   */
-  /* useEffect(() => {
-      axios
-        .get(`http://localhost:4000/userInformation/${student?.user_id}`)
-        .then((res) => {
-          setOneStudent();
-          console.log("esto es un estudianteeeee", oneStudent);
-          console.log("esto es un resdata", res.data);
-        })
-        .catch((err) => console.log(err));
-    }, [student?.user_id]);
-   */
   useEffect(() => {
     teacher &&
       setProfileImg(`http://localhost:4000/images/users/${teacher?.user_img}`);

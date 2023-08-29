@@ -54,7 +54,6 @@ export const TeacherLanding = () => {
       setAverageRating(sum / counter);
     }
   }, [myCoursesData]);
-  console.log(myCoursesData, "courseDATAAAA");
 
   return (
     <section className="mainSection">

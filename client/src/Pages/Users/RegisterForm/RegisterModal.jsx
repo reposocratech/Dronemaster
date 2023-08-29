@@ -1,18 +1,14 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, Link } from "react-router-dom";
-import { saveLocalStorageDroneMaster } from "../../../helper/localStorageDroneMaster";
-import { DroneMasterContext } from "../../../context/DroneMasterProvider";
+import { Link } from "react-router-dom";
 import "../../../../public/styles/registerLoginFormStyle.scss";
-import { Col, Container, Row } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import { Col, Row } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
+
 const RegisterModal = ({
   showRegisterModal,
   setShowRegisterModal,
-  showLoginModal,
   setShowLoginModal,
   openLoginModal,
 }) => {
@@ -37,7 +33,6 @@ const RegisterModal = ({
     axios
       .post("http://localhost:4000/students/registerStudent", data)
       .then((res) => {
-        console.log("result.data.user/////////////", res);
         setShowLoginModal(true);
         setShowRegisterModal(false);
         reset();

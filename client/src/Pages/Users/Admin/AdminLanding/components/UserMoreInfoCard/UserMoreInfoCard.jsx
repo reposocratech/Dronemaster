@@ -7,30 +7,12 @@ const UserMoreInfoCard = ({
   moreInformationStudent,
   student,
 }) => {
-  const [value, setValue] = useState();
   const [profileImg, setProfileImg] = useState();
 
   const closeInfoForm = () => {
     setMoreInformationStudent(false);
   };
 
-  /* useEffect(() => {
-    for (const fieldName in student) {
-      setValue(fieldName, student[fieldName]);
-    }
-  }, [moreInformation]);
- */
-  /*  useEffect(() => {
-    axios
-      .get(`http://localhost:4000/userInformation/${student?.user_id}`)
-      .then((res) => {
-        setOneStudent();
-        console.log("esto es un estudianteeeee", oneStudent);
-        console.log("esto es un resdata", res.data);
-      })
-      .catch((err) => console.log(err));
-  }, [student?.user_id]);
- */
   useEffect(() => {
     student &&
       setProfileImg(`http://localhost:4000/images/users/${student?.user_img}`);

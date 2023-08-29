@@ -5,16 +5,12 @@ import { CategoryContainer } from "./allCourseComponents/CategoryContainer/Categ
 import { DroneMasterContext } from "../../context/DroneMasterProvider";
 import { CourseCard } from "../../components/CardCourse/CourseCard";
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
-
 export const AllCourses = () => {
-
-  const [categoryData, setCategoryData] = useState()
-  const [courseData, setCourseData] = useState()
+  const [categoryData, setCategoryData] = useState();
+  const [courseData, setCourseData] = useState();
   const [counter, setCounter] = useState(0);
   const [counterRatio, setCounterRatio] = useState(1);
   const { course } = useContext(DroneMasterContext);
-
-
   //Gets categories data
   useEffect(() => {
     axios
@@ -24,7 +20,6 @@ export const AllCourses = () => {
       })
       .catch((error) => console.log(error));
   }, []);
-
   //Gets course data
   useEffect(() => {
     axios
@@ -34,7 +29,6 @@ export const AllCourses = () => {
       })
       .catch((error) => console.log(error));
   }, []);
-
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 900 && window.innerWidth < 1100) {
@@ -47,22 +41,25 @@ export const AllCourses = () => {
         setCounterRatio(4);
       }
     };
-
     handleResize(); // Call initially
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
   return (
-    <section className='allCoursesContainer px-sm-5'>
-      {!course && categoryData?.map((cat) => {
-        return (
-          <CategoryContainer key={cat.category_id} category_id={cat.category_id} category_name={cat.category_name} courseData={courseData} />
-        )
-      })}
-
+    <section className="allCoursesContainer px-sm-5">
+      {!course &&
+        categoryData?.map((cat) => {
+          return (
+            <CategoryContainer
+              key={cat.category_id}
+              category_id={cat.category_id}
+              category_name={cat.category_name}
+              courseData={courseData}
+            />
+          );
+        })}
       {(course?.length === 0 || course === undefined) && (
         <>
           <div className="categoryContainer">
@@ -75,7 +72,6 @@ export const AllCourses = () => {
           </div>
         </>
       )}
-
       {course?.length > 0 && (
         <div className="allCoursesContainer p-0 px-sm-5">
           <div className="categoryContainer">
