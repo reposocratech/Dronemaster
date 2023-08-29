@@ -12,13 +12,15 @@ import { Container } from "react-bootstrap";
 import { BsPencil } from "react-icons/bs";
 import { BsEye } from "react-icons/bs";
 import { BsEyeSlash } from "react-icons/bs";
+import UserMoreInfoCard from "../UserMoreInfoCard/userMoreInfoCard";
 
-const AdminAllStudentsCard = () => {
+const AdminAllStudentsCard = ({ setMoreInformation, moreInformation }) => {
   const [students, setStudents] = useState();
   const { register, handleSubmit, reset } = useForm();
   const { user } = useContext(DroneMasterContext);
   const navigate = useNavigate();
   const [searchResultData, setSearchResultData] = useState();
+  const [oneStudent, setOneStudent] = useState();
 
   useEffect(() => {
     axios
@@ -26,21 +28,26 @@ const AdminAllStudentsCard = () => {
       .get("http://localhost:4000/admin/allStudents")
       .then((res) => {
         setStudents(res.data);
-        /* console.log(students); */
       })
       .catch((err) => console.log(err));
   }, []);
 
-  const onSubmit = (data) => {
-    setSearchResultData(
-      students.filter((student) =>
-        student.user_name
-          .toLowerCase()
-          .includes(data.studentSearch.toLowerCase())
-      )
-    );
-    reset();
+  const openInfoForm2 = (userId) => {
+    axios
+      .get(`http://localhost:4000/userInformation/${userId}`)
+      .then((res) => {
+        setOneStudent(res.data[0]);
+        console.log("****************", res.data);
+      })
+      .catch((err) => console.log(err));
+    setMoreInformation(true);
   };
+
+  /*   useEffect(() => {
+    openInfoForm2();
+  }, []); */
+
+  const onSubmit = () => {};
 
   return (
     <Container className="adminTableCard">
@@ -62,7 +69,6 @@ const AdminAllStudentsCard = () => {
             />
           </div>
         </form>
-        <button className="btnOutline1"> Añadir Estudiante</button>
       </div>
       <div className="cardBody">
         <table className="adTable">
@@ -79,6 +85,9 @@ const AdminAllStudentsCard = () => {
                 <AiOutlinePhone className="headIcon d-md-none d-flex fs-2" />{" "}
                 <span className=" d-none d-md-flex">Telefono</span>
               </th>
+              <th className="iconHeadName">
+                <span className=" d-none d-md-flex">Información</span>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -90,16 +99,16 @@ const AdminAllStudentsCard = () => {
                   <>
                     {students?.map((student) => {
                       return (
-                        <tr key={student.user_id}>
+                        <tr key={student?.user_id}>
                           <td>
                             <div className="tableImg">
                               {student?.user_img ? (
                                 <img
-                                  src={`http://localhost:4000/images/user/${student.user_img}`}
+                                  src={`http://localhost:4000/images/user/${student?.user_img}`}
                                 />
                               ) : (
                                 <h6 className="avatarText">
-                                  {student?.user_name.at(0).toUpperCase()}
+                                  {student.user_name.at(0).toUpperCase()}
                                 </h6>
                               )}
                             </div>
@@ -131,11 +140,28 @@ const AdminAllStudentsCard = () => {
                               </div>
                             </div>
                           </td>
+                          <td>
+                            <div className="tableCell iconCell">
+                              <div className="tableCellContent">
+                                <button
+                                  onClick={() => openInfoForm2(student.user_id)}
+                                  className="btnOutline1"
+                                >
+                                  Ver más
+                                </button>
+                              </div>
+                            </div>
+                          </td>
                         </tr>
                       );
                     })}
                   </>
                 )}
+                <UserMoreInfoCard
+                  moreInformation={moreInformation}
+                  setMoreInformation={setMoreInformation}
+                  student={oneStudent}
+                />
               </>
             ) : (
               <>
@@ -164,7 +190,7 @@ const AdminAllStudentsCard = () => {
                           <div className="tableCellContent">
                             <HiOutlineMail className="icon" />
                             <span className="d-none d-md-inline ">
-                              {student.user_email}
+                              {student.email}
                             </span>
                           </div>
                         </div>
@@ -174,7 +200,7 @@ const AdminAllStudentsCard = () => {
                           <div className="tableCellContent">
                             <AiOutlinePhone className="icon" />
                             <span className="d-none d-md-inline ">
-                              {student.user_phone}
+                              {student.phone}
                             </span>
                           </div>
                         </div>
@@ -184,6 +210,12 @@ const AdminAllStudentsCard = () => {
                 })}
               </>
             )}
+
+            <UserMoreInfoCard
+              moreInformation={moreInformation}
+              setMoreInformation={setMoreInformation}
+              student={oneStudent}
+            />
           </tbody>
         </table>
       </div>

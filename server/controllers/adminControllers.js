@@ -1,17 +1,21 @@
 const connection = require("../config/db");
+const bcrypt = require("bcrypt");
 
 class adminControllers {
   // 1.- Create newUser
   // http://localhost:4000/admin/createUser
+
   createUser = (req, res) => {
     const { user_name, user_lastname, email, password, type } = req.body;
+
+    console.log(req.body);
 
     let saltRounds = 10;
     bcrypt.genSalt(saltRounds, function (err, saltRounds) {
       bcrypt.hash(password, saltRounds, function (err, hash) {
         err && res.status(401).json({ err });
 
-        let sql = `INSERT INTO user (user_name, user_lastname, email, password, type) VALUES ('${user_name}', '${user_lastname}', '${email}', '${hash}', '${type}')`;
+        let sql = `INSERT INTO user (user_name, user_lastname, email, password, type) VALUES ("${user_name}", "${user_lastname}", "${email}", "${hash}", ${type})`;
 
         connection.query(sql, (error, result) => {
           error
@@ -25,7 +29,7 @@ class adminControllers {
   // 2.- View all teachers
   // http://localhost:4000/admin/allTeachers
   selectAllTeachers = (req, res) => {
-    let sql = `SELECT * FROM user WHERE type = 1 AND is_deleted = 0`;
+    let sql = `SELECT * FROM user WHERE type = 1`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(201).json(result);
@@ -35,7 +39,7 @@ class adminControllers {
   // 3.- View all students
   // http://localhost:4000/admin/allStudents
   selectAllStudents = (req, res) => {
-    let sql = `SELECT * FROM user WHERE type = 0 AND is_deleted = 0`;
+    let sql = `SELECT * FROM user WHERE type = 0`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(201).json(result);
@@ -81,7 +85,7 @@ class adminControllers {
   enableUser = (req, res) => {
     const { user_id } = req.params;
 
-    let sql = `UPDATE user SET is_deleted = 0 WHERE user_id = "${user_id}" AND type IN (0, 1)`;
+    let sql = `UPDATE user SET is_deleted = 0 WHERE user_id = ${user_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
@@ -93,7 +97,7 @@ class adminControllers {
   disableUser = (req, res) => {
     const { user_id } = req.params;
 
-    let sql = `UPDATE user SET is_deleted = 1 WHERE user_id = "${user_id}" AND type IN (0, 1)`;
+    let sql = `UPDATE user SET is_deleted = 1 WHERE user_id =${user_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
@@ -210,7 +214,7 @@ class adminControllers {
     const { course_id, tag_id } = req.params;
 
     let sql = `DELETE FROM tag_course WHERE tag_id = ${tag_id} AND course_id = ${course_id}`;
-    
+
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });

@@ -27,6 +27,11 @@ export const CourseEditionModal = ({
 
   const course_id = 2;
 
+  const closeEditModal = () => {
+    setShowCourseEditionModal(false);
+  };
+
+  console.log(showCourseEditionModal);
   const {
     register,
     handleSubmit,
@@ -126,13 +131,18 @@ export const CourseEditionModal = ({
   };
   console.log(courseData);
 
-  useEffect(() => {    
-     courseData?.course_name && setValue("course_name", courseData.course_name || "");
-     courseData?.course_length && setValue("course_length", courseData.course_length || "");
-     courseData?.price && setValue("price", courseData.price || "");
-     courseData?.category_id && setValue("category_id", courseData.category_id || "");
-     courseData?.teacher_id && setValue("teacher_id", courseData.teacher_id || "");
-     courseData?.start_date && setValue("start_date", courseData.start_date.slice(0, 10) || "");
+  useEffect(() => {
+    courseData?.course_name &&
+      setValue("course_name", courseData.course_name || "");
+    courseData?.course_length &&
+      setValue("course_length", courseData.course_length || "");
+    courseData?.price && setValue("price", courseData.price || "");
+    courseData?.category_id &&
+      setValue("category_id", courseData.category_id || "");
+    courseData?.teacher_id &&
+      setValue("teacher_id", courseData.teacher_id || "");
+    courseData?.start_date &&
+      setValue("start_date", courseData.start_date.slice(0, 10) || "");
   }, [courseData, setValue]);
 
   const handleDeleteTag = (tagId, tagName) => {
@@ -156,14 +166,19 @@ export const CourseEditionModal = ({
 
   return (
     <Modal
-      show={showCourseEditionModal ? setShowCourseEditionModal : true}
-      onHide={handleClose}
+      show={showCourseEditionModal}
+      onHide={closeEditModal}
       centered={true}
       size="xl"
       fullscreen="false"
       className="courseEditionModalContainer"
+      animation={false}
     >
-      <Modal.Header closeButton className="modalHeader">
+      <Modal.Header
+        closeButton
+        onClick={closeEditModal}
+        className="modalHeader"
+      >
         <div className="cardTitle">
           <div className="iconContainer">
             <GiClassicalKnowledge />
@@ -366,7 +381,7 @@ export const CourseEditionModal = ({
           </div>
         </Modal.Body>
         <Modal.Footer className="modalFooter">
-          <button className=" btnOutline1" onClick={handleClose}>
+          <button className=" btnOutline1" onClick={closeEditModal}>
             Cancelar
           </button>
           <button className="btnNormal" type="submit">

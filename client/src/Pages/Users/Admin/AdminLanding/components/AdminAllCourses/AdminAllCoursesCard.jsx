@@ -18,13 +18,21 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMdArrowDropup } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { FiSearch } from "react-icons/fi";
+import { CourseEditionModal } from "../../../../../Courses/components/CourseEditionModal/CourseEditionModal";
+import { DroneMasterContext } from "../../../../../../context/DroneMasterProvider";
 
 const AdminAllCoursesCard = () => {
   const [allCourses, setAllCourses] = useState();
+  const { course } = useContext(DroneMasterContext);
   const [openUnits, setOpenUnits] = useState([]);
   const [closeUnits, setCloseUnits] = useState([]);
   const { register, handleSubmit, reset } = useForm();
+  const [showCourseEditionModal, setShowCourseEditionModal] = useState(false);
+  const [status, setStatus] = useState();
 
+  const openEditModal = () => {
+    setShowCourseEditionModal(true);
+  };
   useEffect(() => {
     axios
       .get("http://localhost:4000/admin/allCourses")
@@ -33,6 +41,22 @@ const AdminAllCoursesCard = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  const enableCourse = () => {
+    axios
+
+      .put(` http://localhost:4000/courses/enableCourse/${course_id}`)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
+  const disableCourse = () => {
+    axios
+
+      .put(`http://localhost:4000/courses/disableCourse/${course_id}`)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
 
   //DROPDOWN
 
@@ -79,8 +103,6 @@ const AdminAllCoursesCard = () => {
             />
           </div>
         </form>
-
-        <button className="btnOutline1"> Añadir Curso</button>
       </div>
 
       <div className="cardBody">
@@ -113,6 +135,7 @@ const AdminAllCoursesCard = () => {
                           <th className="textReduce text-warning w-75">
                             <div className="oculto">{course.course_name}</div>
                           </th>
+                          <td></td>
                         </tr>
                       );
                     })}
@@ -125,26 +148,6 @@ const AdminAllCoursesCard = () => {
                   return (
                     <tr key={course.course_id}>
                       <th className="textReduce ">{course.course_name}</th>
-                      {/*  <td>
-                        <div className="tableCell iconCell">
-                          <div className="tableCellContent">
-                            <HiOutlineMail className="icon" />
-                            <span className="d-none d-md-inline ">
-                              {course.user_email}
-                            </span>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div className="tableCell iconCell">
-                          <div className="tableCellContent">
-                            <AiOutlinePhone className="icon" />
-                            <span className="d-none d-md-inline ">
-                              {course.user_phone}
-                            </span>
-                          </div>
-                        </div>
-                      </td> */}
                     </tr>
                   );
                 })}
@@ -153,7 +156,7 @@ const AdminAllCoursesCard = () => {
           </tbody>
         </table>
 
-        {/*  {allCourses?.map((course) => {
+        {allCourses?.map((course) => {
           return (
             <table className="tableCellName mb-4">
               <tbody>
@@ -168,47 +171,61 @@ const AdminAllCoursesCard = () => {
                   <AiOutlineStar className="icon" /> {course?.score}
                 </th>
                 <th>
-                  <BsPencil className="icon" />
+                  <span onClick={openEditModal}>
+                    <BsPencil className="icon" />
+                  </span>
+
+                  <CourseEditionModal
+                    setShowCourseEditionModal={setShowCourseEditionModal}
+                    showCourseEditionModal={showCourseEditionModal}
+                  />
                 </th>
                 <th>
-                  <BsEye className="icon" />
+                  <span>
+                    <BsEye
+                      onClick={() => enableCourse(course?.course_id)}
+                      className="icon"
+                    />
+                  </span>
                 </th>
                 <span className="d-none d-md-inline "></span>
+
                 <th>
-                  <BsEyeSlash className="icon" />
+                  <span onClick={disableCourse}>
+                    <BsEyeSlash className="icon" />
+                  </span>
                 </th>
                 <hr className="text-warning" />
               </tbody>
 
-              
               <tbody>
-               <div key={course}>
-                <div
-                  className="dropdownContainer"
-                  onClick={() => toggleUnit(course)}
-                >
-                  {openUnits.includes(course) ? (
-                    <IoMdArrowDropup />
-                  ) : (
-                    <IoMdArrowDropdown />
-                  )}
+                <div key={course}>
+                  <div
+                    className="dropdownContainer"
+                    onClick={() => toggleUnit(course)}
+                  >
+                    {openUnits.includes(course) ? (
+                      <IoMdArrowDropup />
+                    ) : (
+                      <IoMdArrowDropdown />
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div
-                className="listedLesson"
-                style={{
-                  height: openUnits.includes(course)
-                    ? openedHeight
-                    : closedHeight,
-                  transition: "height 0.75s ease-in-out",
-                }}
-              > 
-                <AdminViewOneCourse course_id={course.course_id} />
-              
+                <div
+                  className="listedLesson"
+                  style={{
+                    height: openUnits.includes(course)
+                      ? openedHeight
+                      : closedHeight,
+                    transition: "height 0.75s ease-in-out",
+                  }}
+                >
+                  <AdminViewOneCourse course_id={course.course_id} />
+                </div>
               </tbody>
             </table>
           );
-        })} */}
+        })}
       </div>
     </Container>
   );
