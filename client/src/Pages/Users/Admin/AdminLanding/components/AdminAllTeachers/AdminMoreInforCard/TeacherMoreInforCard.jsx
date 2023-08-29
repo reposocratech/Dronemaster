@@ -4,19 +4,16 @@ import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 
 const TeacherMoreInforCard = ({
-  setMoreInformation,
-  moreInformation,
+  setMoreInformationTeacher,
+  moreInformationTeacher,
   teacher,
+  setResetEffect,
+  resetEffect,
 }) => {
   const [value, setValue] = useState();
   const [profileImg, setProfileImg] = useState();
   const [oneTeacher, setOneTeacher] = useState();
   const [status, setStatus] = useState(0);
-  console.log("SEEEEEEEEEEEEEEEEEEEE", teacher);
-
-  const closeInfoForm = () => {
-    setMoreInformation(false);
-  };
 
   /* useEffect(() => {
       for (const fieldName in teacher) {
@@ -42,10 +39,9 @@ const TeacherMoreInforCard = ({
 
   const setTeacherEnable = () => {
     axios
-      .put(`http://localhost:4000/admin/enableUser/${student?.user_id}`)
+      .put(`http://localhost:4000/admin/enableUser/${teacher?.user_id}`)
       .then((res) => {
-        setStatus(res.data);
-        console.log(status);
+        setMoreInformationTeacher(false);
       })
       .catch((err) => {
         console.log(err);
@@ -54,19 +50,21 @@ const TeacherMoreInforCard = ({
 
   const setTeacherDisable = () => {
     axios
-      .put(`http://localhost:4000/admin/disableUser/${student?.user_id}`)
+      .put(`http://localhost:4000/admin/disableUser/${teacher?.user_id}`)
       .then((res) => {
-        setStatus(res.data);
-        console.log(status);
+        setMoreInformationTeacher(false);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  const closeInfoForm = () => {
+    setMoreInformationTeacher(false);
+  };
   return (
     <Modal
-      show={moreInformation}
+      show={moreInformationTeacher}
       onHide={closeInfoForm}
       className="courseCreationModalContainer"
       animation={false}
@@ -91,7 +89,7 @@ const TeacherMoreInforCard = ({
           Nombre Completo: {teacher?.user_name}
           {teacher?.user_lastname}
         </p>
-        <p> Email {teacher?.email}</p>
+        <p> Antonio {teacher?.email}</p>
         <p>Telefono {teacher?.phone}</p>
         <p> Dirección {teacher?.address}</p>
         <p>Estado: {teacher?.is_deleted === 0 ? "Activo" : "Inactivo"}</p>

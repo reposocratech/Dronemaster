@@ -96,20 +96,31 @@ router.post(
   commonControllers.uploadResource
 );
 
-
 // 18- Gets original comments and rsponses of a lesson
 // http://localhost:4000/myCourse/myLesson/comments/:course_id/unit_id/:lesson_id
-router.get("/myCourse/myLesson/comments/:course_id/:unit_id/:lesson_id", commonControllers.getAllComments);
+router.get(
+  "/myCourse/myLesson/comments/:course_id/:unit_id/:lesson_id",
+  commonControllers.getAllComments
+);
 
- // 19- Post a new response to a comment
+// 19- Post a new response to a comment
 // http://localhost:4000/myCourse/myLesson/response/:course_id/:unit_id/:lesson_id/:user_id/:comment_id
-router.post("/myCourse/myLesson/response/:course_id/:unit_id/:lesson_id/:user_id/:comment_id", commonControllers.setResponseComment); 
+router.post(
+  "/myCourse/myLesson/response/:course_id/:unit_id/:lesson_id/:user_id/:comment_id",
+  commonControllers.setResponseComment
+);
 
 // 20-Gets information of one User
 // http://localhost:4000/userInformation/:user_id
 
 router.get("/userInformation/:user_id", commonControllers.viewOneUserInfo);
 
+//21.- Enable units
+//http://localhost:4000/enableUnit/:unit_id
+router.put("/disableUnits/:unit_id", commonControllers.enableUnits);
 
+//22.- Disable units
+//localhost:4000/disableUnit/:unit_id
+router.put("/disableUnits/:unit_id", commonControllers.disableUnits);
 
 module.exports = router;

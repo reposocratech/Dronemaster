@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useId, useState } from "react";
 import { DroneMasterContext } from "../../../../../../context/DroneMasterProvider";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -14,7 +14,10 @@ import { BsEye } from "react-icons/bs";
 import { BsEyeSlash } from "react-icons/bs";
 import UserMoreInfoCard from "../UserMoreInfoCard/userMoreInfoCard";
 
-const AdminAllStudentsCard = ({ setMoreInformation, moreInformation }) => {
+const AdminAllStudentsCard = ({
+  setMoreInformationStudent,
+  moreInformationStudent,
+}) => {
   const [students, setStudents] = useState();
   const { register, handleSubmit, reset } = useForm();
   const { user } = useContext(DroneMasterContext);
@@ -30,9 +33,10 @@ const AdminAllStudentsCard = ({ setMoreInformation, moreInformation }) => {
         setStudents(res.data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [oneStudent, moreInformationStudent]);
 
   const openInfoForm2 = (userId) => {
+    console.log("IDDDDDDDDDDDDDDDDDD", useId);
     axios
       .get(`http://localhost:4000/userInformation/${userId}`)
       .then((res) => {
@@ -40,7 +44,7 @@ const AdminAllStudentsCard = ({ setMoreInformation, moreInformation }) => {
         console.log("****************", res.data);
       })
       .catch((err) => console.log(err));
-    setMoreInformation(true);
+    setMoreInformationStudent(true);
   };
 
   /*   useEffect(() => {
@@ -144,7 +148,9 @@ const AdminAllStudentsCard = ({ setMoreInformation, moreInformation }) => {
                             <div className="tableCell iconCell">
                               <div className="tableCellContent">
                                 <button
-                                  onClick={() => openInfoForm2(student.user_id)}
+                                  onClick={() =>
+                                    openInfoForm2(student?.user_id)
+                                  }
                                   className="btnOutline1"
                                 >
                                   Ver más
@@ -158,8 +164,8 @@ const AdminAllStudentsCard = ({ setMoreInformation, moreInformation }) => {
                   </>
                 )}
                 <UserMoreInfoCard
-                  moreInformation={moreInformation}
-                  setMoreInformation={setMoreInformation}
+                  moreInformationStudent={moreInformationStudent}
+                  setMoreInformationStudent={setMoreInformationStudent}
                   student={oneStudent}
                 />
               </>
@@ -212,8 +218,8 @@ const AdminAllStudentsCard = ({ setMoreInformation, moreInformation }) => {
             )}
 
             <UserMoreInfoCard
-              moreInformation={moreInformation}
-              setMoreInformation={setMoreInformation}
+              moreInformationStudent={moreInformationStudent}
+              setMoreInformationStudent={setMoreInformationStudent}
               student={oneStudent}
             />
           </tbody>

@@ -15,7 +15,10 @@ import { useForm } from "react-hook-form";
 import UserMoreInfoCard from "../UserMoreInfoCard/userMoreInfoCard";
 import TeacherMoreInforCard from "./AdminMoreInforCard/TeacherMoreInforCard";
 
-const AdminAllTeachersCard = ({ setMoreInformation, moreInformation }) => {
+const AdminAllTeachersCard = ({
+  setMoreInformationTeacher,
+  moreInformationTeacher,
+}) => {
   const [teachers, setTeachers] = useState();
   const { register, handleSubmit, reset } = useForm();
   const { user } = useContext(DroneMasterContext);
@@ -33,7 +36,7 @@ const AdminAllTeachersCard = ({ setMoreInformation, moreInformation }) => {
       .catch((err) => console.log(err));
   }, []);
 
-  const openInfoForm = (userId) => {
+  const openTeacherForm = (userId) => {
     axios
       .get(`http://localhost:4000/userInformation/${userId}`)
       .then((res) => {
@@ -41,11 +44,15 @@ const AdminAllTeachersCard = ({ setMoreInformation, moreInformation }) => {
         console.log("****************", res.data);
       })
       .catch((err) => console.log(err));
-    setMoreInformation(true);
+    setMoreInformationTeacher(true);
+  };
+
+  const closeTeacher = () => {
+    setMoreInformationTeacher(false);
   };
 
   const onSubmit = () => {
-    /*     setMoreInformation(true);
+    /*     setMoreInformationTeacher(true);
     useEffect(() => {
       axios
         .get(`http://localhost:4000/userInformation/${teacher.user_id}`)
@@ -150,7 +157,7 @@ const AdminAllTeachersCard = ({ setMoreInformation, moreInformation }) => {
                           <div className="tableCell iconCell">
                             <div className="tableCellContent">
                               <button
-                                onClick={() => openInfoForm(teacher.user_id)}
+                                onClick={() => openTeacherForm(teacher.user_id)}
                                 className="btnOutline1"
                               >
                                 Ver más
@@ -164,8 +171,8 @@ const AdminAllTeachersCard = ({ setMoreInformation, moreInformation }) => {
                 )}
 
                 <TeacherMoreInforCard
-                  moreInformation={moreInformation}
-                  setMoreInformation={setMoreInformation}
+                  moreInformationTeacher={moreInformationTeacher}
+                  setMoreInformationTeacher={setMoreInformationTeacher}
                   teacher={oneTeacher}
                 />
               </>
@@ -217,8 +224,8 @@ const AdminAllTeachersCard = ({ setMoreInformation, moreInformation }) => {
               </>
             )}
             <TeacherMoreInforCard
-              moreInformation={moreInformation}
-              setMoreInformation={setMoreInformation}
+              moreInformationTeacher={moreInformationTeacher}
+              setMoreInformationTeacher={setMoreInformationTeacher}
               teacher={oneTeacher}
             />
           </tbody>

@@ -4,6 +4,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { BsBook } from "react-icons/bs";
 
 const initialUserCounter = {
+  TotalAdmin: 0,
   TotalTeachers: 0,
   TotalStudents: 0,
   TotalCourse: 0,
@@ -29,8 +30,8 @@ const AdminContadorCard = () => {
           <span className="iconContainer">
             <AiOutlineUser />
           </span>
-          <h6>Profesores</h6>
-          <p>{counter.TotalTeachers}</p>
+          <h6>Admin</h6>
+          <p>{counter.TotalAdmin}</p>
         </div>
         <div className="counterCard">
           <span className="iconContainer">

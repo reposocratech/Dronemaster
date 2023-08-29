@@ -11,12 +11,13 @@ import {
 import { BsPencil } from "react-icons/bs";
 import { BsEye } from "react-icons/bs";
 import { BsEyeSlash } from "react-icons/bs";
+import AdminUnitEdirForm from "../AdminUnitEditForm/AdminUnitEdirForm";
 const AdminViewOneCourse = ({ course_id }) => {
   const [allInformation, setAllInformation] = useState();
   const [unitsName, setUnitsName] = useState([]);
   const [openUnits, setOpenUnits] = useState([]);
-  console.log("333333333333333333333333333333", course_id);
-  /* console.log("todos los cursooooooos", allCourses); */
+  const [unitEditForm, setUnitEditForm] = useState(false);
+
   useEffect(() => {
     axios
       .get(`http://localhost:4000/teachers/myCourses/courseInfo/${course_id}`)
@@ -26,17 +27,19 @@ const AdminViewOneCourse = ({ course_id }) => {
       })
       .catch((err) => console.log(err));
   }, [course_id]);
-  console.log("*********************************", allInformation);
 
   const uniqueUnitNames = Array.from(
     new Set(allInformation?.map((item) => item.unit_tittle))
   );
-  console.log(uniqueUnitNames);
+
   useEffect(() => {
     setUnitsName(uniqueUnitNames);
   }, [allInformation]);
-  console.log("1111111111111111111111111111111111111", course_id);
-  console.log("2222222222222222222222222222222", allInformation);
+
+  const openUnitEditForm = () => {
+    setUnitEditForm(true);
+  };
+
   //DROPDOWN
   const closedHeight = "0px";
   const openedHeight = "35px";
@@ -49,48 +52,83 @@ const AdminViewOneCourse = ({ course_id }) => {
       setOpenUnits([...openUnits, unitIndex]);
     }
   };
+
+  const enableUnit = (unitId, isHidden) => {
+    axios
+      .put(`http://localhost:4000/disableUnit/${unitId}`)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
+  const disableUnit = (unitId, isHidden) => {
+    axios
+      .put(`http://localhost:4000/disableUnit/${unitId}`)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
   return (
-    <tr className="coursesTableCard mb-4">
+    <div>
       {unitsName.map((unitName, unitIndex) => (
         <div key={unitIndex}>
-          <td className="d-flex me-4">
+          <div className="d-flex me-4">
             <h6>
-              Unidad {unitIndex + 1}: {unitName}
+              Tema {unitIndex + 1}: {unitName}
             </h6>
-            <div className="resourceContainer ">
-              <BsPencil className="icon  text-warning" />
-              <BsEye className="icon  text-warning" />
-              <BsEyeSlash className="icon  text-warning" />
+            <div>
+              <BsPencil onClick={openUnitEditForm} />
+              {allInformation
+                .filter((item) => item.unit_tittle === unitName)
+                .every((item) => !item.unit_is_hidden) ? (
+                <BsEyeSlash onClick={() => enableUnit(unitIndex)} />
+              ) : (
+                <BsEye onClick={() => disableUnit(unitIndex)} />
+              )}
             </div>
-          </td>
-          <tr>
+          </div>
+          <AdminUnitEdirForm
+            unitEditForm={unitEditForm}
+            setUnitEditForm={setUnitEditForm}
+          />
+          <div
+            className="dropdownContainer"
+            onClick={() => toggleUnit(unitIndex)}
+          >
+            {openUnits.includes(unitIndex) ? (
+              <IoMdArrowDropup />
+            ) : (
+              <IoMdArrowDropdown />
+            )}
+          </div>
+          <div>
             {allInformation
               .filter((item) => item.unit_tittle === unitName)
               .map((lesson) => (
-                <td className="d-flex me-4">
-                  <h6>{lesson.lesson_title}</h6>
-                  <div className="resourceContainer ">
-                    <BsPencil className="icon  text-warning" />
-                    <BsEye className="icon  text-warning" />
-                    <BsEyeSlash className="icon  text-warning" />
+                <div className="listedLesson">
+                  <div className="lessonText">
+                    <h6 className="lessonText">{lesson.lesson_title}</h6>
                   </div>
-                </td>
+                  <div>
+                    <BsPencil />
+                    <BsEyeSlash />
+                    <BsEye />
+                  </div>
+                </div>
               ))}
 
             <div>
               {allInformation
                 .filter((item) => item.unit_tittle === unitName)
                 .map((resource) => (
-                  <tr className="coursesTableCard mb-4">
+                  <div className="mb-4">
                     <div> Recurso: {resource.resource_id}</div>
-                    <div className="resourceContainer"></div>
-                  </tr>
+                  </div>
                 ))}
             </div>
-          </tr>
+          </div>
         </div>
       ))}
-    </tr>
+    </div>
   );
 };
 export default AdminViewOneCourse;

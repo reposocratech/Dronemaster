@@ -121,7 +121,7 @@ class courseControllers {
     let sql = `UPDATE course SET course_is_hidden = 0 WHERE course_id = ${course_id}`;
 
     connection.query(sql, (error, result) => {
-      if (error) res.status(500).json(err);
+      if (error) res.status(500).json(error);
       res.status(200).json({ message: "Course enable succesfully" });
     });
   };
@@ -134,7 +134,7 @@ class courseControllers {
     let sql = `UPDATE course SET course_is_hidden = 1 WHERE course_id = ${course_id}`;
 
     connection.query(sql, (error, result) => {
-      if (error) res.status(500).json(err);
+      if (error) res.status(500).json(error);
       res.status(200).json({ message: "Course disable succesfully" });
     });
   };
@@ -340,7 +340,7 @@ class courseControllers {
   selectCourseInfo = (req, res) => {
     const { course_id } = req.params;
 
-    let sql = `SELECT course.course_img, course.course_name, course.course_length, course.price, course.course_description, course.category_id, course.counter_rating, course.start_date, course.score FROM course course WHERE course.course_id = ${course_id}`;
+    let sql = `SELECT course.course_id, course.course_img, course.course_name, course.course_length, course.price, course.course_description, course.category_id, course.counter_rating, course.start_date, course.score FROM course course WHERE course.course_id = ${course_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
