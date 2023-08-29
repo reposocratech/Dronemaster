@@ -22,9 +22,12 @@ const StudentLanding = () => {
   const [lessonsOneCourse, setLessonsOneCourse] = useState(0)
   const [courseId, setCourseId] = useState(0)
   const [showEditionModal, setShowEditionModal] = useState(false);
-  console.log(courseMaterial);
-
+  const [showRatingModal, setShowRatingModal] = useState(false)
+  const [score, setScore] = useState()
+  const [counterRating, setCounterRating] = useState()
   //Get all courses of the user
+
+
   useEffect(() => {
     axios
       .get(`http://localhost:4000/showMyCourses/${user?.user_id}`)
@@ -32,7 +35,7 @@ const StudentLanding = () => {
         setMyCoursesData(res.data);
       })
       .catch((error) => console.log(error));
-  }, [user]);
+  }, [user, showEditionModal, showRatingModal, score, counterRating]);
 
   useEffect(() => {
     axios
@@ -73,7 +76,8 @@ const StudentLanding = () => {
         )}
 
         {courseMaterial && <div>
-          {examAvailable === 1 && <ExamCard />}
+          {examAvailable === 1 && <ExamCard setShowRatingModal={setShowRatingModal} showRatingModal={showRatingModal}
+            score={score} counterRating={counterRating} setScore={setScore} setCounterRating={setCounterRating} />}
 
 
         </div>}

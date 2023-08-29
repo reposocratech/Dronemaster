@@ -247,6 +247,7 @@ class commonControllers {
   };
 
 
+
   // 16.- Gets original comments  of a lesson
   // http://localhost:4000/myCourse/myLesson/comments/:course_id/unit_id/:lesson_id
   getAllComments = (req, res) => {
@@ -255,18 +256,17 @@ class commonControllers {
 
     let sql = `SELECT comment.comment_id, comment.comment_content, comment.comment_is_hidden,user.user_id, user.user_name, user.user_lastname, user.user_img FROM comment JOIN user ON comment.user_id = user.user_id WHERE comment.course_id = ${course_id} AND comment.unit_id = ${unit_id} AND comment.lesson_id = ${lesson_id} AND comment.parent_comment_id IS NULL ORDER BY comment.comment_id DESC`;
 
-     connection.query(sql, (error, result) => {
+    connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
   };
-  
+
   // 17 Get resource name to download resource
   // http://localhost:4000/resourceName/:lesson_id
   getResourceName = (req, res) => {
     const { lesson_id } = req.params;
 
     let sql = `SELECT resource_name FROM resource JOIN lesson ON lesson.resource_id = resource.resource_id WHERE lesson_id = ${lesson_id}`;
-
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
@@ -278,8 +278,8 @@ class commonControllers {
   setResponseComment = (req, res) => {
     const { unit_id, course_id, lesson_id, user_id, comment_id } = req.params;
 
-    const { responseContent  } = req.body;
-  
+    const { responseContent } = req.body;
+
     let sql = `INSERT INTO comment (user_id, course_id, unit_id, lesson_id, parent_comment_id, comment_content) VALUES (${user_id},${course_id}, ${unit_id}, ${lesson_id}, ${comment_id},"${responseContent}")`;
 
     connection.query(sql, (error, result) => {
@@ -308,7 +308,6 @@ class commonControllers {
     const { user_id } = req.params;
 
     let sql = `SELECT user_img, user_name, user_lastname, email, phone, address, is_deleted FROM user WHERE user_id = ${user_id}`;
-
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);

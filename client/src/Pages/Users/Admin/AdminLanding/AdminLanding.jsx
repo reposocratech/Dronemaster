@@ -24,6 +24,8 @@ const AdminLanding = () => {
   const [moreInformation, setMoreInformation] = useState(false);
   const [showEditionModal, setShowEditionModal] = useState(false);
 
+
+
   const { user } = useContext(DroneMasterContext);
 
   useEffect((data) => {
