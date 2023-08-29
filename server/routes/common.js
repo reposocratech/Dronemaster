@@ -84,11 +84,20 @@ router.get(
   commonControllers.getUserCourseInfo
 );
 
-// 16.- Get resource name to download resource
+// 16- Gets original comments and rsponses of a lesson
+// http://localhost:4000/myCourse/myLesson/comments/:course_id/unit_id/:lesson_id
+router.get("/myCourse/myLesson/comments/:course_id/:unit_id/:lesson_id", commonControllers.getAllComments);
+
+// 17.- Get resource name to download resource
 // http://localhost:4000/resourceName/:lesson_id
 router.get("/resourceName/:lesson_id", commonControllers.getResourceName);
 
-// 17.- Upload resource into a lesson
+
+// 18- Post a new response to a comment
+// http://localhost:4000/myCourse/myLesson/addResponse/:course_id/:unit_id/:lesson_id/:user_id/:comment_id
+router.post("/myCourse/myLesson/addResponse/:course_id/:unit_id/:lesson_id/:user_id/:comment_id", commonControllers.setResponseComment); 
+
+// 19.- Upload resource into a lesson
 // http://localhost:4000/uploadResource/:user_id/:course_id/:unit_id/:lesson_id
 router.post(
   "/uploadResource/:user_id/:course_id/:unit_id/:lesson_id",
@@ -96,20 +105,14 @@ router.post(
   commonControllers.uploadResource
 );
 
-
-// 18- Gets original comments and rsponses of a lesson
-// http://localhost:4000/myCourse/myLesson/comments/:course_id/unit_id/:lesson_id
-router.get("/myCourse/myLesson/comments/:course_id/:unit_id/:lesson_id", commonControllers.getAllComments);
-
- // 19- Post a new response to a comment
-// http://localhost:4000/myCourse/myLesson/response/:course_id/:unit_id/:lesson_id/:user_id/:comment_id
-router.post("/myCourse/myLesson/response/:course_id/:unit_id/:lesson_id/:user_id/:comment_id", commonControllers.setResponseComment); 
-
 // 20-Gets information of one User
 // http://localhost:4000/userInformation/:user_id
 
 router.get("/userInformation/:user_id", commonControllers.viewOneUserInfo);
 
+ // 21.- Gets responses  of a lesson
+  // http://localhost:4000/myCourse/myLesson/responses/:course_id/unit_id/:lesson_id
+  router.get("/myCourse/myLesson/responses/:course_id/:unit_id/:lesson_id", commonControllers.getAllResponses);
 
 
 module.exports = router;
