@@ -12,7 +12,7 @@ class studentControllers {
       bcrypt.hash(password, saltRounds, function (err, hash) {
         err && res.status(401).json({ err });
 
-        let sql = `INSERT INTO user (user_name, user_lastname, email, password) VALUES ( "${user_name}","${user_lastname}","${email}", "${hash}")`;
+        let sql = `INSERT INTO user (user_name, user_lastname, email, password) VALUES ("${user_name}", "${user_lastname}", "${email}", "${hash}")`;
 
         connection.query(sql, (error, result) => {
           error

@@ -3,8 +3,9 @@ import { FaEdit } from "react-icons/fa";
 import { DroneMasterContext } from "../../../../../../context/DroneMasterProvider";
 import { useNavigate } from "react-router-dom";
 
-const AdminCard = () => {
+const AdminCard = ({ setShowEditionModal }) => {
   const { user } = useContext(DroneMasterContext);
+
   const navigate = useNavigate();
 
   return (
@@ -26,11 +27,13 @@ const AdminCard = () => {
           <p>{user?.type == 2 && "Admin"}</p>
         </div>
         <div className="editionButton">
-          <div
-            className="iconButton"
-            onClick={() => navigate(`/user/editMyProfile/${user?.user_id}`)}
-          >
-            <FaEdit />
+          <div className="editionButton">
+            <div
+              className="iconButton"
+              onClick={() => setShowEditionModal(true)}
+            >
+              <FaEdit />
+            </div>
           </div>
         </div>
       </div>

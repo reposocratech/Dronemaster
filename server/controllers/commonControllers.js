@@ -191,7 +191,6 @@ class commonControllers {
   deleteProfileImage = (req, res) => {
     const { user_id } = req.params;
 
-
     let sql = `UPDATE user SET user_img = NULL WHERE user_id = ${user_id}`;
 
     connection.query(sql, (error, result) => {
@@ -211,13 +210,24 @@ class commonControllers {
     });
   };
 
-  // 13.- Gets info from a user at user_course
+  // 15.- Gets info from a user at user_course
   // http://localhost:4000/myProfile/myCourse/:user_id/:course_id
   getUserCourseInfo = (req, res) => {
-    const {user_id ,course_id} = req.params;
+    const { user_id, course_id } = req.params;
 
-    let sql = `SELECT * FROM user_course WHERE user_id = ${user_id} AND course_id = ${course_id}`
-    
+    let sql = `SELECT * FROM user_course WHERE user_id = ${user_id} AND course_id = ${course_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 16. Get the information of one User
+  // http://localhost:4000/userInformation/:user_id
+  viewOneUserInfo = (req, res) => {
+    const { user_id } = req.params;
+
+    let sql = `SELECT user_img, user_name, user_lastname, email, phone, address, is_deleted FROM user WHERE user_id = ${user_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);

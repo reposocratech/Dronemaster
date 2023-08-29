@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import "./AdminLanding.scss";
 import { Container } from "react-bootstrap";
@@ -11,12 +11,20 @@ import AdminAllTeachersCard from "./components/AdminAllTeachers/AdminAllTeachers
 import AdminAllStudentsCard from "./components/AdminAllStudents/AdminAllStudentsCard";
 import AdminChartCard from "./components/AdminChart/AdminChartCard";
 import AdminNewUserCard from "./components/AdminNewUser/AdminNewUserCard";
+import { EditMyProfileModal } from "../../../../components/EditMyProfileModal/EditMyProfileModal";
+import DroneMasterProvider, {
+  DroneMasterContext,
+} from "../../../../context/DroneMasterProvider";
 
 const AdminLanding = () => {
   const [allCourses, setAllCourses] = useState();
   const [allStudents, setAllStudents] = useState();
   const [allTeachers, setAllTeachers] = useState();
   const [inscriptionDates, setInscriptionDates] = useState();
+  const [moreInformation, setMoreInformation] = useState(false);
+  const [showEditionModal, setShowEditionModal] = useState(false);
+
+  const { user } = useContext(DroneMasterContext);
 
   useEffect((data) => {
     axios
@@ -68,7 +76,7 @@ const AdminLanding = () => {
   return (
     <section className="mainSection">
       <aside className="sideContent">
-        <AdminCard />
+        <AdminCard setShowEditionModal={setShowEditionModal} />
         <AdminContadorCard />
         <AdminInfoCard />
         <AdminChartCard
@@ -80,8 +88,23 @@ const AdminLanding = () => {
 
       <div className="mainContainer">
         <AdminAllCoursesCard />
-        <AdminAllTeachersCard />
-        <AdminAllStudentsCard />
+        <AdminAllTeachersCard
+          moreInformation={moreInformation}
+          setMoreInformation={setMoreInformation}
+        />
+        <AdminAllStudentsCard
+          moreInformation={moreInformation}
+          setMoreInformation={setMoreInformation}
+        />
+      </div>
+
+      <div>
+        {" "}
+        <EditMyProfileModal
+          showEditionModal={showEditionModal}
+          setShowEditionModal={setShowEditionModal}
+          user={user}
+        />
       </div>
     </section>
   );

@@ -14,7 +14,7 @@ const RegisterModal = ({
   setShowRegisterModal,
   showLoginModal,
   setShowLoginModal,
-  openLoginModal
+  openLoginModal,
 }) => {
   const closeRegisterModal = () => {
     setShowRegisterModal(false);
@@ -45,7 +45,11 @@ const RegisterModal = ({
       .catch((error) => console.log(error));
   };
   return (
-    <Modal show={showRegisterModal} onHide={closeRegisterModal} animation={false}>
+    <Modal
+      show={showRegisterModal}
+      onHide={closeRegisterModal}
+      animation={false}
+    >
       <Modal.Body className="bckModal">
         <Row>
           <Col className="formContainer">
