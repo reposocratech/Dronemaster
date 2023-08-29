@@ -87,6 +87,18 @@ class teacherControllers {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
   };
+
+  // 9.- Select all resource uploaded by a teacher
+  // http://localhost:4000/teachers/teacherResources/:user_id
+  selectAllTeacherResources = (req, res) => {
+    const { user_id } = req.params;
+
+    let sql = `SELECT resource_id FROM resource WHERE user_id = ${user_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
 }
 
 module.exports = new teacherControllers();

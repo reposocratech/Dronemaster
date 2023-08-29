@@ -246,12 +246,15 @@ class commonControllers {
     });
   };
 
-  // 16.- Gets original comments and responses of a lesson
+
+
+  // 16.- Gets original comments  of a lesson
   // http://localhost:4000/myCourse/myLesson/comments/:course_id/unit_id/:lesson_id
   getAllComments = (req, res) => {
+
     const { unit_id, course_id, lesson_id } = req.params;
 
-    let sql = `SELECT comment.comment_id, comment.comment_content, comment.user_id, user.user_name, user.user_lastname, user.user_img, comment.parent_comment_id, response.comment_id AS response_comment_id, response.comment_content AS response_comment_content, response.user_id AS response_comment_user_id FROM comment LEFT JOIN comment AS response ON comment.comment_id = response.parent_comment_id LEFT JOIN user ON comment.user_id = user.user_id WHERE comment.course_id = ${course_id} AND comment.unit_id = ${unit_id} AND comment.lesson_id = ${lesson_id}`;
+    let sql = `SELECT comment.comment_id, comment.comment_content, comment.comment_is_hidden,user.user_id, user.user_name, user.user_lastname, user.user_img FROM comment JOIN user ON comment.user_id = user.user_id WHERE comment.course_id = ${course_id} AND comment.unit_id = ${unit_id} AND comment.lesson_id = ${lesson_id} AND comment.parent_comment_id IS NULL ORDER BY comment.comment_id DESC`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
@@ -271,7 +274,7 @@ class commonControllers {
   };
 
   // 18- Post a new response to a comment
-  // http://localhost:4000/myCourse/myLesson/response/:course_id/:unit_id/:lesson_id/:user_id/:comment_id
+  // http://localhost:4000/myCourse/myLesson/addResponse/:course_id/:unit_id/:lesson_id/:user_id/:comment_id
   setResponseComment = (req, res) => {
     const { unit_id, course_id, lesson_id, user_id, comment_id } = req.params;
 
@@ -292,12 +295,14 @@ class commonControllers {
     console.log(file);
 
     let sql = `INSERT INTO resource (user_id, resource_name) VALUES (${user_id}, "${file}")`;
-    connection.query(sql, (error, result) => {
+  connection.query(sql, (error, result) => {
+
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
   };
 
-  // 20et the information of one User
+
+  // 20 Get the information of one User
   // http://localhost:4000/userInformation/:user_id
   viewOneUserInfo = (req, res) => {
     const { user_id } = req.params;
@@ -325,10 +330,22 @@ class commonControllers {
   //http://localhost:4000/disableUnit/:unit_id
   disableUnits = (req, res) => {
     const { unit_id } = req.params;
-
     let sql = `UPDATE unit SET unit_is_hidden = 1 WHERE unit_id = ${unit_id}`;
 
     connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 21.- Gets responses  of a lesson
+  // http://localhost:4000/myCourse/myLesson/responses/:course_id/unit_id/:lesson_id
+  getAllResponses = (req, res) => {
+    
+    const { unit_id, course_id, lesson_id } = req.params;
+
+    let sql = `SELECT comment.comment_id, comment.comment_content, comment.comment_is_hidden, comment.parent_comment_id,user.user_id, user.user_name, user.user_lastname, user.user_img FROM comment JOIN user ON comment.user_id = user.user_id WHERE comment.parent_comment_id IS NOT NULL AND comment.course_id = ${course_id} AND comment.unit_id = ${unit_id} AND comment.lesson_id = ${lesson_id} AND comment.parent_comment_id IS NOT NULL ORDER BY comment.comment_id DESC`;
+
+     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
   };

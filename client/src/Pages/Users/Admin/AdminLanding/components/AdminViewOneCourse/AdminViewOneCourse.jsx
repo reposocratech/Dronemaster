@@ -8,15 +8,26 @@ import {
   BsFillFileArrowUpFill,
   BsFillFileEarmarkExcelFill,
 } from "react-icons/bs";
+import { BsPlusCircleFill } from "react-icons/bs"
 import { BsPencil } from "react-icons/bs";
 import { BsEye } from "react-icons/bs";
 import { BsEyeSlash } from "react-icons/bs";
 import AdminUnitEdirForm from "../AdminUnitEditForm/AdminUnitEdirForm";
-const AdminViewOneCourse = ({ course_id }) => {
+import { LessonCreationModal } from "../../../../../Courses/components/CourseCreationModal/LessonCreationModal/LessonCreationModal";
+
+
+const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
   const [allInformation, setAllInformation] = useState();
   const [unitsName, setUnitsName] = useState([]);
   const [openUnits, setOpenUnits] = useState([]);
-  const [unitEditForm, setUnitEditForm] = useState(false);
+   const [unitEditForm, setUnitEditForm] = useState(false);
+  const [showLessonCreationModal, setShowLessonCreationModal] = useState(false);
+  const [unitId, setUnitId] = useState()
+  
+  const OpenLessonCreateModal = (u_id) => {
+    setUnitId(u_id)
+    setShowLessonCreationModal(true)
+  }
 
   useEffect(() => {
     axios
@@ -26,11 +37,18 @@ const AdminViewOneCourse = ({ course_id }) => {
         console.log(res.data);
       })
       .catch((err) => console.log(err));
-  }, [course_id]);
+
+  }, [course_id, resEffect]);
+  
 
   const uniqueUnitNames = Array.from(
     new Set(allInformation?.map((item) => item.unit_tittle))
   );
+  const unit_id = Array.from(
+    new Set(allInformation?.map((item) => item.unit_id))
+  );
+  console.log("el uninini", unit_id)
+  console.log(uniqueUnitNames);
 
   useEffect(() => {
     setUnitsName(uniqueUnitNames);
@@ -53,6 +71,7 @@ const AdminViewOneCourse = ({ course_id }) => {
     }
   };
 
+
   const enableUnit = (unitId, isHidden) => {
     axios
       .put(`http://localhost:4000/disableUnit/${unitId}`)
@@ -67,6 +86,7 @@ const AdminViewOneCourse = ({ course_id }) => {
       .catch((err) => console.log(err));
   };
 
+
   return (
     <div>
       {unitsName.map((unitName, unitIndex) => (
@@ -75,7 +95,9 @@ const AdminViewOneCourse = ({ course_id }) => {
             <h6>
               Tema {unitIndex + 1}: {unitName}
             </h6>
+
             <div>
+              <BsPlusCircleFill className="icon" onClick={() => OpenLessonCreateModal(unit_id[unitIndex])} />
               <BsPencil onClick={openUnitEditForm} />
               {allInformation
                 .filter((item) => item.unit_tittle === unitName)
@@ -84,6 +106,7 @@ const AdminViewOneCourse = ({ course_id }) => {
               ) : (
                 <BsEye onClick={() => disableUnit(unitIndex)} />
               )}
+
             </div>
           </div>
           <AdminUnitEdirForm
@@ -104,9 +127,11 @@ const AdminViewOneCourse = ({ course_id }) => {
             {allInformation
               .filter((item) => item.unit_tittle === unitName)
               .map((lesson) => (
+
                 <div className="listedLesson">
                   <div className="lessonText">
                     <h6 className="lessonText">{lesson.lesson_title}</h6>
+
                   </div>
                   <div>
                     <BsPencil />
@@ -128,7 +153,19 @@ const AdminViewOneCourse = ({ course_id }) => {
           </div>
         </div>
       ))}
-    </div>
+      
+      
+      <LessonCreationModal
+        setShowLessonCreationModal={setShowLessonCreationModal}
+        showLessonCreationModal={showLessonCreationModal}
+        course_id={course_id}
+        resEffect={resEffect}
+        setResEffect={setResEffect}
+        unitId={unitId}
+
+      />
+   </div>
+
   );
 };
 export default AdminViewOneCourse;

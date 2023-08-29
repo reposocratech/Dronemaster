@@ -62,4 +62,17 @@ router.get(
   studentControllers.getStudentStatus
 );
 
+// 6.- get course score and counter rating
+// http://localhost:4000/students/scoreCounterRating/:course_id
+router.get(
+  "/scoreCounterRating/:course_id",
+  studentControllers.getScoreAndCounterRating
+);
+
+// 7.- Update score and counter rating
+// http://localhost:4000/students/updateScoreRating/:course_id/:score/:counter_rating
+router.put(
+  "/updateScoreRating/:course_id",
+  studentControllers.updateScoreAndCounterRating
+);
 module.exports = router;

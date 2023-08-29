@@ -8,8 +8,12 @@ import AdminViewOneCourse from "../AdminViewOneCourse/AdminViewOneCourse";
 import { BsBook } from "react-icons/bs";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMdArrowDropup } from "react-icons/io";
+import { BsPlusCircleFill } from "react-icons/bs"
 import { useForm } from "react-hook-form";
 import { CourseEditionModal } from "../../../../../Courses/components/CourseEditionModal/CourseEditionModal";
+import { DroneMasterContext } from "../../../../../../context/DroneMasterProvider";
+import { UnitCreationModal } from "../../../../../Courses/components/CourseCreationModal/UnitCreationModal/UnitCreationModal";
+
 
 const AdminAllCoursesCard = () => {
   const [allCourses, setAllCourses] = useState();
@@ -17,13 +21,21 @@ const AdminAllCoursesCard = () => {
   const [moreInformationCourse, setMoreInformarionCourse] = useState();
   const { register, handleSubmit, reset } = useForm();
   const [showCourseEditionModal, setShowCourseEditionModal] = useState(false);
+
   const [resetEffect, setResetEffect] = useState(false);
-
   const [oneCourse, setOneCourse] = useState();
-
+  const [showUnitCreationModal, setShowUnitCreationModal] = useState(false);
+  const [status, setStatus] = useState();
+  const [resEffect, setResEffect] = useState(false)
   const openEditModal = () => {
     setShowCourseEditionModal(true);
   };
+
+
+
+  const openUnitCreateModal = () => {
+    setShowUnitCreationModal(true)
+  }
 
   useEffect(() => {
     axios
@@ -32,7 +44,7 @@ const AdminAllCoursesCard = () => {
         setAllCourses(res.data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [resEffect]);
 
   const enableCourse = (courseId) => {
     axios
@@ -98,11 +110,31 @@ const AdminAllCoursesCard = () => {
 
         {allCourses?.map((course) => {
           return (
+
             <div key={course.course_id} className="unitList">
               <div className="unitTittle">
                 <h6>
                   <AiOutlineFolderOpen className="icon2 me-2" />
                   {course.course_name}
+                  <div>
+                  <AiOutlineClockCircle className="icon" />
+                  {course?.course_length}h
+                </div>
+                <div>
+                  <AiOutlineStar className="icon" /> {course?.score}
+                </div>
+                  <div>
+                  <span onClick={openUnitCreateModal}>
+                    <BsPlusCircleFill className="icon" />
+                  </span>
+
+                  <UnitCreationModal
+                    setShowUnitCreationModal={setShowUnitCreationModal}
+                    showUnitCreationModal={showUnitCreationModal}
+                    course_id={course.course_id}
+                    resEffect={resEffect} setResEffect={setResEffect}
+                  />
+                </div>
                   <span onClick={openEditModal}>
                     <BsPencil />
                   </span>
@@ -147,7 +179,8 @@ const AdminAllCoursesCard = () => {
                 </div>
 
                 <div>
-                  <AdminViewOneCourse course_id={course?.course_id} />
+                  <AdminViewOneCourse course_id={course?.course_id} resEffect={resEffect} setResEffect={setResEffect} />
+
                 </div>
               </div>
             </div>

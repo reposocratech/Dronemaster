@@ -4,7 +4,7 @@ import { DroneMasterContext } from "../../../../../../context/DroneMasterProvide
 import { AiFillEye, AiFillFile } from "react-icons/ai";
 import '../../studentLandingStyle.scss'
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { saveAs } from 'file-saver'
 export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOneCourse, courseId }) => {
     const navigate = useNavigate()
@@ -17,7 +17,7 @@ export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOn
         new Set(courseMaterial?.map((item) => item.unit_tittle))
     );
 
-    console.log("", courseMaterial);
+    console.log("dale ya", courseMaterial);
     useEffect(() => {
         setUnitsName(uniqueUnitNames);
     }, [courseMaterial]);
@@ -124,7 +124,7 @@ export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOn
                                                 <td className="textReduce text-start w-75 ps-3">
                                                     <div className="oculto">{lesson.lesson_title}</div>
                                                 </td>
-                                                {lesson.resource_is_hidden === 0 && <>
+                                                {(lesson.resource_is_hidden === 0 || lesson.resource_is_hidden === null) && <>
                                                     <td>
                                                         <AiFillEye
                                                             style={{ color: selectedLessons.includes(lesson.lesson_id) ? 'green' : 'white' }}

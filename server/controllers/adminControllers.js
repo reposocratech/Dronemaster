@@ -47,37 +47,29 @@ class adminControllers {
   };
 
   // 4.- Enable comment
-  // http://localhost:4000/admin/enableComment
+  // http://localhost:4000/admin/enableComment/:comment_id
   enableComment = (req, res) => {
     const { comment_id } = req.params;
-    const { type } = req.body;
-
-    if (type !== 2) {
-      res.status(403).json({ error });
-    } else {
+  
       let updateSql = `UPDATE comment SET comment_is_hidden = 0 WHERE comment_id = ${comment_id}`;
 
       connection.query(updateSql, (error, result) => {
         error ? res.status(400).json({ error }) : res.status(201).json(result);
       });
-    }
+    
   };
 
   // 5.- Disable comment
-  // http://localhost:4000/admin/disableComment
+  // http://localhost:4000/admin/disableComment/:coment_id
   disableComment = (req, res) => {
     const { comment_id } = req.params;
-    const { type } = req.body;
-
-    if (type !== 2) {
-      res.status(403).json({ error });
-    } else {
+    
       let sql = `UPDATE comment SET comment_is_hidden = 1 WHERE comment_id = ${comment_id}`;
 
       connection.query(sql, (error, result) => {
         error ? res.status(400).json({ error }) : res.status(200).json(result);
       });
-    }
+    
   };
 
   // 6.- Enable User (admin)
@@ -143,10 +135,10 @@ class adminControllers {
   // http://localhost:4000/admin/createLesson/:course_id/:unit_id
   createLesson = (req, res) => {
     const { course_id, unit_id } = req.params;
-    const { lesson_title, lesson_content } = req.body;
+    const { lesson_title, lesson_content, lesson_url_video } = req.body;
 
     let sql = `
-    INSERT INTO lesson (course_id, unit_id, lesson_title, lesson_content) VALUES (${course_id}, ${unit_id}, '${lesson_title}', '${lesson_content}')`;
+    INSERT INTO lesson (course_id, unit_id, lesson_title, lesson_content, lesson_url_video) VALUES (${course_id}, ${unit_id}, '${lesson_title}', '${lesson_content}', '${lesson_url_video}')`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
@@ -157,10 +149,11 @@ class adminControllers {
   // http://localhost:4000/admin/createUnit/:course_id
   createUnit = (req, res) => {
     const { course_id } = req.params;
-    const { unit_title } = req.body;
 
-    let sql = `
-    INSERT INTO unit (course_id, unit_title) VALUES (${course_id}, '${unit_title}')`;
+    const { unit_tittle } = req.body;
+    console.log(unit_tittle);
+
+    let sql = `INSERT INTO unit (course_id, unit_tittle) VALUES (${course_id}, "${unit_tittle}")`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
