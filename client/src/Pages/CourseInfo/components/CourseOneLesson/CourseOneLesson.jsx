@@ -7,13 +7,11 @@ import { CourseDescription } from "../CourseDescription/CourseDescription";
 import { MdOutlinePlayLesson } from "react-icons/md";
 import { UnitsLessonList } from "./components/UnitsLessonList";
 import "./courseOneLesson.scss";
+import { LessonComments } from "./components/LessonComments";
 
 export const CourseOneLesson = () => {
   const { course_id, unit_id, lesson_id } = useParams();
-  const [courseGeneralInfo, setcouGeneralrseInfo] = useState();
   const [lessonData, setLessonData] = useState();
-  const [unitsCount, setUnitsCount] = useState();
-  const [lessonsCount, setLessonsCount] = useState();
   const [courseUnitsLessons, setCourseUnitsLessons] = useState();
 
   const { user } = useContext(DroneMasterContext);
@@ -29,6 +27,8 @@ export const CourseOneLesson = () => {
       })
       .catch((err) => console.log(err));
   }, [course_id]);
+
+  
 
   useEffect(() => {
     axios
@@ -74,7 +74,17 @@ export const CourseOneLesson = () => {
 
       {/* Side section */}
       <aside className="rightAsideSection">
-        <UnitsLessonList    myCourseInfo={courseUnitsLessons}    course_id={course_id}/>
+        <UnitsLessonList
+          myCourseInfo={courseUnitsLessons}
+          course_id={course_id}
+        />
+
+        <LessonComments
+          user={user}
+          course_id={course_id}
+          unit_id={unit_id}
+          lesson_id={lesson_id}
+        />
       </aside>
     </section>
   );

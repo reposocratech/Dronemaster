@@ -191,7 +191,6 @@ class commonControllers {
   deleteProfileImage = (req, res) => {
     const { user_id } = req.params;
 
-
     let sql = `UPDATE user SET user_img = NULL WHERE user_id = ${user_id}`;
 
     connection.query(sql, (error, result) => {
@@ -214,10 +213,40 @@ class commonControllers {
   // 13.- Gets info from a user at user_course
   // http://localhost:4000/myProfile/myCourse/:user_id/:course_id
   getUserCourseInfo = (req, res) => {
-    const {user_id ,course_id} = req.params;
+    const { user_id, course_id } = req.params;
 
-    let sql = `SELECT * FROM user_course WHERE user_id = ${user_id} AND course_id = ${course_id}`
-    
+    let sql = `SELECT * FROM user_course WHERE user_id = ${user_id} AND course_id = ${course_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 14.- Gets original comments and responses of a lesson
+  // http://localhost:4000/myCourse/myLesson/comments/:course_id/unit_id/:lesson_id
+  getAllComments = (req, res) => {
+    const { unit_id, course_id, lesson_id } = req.params;
+
+    let sql = `SELECT comment.comment_id, comment.comment_content, comment.user_id, user.user_name, user.user_lastname, user.user_img, comment.parent_comment_id, response.comment_id AS response_comment_id, response.comment_content AS response_comment_content, response.user_id AS response_comment_user_id FROM comment LEFT JOIN comment AS response ON comment.comment_id = response.parent_comment_id LEFT JOIN user ON comment.user_id = user.user_id WHERE comment.course_id = ${course_id} AND comment.unit_id = ${unit_id} AND comment.lesson_id = ${lesson_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 15.- Post a new response to a comment
+  // http://localhost:4000/myCourse/myLesson/response/:course_id/:unit_id/:lesson_id/:user_id/:comment_id
+  setResponseComment = (req, res) => {
+    const { unit_id, course_id, lesson_id, user_id, comment_id } = req.params;
+
+    const { responseContent  } = req.body;
+    console.log(responseContent);
+
+    console.log(req.body);
+
+
+    let sql = `INSERT INTO comment (user_id, course_id, unit_id, lesson_id, parent_comment_id, comment_content) VALUES (${user_id},${course_id}, ${unit_id}, ${lesson_id}, ${comment_id},"${responseContent}")`;
+
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);

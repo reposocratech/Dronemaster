@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal,  } from "react-bootstrap";
 import { DroneMasterContext } from "../../../../context/DroneMasterProvider";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -22,6 +22,7 @@ export const CourseEditionModal = ({
   const [courseImg, setCourseImg] = useState();
   const [file, setFile] = useState();
   const [teacherPrev_id, setTeacherPrev_id] = useState();
+
 
   const { user, resetData, setResetData } = useContext(DroneMasterContext);
 
@@ -108,6 +109,7 @@ export const CourseEditionModal = ({
         console.log(err);
       });
 
+
     if (file) {
       const newFormData = new FormData();
 
@@ -132,8 +134,9 @@ export const CourseEditionModal = ({
      courseData?.price && setValue("price", courseData.price || "");
      courseData?.category_id && setValue("category_id", courseData.category_id || "");
      courseData?.teacher_id && setValue("teacher_id", courseData.teacher_id || "");
-     courseData?.start_date && setValue("start_date", courseData.start_date.slice(0, 10) || "");
+     courseData?.start_date && courseData.start_date != null && setValue("start_date", courseData.start_date.slice(0, 10) || "");
   }, [courseData, setValue]);
+  console.log(courseData?.start_date);
 
   const handleDeleteTag = (tagId, tagName) => {
     let url = "";
