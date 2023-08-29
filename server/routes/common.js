@@ -48,7 +48,15 @@ router.put("/enableResource/:resource_id", commonControllers.enableResources);
 
 // 10.- Disable resources
 // http://localhost:4000/disableResource/:resource_id
-router.put("/disableResource/:resource_id", commonControllers.enableResources);
+router.put("/disableResource/:resource_id", commonControllers.disableResources);
+
+// 9.- Enable lessons
+// http://localhost:4000/enableLessons/:lesson_id
+router.put("/enableLessons/:lesson_id", commonControllers.enableLessons);
+
+// 10.- Disable lessons
+// http://localhost:4000/disableLessons/:lesson_id
+router.put("/disableLessons/:lesson_id", commonControllers.disableLessons);
 
 // 11.- Get 4 top courses (
 // http://localhost:4000/topCourses
@@ -71,9 +79,21 @@ router.get("/downloadExam/:course_id", commonControllers.downloadExam);
 
 // 13.- Gets info from a user at user_course
 // http://localhost:4000/myProfile/myCourse/:user_id/:course_id
-router.get("/myProfile/myCourse/:user_id/:course_id", commonControllers.getUserCourseInfo);
+router.get(
+  "/myProfile/myCourse/:user_id/:course_id",
+  commonControllers.getUserCourseInfo
+);
 
+// 6.- Get resource name to download resource
+// http://localhost:4000/resourceName/:lesson_id
+router.get("/resourceName/:lesson_id", commonControllers.getResourceName);
 
-
+// 7.- Upload resource into a lesson
+// http://localhost:4000/uploadResource/:user_id/:course_id/:unit_id/:lesson_id
+router.post(
+  "/uploadResource/:user_id/:course_id/:unit_id/:lesson_id",
+  multer("resources"),
+  commonControllers.uploadResource
+);
 
 module.exports = router;

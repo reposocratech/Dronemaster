@@ -23,11 +23,11 @@ export const CourseInfo = () => {
   const [courseUnitsLessons, setCourseUnitsLessons] = useState();
   const [unitsCount, setUnitsCount] = useState();
   const [lessonsCount, setLessonsCount] = useState();
-  const [userCourseRelationship, setUserCourseRelationship] = useState(false)
+  const [userCourseRelationship, setUserCourseRelationship] = useState()
 
-  const { user } = useContext(DroneMasterContext);
+  const { user, resetData, setResetData } = useContext(DroneMasterContext);
 
-    //Gets all units and lesson of a course
+  //Gets all units and lesson of a course
   useEffect(() => {
     axios
       .get(`http://localhost:4000/teachers/myCourses/courseInfo/${course_id}`)
@@ -64,11 +64,11 @@ export const CourseInfo = () => {
 
   useEffect(() => {
     user &&
-    axios.get(`http://localhost:4000/myProfile/myCourse/${user.user_id}/${course_id}`)
-    .then((res)=> setUserCourseRelationship(true))
-    .catch((err)=> console.log(err))
+      axios.get(`http://localhost:4000/myProfile/myCourse/${user.user_id}/${course_id}`)
+        .then((res) => setUserCourseRelationship(res.data))
+        .catch((err) => console.log(err))
   }, [course_id, user])
-  
+
 
   useEffect(() => {
     //Counts units
@@ -92,41 +92,50 @@ export const CourseInfo = () => {
     setLessonsCount(lessonsSet.size);
   }, [courseUnitsLessons]);
 
+  const onSubmit = () => {
+    axios
+      .post(`http://localhost:4000/courses/payACourse/${user.user_id}/${course_id}/${courseGeneralInfo.price}`,)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+
+    setResetData(!resetData)
+  }
+
   return (
     <section className="courseInfoMainSection">
-        {/* Course name title */}
+      {/* Course name title */}
 
-        <div className="courseNameCard">
-          <div className="cardTitle">
-            <div className="title">
-              <div className="iconContainer">
-                <GiClassicalKnowledge />
-              </div>
-              <h2 className="titleText">{courseGeneralInfo?.course_name}</h2>
+      <div className="courseNameCard">
+        <div className="cardTitle">
+          <div className="title">
+            <div className="iconContainer">
+              <GiClassicalKnowledge />
             </div>
+            <h2 className="titleText">{courseGeneralInfo?.course_name}</h2>
           </div>
         </div>
+      </div>
       {/* Main Section */}
       <div className="mainSide">
-          {/* Introduccion Video or Image*/}
+        {/* Introduccion Video or Image*/}
 
-          <div className="introMultimedia">
-            <img
-              src={
-                courseGeneralInfo?.course_img &&
-                `http://localhost:4000/images/courses/courseDefaultImg.jpg`
-              }
-              alt="Course image"
-            />
-            <img
-              className="watermarkImg"
-              src={
-                courseGeneralInfo?.course_img &&
-                `/dashboard_images/logo_DroneMaster.png`
-              }
-              alt="Course image"
-            />
-          </div>
+        <div className="introMultimedia">
+          <img
+            src={
+              courseGeneralInfo?.course_img &&
+              `http://localhost:4000/images/courses/courseDefaultImg.jpg`
+            }
+            alt="Course image"
+          />
+          <img
+            className="watermarkImg"
+            src={
+              courseGeneralInfo?.course_img &&
+              `/dashboard_images/logo_DroneMaster.png`
+            }
+            alt="Course image"
+          />
+        </div>
         <div className="courseTextInfoCard">
           {/* Course Description */}
           <CourseDescription
@@ -146,7 +155,7 @@ export const CourseInfo = () => {
 
       {/* Side section */}
       <aside className="rightAsideSection">
-        {!userCourseRelationship && <div className="courseMultimediaInfoCard">
+        {(userCourseRelationship == undefined || userCourseRelationship.length == 0) && <div className="courseMultimediaInfoCard">
           {/* Course Image */}
           <div className="courseImgContainer">
             <img
@@ -218,7 +227,8 @@ export const CourseInfo = () => {
                   {courseGeneralInfo.price} <span className="currency">€</span>
                 </h4>
               )}
-              <button className="btnNormal">INSCRIBETE</button>
+              {user && <button className="btnNormal" onClick={onSubmit}>INSCRIBETE</button>}
+              {!user && <p className="fst-italic" style={{ color: '#f7ab16' }}>Inicia sesión o regístrate para inscribirte en el curso</p>}
             </div>
           </div>
         </div>}

@@ -10,8 +10,8 @@
         height: 40px;
         position: absolute;
         width: 120px;
-        left: calc(165px - 60px);
-        top: calc((185.63px / 2) - 20px);
+        left: calc(clamp((110px - 60px), (127.5px - 60px), (165px - 60px)));
+        top: calc(clamp(((123.75px / 2) - 20px), (71.65px - 60px), ((185.63px / 2) - 20px)));
         display: none;
     }
 

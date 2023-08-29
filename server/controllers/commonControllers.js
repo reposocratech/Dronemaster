@@ -143,11 +143,11 @@ class commonControllers {
   };
 
   //9.- Enable resources
-  //localhost:4000/enableResource/:resource_id
+  //http://localhost:4000/enableResource/:resource_id
   enableResources = (req, res) => {
     const { resource_id } = req.params;
 
-    let sql = `UPDATE resource SET resource_is_hidden = 0 WHERE resource_id = "${resource_id}"`;
+    let sql = `UPDATE resource SET resource_is_hidden = 0 WHERE resource_id = ${resource_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
@@ -159,7 +159,31 @@ class commonControllers {
   disableResources = (req, res) => {
     const { resource_id } = req.params;
 
-    let sql = `UPDATE resource SET resource_is_hidden = 1 WHERE resource_id = "${resource_id}"`;
+    let sql = `UPDATE resource SET resource_is_hidden = 1 WHERE resource_id = ${resource_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  //9.- Enable lessons
+  //http://localhost:4000/enableLessons/:lesson_id
+  enableLessons = (req, res) => {
+    const { lesson_id } = req.params;
+
+    let sql = `UPDATE lesson SET lesson_is_hidden = 0 WHERE lesson_id = ${lesson_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  //10.- Disable lessons
+  //localhost:4000/disableLessons/:lesson_id
+  disableLessons = (req, res) => {
+    const { lesson_id } = req.params;
+
+    let sql = `UPDATE lesson SET lesson_is_hidden = 1 WHERE lesson_id = ${lesson_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
@@ -191,7 +215,6 @@ class commonControllers {
   deleteProfileImage = (req, res) => {
     const { user_id } = req.params;
 
-
     let sql = `UPDATE user SET user_img = NULL WHERE user_id = ${user_id}`;
 
     connection.query(sql, (error, result) => {
@@ -214,10 +237,35 @@ class commonControllers {
   // 13.- Gets info from a user at user_course
   // http://localhost:4000/myProfile/myCourse/:user_id/:course_id
   getUserCourseInfo = (req, res) => {
-    const {user_id ,course_id} = req.params;
+    const { user_id, course_id } = req.params;
 
-    let sql = `SELECT * FROM user_course WHERE user_id = ${user_id} AND course_id = ${course_id}`
-    
+    let sql = `SELECT * FROM user_course WHERE user_id = ${user_id} AND course_id = ${course_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 6.- Get resource name to download resource
+  // http://localhost:4000/resourceName/:lesson_id
+  getResourceName = (req, res) => {
+    const { lesson_id } = req.params;
+
+    let sql = `SELECT resource_name FROM resource JOIN lesson ON lesson.resource_id = resource.resource_id WHERE lesson_id = ${lesson_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 7.- Upload resource into a lesson
+  // http://localhost:4000/uploadResource/:user_id/:course_id/:unit_id/:lesson_id
+  uploadResource = (req, res) => {
+    const { user_id } = req.params;
+    let file = req.file.filename;
+    console.log(file);
+
+    let sql = `INSERT INTO resource (user_id, resource_name) VALUES (${user_id}, "${file}")`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);

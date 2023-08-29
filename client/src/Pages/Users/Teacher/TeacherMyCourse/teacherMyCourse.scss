@@ -95,6 +95,7 @@
         }
       }
     }
+
     //Chart Card
     .chartCard {
       grid-area: chart1;
@@ -121,11 +122,12 @@
           }
         }
       }
+
       .chartContainer {
         width: 100%;
 
         .grafica {
-          width: 100% !important ;
+          width: 100% !important;
         }
       }
     }
@@ -183,6 +185,7 @@
 
         .courseList {
           padding: 0;
+
           .courseListRow {
             font-size: 14px;
             border-bottom: 1px solid $TertiaryDarkColor;
@@ -306,6 +309,7 @@
                 .tableCell {
                   width: 100%;
                 }
+
                 select {
                   align-self: center;
                 }
@@ -354,6 +358,7 @@
                     }
                   }
                 }
+
                 @media (max-width: 768px) {
                   .iconCell {
                     width: 100%;
@@ -361,6 +366,7 @@
                     padding: 5px;
                   }
                 }
+
                 @media (max-width: 768px) {
                   .headIcon {
                     margin: auto;
@@ -442,6 +448,7 @@
               font-size: 20px;
             }
           }
+
           ul {
             overflow: hidden;
             padding-inline-start: clamp(10px, 2vw, 40px);
@@ -467,17 +474,22 @@
                 .resourceContainer {
                   padding: 0 16px;
                   display: flex;
+                  align-items: center;
                   gap: 12px;
 
                   .downloadIcon {
                     color: #018001;
                   }
+
                   .uploadIcon {
                     color: #007bb0;
+                    margin-bottom: 4.5px;
                   }
+
                   .deleteIcon {
                     color: #b85450;
                   }
+
                   .downloadIcon:hover,
                   .uploadIcon:hover,
                   .deleteIcon:hover {
@@ -492,6 +504,7 @@
       }
     }
   }
+
   .overflowText {
     overflow: hidden;
     display: -webkit-box;
@@ -505,14 +518,14 @@
     text-align: center !important;
   }
 
-  .ocultado {
-  }
+  .ocultado {}
 }
 
 //Media Tablet
 @media (max-width: 1200px) {
   .mainSectionOneCourse {
     flex-direction: column;
+
     .sideContent {
       width: 100%;
       display: grid;
@@ -531,6 +544,7 @@
         grid-area: counter;
         gap: 8px;
         height: 100%;
+
         .counterCard {
           flex-direction: row;
         }
@@ -539,6 +553,7 @@
       .courseListCard {
         grid-area: list;
       }
+
       .chartCard {
         grid-area: chart;
       }
@@ -549,6 +564,7 @@
     }
   }
 }
+
 //Media Tablet Vertical
 @media (max-width: 768px) {
   .mainSectionOneCourse {
@@ -563,6 +579,7 @@
       .counterContainer {
         gap: 8px;
         height: 100%;
+
         .counterCard {
           flex-direction: column;
         }
@@ -580,10 +597,12 @@
     .visible {
       display: flex !important;
     }
+
     .ocultado {
       display: none !important;
       height: 100%;
     }
+
     .sideContent {
       grid-template:
         "teacher"
