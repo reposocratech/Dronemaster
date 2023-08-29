@@ -47,37 +47,29 @@ class adminControllers {
   };
 
   // 4.- Enable comment
-  // http://localhost:4000/admin/enableComment
+  // http://localhost:4000/admin/enableComment/:comment_id
   enableComment = (req, res) => {
     const { comment_id } = req.params;
-    const { type } = req.body;
-
-    if (type !== 2) {
-      res.status(403).json({ error });
-    } else {
+  
       let updateSql = `UPDATE comment SET comment_is_hidden = 0 WHERE comment_id = ${comment_id}`;
 
       connection.query(updateSql, (error, result) => {
         error ? res.status(400).json({ error }) : res.status(201).json(result);
       });
-    }
+    
   };
 
   // 5.- Disable comment
-  // http://localhost:4000/admin/disableComment
+  // http://localhost:4000/admin/disableComment/:coment_id
   disableComment = (req, res) => {
     const { comment_id } = req.params;
-    const { type } = req.body;
-
-    if (type !== 2) {
-      res.status(403).json({ error });
-    } else {
+    
       let sql = `UPDATE comment SET comment_is_hidden = 1 WHERE comment_id = ${comment_id}`;
 
       connection.query(sql, (error, result) => {
         error ? res.status(400).json({ error }) : res.status(200).json(result);
       });
-    }
+    
   };
 
   // 6.- Enable User (admin)
