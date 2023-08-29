@@ -7,6 +7,7 @@ import { StudentCoursesCard } from "../StudentLanding/components/StudentCoursesC
 import "./studentLandingStyle.scss";
 import "../../Teacher/TeacherLanding/teacherLandingStyle.scss";
 import "../../../AllCourses/allCoursesStyle.scss";
+import '../../../../components/CardCourse/CourseCard.scss'
 import { DroneMasterContext } from "../../../../context/DroneMasterProvider";
 import { StudentCourseTableInfo } from "./components/CourseInfo/StudentCourseTableInfo";
 import { CircularBarProgress } from "./components/CircularBarProgress/CircularBarProgress";
@@ -55,7 +56,7 @@ const StudentLanding = () => {
       </aside>
       <div className="mainContainer">
         {myCoursesData?.length === 0 && (
-          <div className="topCourses justify-content-center  flex-wrap gap-5 pt-5 ">
+          <div className="topCourses justify-content-center flex-wrap gap-5 pt-5 ">
             {bestRatedCourses.map((oneCourse) => {
               return (
                 <CourseCard key={oneCourse.course_id} oneCourse={oneCourse} />

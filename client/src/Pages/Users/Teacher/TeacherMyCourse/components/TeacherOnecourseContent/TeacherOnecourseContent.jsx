@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GiClassicalKnowledge } from "react-icons/gi";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMdArrowDropup } from "react-icons/io";
@@ -6,13 +6,24 @@ import {
   BsFillFileEarmarkArrowDownFill,
   BsFillFileArrowUpFill,
   BsFillFileEarmarkExcelFill,
+  BsFillEyeFill
 } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { DroneMasterContext } from "../../../../../../context/DroneMasterProvider";
+
 
 export const TeacherOnecourseContent = ({ myCourseInfo }) => {
+  const { course_id } = useParams()
+  const { user } = useContext(DroneMasterContext)
   const [unitsName, setUnitsName] = useState([]);
   const [openUnits, setOpenUnits] = useState([]);
   const navigate = useNavigate();
+  const [resetUseEffect, setResetUseEffect] = useState(false)
+  const [file, setFile] = useState();
+
+
+  console.log(myCourseInfo);
 
   // Takes uniques unit_title
   const uniqueUnitNames = Array.from(
@@ -26,6 +37,20 @@ export const TeacherOnecourseContent = ({ myCourseInfo }) => {
   const closedHeight = "0px";
   const openedHeight = "35px";
 
+  const uploadResource = (e, lesson_id, unit_id) => {
+
+    const newFormData = new FormData()
+
+    newFormData.append("file", e.target.files[0])
+    axios
+      .post(`http://localhost:4000/uploadResource/${user.user_id}/${course_id}/${unit_id}/${lesson_id}`, newFormData)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+
+  }
+
+  console.log("eoeoeo", file);
+
   const toggleUnit = (unitIndex) => {
     if (openUnits.includes(unitIndex)) {
       // Si el índice ya está en el array, lo eliminamos
@@ -35,6 +60,36 @@ export const TeacherOnecourseContent = ({ myCourseInfo }) => {
       setOpenUnits([...openUnits, unitIndex]);
     }
   };
+
+  const enableLesson = (lesson_id) => {
+    axios
+      .put(`http://localhost:4000/enableLessons/${lesson_id}`)
+      .then((res) => { })
+      .catch((err) => console.log(err))
+  }
+
+  const disableLesson = (lesson_id) => {
+    axios
+      .put(`http://localhost:4000/disableLessons/${lesson_id}`)
+      .then((res) => setResetUseEffect(!resetUseEffect))
+      .catch((err) => console.log(err))
+
+  }
+
+  const downloadResource = (lesson_id) => {
+    axios
+      .get(`http://localhost:4000/resourceName/${lesson_id}`)
+      .then((res) => saveAs(`http://localhost:4000/images/resources/${res.data[0].resource_name}`, `${res.data[0].resource_name}`))
+      .catch((err) => console.log(err))
+  }
+
+
+  const deleteResource = (resource_id) => {
+    axios
+      .delete(`http://localhost:4000/teachers/deleteResource/${user.user_id}/${resource_id}`)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+  }
 
   return (
     <div className="allUnitsLessonCard">
@@ -94,9 +149,26 @@ export const TeacherOnecourseContent = ({ myCourseInfo }) => {
                     <div className="lessonTitle">
                       <div className="lessonText">{lesson.lesson_title}</div>
                       <div className="resourceContainer">
-                        <BsFillFileEarmarkArrowDownFill className="downloadIcon" />
-                        <BsFillFileArrowUpFill className="uploadIcon" />
-                        <BsFillFileEarmarkExcelFill className="deleteIcon" />
+                        {lesson?.lesson_is_hidden === 1 && <BsFillEyeFill className="deleteIcon" onClick={() => enableLesson(lesson.lesson_id)} />}
+                        {lesson?.lesson_is_hidden === 0 && <BsFillEyeFill className="downloadIcon"
+                          onClick={() => disableLesson(lesson.lesson_id)} />}
+                        <BsFillFileEarmarkArrowDownFill
+                          className="downloadIcon"
+                          onClick={() => downloadResource(lesson.lesson_id)}
+                        />
+
+                        <label htmlFor="inputFile" className="d-inline"><BsFillFileArrowUpFill className="uploadIcon"
+                        /></label>
+                        <input
+                          type="file"
+                          onChange={(e) => uploadResource(e, lesson.lesson_id, lesson.unit_id)}
+                          className="d-none"
+                          id="inputFile"
+                        />
+
+                        <BsFillFileEarmarkExcelFill className="deleteIcon"
+                          onClick={() => deleteResource(lesson.resource_id)}
+                        />
                       </div>
                     </div>
                   </li>
@@ -105,6 +177,6 @@ export const TeacherOnecourseContent = ({ myCourseInfo }) => {
           </div>
         ))}
       </div>
-    </div>
+    </div >
   );
 };

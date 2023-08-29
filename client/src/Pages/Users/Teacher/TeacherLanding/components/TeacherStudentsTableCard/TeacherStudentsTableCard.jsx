@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { FiSearch } from "react-icons/fi";
 import { AiOutlineUser } from "react-icons/ai";
@@ -12,6 +12,8 @@ export const TeacherStudentsTableCard = ({ myStudentsData }) => {
   const [searchResultData, setSearchResultData] = useState();
   const navigate = useNavigate();
 
+  console.log("el student dataaa", myStudentsData);
+
   const onSubmit = (data) => {
     setSearchResultData(
       myStudentsData.filter((student) =>
@@ -22,6 +24,8 @@ export const TeacherStudentsTableCard = ({ myStudentsData }) => {
     );
     reset();
   };
+
+
   return (
     <div className="studentsTableCard">
       <div className="cardTitle">
@@ -112,6 +116,7 @@ export const TeacherStudentsTableCard = ({ myStudentsData }) => {
                               </div>
                             </div>
                           </td>
+
                         </tr>
                       );
                     })}
@@ -162,6 +167,7 @@ export const TeacherStudentsTableCard = ({ myStudentsData }) => {
                           </div>
                         </div>
                       </td>
+
                     </tr>
                   );
                 })}

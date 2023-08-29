@@ -71,8 +71,6 @@ export const CircularBarProgress = ({ lessonsOneCourse, lessonsViewedByStudent, 
                     </Doughnut>
                     <div className='percentageText d-flex justify-content-center pb-2'><h4>{percentage}<span style={{ color: '#f7ab16' }}>%</span></h4></div>
                 </div>
-
-
             </div >}
 
         </>

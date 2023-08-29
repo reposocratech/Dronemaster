@@ -15,6 +15,7 @@ const NavBarApp = () => {
   const [listCourses, setListCourses] = useState();
   const navigate = useNavigate();
   const {
+    course,
     setCourse,
     setToken,
     token,
@@ -47,7 +48,7 @@ const NavBarApp = () => {
     setCourse(courseFound);
     navigate("/allCourses");
   };
-
+  console.log(course);
   const openLoginModal = () => {
     setShowLoginModal(true);
     setShowRegisterModal(false)

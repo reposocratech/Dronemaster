@@ -24,17 +24,17 @@ export const TeacherMyCourse = () => {
   const [showEditionModal, setShowEditionModal] = useState(false);
   const [myCoursesData, setMyCoursesData] = useState();
   const [inscriptionDates, setInscriptionDates] = useState()
-  
+
   useEffect(() => {
     axios
-    .get(`http://localhost:4000/teachers/myCourses/inscriptionDates/${course_id}`)
-    .then((res) => {
-      setInscriptionDates(res.data)
-    })
-    .catch((error) => console.log(error));
+      .get(`http://localhost:4000/teachers/myCourses/inscriptionDates/${course_id}`)
+      .then((res) => {
+        setInscriptionDates(res.data)
+      })
+      .catch((error) => console.log(error));
 
   }, [course_id])
-  
+
 
   //Get all courses of the user
   useEffect(() => {
@@ -47,12 +47,11 @@ export const TeacherMyCourse = () => {
   }, [user]);
 
   useEffect(() => {
-    
+
     //Get all students info from a course
     axios
       .get(`http://localhost:4000/teachers/myCourses/students/${course_id}`)
       .then((res) => {
-        console.log(res.data);
         setMyOneCourseStudentsData(res.data);
       })
       .catch((err) => console.log(err));
@@ -95,14 +94,14 @@ export const TeacherMyCourse = () => {
       <div className="mainContainer">
         <TeacherOnecourseContent myCourseInfo={myCourseInfo} />
 
-       
+
 
         <TeacherOneCourseStudentsTable
-          myOneCourseStudentsData={myOneCourseStudentsData} 
+          myOneCourseStudentsData={myOneCourseStudentsData}
         />
 
-     
-      
+
+
       </div>
       <EditMyProfileModal
         showEditionModal={showEditionModal}

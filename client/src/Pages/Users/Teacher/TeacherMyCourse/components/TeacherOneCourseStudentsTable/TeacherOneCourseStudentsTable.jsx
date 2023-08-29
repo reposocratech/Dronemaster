@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { FiSearch } from "react-icons/fi";
 import { AiOutlineUser } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
-import { AiOutlinePhone } from "react-icons/ai";
+import { AiOutlinePhone, AiFillFile } from "react-icons/ai";
 import axios from "axios";
 
 export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
+  const { course_id } = useParams()
   const { register, handleSubmit, reset } = useForm();
   const [searchResultData, setSearchResultData] = useState();
   const navigate = useNavigate();
+
+
 
   const onSubmit = (data) => {
     setSearchResultData(
@@ -26,24 +29,31 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
 
   const handleChange = (e, user_id) => {
     const updatedStatus = e.target?.value
-    
-    if(updatedStatus == 4){
-      axios
-      .put(`http://localhost:4000/admin/passedCourse/${user_id}`)
-      .then((res) => console.log(res))
-      .catch((err)=> console.log(err))
 
-    } else if( updatedStatus == 3){
+    if (updatedStatus == 4) {
+      axios
+        .put(`http://localhost:4000/admin/passedCourse/${user_id}`)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err))
+
+    } else if (updatedStatus == 3) {
 
       axios
-      .put(`http://localhost:4000/admin/notPassedCourse/${user_id}`)
-      .then((res) => console.log(res))
-      .catch((err)=> console.log(err))
-    } 
-    
+        .put(`http://localhost:4000/admin/notPassedCourse/${user_id}`)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err))
+    }
+
   }
 
-  
+  const downloadExam = (student_id) => {
+    axios
+      .get(`http://localhost:4000/teachers/examName/${student_id}/${course_id}`)
+      .then((res) => saveAs(`http://localhost:4000/images/resources/${res.data[0].student_exam_file}`, `${res.data[0].student_exam_file}`))
+      .catch((err) => console.log(err))
+  }
+
+
   return (
     <div className="studentsTableCard">
       <div className="cardTitle">
@@ -71,10 +81,10 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
             <tr>
               <th colSpan={2}>Nombre</th>
               <th><div className="overflowText ocultado ">Primer Apellido</div>
-                        <div className="visible overflowText">Ap...</div></th>
+                <div className="visible overflowText">Ap...</div></th>
 
               <th className="iconHeadName ">
-               
+
                 <HiOutlineMail className="headIcon d-md-none d-flex fs-2" />{" "}
                 <span className=" d-none d-md-flex">Email</span>
               </th>
@@ -84,7 +94,7 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
                 <span className=" d-none d-md-flex">Telefono</span>
               </th>
 
-          
+              <th className="text-center">examen</th>
               <th className="text-center">Calificar</th>
             </tr>
           </thead>
@@ -126,7 +136,7 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
                               </div>
                             </div>
                           </td>
-                          <td className="ocultado "> 
+                          <td className="ocultado ">
                             <div className="tableCell iconCell">
                               <div className="tableCellContent ">
                                 <AiOutlinePhone className="icon headIcon" />
@@ -136,7 +146,15 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
                               </div>
                             </div>
                           </td>
-                         
+                          <td>
+                            {(student.status === 2 || student.status === 3 || student.status === 4) &&
+                              <AiFillFile
+                                role="button"
+                                className="text-success"
+                                onClick={() => downloadExam(student.user_id)}
+                              />
+                            }</td>
+
                           <td className=" buttonCell">
                             <div className="tableCell  ">
                               <div className="tableCellContent inputCell">
@@ -147,7 +165,7 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
                                         name="status"
                                         id="status"
                                         className="btnOutline2"
-                                        onChange={(e)=>handleChange(e, student.user_id)}
+                                        onChange={(e) => handleChange(e, student.user_id)}
                                       >
                                         <option value="2">Completado</option>
                                         <option value="3">Suspenso</option>
@@ -159,7 +177,7 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
                                         name="status"
                                         id="status"
                                         className="btnOutline2"
-                                        onChange={(e)=>handleChange(e, student.user_id)}
+                                        onChange={(e) => handleChange(e, student.user_id)}
                                       >
                                         <option value="3">Suspenso</option>
                                         <option value="4">Aprobado</option>
@@ -170,7 +188,7 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
                                         name="status"
                                         id="status"
                                         className="btnOutline2"
-                                        onChange={(e)=>handleChange(e, student.user_id)}
+                                        onChange={(e) => handleChange(e, student.user_id)}
                                       >
                                         <option value="4">Aprobado</option>
                                         <option value="3">Suspenso</option>
@@ -229,7 +247,7 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
                           </div>
                         </div>
                       </td>
-                      <td className="ocultado "> 
+                      <td className="ocultado ">
                         <div className="tableCell iconCell">
                           <div className="tableCellContent ">
                             <AiOutlinePhone className="icon headIcon" />
@@ -239,7 +257,16 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
                           </div>
                         </div>
                       </td>
-                     
+                      <td>
+                        {(student.status === 2 || student.status === 3 || student.status === 4) &&
+                          <AiFillFile
+                            role="button"
+                            className="text-success"
+                            onClick={() => downloadExam(student.user_id)}
+                          />
+                        }
+                      </td>
+
                       <td className=" buttonCell">
                         <div className="tableCell  ">
                           <div className="tableCellContent inputCell">
@@ -250,7 +277,7 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
                                     name="status"
                                     id="status"
                                     className="btnOutline2"
-                                    onChange={(e)=>handleChange(e, student.user_id)}
+                                    onChange={(e) => handleChange(e, student.user_id)}
                                   >
                                     <option value="2">Completado</option>
                                     <option value="3">Suspenso</option>
@@ -262,7 +289,7 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
                                     name="status"
                                     id="status"
                                     className="btnOutline2"
-                                    onChange={(e)=>handleChange(e, student.user_id)}
+                                    onChange={(e) => handleChange(e, student.user_id)}
                                   >
                                     <option value="3">Suspenso</option>
                                     <option value="4">Aprobado</option>
@@ -273,7 +300,7 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
                                     name="status"
                                     id="status"
                                     className="btnOutline2"
-                                    onChange={(e)=>handleChange(e, student.user_id)}
+                                    onChange={(e) => handleChange(e, student.user_id)}
                                   >
                                     <option value="4">Aprobado</option>
                                     <option value="3">Suspenso</option>

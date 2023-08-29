@@ -139,17 +139,9 @@ class studentControllers {
           let sql2 = `INSERT INTO student_exam (user_id, course_id, student_exam_file) VALUES (${user_id}, ${course_id}, "${pdf}")`;
 
           connection.query(sql2, (error, result2) => {
-            if (result2) {
-              let sql3 = `UPDATE user_course SET status = 2 WHERE user_id = ${user_id} AND course_id = ${course_id}`;
-
-              connection.query(sql3, (error, result3) => {
-                error
-                  ? res.status(400).json({ error })
-                  : res.status(201).json(result3);
-              });
-            } else {
-              res.status(500).json({ error });
-            }
+            error
+              ? res.status(400).json({ error })
+              : res.status(201).json(result2);
           });
         }
       }
