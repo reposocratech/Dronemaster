@@ -2,15 +2,16 @@ import React, { useContext, useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 
-const UserMoreInfoCard = ({ setMoreInformation, moreInformation, student }) => {
+const UserMoreInfoCard = ({
+  setMoreInformationStudent,
+  moreInformationStudent,
+  student,
+}) => {
   const [value, setValue] = useState();
   const [profileImg, setProfileImg] = useState();
-  const [oneStudent, setOneStudent] = useState();
-  const [status, setStatus] = useState(0);
-  console.log("000000000000000000000000", student);
 
   const closeInfoForm = () => {
-    setMoreInformation(false);
+    setMoreInformationStudent(false);
   };
 
   /* useEffect(() => {
@@ -39,8 +40,7 @@ const UserMoreInfoCard = ({ setMoreInformation, moreInformation, student }) => {
     axios
       .put(`http://localhost:4000/admin/enableUser/${student?.user_id}`)
       .then((res) => {
-        setStatus(res.data);
-        console.log(status);
+        setMoreInformationStudent(false);
       })
       .catch((err) => {
         console.log(err);
@@ -51,8 +51,7 @@ const UserMoreInfoCard = ({ setMoreInformation, moreInformation, student }) => {
     axios
       .put(`http://localhost:4000/admin/disableUser/${student?.user_id}`)
       .then((res) => {
-        setStatus(res.data);
-        console.log(status);
+        setMoreInformationStudent(false);
       })
       .catch((err) => {
         console.log(err);
@@ -61,7 +60,7 @@ const UserMoreInfoCard = ({ setMoreInformation, moreInformation, student }) => {
 
   return (
     <Modal
-      show={moreInformation}
+      show={moreInformationStudent}
       onHide={closeInfoForm}
       className="courseCreationModalContainer"
       animation={false}

@@ -10,7 +10,7 @@ import { GiClassicalKnowledge } from "react-icons/gi";
 import axios from "axios";
 
 const FormularioCreacionTeacher = ({ showModalForm, setShowModalForm }) => {
-  const { user, course } = useContext(DroneMasterContext);
+  const { course } = useContext(DroneMasterContext);
   const {
     register,
     handleSubmit,
@@ -25,9 +25,6 @@ const FormularioCreacionTeacher = ({ showModalForm, setShowModalForm }) => {
     },
   });
   const handleClose = () => setShowModalForm(false);
-  const [status, setStatus] = useState();
-
-  console.log("esto son cursos", course);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -40,22 +37,6 @@ const FormularioCreacionTeacher = ({ showModalForm, setShowModalForm }) => {
       })
       .catch((error) => console.log(error));
     setShowModalForm(false);
-  };
-
-  const enableCourse = () => {
-    axios
-
-      .put(` http://localhost:4000/courses/enableCourse/${course_id}`)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  };
-
-  const disableCourse = () => {
-    axios
-
-      .put(`http://localhost:4000/courses/disableCourse/${course_id}`)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
   };
 
   return (

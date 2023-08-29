@@ -295,8 +295,8 @@ class commonControllers {
     console.log(file);
 
     let sql = `INSERT INTO resource (user_id, resource_name) VALUES (${user_id}, "${file}")`;
-
   connection.query(sql, (error, result) => {
+
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
   };
@@ -307,7 +307,30 @@ class commonControllers {
   viewOneUserInfo = (req, res) => {
     const { user_id } = req.params;
 
-    let sql = `SELECT user_img, user_name, user_lastname, email, phone, address, is_deleted FROM user WHERE user_id = ${user_id}`;
+    let sql = `SELECT user_id, user_img, user_name, user_lastname, email, phone, address, is_deleted FROM user WHERE user_id = ${user_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  //21.- Enable units
+  //http://localhost:4000/enableUnit/:unit_id
+  enableUnits = (req, res) => {
+    const { unit_id } = req.params;
+
+    let sql = `UPDATE unit SET unit_is_hidden = 0 WHERE unitn_id = ${unit_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  //22.- Disable units
+  //http://localhost:4000/disableUnit/:unit_id
+  disableUnits = (req, res) => {
+    const { unit_id } = req.params;
+    let sql = `UPDATE unit SET unit_is_hidden = 1 WHERE unit_id = ${unit_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);

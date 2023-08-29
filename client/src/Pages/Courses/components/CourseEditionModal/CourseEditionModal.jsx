@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Modal,  } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { DroneMasterContext } from "../../../../context/DroneMasterProvider";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -12,7 +12,8 @@ import "./courseEditionModalStyle.scss";
 export const CourseEditionModal = ({
   setShowCourseEditionModal,
   showCourseEditionModal,
-  //   course_id,
+  course,
+  course_id,
 }) => {
   const [teachersList, setTeachersList] = useState();
   const [categoriesList, setCategoriesList] = useState();
@@ -23,10 +24,7 @@ export const CourseEditionModal = ({
   const [file, setFile] = useState();
   const [teacherPrev_id, setTeacherPrev_id] = useState();
 
-
   const { user, resetData, setResetData } = useContext(DroneMasterContext);
-
-  const course_id = 2;
 
   const closeEditModal = () => {
     setShowCourseEditionModal(false);
@@ -114,7 +112,6 @@ export const CourseEditionModal = ({
         console.log(err);
       });
 
-
     if (file) {
       const newFormData = new FormData();
 
@@ -133,14 +130,19 @@ export const CourseEditionModal = ({
   };
   console.log(courseData);
 
-
-  useEffect(() => {    
-     courseData?.course_name && setValue("course_name", courseData.course_name || "");
-     courseData?.course_length && setValue("course_length", courseData.course_length || "");
-     courseData?.price && setValue("price", courseData.price || "");
-     courseData?.category_id && setValue("category_id", courseData.category_id || "");
-     courseData?.teacher_id && setValue("teacher_id", courseData.teacher_id || "");
-     courseData?.start_date && courseData.start_date != null && setValue("start_date", courseData.start_date.slice(0, 10) || "");
+  useEffect(() => {
+    courseData?.course_name &&
+      setValue("course_name", courseData.course_name || "");
+    courseData?.course_length &&
+      setValue("course_length", courseData.course_length || "");
+    courseData?.price && setValue("price", courseData.price || "");
+    courseData?.category_id &&
+      setValue("category_id", courseData.category_id || "");
+    courseData?.teacher_id &&
+      setValue("teacher_id", courseData.teacher_id || "");
+    courseData?.start_date &&
+      courseData.start_date != null &&
+      setValue("start_date", courseData.start_date.slice(0, 10) || "");
   }, [courseData, setValue]);
   console.log(courseData?.start_date);
 

@@ -76,6 +76,7 @@ class adminControllers {
   // http://localhost:4000/admin/enableUser/:user_id
   enableUser = (req, res) => {
     const { user_id } = req.params;
+    console.log(user_id);
 
     let sql = `UPDATE user SET is_deleted = 0 WHERE user_id = ${user_id}`;
 

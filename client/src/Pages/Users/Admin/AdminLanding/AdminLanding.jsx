@@ -21,7 +21,8 @@ const AdminLanding = () => {
   const [allStudents, setAllStudents] = useState();
   const [allTeachers, setAllTeachers] = useState();
   const [inscriptionDates, setInscriptionDates] = useState();
-  const [moreInformation, setMoreInformation] = useState(false);
+  const [moreInformationStudent, setMoreInformationStudent] = useState(false);
+  const [moreInformationTeacher, setMoreInformationTeacher] = useState(false);
   const [showEditionModal, setShowEditionModal] = useState(false);
 
 
@@ -59,6 +60,7 @@ const AdminLanding = () => {
       .get(" http://localhost:4000/admin/allTeachers", data)
       .then((res) => {
         setAllTeachers(res.data);
+        console.log("444444444444444444444", allStudents);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -91,12 +93,12 @@ const AdminLanding = () => {
       <div className="mainContainer">
         <AdminAllCoursesCard />
         <AdminAllTeachersCard
-          moreInformation={moreInformation}
-          setMoreInformation={setMoreInformation}
+          moreInformationTeacher={moreInformationTeacher}
+          setMoreInformationTeacher={setMoreInformationTeacher}
         />
         <AdminAllStudentsCard
-          moreInformation={moreInformation}
-          setMoreInformation={setMoreInformation}
+          moreInformationStudent={moreInformationStudent}
+          setMoreInformationStudent={setMoreInformationStudent}
         />
       </div>
 
