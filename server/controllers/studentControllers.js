@@ -159,6 +159,34 @@ class studentControllers {
       error ? res.status(400).json({ error }) : res.status(201).json(result);
     });
   };
+
+  // 6.- get course score and counter rating
+  // http://localhost:4000/students/scoreCounterRating/:course_id
+  getScoreAndCounterRating = (req, res) => {
+    const { course_id } = req.params;
+
+    let sql = `SELECT score, counter_rating FROM course WHERE course_id = ${course_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(201).json(result);
+    });
+  };
+
+  // 7.- Update score and counter rating
+  // http://localhost:4000/students/updateScoreRating/:course_id/:score/:counter_rating
+  updateScoreAndCounterRating = (req, res) => {
+    const { course_id } = req.params;
+
+    const { score, counter_rating } = req.body;
+
+    console.log(req.body);
+
+    let sql = `UPDATE course SET score = ${score}, counter_rating = ${counter_rating} WHERE course_id = ${course_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(201).json(result);
+    });
+  };
 }
 
 module.exports = new studentControllers();

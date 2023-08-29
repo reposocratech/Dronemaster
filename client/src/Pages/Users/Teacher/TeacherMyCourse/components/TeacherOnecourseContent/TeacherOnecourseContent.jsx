@@ -13,31 +13,38 @@ import axios from "axios";
 import { DroneMasterContext } from "../../../../../../context/DroneMasterProvider";
 
 
-export const TeacherOnecourseContent = ({ myCourseInfo }) => {
+export const TeacherOnecourseContent = ({ myCourseInfo, setResetUseEffect, resetUseEffect }) => {
   const { course_id } = useParams()
   const { user } = useContext(DroneMasterContext)
   const [unitsName, setUnitsName] = useState([]);
   const [openUnits, setOpenUnits] = useState([]);
   const navigate = useNavigate();
-  const [resetUseEffect, setResetUseEffect] = useState(false)
-  const [file, setFile] = useState();
+  const [teacherResource, setTeacherResource] = useState([])
 
-
-  console.log(myCourseInfo);
+  console.log(teacherResource);
 
   // Takes uniques unit_title
   const uniqueUnitNames = Array.from(
     new Set(myCourseInfo?.map((item) => item.unit_tittle))
   );
 
+  console.log("los recursos del profee", teacherResource);
+
   useEffect(() => {
     setUnitsName(uniqueUnitNames);
+
+    axios
+      .get(`http://localhost:4000/teachers/teacherResources/${user?.user_id}`)
+      .then((res) => setTeacherResource(res.data))
+      .catch((err) => console.log(err))
   }, [myCourseInfo]);
 
   const closedHeight = "0px";
   const openedHeight = "35px";
 
   const uploadResource = (e, lesson_id, unit_id) => {
+
+    console.log(lesson_id);
 
     const newFormData = new FormData()
 
@@ -48,8 +55,6 @@ export const TeacherOnecourseContent = ({ myCourseInfo }) => {
       .catch((err) => console.log(err))
 
   }
-
-  console.log("eoeoeo", file);
 
   const toggleUnit = (unitIndex) => {
     if (openUnits.includes(unitIndex)) {
@@ -64,7 +69,7 @@ export const TeacherOnecourseContent = ({ myCourseInfo }) => {
   const enableLesson = (lesson_id) => {
     axios
       .put(`http://localhost:4000/enableLessons/${lesson_id}`)
-      .then((res) => { })
+      .then((res) => setResetUseEffect(!resetUseEffect))
       .catch((err) => console.log(err))
   }
 
@@ -147,7 +152,9 @@ export const TeacherOnecourseContent = ({ myCourseInfo }) => {
                     }}
                   >
                     <div className="lessonTitle">
-                      <div className="lessonText">{lesson.lesson_title}</div>
+                      <div className="lessonText">
+
+                        {lesson.lesson_title}</div>
                       <div className="resourceContainer">
                         {lesson?.lesson_is_hidden === 1 && <BsFillEyeFill className="deleteIcon" onClick={() => enableLesson(lesson.lesson_id)} />}
                         {lesson?.lesson_is_hidden === 0 && <BsFillEyeFill className="downloadIcon"
@@ -166,9 +173,9 @@ export const TeacherOnecourseContent = ({ myCourseInfo }) => {
                           id="inputFile"
                         />
 
-                        <BsFillFileEarmarkExcelFill className="deleteIcon"
+                        {teacherResource.filter(elem => elem.resource_id === lesson.lesson_id) && < BsFillFileEarmarkExcelFill className="deleteIcon"
                           onClick={() => deleteResource(lesson.resource_id)}
-                        />
+                        />}
                       </div>
                     </div>
                   </li>

@@ -45,4 +45,11 @@ router.delete(
   teacherControllers.deleteTeacherResource
 );
 
+// 9.- Select all resource uploaded by a teacher
+// http://localhost:4000/teachers/teacherResources/:user_id
+router.get(
+  "/teacherResources/:user_id",
+  teacherControllers.selectAllTeacherResources
+);
+
 module.exports = router;

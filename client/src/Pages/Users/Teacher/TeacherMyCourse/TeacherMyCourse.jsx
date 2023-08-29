@@ -24,6 +24,7 @@ export const TeacherMyCourse = () => {
   const [showEditionModal, setShowEditionModal] = useState(false);
   const [myCoursesData, setMyCoursesData] = useState();
   const [inscriptionDates, setInscriptionDates] = useState()
+  const [resetUseEffect, setResetUseEffect] = useState(false)
 
   useEffect(() => {
     axios
@@ -33,8 +34,7 @@ export const TeacherMyCourse = () => {
       })
       .catch((error) => console.log(error));
 
-  }, [course_id])
-
+  }, [course_id, resetUseEffect])
 
   //Get all courses of the user
   useEffect(() => {
@@ -44,7 +44,7 @@ export const TeacherMyCourse = () => {
         setMyCoursesData(res.data);
       })
       .catch((error) => console.log(error));
-  }, [user]);
+  }, [user, resetUseEffect]);
 
   useEffect(() => {
 
@@ -55,7 +55,7 @@ export const TeacherMyCourse = () => {
         setMyOneCourseStudentsData(res.data);
       })
       .catch((err) => console.log(err));
-  }, [course_id]);
+  }, [course_id, resetUseEffect]);
   //Get all info of a course
   useEffect(() => {
     axios
@@ -65,7 +65,7 @@ export const TeacherMyCourse = () => {
         console.log(res.data);
       })
       .catch((err) => console.log(err));
-  }, [course_id]);
+  }, [course_id, resetUseEffect]);
 
   return (
     <section className="mainSectionOneCourse">
@@ -89,18 +89,14 @@ export const TeacherMyCourse = () => {
 
         <TeacherCourseList myCoursesData={myCoursesData} />
 
-        <CourseStatsChart inscriptionDates={inscriptionDates} />
+        {inscriptionDates?.length !== 0 && <CourseStatsChart inscriptionDates={inscriptionDates} />}
       </aside>
       <div className="mainContainer">
-        <TeacherOnecourseContent myCourseInfo={myCourseInfo} />
-
-
+        <TeacherOnecourseContent myCourseInfo={myCourseInfo} setResetUseEffect={setResetUseEffect} resetUseEffect={resetUseEffect} />
 
         <TeacherOneCourseStudentsTable
           myOneCourseStudentsData={myOneCourseStudentsData}
         />
-
-
 
       </div>
       <EditMyProfileModal

@@ -4,14 +4,27 @@ import '../../../../../../components/EditMyProfileModal/editMyProfileModal.scss'
 import { AiFillFile } from "react-icons/ai";
 import { DroneMasterContext } from '../../../../../../context/DroneMasterProvider';
 import axios from 'axios';
+import { RatingModal } from '../RatingModal/RatingModal';
 
 
-export const ExamCard = () => {
+export const ExamCard = ({ setShowRatingModal, showRatingModal, counterRating, score, setCounterRating, setScore }) => {
     const { user, courseMaterial } = useContext(DroneMasterContext)
     const [downloadedExam, setDownloadedExam] = useState(0);
     const [fileExam, setFileExam] = useState();
     const [file, setFile] = useState();
     const [userStatus, setUserStatus] = useState()
+
+    useEffect(() => {
+        axios
+            .get(`http://localhost:4000/students/scoreCounterRating/${courseMaterial[0]?.course_id}`)
+            .then((res) => {
+                setScore(parseFloat(res.data[0].score))
+                setCounterRating(parseInt(res.data[0].counter_rating))
+            })
+            .catch((err) => console.log(err))
+    }, [showRatingModal, score, counterRating])
+
+
 
     useEffect(() => {
         axios
@@ -40,6 +53,7 @@ export const ExamCard = () => {
         axios
             .post(`http://localhost:4000/students/uploadExam/${user.user_id}/${courseMaterial[0]?.course_id}`, newFormData)
             .then((res) => {
+                setShowRatingModal(true)
                 setDownloadedExam(3)
                 setUserStatus(userStatus)
             })
@@ -96,6 +110,8 @@ export const ExamCard = () => {
                 width="100%"
                 height="700px"
             ></iframe>}
+
+            <RatingModal setShowRatingModal={setShowRatingModal} showRatingModal={showRatingModal} score={score} counterRating={counterRating} setScore={setScore} setCounterRating={setCounterRating} />
 
         </div>
 

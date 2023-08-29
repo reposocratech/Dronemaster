@@ -8,15 +8,26 @@ import {
   BsFillFileArrowUpFill,
   BsFillFileEarmarkExcelFill,
 } from "react-icons/bs";
+import { BsPlusCircleFill } from "react-icons/bs"
 import { BsPencil } from "react-icons/bs";
 import { BsEye } from "react-icons/bs";
 import { BsEyeSlash } from "react-icons/bs";
-const AdminViewOneCourse = ({ course_id }) => {
+import { LessonCreationModal } from "../../../../../Courses/components/CourseCreationModal/LessonCreationModal/LessonCreationModal";
+const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
   const [allInformation, setAllInformation] = useState();
   const [unitsName, setUnitsName] = useState([]);
   const [openUnits, setOpenUnits] = useState([]);
+  const [showLessonCreationModal, setShowLessonCreationModal] = useState(false);
+  const [unitId, setUnitId] = useState()
   console.log("333333333333333333333333333333", course_id);
   /* console.log("todos los cursooooooos", allCourses); */
+
+  console.log("rewfsdfgsdfgdfasg", allInformation);
+
+  const OpenLessonCreateModal = (u_id) => {
+    setUnitId(u_id)
+    setShowLessonCreationModal(true)
+  }
   useEffect(() => {
     axios
       .get(`http://localhost:4000/teachers/myCourses/courseInfo/${course_id}`)
@@ -25,12 +36,18 @@ const AdminViewOneCourse = ({ course_id }) => {
         console.log(res.data);
       })
       .catch((err) => console.log(err));
-  }, [course_id]);
+  }, [course_id, resEffect]);
   console.log("*********************************", allInformation);
 
   const uniqueUnitNames = Array.from(
     new Set(allInformation?.map((item) => item.unit_tittle))
   );
+
+  const unit_id = Array.from(
+    new Set(allInformation?.map((item) => item.unit_id))
+  );
+
+  console.log("el uninini", unit_id)
   console.log(uniqueUnitNames);
   useEffect(() => {
     setUnitsName(uniqueUnitNames);
@@ -49,6 +66,7 @@ const AdminViewOneCourse = ({ course_id }) => {
       setOpenUnits([...openUnits, unitIndex]);
     }
   };
+
   return (
     <tr className="coursesTableCard mb-4">
       {unitsName.map((unitName, unitIndex) => (
@@ -58,9 +76,12 @@ const AdminViewOneCourse = ({ course_id }) => {
               Unidad {unitIndex + 1}: {unitName}
             </h6>
             <div className="resourceContainer ">
+              <BsPlusCircleFill className="icon" onClick={() => OpenLessonCreateModal(unit_id[unitIndex])} />
               <BsPencil className="icon  text-warning" />
               <BsEye className="icon  text-warning" />
               <BsEyeSlash className="icon  text-warning" />
+
+              {/* {console.log(unit_id[unitIndex])} */}
             </div>
           </td>
           <tr>
@@ -70,6 +91,7 @@ const AdminViewOneCourse = ({ course_id }) => {
                 <td className="d-flex me-4">
                   <h6>{lesson.lesson_title}</h6>
                   <div className="resourceContainer ">
+
                     <BsPencil className="icon  text-warning" />
                     <BsEye className="icon  text-warning" />
                     <BsEyeSlash className="icon  text-warning" />
@@ -90,6 +112,15 @@ const AdminViewOneCourse = ({ course_id }) => {
           </tr>
         </div>
       ))}
+      <LessonCreationModal
+        setShowLessonCreationModal={setShowLessonCreationModal}
+        showLessonCreationModal={showLessonCreationModal}
+        course_id={course_id}
+        resEffect={resEffect}
+        setResEffect={setResEffect}
+        unitId={unitId}
+
+      />
     </tr>
   );
 };
