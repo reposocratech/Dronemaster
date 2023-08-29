@@ -27,6 +27,7 @@ const AdminViewOneCourse = ({ course_id }) => {
       .catch((err) => console.log(err));
   }, [course_id]);
   console.log("*********************************", allInformation);
+
   const uniqueUnitNames = Array.from(
     new Set(allInformation?.map((item) => item.unit_tittle))
   );

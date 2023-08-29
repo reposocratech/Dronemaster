@@ -4,7 +4,8 @@ import { DroneMasterContext } from "../../../../../../context/DroneMasterProvide
 import { AiFillEye, AiFillFile } from "react-icons/ai";
 import '../../studentLandingStyle.scss'
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { saveAs } from 'file-saver'
 export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOneCourse, courseId }) => {
     const navigate = useNavigate()
     const { courseMaterial, user } = useContext(DroneMasterContext);
@@ -15,6 +16,8 @@ export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOn
     const uniqueUnitNames = Array.from(
         new Set(courseMaterial?.map((item) => item.unit_tittle))
     );
+
+    console.log("", courseMaterial);
     useEffect(() => {
         setUnitsName(uniqueUnitNames);
     }, [courseMaterial]);
@@ -51,6 +54,7 @@ export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOn
     useEffect(() => {
         setSelectedLessons(lessonViewed);
     }, [resetUseEffect, user, lessonViewed, selectedLessons])
+
     //console.log("el selected", lessonViewed);
     const toggleLesson = (lessonId) => {
         if (selectedLessons.includes(lessonId)) {
@@ -59,6 +63,7 @@ export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOn
             setSelectedLessons([...selectedLessons, lessonId]);
         }
     };
+
     const downloadResource = (lesson_id) => {
         axios
             .post(`http://localhost:4000/students/registerLessonViewed/${user.user_id}/${lesson_id}/${courseId}`)
@@ -67,7 +72,13 @@ export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOn
                 setResetUseEffect(!resetUseEffect);
             })
             .catch((err) => console.log(err))
+
+        axios
+            .get(`http://localhost:4000/resourceName/${lesson_id}`)
+            .then((res) => saveAs(`http://localhost:4000/images/resources/${res.data[0].resource_name}`, `${res.data[0].resource_name}`))
+            .catch((err) => console.log(err))
     }
+
     return (<>
         {!courseMaterial && <div className="coursesTableCard">
             <div className="cardTitle justify-content-center">
@@ -105,32 +116,39 @@ export const StudentCourseTableInfo = ({ setLessonsViewedByStudent, setLessonsOn
                             </tr>
                         </thead>
                         <tbody>
-                            {courseMaterial
-                                .filter((elem) => elem.unit_tittle === unitName)
+                            {courseMaterial.filter((elem) => elem.unit_tittle === unitName)
                                 .map((lesson, lessonIdx) => (
-                                    <tr key={lessonIdx}>
-                                        <td className="textReduce text-start w-75 ps-3">
-                                            <div className="oculto">{lesson.lesson_title}</div>
-                                        </td>
-                                        <td>
-                                            <AiFillEye
-                                                style={{ color: selectedLessons.includes(lesson.lesson_id) ? 'green' : 'white' }}
-                                            />
-                                        </td>
-                                        <td>
-                                            <AiFillFile
-                                                role="button"
-                                                className="text-success"
-                                                onClick={() => downloadResource(lesson.lesson_id)}
-                                            />
-                                        </td>
-                                    </tr>
+                                    <>
+                                        {lesson.lesson_is_hidden === 0 && <>
+                                            <tr tr key={lessonIdx} >
+                                                <td className="textReduce text-start w-75 ps-3">
+                                                    <div className="oculto">{lesson.lesson_title}</div>
+                                                </td>
+                                                {lesson.resource_is_hidden === 0 && <>
+                                                    <td>
+                                                        <AiFillEye
+                                                            style={{ color: selectedLessons.includes(lesson.lesson_id) ? 'green' : 'white' }}
+                                                        />
+                                                    </td>
+                                                    <td>
+                                                        <AiFillFile
+                                                            role="button"
+                                                            className="text-success"
+                                                            onClick={() => downloadResource(lesson.lesson_id)}
+                                                        />
+                                                    </td>
+                                                </>
+                                                }
+                                            </tr>
+                                        </>
+                                        }
+                                    </>
                                 ))}
                         </tbody>
                     </table>
                 ))}
             </div>
-        </div>
+        </div >
         }
     </>
     )

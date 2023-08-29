@@ -43,7 +43,7 @@ class teacherControllers {
     const { course_id } = req.params;
     console.log(course_id);
 
-    let sql = `SELECT course.score AS course_score, course.course_id, unit.unit_id, lesson.lesson_id, resource.resource_id, course.course_name, unit.unit_tittle, lesson.lesson_title FROM course LEFT JOIN unit ON course.course_id = unit.course_id LEFT JOIN lesson ON unit.course_id = lesson.course_id AND unit.unit_id = lesson.unit_id LEFT JOIN resource ON lesson.resource_id = resource.resource_id WHERE course.course_id = ${course_id}`;
+    let sql = `SELECT course.score AS course_score, course.course_id, unit.unit_id, lesson.lesson_id, lesson.lesson_is_hidden, resource.resource_id, resource.resource_is_hidden, course.course_name,unit.unit_id, unit.unit_tittle, lesson.lesson_title FROM course LEFT JOIN unit ON course.course_id = unit.course_id LEFT JOIN lesson ON unit.course_id = lesson.course_id AND unit.unit_id = lesson.unit_id LEFT JOIN resource ON lesson.resource_id = resource.resource_id WHERE course.course_id = ${course_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
@@ -57,6 +57,31 @@ class teacherControllers {
     console.log("paraaaaaaaaaaaaaaaaaaaaaaaaaaaaams", course_id);
 
     let sql = `SELECT start_date FROM user_course WHERE user_id IN ( SELECT user_id FROM user WHERE type = 0 ) AND course_id = ${course_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 6.- Download student exam to review
+  // http://localhost:4000/teachers/examName/:user_id/:course_id
+  getExamName = (req, res) => {
+    const { user_id, course_id } = req.params;
+    console.log(user_id, course_id);
+
+    let sql = `SELECT student_exam_file FROM student_exam WHERE user_id = ${user_id} AND course_id = ${course_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 8.- Delete resource into a lesson uploaded by a teachers
+  // http://localhost:4000/teachers/deleteResource/:user_id/:resource_id
+  deleteTeacherResource = (req, res) => {
+    const { user_id, resource_id } = req.params;
+
+    let sql = `DELETE FROM resource WHERE resource_id = ${resource_id} AND user_id = ${user_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);

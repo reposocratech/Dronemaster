@@ -291,14 +291,16 @@ class courseControllers {
   };
 
   // 9.- Suscribe into a course
-  // http://localhost:4000/courses/payACourse/:user_id/:course_id
+  // http://localhost:4000/courses/payACourse/:user_id/:course_id/:price
   suscribeIntoACourse = (req, res) => {
-    const { user_id, course_id } = req.params;
+    const { user_id, course_id, price } = req.params;
+
+    console.log(price);
 
     let dateNow = new Date();
     let formatedDate = `${dateNow.getFullYear()}-${dateNow.getMonth()}-${dateNow.getDate()}`;
 
-    let sql = `INSERT INTO user_course (user_id, course_id, start_date) VALUES (${user_id}, ${course_id}, "${formatedDate}")`;
+    let sql = `INSERT INTO user_course (user_id, course_id, start_date, paid_price) VALUES (${user_id}, ${course_id}, "${formatedDate}", ${price})`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);

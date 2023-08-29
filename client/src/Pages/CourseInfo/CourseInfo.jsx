@@ -28,7 +28,7 @@ export const CourseInfo = () => {
   const [lessonsOneCourse, setLessonsOneCourse] = useState(0);
   const [lessonsViewedByStudent, setLessonsViewedByStudent] = useState();
 
-  const { user } = useContext(DroneMasterContext);
+  const { user, resetData, setResetData } = useContext(DroneMasterContext);
 
   //Gets all units and lesson of a course
   useEffect(() => {
@@ -67,6 +67,7 @@ export const CourseInfo = () => {
   //Check if user has already boy a course
   useEffect(() => {
     user &&
+
       axios
         .get(
           `http://localhost:4000/myProfile/myCourse/${user.user_id}/${course_id}`
@@ -75,7 +76,7 @@ export const CourseInfo = () => {
         .catch((err) => console.log(err));
   }, [course_id, user]);
 
-  console.log(userCourseRelationship);
+
 
   useEffect(() => {
     if (course_id) {
@@ -123,6 +124,15 @@ export const CourseInfo = () => {
     setLessonsCount(lessonsSet.size);
   }, [courseUnitsLessons]);
 
+  const onSubmit = () => {
+    axios
+      .post(`http://localhost:4000/courses/payACourse/${user.user_id}/${course_id}/${courseGeneralInfo.price}`,)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+
+    setResetData(!resetData)
+  }
+
   return (
     <section className="courseInfoMainSection">
       {/* Course name title */}
@@ -143,8 +153,8 @@ export const CourseInfo = () => {
 
         <div className="introMultimedia">
           <img
-            src="http://localhost:4000/images/courses/courseDefaultImg.jpg"
-            alt="Course image"
+            src="http://localhost:4000/images/courses/courseDefaultImg.jpg"      
+          alt="Course image"
           />
           <img
             className="watermarkImg"
@@ -183,6 +193,7 @@ export const CourseInfo = () => {
                 }
                 alt="Course image"
               />
+
             </div>
             <div className="courseDataContent">
               <h6 className="courseTitle">{courseGeneralInfo?.course_name}</h6>
@@ -238,16 +249,9 @@ export const CourseInfo = () => {
                 </div>
               )}
 
-              {/* Price & button */}
-              <div className="coursePriceButton">
-                {courseGeneralInfo?.price && (
-                  <h4>
-                    {courseGeneralInfo.price}{" "}
-                    <span className="currency">€</span>
-                  </h4>
-                )}
-                <button className="btnNormal">INSCRIBETE</button>
-              </div>
+              {user && <button className="btnNormal" onClick={onSubmit}>INSCRIBETE</button>}
+              {!user && <p className="fst-italic" style={{ color: '#f7ab16' }}>Inicia sesión o regístrate para inscribirte en el curso</p>}
+
             </div>
           </div>
         )}

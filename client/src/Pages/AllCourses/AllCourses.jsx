@@ -63,7 +63,7 @@ export const AllCourses = () => {
         )
       })}
 
-      {course === 0 && (
+      {(course?.length === 0 || course === undefined) && (
         <>
           <div className="categoryContainer">
             <h2 className="categoryTitle text-center text-md-start">
