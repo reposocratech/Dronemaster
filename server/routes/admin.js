@@ -22,7 +22,7 @@ router.put("/enableComment/:comment_id", adminControllers.enableComment);
 
 // 5.- Disable comment
 // http://localhost:4000/admin/disableComment/:comment_id
-router.post("/disableComment/:comment_id", adminControllers.disableComment);
+router.put("/disableComment/:comment_id", adminControllers.disableComment);
 
 // 6.- Enable User
 // http://localhost:4000/admin/enableUser/:user_id
