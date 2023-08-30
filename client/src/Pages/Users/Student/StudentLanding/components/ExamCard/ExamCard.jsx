@@ -55,7 +55,7 @@ export const ExamCard = ({ setShowRatingModal, showRatingModal, counterRating, s
             .then((res) => {
                 setShowRatingModal(true)
                 setDownloadedExam(3)
-                setUserStatus(userStatus)
+                setUserStatus(2)
             })
             .catch((err) => console.log(err))
 

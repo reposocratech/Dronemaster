@@ -8,7 +8,6 @@ import { MdOutlinePlayLesson } from "react-icons/md";
 import { UnitsLessonList } from "./components/UnitsLessonList";
 import { LessonComments } from "./components/LessonComments";
 import { BsFileEarmarkArrowDownFill } from "react-icons/bs";
-
 import "./courseOneLesson.scss";
 import { LessonVideo } from "./components/LessonVideo";
 
@@ -41,7 +40,7 @@ export const CourseOneLesson = () => {
 
   const handleDownload = () => {
     axios
-      .get(`http://localhost:4000/resourceName/${lesson_id}`)
+      .get(`http://localhost:4000/resourceName/${lessonData?.resource_id}`)
       .then((res) =>
         saveAs(
           `http://localhost:4000/images/resources/${res.data[0].resource_name}`,
@@ -67,7 +66,7 @@ export const CourseOneLesson = () => {
       {/* Main Section */}
 
       {/* Introduccion Video or Image*/}
-      <LessonVideo videoUrl={lessonData?.lesson_url_video}/>
+      <LessonVideo videoUrl={lessonData?.lesson_url_video} />
       {/* <div className="introMultimedia">
         <img
           src="http://localhost:4000/images/resources/leccion1.jpg"

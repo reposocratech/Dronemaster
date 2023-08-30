@@ -69,12 +69,15 @@ export const LessonComments = ({ user, course_id, unit_id, lesson_id }) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="commentInputContainer">
             <div className="userImgContainer">
-              <img
-                src={
-                  user?.user_img &&
-                  `http://localhost:4000/images/users/${user?.user_img}`
-                }
-              />
+              {user?.user_img ? (
+                <img
+                  src={`http://localhost:4000/images/users/${user.user_img}`}
+                />
+              ) : (
+                <h6 className="avatarText">
+                  {user?.user_name.at(0).toUpperCase()}
+                </h6>
+              )}
               <p className="mb-0">
                 {user?.user_name} {user?.user_lastname}
               </p>
@@ -98,7 +101,7 @@ export const LessonComments = ({ user, course_id, unit_id, lesson_id }) => {
         </form>
         <hr className="w-100" />
 
-        {allComments?.length === 0 &&  (
+        {allComments?.length === 0 && (
           <div className="noCommnetsContainer">
             <p className="noCommentsText">
               Sé el primero en <br /> comentar tu experiancia
