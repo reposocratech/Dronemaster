@@ -160,8 +160,7 @@ export const StudentCourseTableInfo = ({
                                     {lesson.lesson_title}
                                   </div>
                                 </td>
-                                {(lesson.resource_is_hidden === 0 ||
-                                  lesson.resource_is_hidden === null) && (
+                                {lesson.resource_is_hidden === 0 && (
                                   <>
                                     <td>
                                       <AiFillEye

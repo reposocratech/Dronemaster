@@ -278,7 +278,7 @@ export const CourseInfo = () => {
             </div>
           )}
         {
-          user.type === 0 && <>
+          user?.type === 0 && <>
             {(userCourseRelationship != undefined ||
               userCourseRelationship?.length != 0) && (
                 <CircularStudentProgressBar

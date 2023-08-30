@@ -13,6 +13,8 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
   const { register, handleSubmit, reset } = useForm();
   const [searchResultData, setSearchResultData] = useState();
 
+  console.log(myOneCourseStudentsData);
+
   const onSubmit = (data) => {
     setSearchResultData(
       myOneCourseStudentsData.filter((student) =>
@@ -43,11 +45,15 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
   const downloadExam = (student_id) => {
     axios
       .get(`http://localhost:4000/teachers/examName/${student_id}/${course_id}`)
-      .then((res) =>
+      .then((res) => {
+        console.log(res);
         saveAs(
-          `http://localhost:4000/images/resources/${res.data[0].student_exam_file}`,
+          `http://localhost:4000/images/exams/${res.data[0].student_exam_file}`,
           `${res.data[0].student_exam_file}`
         )
+      }
+
+
       )
       .catch((err) => console.log(err));
   };
@@ -150,9 +156,7 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
                             </div>
                           </td>
                           <td>
-                            {(student.status === 2 ||
-                              student.status === 3 ||
-                              student.status === 4) && (
+                            {student.status !== 1 && (
                               <AiFillFile
                                 role="button"
                                 className="text-success"
@@ -274,9 +278,7 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
                         </div>
                       </td>
                       <td>
-                        {(student.status === 2 ||
-                          student.status === 3 ||
-                          student.status === 4) && (
+                        {student.status !== 1 && (
                           <AiFillFile
                             role="button"
                             className="text-success"

@@ -114,7 +114,7 @@ class studentControllers {
   selectCountLessonCourse = (req, res) => {
     const { course_id } = req.params;
 
-    let sql = `SELECT COUNT(lesson_id) AS count_lessons_Course from lesson where course_id = ${course_id}`;
+    let sql = `SELECT COUNT(lesson.lesson_id) AS count_lessons_Course FROM lesson JOIN resource ON lesson.resource_id = resource.resource_id WHERE lesson.course_id = ${course_id} AND lesson.lesson_is_hidden = 0 AND resource.resource_is_hidden = 0;`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(201).json(result);
@@ -135,9 +135,17 @@ class studentControllers {
           let sql2 = `INSERT INTO student_exam (user_id, course_id, student_exam_file) VALUES (${user_id}, ${course_id}, "${pdf}")`;
 
           connection.query(sql2, (error, result2) => {
-            error
-              ? res.status(400).json({ error })
-              : res.status(201).json(result2);
+            if (error) {
+              res.status(400).json({ error });
+            } else {
+              let sql3 = `UPDATE user_course SET status = 2 WHERE user_id = ${user_id} AND course_id = ${course_id}`;
+
+              connection.query(sql3, (error, result3) => {
+                error
+                  ? res.status(400).json({ error })
+                  : res.status(201).json(result3);
+              });
+            }
           });
         }
       }

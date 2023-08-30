@@ -237,7 +237,8 @@ class adminControllers {
             : res.status(200).json(result2);
         });
       }
-
+    });
+  };
   // 18.- EditLesson
   // http://localhost:4000/admin/editLesson/:course_id/:unit_id/:lesson_id
   editLesson = (req, res) => {
