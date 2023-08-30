@@ -1,25 +1,42 @@
 import React from "react";
 import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { GiClassicalKnowledge } from "react-icons/gi";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-const AdminUnitEdirForm = ({ unitEditForm, setUnitEditForm }) => {
+const AdminUnitEdirForm = ({
+  unitEditForm,
+  setUnitEditForm,
+  unit_id,
+  course_id,
+  resEffect,
+  setResEffect,
+}) => {
   const closeUnitEditForm = () => {
     setUnitEditForm(false);
   };
-
+  console.log("unit_id", unit_id);
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
+    reset,
   } = useForm();
 
-  const onSubmit = () => {};
+  const [editUnit, setEditUnit] = useState();
+
+  const onSubmit = (data) => {
+    axios
+      .put(`http://localhost:4000/admin/editUnit/${course_id}/${unit_id}`, data)
+      .then((res) => {
+        console.log(res);
+        setEditUnit(res.data);
+        closeUnitEditForm(true);
+        setResEffect(!resEffect);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <Modal show={unitEditForm} onHide={closeUnitEditForm}>
@@ -33,7 +50,7 @@ const AdminUnitEdirForm = ({ unitEditForm, setUnitEditForm }) => {
             <GiClassicalKnowledge />
           </div>
 
-          <h4 className="titleText">Edición de curso</h4>
+          <h4 className="titleText">Edición del tema</h4>
         </div>
       </Modal.Header>
 
@@ -41,20 +58,20 @@ const AdminUnitEdirForm = ({ unitEditForm, setUnitEditForm }) => {
         <Modal.Body className="modalBody1">
           {/* Name Input Group */}
           <div className="d-flex flex-column align-items-start gap-1 inputName">
-            <label htmlFor="course_name" className="ps-3">
+            <label htmlFor="unit_tittle" className="ps-3">
               Nombre del Tema
             </label>
             <input
               placeholder="Nombre del Tema"
-              {...register("unit_name", {
-                required: "Debes rellenar el nombre del tema",
+              {...register("unit_tittle", {
+                required: "Camp obligatorio",
                 minLength: { value: 3, message: "Minimo de 3 letras" },
                 maxLength: { value: 100, message: "Maximo 100 caracteres" },
               })}
               className="input1"
-              id="unit_name"
+              id="unit_tittle"
             />
-            <span className="errorMessage">{errors.course_name?.message}</span>
+            <span className="errorMessage">{errors.unit_tittle?.message}</span>
           </div>
         </Modal.Body>
         <Modal.Footer className="modalFooter">

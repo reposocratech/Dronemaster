@@ -149,6 +149,7 @@ const AdminAllCoursesCard = () => {
                       <BsEyeSlash />
                     </span>
                   )}
+                  <button className="btnOutline1">Ver más</button>
                 </h6>
 
                 <CourseEditionModal

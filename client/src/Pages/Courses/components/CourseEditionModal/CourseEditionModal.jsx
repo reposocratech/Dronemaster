@@ -225,7 +225,7 @@ export const CourseEditionModal = ({
               {...register("category_id")}
               id="category_id"
               className="input2"
-              autoComplete="fañse"
+              autoComplete="false"
             >
               <option value={1} className="optionDefault">
                 Seleccione una categoria{" "}
