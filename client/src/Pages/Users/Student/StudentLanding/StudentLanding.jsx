@@ -50,7 +50,7 @@ const StudentLanding = () => {
   const examAvailable = lessonsViewedByStudent / lessonsOneCourse;
 
   return (
-    <div className="mainSection">
+    <div className="mainSectionStudent">
       <aside className="sideContent">
         <StudentCard user={user} setShowEditionModal={setShowEditionModal} />
         <UserCardInfo user={user} />

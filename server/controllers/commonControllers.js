@@ -19,7 +19,7 @@ class commonControllers {
 
       // if there isn´t an user with this email
       if (!result || !result.length || result[0].is_deleted == 1) {
-        res.status(401).json("user is not registered");
+        res.status(401).json("Contraseña o email incorrectos");
       } else {
         // Correct email
         const [user] = result;
@@ -47,7 +47,7 @@ class commonControllers {
             res.status(200).json({ token, user: result[0] });
           } // Incorrect password
           else {
-            res.status(401).json("incorrect email or password");
+            res.status(401).json("Contraseña o email incorrectos");
           }
         });
       }

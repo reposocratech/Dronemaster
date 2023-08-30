@@ -10,6 +10,7 @@ import { LessonComments } from "./components/LessonComments";
 import { BsFileEarmarkArrowDownFill } from "react-icons/bs";
 
 import "./courseOneLesson.scss";
+import { LessonVideo } from "./components/LessonVideo";
 
 export const CourseOneLesson = () => {
   const { course_id, unit_id, lesson_id } = useParams();
@@ -27,7 +28,7 @@ export const CourseOneLesson = () => {
         setLessonData(res.data[0]);
       })
       .catch((err) => console.log(err));
-  }, [course_id]);
+  }, [course_id, unit_id, lesson_id]);
 
   useEffect(() => {
     axios
@@ -66,13 +67,13 @@ export const CourseOneLesson = () => {
       {/* Main Section */}
 
       {/* Introduccion Video or Image*/}
-
-      <div className="introMultimedia">
+      <LessonVideo videoUrl={lessonData?.lesson_url_video}/>
+      {/* <div className="introMultimedia">
         <img
           src="http://localhost:4000/images/resources/leccion1.jpg"
           alt="Course image"
         />
-      </div>
+      </div> */}
 
       <div className="courseTextInfoCard">
         {/* Course Description */}

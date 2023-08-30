@@ -3,6 +3,7 @@ import axios from "axios";
 import './CourseCard.scss'
 import { useNavigate } from "react-router-dom";
 import { StarRating } from "../StarRating/StarRating";
+import{ BsCalendarDate } from "react-icons/bs"
 
 export const CourseCard = ({ oneCourse }) => {
   const navigate = useNavigate();
@@ -17,6 +18,23 @@ export const CourseCard = ({ oneCourse }) => {
       });
     return () => {};
   }, [oneCourse]);
+
+  console.log(oneCourse);
+
+
+  const currentDate = new Date();
+  const courseStartDate = new Date(oneCourse?.start_date);
+   const monthNames = [
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+  ];
+  const day = courseStartDate.getDate();
+  const month = monthNames[courseStartDate.getMonth()];
+  const year = courseStartDate.getFullYear();
+
+  const formattedStartDate = `${day} de ${month} de ${year}`;
+
+
 
   return (
     <div
@@ -33,13 +51,23 @@ export const CourseCard = ({ oneCourse }) => {
           />
         </div>
         <div className="courseCardBody">
-          <h4 className="courseTitle">{oneCourse.course_name}</h4>
-          <div className="tagList">
-            {tagList?.map((e) => {
-              return <span key={e.tag_id} className="tag">#{e.tag_name}</span>;
-            })}
+          <div  className="courseTitle">
+            <h4>{oneCourse.course_name}</h4>
           </div>
-          {oneCourse?.score != null && (
+            {tagList?.map((e) => {
+          <div className="tagList">
+              return <span key={e.tag_id} className="tag">#{e.tag_name}</span>;
+          </div>
+        })}
+
+          {(oneCourse?.start_date && courseStartDate > currentDate) &&
+          <div className="dateContainer">
+            <BsCalendarDate className="icon"/>
+           <div>
+             {formattedStartDate}</div>
+          </div>
+           } 
+          {(oneCourse?.score != null &&  oneCourse?.score !== 0) &&(
             <div className="courseScore">
               <h5>{oneCourse.score}</h5>
               <StarRating rating={oneCourse.score} />

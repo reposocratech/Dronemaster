@@ -112,12 +112,16 @@
           display: flex;
           flex-direction: column;
           align-items: center;
+          
 
           .title {
             color: $TertiaryDarkColor;
             font-size: 12px;
             font-weight: 400;
             text-align: center;
+
+          }
+          h6{
           }
         }
       }

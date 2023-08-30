@@ -98,7 +98,7 @@ export const LessonComments = ({ user, course_id, unit_id, lesson_id }) => {
         </form>
         <hr className="w-100" />
 
-        {allResponses?.length === 0 && (
+        {allComments?.length === 0 &&  (
           <div className="noCommnetsContainer">
             <p className="noCommentsText">
               Sé el primero en <br /> comentar tu experiancia

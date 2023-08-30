@@ -91,9 +91,9 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
               {allInformation
                 .filter((item) => item.unit_tittle === unitName)
                 .every((item) => !item.unit_is_hidden) ? (
-                <BsEyeSlash onClick={() => enableUnit(unitIndex)} />
+                <BsEyeSlash onClick={() => enableUnit(unit_id[unitIndex])} />
               ) : (
-                <BsEye onClick={() => disableUnit(unitIndex)} />
+                <BsEye onClick={() => disableUnit(unit_id[unitIndex])} />
               )}
             </div>
           </div>

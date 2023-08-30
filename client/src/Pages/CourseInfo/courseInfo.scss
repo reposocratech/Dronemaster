@@ -1,15 +1,16 @@
 @import "../../../public/styles/variables";
 
 .courseInfoMainSection {
+  min-height: calc(100vh - 200px);
   background-color: $PrimaryDarkColor;
   gap: 8px;
-  padding: 4vh 12vw;
+  padding: 4vh 6vw;
   color: white;
   display: grid;
   grid-template-areas:
     "CourseTitle CourseTitle"
     "mainSide rightAsideSection";
-  grid-template-columns: 7fr 3fr;
+  grid-template-columns: 7fr auto;
 
   // Course title
   .courseNameCard {
@@ -57,7 +58,7 @@
       display: flex;
       justify-content: center;
       padding-top: 15px;
-      
+
       img {
         border-radius: 8px;
         width: 100%;
@@ -243,10 +244,9 @@
   }
   //Aside
   .rightAsideSection {
-   
     grid-area: rightAsideSection;
     min-width: 250px;
-    max-width: 400px;
+    max-width: 350px;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -254,7 +254,7 @@
 
     .courseMultimediaInfoCard {
       position: sticky;
-      top:15px;
+      top: 15px;
       display: flex;
       flex-direction: column;
       background-color: $CuaternaryDark;
@@ -388,40 +388,21 @@
       color: white;
       gap: 8px;
 
-      
-    .cardTitle {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-right: 12px;
-
-      .title { 
+      .cardTitle {
         display: flex;
         align-items: center;
-        gap: 20px;
-        .iconContainer {
-          font-size: 40px;
-        }
-        .titleText {
-          margin: 0;
-        }
+        padding-right: 12px;
+        gap: 12px;
       }
-    }
 
       .contenedor-circular {
         text-align: center;
         margin: 50px auto;
       }
 
-      .progreso {
-        font-size: 18px;
-        margin-top: 10px;
-      }
 
       .percentageText {
-        padding: 0;
         position: absolute;
-        //top: calc(50% - (43.19px / 2));
         top: 52%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -430,13 +411,39 @@
           color: #e8e8e8;
           font-size: 40px;
           margin: 0;
+
+          span{
+            color: $PrimaryOrangeColor;
+          }
         }
       }
 
       .progressDoughnut {
         position: relative;
-        width: clamp(200px, 25vw, 250px) !important;
-        height: clamp(200px, 25vw, 250px) !important;
+        width: clamp(200px, 20vw, 250px) !important;
+        height: clamp(200px, 20vw, 250px) !important;
+      }
+
+      .legendContainer {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+      }
+      
+      .legendItem {
+        display: flex;
+        align-items: center;
+        margin: 0 15px;
+      }
+      
+      .legendColor {
+        width: 20px;
+        height: 10px;
+        margin-right: 5px;
+      }
+      
+      .legendLabel {
+        font-size: 14px;
       }
     }
   }
@@ -451,5 +458,22 @@
   .icon3 {
     font-size: 16px;
     color: $PrimaryOrangeColor;
+  }
+}
+@media (max-width: 992px) {
+  .courseInfoMainSection {
+    grid-template-areas:
+      "CourseTitle"
+      "mainSide"
+      "rightAsideSection ";
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto auto auto auto auto;
+
+    .rightAsideSection{
+      width: 100%;
+      min-width: none;
+      max-width: none;
+      
+    }
   }
 }

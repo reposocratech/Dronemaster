@@ -52,11 +52,13 @@ export const CommentsAndResponsesList = ({
 
   return (
     <div className="commentsResponsesList">
-      {allComments?.map((comment, commentIndex) => (
-        <>
+      {allComments?.map((comment, commentIndex) => {
+
+        return (
+        <span key={comment.comment_id}>
           {(user.type === 2 || comment.comment_is_hidden === 0) && (
             <div
-              key={comment.comment_id}
+              
               className="commentCont"
               style={{
                 filter: `${
@@ -81,7 +83,7 @@ export const CommentsAndResponsesList = ({
                 <p className="mb-0 text-capitalize">
                   {comment.user_name} {comment?.user_lastname}
                 </p>
-                {(user?.user_id == comment.user_id || user?.type === 2) && (
+                {(user?.user_id == comment.user_id || user?.type !== 0) && (
                   <div className="deleteButtonCont">
                     {comment.comment_is_hidden === 0 ? (
                       <AiOutlineEyeInvisible
@@ -146,8 +148,8 @@ export const CommentsAndResponsesList = ({
                     response.parent_comment_id === comment.comment_id
                 )
                 .map((response) => (
-                  <>
-                    {(user.type === 2 || response.comment_is_hidden === 0) && (
+                  <span key={response.comment_id}>
+                    {(user.type !== 0  || response.comment_is_hidden === 0) && (
                       <div
                         key={response.comment_id}
                         className="responseCont"
@@ -198,12 +200,14 @@ export const CommentsAndResponsesList = ({
                         <p>{response.comment_content}</p>
                       </div>
                     )}
-                  </>
+                  </span>
                 ))}
             </div>
           )}
-        </>
-      ))}
+        </span>
+      )
+    }
+      )}
     </div>
   );
 };

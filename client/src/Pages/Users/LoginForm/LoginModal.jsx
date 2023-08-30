@@ -5,7 +5,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { saveLocalStorageDroneMaster } from "../../../helper/localStorageDroneMaster";
 import { DroneMasterContext } from "../../../context/DroneMasterProvider";
 import "../../../../public/styles/registerLoginFormStyle.scss";
-import { Col, Row } from "react-bootstrap";
 
 import Modal from "react-bootstrap/Modal";
 
@@ -14,8 +13,10 @@ const LoginModal = ({
   showLoginModal,
   openRegisterModal,
 }) => {
+  const [errorMessage, setErrorMessage] = useState();
   const closeLoginModal = () => {
     setShowLoginModal(false);
+    reset();
   };
   const navigate = useNavigate();
   const { setUser, setIsLogged } = useContext(DroneMasterContext);
@@ -51,80 +52,90 @@ const LoginModal = ({
           navigate("/");
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => setErrorMessage(error.response.data));
   };
   return (
     <Modal
-      className="main lg"
+      className="main"
       show={showLoginModal}
       onHide={closeLoginModal}
       animation={false}
+      size="lg"
+      centered
     >
       <Modal.Body className="bckModal">
-        <Row>
-          <Col className="formContainer">
-            <div className="form3">
-              <form className="position" onSubmit={handleSubmit(onSubmit2)}>
+        <div className="formContainer">
+          <div className="form3">
+            <form onSubmit={handleSubmit(onSubmit2)}>
+              <div className="inputContainer">
                 <input
                   {...register("email", {
-                    required: "Email must be completed",
+                    required: "Campo obligatorio",
                     maxLength: 200,
                   })}
+                  id="email"
                   placeholder="Email"
                   autoComplete="off"
                   type="email"
                   className="forminput"
                 />
-                <p>{errors.email?.message}</p>
+                <label htmlFor="email" className="textError">
+                  {errors.email?.message}
+                </label>
+              </div>
+              <div className="inputContainer">
                 <input
                   {...register("password", {
-                    required: "Password must be completed",
+                    required: "Campo obligatorio",
                   })}
+                  id="password"
                   placeholder="Contraseña"
                   autoComplete="off"
                   type="password"
                   className="forminput"
                 />
-                <p>{errors.password?.message}</p>
-                <Col className="d-flex m-3">
-                  <button className="btnNormal me-3"> Aceptar</button>
-                  <button
-                    className="btnNormal"
-                    onClick={() => {
-                      closeLoginModal();
-                    }}
-                  >
-                    Cancelar
-                  </button>
-                </Col>
-                <Col className="LI">
-                  <span>¿Aún no formas parte de nuestra comunidad? </span>
-                  <span
-                    role="button"
-                    className="span"
-                    onClick={() => {
-                      closeLoginModal();
-                      openRegisterModal();
-                    }}
-                  >
-                    Registrate
-                  </span>
-                </Col>
-              </form>
-            </div>
-            <div className="form4">
-              <div className="text-group">
-                <h1 className="welcome-title">¡Bienvenido de vuelta!</h1>
-                <p className="text-paragraph">
-                  Estamos emocionados por tenerte aqui nuevamente
-                </p>
-                <p className="text-paragraph">
-                  Ingresa y disfruta de tu experiencia
-                </p>
+                <label htmlFor="password" className="textError">
+                  {errors.password?.message} {errorMessage}
+                </label>
               </div>
+              <div className=" buttonsCont my-2">
+                <button className="btnNormal "> Aceptar</button>
+                <button
+                  className="btnNormal"
+                  onClick={() => {
+                    closeLoginModal();
+                  }}
+                >
+                  Cancelar
+                </button>
+              </div>
+              <div className="text">
+                <span>¿Aún no formas parte de nuestra comunidad? </span>
+                <span
+                  role="button"
+                  className="span"
+                  onClick={() => {
+                    closeLoginModal();
+                    openRegisterModal();
+                  }}
+                >
+                  Registrate
+                </span>
+              </div>
+            </form>
+          </div>
+          <div className="form4">
+            <div className="text-group">
+              <h1 className="welcome-title">¡Bienvenido de vuelta!</h1>
+              <p className="text-paragraph">
+                Estamos emocionados por tenerte aqui nuevamente
+              </p>
+              <p className="mb-0 text-center">
+                Ingresa y disfruta de tu experiencia
+              </p>
             </div>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </Modal.Body>
     </Modal>
   );
