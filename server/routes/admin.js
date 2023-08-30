@@ -76,14 +76,21 @@ router.put(
 // http://localhost:4000/admin/inscriptionDates
 router.get("/inscriptionDates", adminControllers.viewInscriptionDates);
 
-// 17.- EditLesson
+// 17.- Delete resource into a lesson
+// http://localhost:4000/admin/deleteResource/:resource_id/:lesson_id
+router.delete(
+  "/deleteResource/:resource_id/:lesson_id",
+  adminControllers.deleteResource
+);
+
+// 16.- EditLesson
 // http://localhost:4000/admin/editLesson/:course_id/:unit_id/:lesson_id
 router.put(
   "/editLesson/:course_id/:unit_id/:lesson_id",
   adminControllers.editLesson
 );
 
-// 18.- EditUnit
+// 19.- EditUnit
 // http://localhost:4000/admin/editUnit/:course_id/:unit_id
 router.put("/editUnit/:course_id/:unit_id", adminControllers.editUnit);
 

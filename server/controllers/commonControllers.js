@@ -258,11 +258,11 @@ class commonControllers {
   };
 
   // 17 Get resource name to download resource
-  // http://localhost:4000/resourceName/:lesson_id
+  // http://localhost:4000/resourceName/resource_id
   getResourceName = (req, res) => {
-    const { lesson_id } = req.params;
+    const { resource_id } = req.params;
 
-    let sql = `SELECT resource_name FROM resource JOIN lesson ON lesson.resource_id = resource.resource_id WHERE lesson_id = ${lesson_id}`;
+    let sql = `SELECT resource_name FROM resource WHERE resource_id = ${resource_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
@@ -286,12 +286,25 @@ class commonControllers {
   // 19- Upload resource into a lesson
   // http://localhost:4000/uploadResource/:user_id/:course_id/:unit_id/:lesson_id
   uploadResource = (req, res) => {
-    const { user_id } = req.params;
+    const { user_id, lesson_id } = req.params;
     let file = req.file.filename;
+    console.log(file);
 
-    let sql = `INSERT INTO resource (user_id, resource_name) VALUES (${user_id}, "${file}")`;
-    connection.query(sql, (error, result) => {
-      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    let sql1 = `INSERT INTO resource (created_by_user_id, resource_name) VALUES (${user_id}, "${file}")`;
+
+    connection.query(sql1, (error, result1) => {
+      console.log(result1.insertId);
+      if (error) {
+        res.status(400).json({ error });
+      } else {
+        let sql2 = `UPDATE lesson SET resource_id = ${result1.insertId} WHERE lesson_id = ${lesson_id}`;
+
+        connection.query(sql2, (error, result2) => {
+          error
+            ? res.status(400).json({ error })
+            : res.status(200).json(result2);
+        });
+      }
     });
   };
 

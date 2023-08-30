@@ -92,8 +92,8 @@ router.get(
 );
 
 // 17.- Get resource name to download resource
-// http://localhost:4000/resourceName/:lesson_id
-router.get("/resourceName/:lesson_id", commonControllers.getResourceName);
+// http://localhost:4000/resourceName/:resource_id
+router.get("/resourceName/:resource_id", commonControllers.getResourceName);
 
 // 18- Post a new response to a comment
 // http://localhost:4000/myCourse/myLesson/addResponse/:course_id/:unit_id/:lesson_id/:user_id/:comment_id

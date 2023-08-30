@@ -1,8 +1,7 @@
 import React from "react";
 import "./AboutApp.scss";
 import { Container } from "react-bootstrap";
-import { CourseCreationModal } from "../Courses/components/CourseCreationModal/CourseCreationModal";
-import { CourseEditionModal } from "../Courses/components/CourseEditionModal/CourseEditionModal";
+import { TbDrone } from "react-icons/tb"
 
 export const AboutApp = () => {
   return (
@@ -22,83 +21,86 @@ export const AboutApp = () => {
           Nuestra Misión
         </h3>
         <p className=" text-center text-md-start">
-          Nuestra misión es fomentar la innovación y el progreso en sectores
-          vitales como la agricultura, cuerpos de seguridad y bomberos, al
-          proporcionar una plataforma educativa de vanguardia que capacite a
-          profesionales y entusiastas con las destrezas necesarias para
-          aprovechar al máximo las capacidades de los drones. Estamos
-          comprometidos a brindar conocimientos prácticos y teóricos de alta
-          calidad, que permitan a nuestros estudiantes convertirse en líderes en
-          sus respectivas áreas, impulsando el cambio positivo y la eficiencia
-          en sus operaciones diarias.
+          Nuestra misión es empoderar a profesionales de diversos sectores
+          apasionados de la innovación, brindándoles formación online y
+          presencial que les dote de las habilidades y conocimiento necesarios
+          para realizar vuelos seguros y eficientes con drones, y para examinar
+          los datos resultantes de manera detallada, convirtiéndoles en pilotos
+          altamente competentes.
+        </p>
+        <p>
+          Buscamos ser el puente que conecta la tecnología dron con las
+          necesidades cambiantes de diversos sectores, permitiendo a nuestros
+          graduados aplicar sus habilidades de manera impactante en su trabajo
+          diario.</p>
+      </div>
+
+      <div className="paragraph">
+        <h3 className="text-warning text-center text-md-start">
+          Visión
+        </h3>
+        <p className=" text-center text-md-start">
+          Aspiramos a ser reconocidos como el estándar de excelencia en la
+          formación de pilotos de drones, elevando constantemente la calidad
+          de nuestra educación y adaptándonos a las últimas tecnologías y
+          tendencias. Nuestra visión abarca la creación de una comunidad global de
+          expertos en drones que contribuyan al progreso sostenible de diversos
+          sectores en todo el mundo.
         </p>
       </div>
 
       <div className="paragraph">
         <h3 className="text-warning text-center text-md-start">
-          Nuestros Cursos
+          Valores
         </h3>
-        <p className=" text-center text-md-start">
-          Ofrecemos una amplia gama de cursos especializados que abarcan desde
-          los fundamentos básicos hasta las técnicas avanzadas en el uso de
-          drones en la agricultura, operaciones de seguridad y situaciones de
-          emergencia. Nuestros cursos son diseñados y enseñados por expertos
-          altamente calificados con una amplia experiencia en sus campos
-          respectivos. Cubrimos temas cruciales como la planificación de vuelo,
-          captura de datos, análisis de imágenes, mantenimiento de drones y
-          mucho más.
-        </p>
+        <div className="d-flex">
+          <div className="d-none d-md-flex pt-1">
+            <TbDrone style={{ color: "#f7ab16", paddingRight: "5px", width: "40px" }} />
+          </div>
+          <p className=" text-center text-md-start">
+            Entendemos que la práctica es esencial para el aprendizaje efectivo.
+            Por ello, hemos incorporado experiencias prácticas y escenarios
+            realistas en nuestros cursos. Los estudiantes tendrán la oportunidad
+            de poner en práctica lo aprendido a través de simulaciones y proyectos
+            que reflejen situaciones de la vida real en la agricultura moderna y
+            en operaciones de seguridad y rescate.
+          </p>
+        </div>
+        <div className="d-flex">
+          <div className="d-none d-md-flex pt-1">
+            <TbDrone style={{ color: "#f7ab16", paddingRight: "5px", width: "40px" }} />
+          </div>
+          <p className=" text-center text-md-start">
+            Abrazamos la innovación tecnológica y pedagógica en una
+            búsqueda continua de nuevas formas de mejorar nuestra formación y
+            adaptarnos a las últimas tendencias en el mundo de los drones y el
+            análisis de datos.
+          </p>
+        </div>
+        <div className="d-flex">
+          <div className="d-none d-md-flex pt-1">
+            <TbDrone style={{ color: "#f7ab16", paddingRight: "5px", width: "40px" }} />
+          </div>
+          <p className=" text-center text-md-start">
+            Creemos que compartir conocimientos y experiencias enriquece a todos y
+            acelera la adopción efectiva de la tecnología dron en diversos campos.
+          </p>
+        </div>
+        <div className="d-flex">
+          <div className="d-none d-md-flex pt-1">
+            <TbDrone style={{ color: "#f7ab16", paddingRight: "5px", width: "40px" }} />
+          </div>
+          <p className=" text-center text-md-start">
+            Somos conscientes de la naturaleza cambiante de la tecnología y de los
+            sectores a los que servimos. Estamos comprometidos a adaptarnos y
+            evolucionar para mantenernos relevantes y a la vanguardia de la
+            educación en pilotos de drones.
+          </p>
+        </div>
       </div>
 
-      <div className="paragraph">
-        <h3 className="text-warning text-center text-md-start">
-          Experiencia Práctica
-        </h3>
-        <p className=" text-center text-md-start">
-          Entendemos que la práctica es esencial para el aprendizaje efectivo.
-          Por ello, hemos incorporado experiencias prácticas y escenarios
-          realistas en nuestros cursos. Los estudiantes tendrán la oportunidad
-          de poner en práctica lo aprendido a través de simulaciones y proyectos
-          que reflejen situaciones de la vida real en la agricultura moderna y
-          en operaciones de seguridad y rescate.
-        </p>
-      </div>
 
-      <div className="paragraph">
-        <h3 className="text-warning text-center text-md-start">
-          Comunidad y Colaboración
-        </h3>
-        <p className=" text-center text-md-start">
-          En <span className="text-warning fs-5 fst-italic">DroneMaster</span>,
-          creemos en la importancia de la colaboración y el intercambio de
-          conocimientos. Por eso, hemos creado una comunidad vibrante donde los
-          estudiantes pueden interactuar, compartir ideas y experiencias, y
-          aprender unos de otros. Fomentamos la conexión entre profesionales y
-          entusiastas de la agricultura y la seguridad, creando un espacio en el
-          que puedan crecer juntos y ampliar sus horizontes.
-        </p>
-      </div>
 
-      <div className="paragraph">
-        <h3 className="text-warning text-center text-md-start">
-          Compromiso con la Excelencia
-        </h3>
-        <p className=" text-center text-md-start">
-          Nuestro compromiso con la excelencia se refleja en cada aspecto de
-          nuestra plataforma, desde el contenido del curso hasta la experiencia
-          del usuario. Buscamos constantemente formas de mejorar y evolucionar
-          para asegurarnos de que nuestros estudiantes reciban la mejor
-          educación posible en el emocionante campo de los drones.
-        </p>
-
-        <p className=" text-center text-md-start">
-          Únete a nosotros en{" "}
-          <span className="text-warning fs-5 fst-italic">DroneMaster</span> y
-          descubre cómo los drones están transformando la agricultura y
-          revolucionando las operaciones de seguridad y rescate. ¡Prepárate para
-          despegar hacia un futuro lleno de posibilidades infinitas!
-        </p>
-      </div>
 
       <p className="text-center text-warning fs-6 pt-4">
         ¡Explora, Aprende, Lidera con DroneMaster!

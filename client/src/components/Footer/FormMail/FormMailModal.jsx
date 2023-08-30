@@ -43,75 +43,17 @@ export const FormMailModal = ({ showMailModal, setShowMailModal }) => {
           <div className="iconContainer">
             <AiFillPhone />
           </div>
-          <h4 className="titleText">Contáctanos y te llamamos</h4>
+          <h4 className="titleText">Contáctanos</h4>
         </div>
       </Modal.Header>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Modal.Body className="modalBodyMail">
-          <p className="question text-center">
-            ¿Tienes alguna duda, o quieres recibir información? deja tu nombre y
-            el numero de telefono y te llamamos
-          </p>
-          <div className="d-flex flex-column align-items-start gap-1 inputName">
-            <label htmlFor="user_name" className="ps-3">
-              Nombre
-            </label>
-            <input
-              placeholder="Nombre"
-              {...register("user_name")}
-              className="input1"
-              id="user_name"
-            />
-          </div>
-          <div className="d-flex flex-column align-items-start gap-1 inputPhone">
-            <label htmlFor="phone" className="ps-3">
-              Teléfono
-            </label>
-            <input
-              placeholder="Teléfono"
-              {...register("phone")}
-              id="phone"
-              className="input1"
-            />
-          </div>
-          <div className="d-flex flex-column align-items-start gap-1 inputEmail">
-            <label htmlFor="email" className="ps-3">
-              Email
-            </label>
-            <input
-              placeholder="Email"
-              {...register("email", {
-                required: "Email must be completed",
-                maxLength: 200,
-              })}
-              id="email"
-              className="input1"
-            />
-          </div>
-          <div className="d-flex flex-column align-items-start gap-1 inputDescription">
-            <label htmlFor="description" className="ps-3">
-              descripción
-            </label>
-            <input
-              placeholder="Cuéntanos que necesitas"
-              {...register("description", {
-                required: "description must be completed",
-                maxLength: 200,
-              })}
-              id="description"
-              className="input1"
-            />
-          </div>
-        </Modal.Body>
-        <Modal.Footer className="modalFooter">
-          <button className=" btnOutline1" onClick={handleClose}>
-            Cancelar
-          </button>
-          <button className="btnNormal" type="submit">
-            Enviar
-          </button>
-        </Modal.Footer>
-      </form>
+      <Modal.Body className="modalBodyMail">
+        <p className="question text-center">
+          ¿Tienes alguna duda, o quieres recibir información? llámanos o escríbenos un correo
+        </p>
+        <h6>Teléfono de contacto: <span className="fst-italic" >676767676</span></h6>
+        <h6>Correo electrónico: <span className="fst-italic" >dronemasterinfo@gmail.com</span></h6>
+      </Modal.Body>
+
     </Modal>
   );
 };

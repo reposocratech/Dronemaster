@@ -1,7 +1,7 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { saveLocalStorageDroneMaster } from "../../../helper/localStorageDroneMaster";
 import { DroneMasterContext } from "../../../context/DroneMasterProvider";
 import "../../../../public/styles/registerLoginFormStyle.scss";

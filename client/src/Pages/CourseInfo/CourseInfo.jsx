@@ -16,6 +16,7 @@ import {
   AiOutlineTrophy,
 } from "react-icons/ai";
 import "./courseInfo.scss";
+import { BsCalendar2Date } from "react-icons/bs"
 
 export const CourseInfo = () => {
   const { course_id } = useParams();
@@ -27,8 +28,17 @@ export const CourseInfo = () => {
   const [userCourseRelationship, setUserCourseRelationship] = useState();
   const [lessonsOneCourse, setLessonsOneCourse] = useState(0);
   const [lessonsViewedByStudent, setLessonsViewedByStudent] = useState();
-
   const { user, resetData, setResetData } = useContext(DroneMasterContext);
+  const currentDate = new Date();
+  const courseStartDate = new Date(courseGeneralInfo?.start_date);
+  const monthNames = [
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+  ];
+  const day = courseStartDate.getDate();
+  const month = monthNames[courseStartDate.getMonth()];
+  const year = courseStartDate.getFullYear();
+  const formattedStartDate = `${day} de ${month} de ${year}`;
 
   //Gets all units and lesson of a course
   useEffect(() => {
@@ -141,7 +151,7 @@ export const CourseInfo = () => {
             <div className="iconContainer">
               <GiClassicalKnowledge />
             </div>
-            <h2 className="titleText">{courseGeneralInfo?.course_name}</h2>
+            <h2 className="titleText text-capitalize">{courseGeneralInfo?.course_name}</h2>
           </div>
         </div>
       </div>
@@ -181,93 +191,105 @@ export const CourseInfo = () => {
       <aside className="rightAsideSection">
         {(userCourseRelationship == undefined ||
           userCourseRelationship?.length == 0) && (
-          <div className="courseMultimediaInfoCard">
-            {/* Course Image */}
-            <div className="courseImgContainer">
-              <img
-                src={
-                  courseGeneralInfo?.course_img &&
-                  `http://localhost:4000/images/courses/${courseGeneralInfo?.course_img}`
+            <div className="courseMultimediaInfoCard">
+              {/* Course Image */}
+              <div className="courseImgContainer">
+                {courseGeneralInfo?.course_img &&
+                  <img
+                    src={
+                      courseGeneralInfo?.course_img &&
+                      `http://localhost:4000/images/courses/${courseGeneralInfo?.course_img}`
+                    }
+                    alt="Course image"
+                  />
                 }
-                alt="Course image"
-              />
-            </div>
-            <div className="courseDataContent">
-              <h6 className="courseTitle">{courseGeneralInfo?.course_name}</h6>
-              <div className="tagList">
-                {tagList?.map((e) => {
-                  return (
-                    <span key={e.tag_id} className="tag">
-                      #{e.tag_name}
-                    </span>
-                  );
-                })}
-              </div>
-              {/* Icon groups container */}
-              <div className="iconInfoContainer">
-                <h6 className="fw-medium">Este curso incluye:</h6>
-                <div className="iconGroup1">
-                  <AiOutlineClockCircle className="icon3" />
-                  {courseGeneralInfo?.course_length} horas lectivas
-                </div>
-                <div className="iconGroup1">
-                  <AiOutlineFolderOpen className="icon3" /> {unitsCount} Temas
-                </div>
-                <div className="iconGroup1">
-                  <MdOutlinePlayLesson className="icon3" /> {lessonsCount}{" "}
-                  Lecciones
-                </div>
-                <div className="iconGroup1">
-                  <GiSmartphone className="icon3" /> Acceso movil
-                </div>
-                <div className="iconGroup1">
-                  <IoInfinite className="icon3" /> Acceso de por vida
-                </div>
-                <div className="iconGroup1">
-                  <AiOutlineTrophy className="icon3" /> Certificado de
-                  finalización
-                </div>
-              </div>
 
-              {/* Stars container */}
-              {courseGeneralInfo?.score != null && (
-                <div className="courseScore">
-                  <div className="starsRatingContainer">
-                    <StarRating rating={courseGeneralInfo?.score} />
-                    <h4>{courseGeneralInfo?.score}</h4>
+              </div>
+              <div className="courseDataContent">
+                <h6 className="courseTitle text-capitalize">{courseGeneralInfo?.course_name}</h6>
+                <div className="tagList">
+                  {tagList?.map((e) => {
+                    return (
+                      <span key={e.tag_id} className="tag">
+                        #{e.tag_name}
+                      </span>
+                    );
+                  })}
+                </div>
+                {/* Icon groups container */}
+                <div className="iconInfoContainer">
+                  <h6 className="fw-medium">Este curso incluye:</h6>
+                  <div className="iconGroup1">
+                    <AiOutlineClockCircle className="icon3" />
+                    {courseGeneralInfo?.course_length} horas lectivas
                   </div>
-                  <h6 className="ratingCounter">
-                    (
-                    {courseGeneralInfo?.counter_rating
-                      .toLocaleString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-                    )
-                  </h6>
+                  <div className="iconGroup1">
+                    <AiOutlineFolderOpen className="icon3" /> {unitsCount} Temas
+                  </div>
+                  <div className="iconGroup1">
+                    <MdOutlinePlayLesson className="icon3" /> {lessonsCount}{" "}
+                    Lecciones
+                  </div>
+                  <div className="iconGroup1">
+                    <GiSmartphone className="icon3" /> Acceso movil
+                  </div>
+                  <div className="iconGroup1">
+                    <IoInfinite className="icon3" /> Acceso de por vida
+                  </div>
+                  <div className="iconGroup1">
+                    <AiOutlineTrophy className="icon3" /> Certificado de
+                    finalización
+                  </div>
+                  {courseStartDate > currentDate &&
+                    <div className="iconGroup1 d-flex justify-content-end align-items-center pt-2">
+                      <span style={{ color: "#9d9d9d", fontSize: "15px" }}>{formattedStartDate}</span> <BsCalendar2Date className="icon3 mb-1" />
+                    </div>
+                  }
                 </div>
-              )}
 
-              {user && (
-                <button className="btnNormal" onClick={onSubmit}>
-                  INSCRIBETE
-                </button>
-              )}
-              {!user && (
-                <p className="fst-italic" style={{ color: "#f7ab16" }}>
-                  Inicia sesión o regístrate para inscribirte en el curso
-                </p>
-              )}
+                {/* Stars container */}
+                {courseGeneralInfo?.score != null && (
+                  <div className="courseScore">
+                    <div className="starsRatingContainer">
+                      <StarRating rating={courseGeneralInfo?.score} />
+                      <h4>{courseGeneralInfo?.score}</h4>
+                    </div>
+                    <h6 className="ratingCounter">
+                      (
+                      {courseGeneralInfo?.counter_rating
+                        .toLocaleString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                      )
+                    </h6>
+                  </div>
+                )}
+
+                {user && (
+                  <button className="btnNormal" onClick={onSubmit}>
+                    INSCRIBETE
+                  </button>
+                )}
+                {!user && (
+                  <p className="fst-italic text-center" style={{ color: "#f7ab16" }}>
+                    Inicia sesión o regístrate para inscribirte en el curso
+                  </p>
+                )}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        {
+          user.type === 0 && <>
+            {(userCourseRelationship != undefined ||
+              userCourseRelationship?.length != 0) && (
+                <CircularStudentProgressBar
+                  lessonsOneCourse={lessonsOneCourse}
+                  lessonsViewedByStudent={lessonsViewedByStudent}
+                  course_name={courseGeneralInfo?.course_name}
+                />
+              )}
+          </>
+        }
 
-        {(userCourseRelationship != undefined ||
-          userCourseRelationship?.length != 0) && (
-          <CircularStudentProgressBar
-            lessonsOneCourse={lessonsOneCourse}
-            lessonsViewedByStudent={lessonsViewedByStudent}
-            course_name={courseGeneralInfo?.course_name}
-          />
-        )}
       </aside>
     </section>
   );
