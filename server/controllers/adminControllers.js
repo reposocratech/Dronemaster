@@ -217,6 +217,32 @@ class adminControllers {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
   };
+
+  // 17.- EditLesson
+  // http://localhost:4000/admin/editLesson/:course_id/:unit_id/:lesson_id
+  editLesson = (req, res) => {
+    const { lesson_title, lesson_content } = req.body;
+    const { course_id, unit_id, lesson_id } = req.params;
+
+    let sql = `UPDATE lesson SET lesson_title='${lesson_title}', lesson_content='${lesson_content}' WHERE course_id=${course_id} AND unit_id=${unit_id} AND lesson_id=${lesson_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 18.- EditUnit
+  // http://localhost:4000/admin/editUnit/:course_id/:unit_id
+  editUnit = (req, res) => {
+    const { unit_tittle } = req.body;
+    const { course_id, unit_id } = req.params;
+
+    let sql = `UPDATE unit SET unit_tittle='${unit_tittle}' WHERE unit_id = ${unit_id} and course_id = ${course_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
 }
 
 module.exports = new adminControllers();
