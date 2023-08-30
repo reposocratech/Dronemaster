@@ -13,6 +13,7 @@ const RegisterModal = ({
 }) => {
   const closeRegisterModal = () => {
     setShowRegisterModal(false);
+    reset()
   };
   const {
     register,
@@ -43,14 +44,16 @@ const RegisterModal = ({
       show={showRegisterModal}
       onHide={closeRegisterModal}
       animation={false}
+      size="lg"
+      centered
     >
       <Modal.Body className="bckModal">
-        <Row>
-          <Col className="formContainer">
+   
+          <div className="formContainer formContainer2">
             <div className="form1">
               <div className="text-group">
                 <h1 className="welcome-title">¡Únete a nosotros!</h1>
-                <p className="text-paragraph">
+                <p className="text-paragraph textHidden">
                   Estamos encantados de darte la bienvenida.
                 </p>
                 <p className="text-paragraph">
@@ -59,73 +62,86 @@ const RegisterModal = ({
                 </p>
               </div>
             </div>
-            <Col className="form2">
+            <div className="form2">
               <form onSubmit={handleSubmit(onSubmit)}>
-                <input
-                  {...register("user_name", {
-                    required: "Must be completed",
-                    maxLength: 50,
-                  })}
-                  placeholder="Nombre"
-                  type="text"
-                  autoComplete="off"
-                  className="forminput"
-                />
-                <p>{errors.firstName?.message}</p>
-                <input
-                  {...register("user_lastname", {
-                    required: "Must be completed",
-                    maxLength: 1000,
-                  })}
-                  placeholder="Apellidos"
-                  type="text"
-                  autoComplete="off"
-                  className="forminput"
-                />
-                <p>{errors.lastName?.message}</p>
-                <input
-                  {...register("email", {
-                    required: "Must be completed",
-                    maxLength: 200,
-                  })}
-                  placeholder="Email"
-                  type="email"
-                  autoComplete="off"
-                  className="forminput"
-                />
-                <p>{errors.email?.message}</p>
-                <input
-                  {...register("password", {
-                    required: "Must be completed",
-                    /*                   pattern: {
-                    value: /^[A-Za-z]+$/i,
-                    maxLength: 150,
-                    message: "Must contain minus, MAYS,, number and Symbol",
-                  }, */
-                  })}
-                  placeholder="Contraseña"
-                  type="password"
-                  autoComplete="off"
-                  className="forminput"
-                />
-                <p>{errors.password?.message}</p>
-                <div className="d-flex m-3">
+                <div className="inputContainer">
+                  <input
+                    {...register("user_name", {
+                      required: "Campo obligatorio",
+                      maxLength: 50,
+                    })}
+                    id="user_name"
+                    placeholder="Nombre"
+                    type="text"
+                    autoComplete="off"
+                    className="forminput"
+                    
+                  />
+                  <label htmlFor="user_name" className="textError">{errors.user_name?.message}</label>
+                </div>
+                <div className="inputContainer">
+                  <input
+                    {...register("user_lastname", {
+                      required: "Campo obligatorio",
+                      maxLength: 1000,
+                    })}
+                    id="user_lastname"
+                    placeholder="Apellidos"
+                    type="text"
+                    autoComplete="off"
+                    className="forminput"
+                  />
+                  <label htmlFor="user_lastname" className="textError">{errors.user_lastname?.message}</label>
+                </div>
+                <div className="inputContainer">
+                  <input
+                    {...register("email", {
+                      required: "Campo obligatorio",
+                      maxLength: 200,
+                    })}
+                    id="email"
+                    placeholder="Email"
+                    type="email"
+                    autoComplete="off"
+                    className="forminput"
+                  />
+                  <label htmlFor="email" className="textError">{errors.email?.message}</label>
+                </div>
+                <div className="inputContainer">
+                  <input
+                    {...register("password", {
+                      required: "Campo obligatorio",
+                      /*                   pattern: {
+                      value: /^[A-Za-z]+$/i,
+                      maxLength: 150,
+                      message: "Must contain minus, MAYS,, number and Symbol",
+                    }, */
+                    })}
+                    id="password"
+                    placeholder="Contraseña"
+                    type="password"
+                    autoComplete="off"
+                    className="forminput"
+                  />
+                  <label htmlFor="password" className="textError">{errors.password?.message}</label>
+                </div>
+                <div className="buttonsCont">
                   <button className="btnNormal me-3"> Aceptar</button>
                   <button className="btnNormal" onClick={closeRegisterModal}>
                     {" "}
                     Cancelar
                   </button>
                 </div>
-                <p>
+                <p className="mt-2 text-center">
                   ¿Ya tienes una cuenta?{" "}
                   <Link className="span" onClick={openLoginModal}>
                     Inicia Sesión
                   </Link>{" "}
                 </p>
               </form>
-            </Col>
-          </Col>
-        </Row>
+            </div>
+          </div>
+      
       </Modal.Body>
     </Modal>
   );

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MdOutlinePlayLesson } from "react-icons/md";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import { AiOutlineFolderOpen } from "react-icons/ai";
+import { BsArrowRightShort } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
 export const UnitsLessonList = ({ myCourseInfo, user, course_id }) => {
@@ -32,12 +33,10 @@ export const UnitsLessonList = ({ myCourseInfo, user, course_id }) => {
   };
   return (
     <div className="allUnitsLessonCard">
-        <div className="listHeadline">
-          <h6 className="mb-1">{myCourseInfo && myCourseInfo[0].course_name}</h6>
-     
-        </div>
+      <div className="listHeadline">
+        <h6 className="mb-1">{myCourseInfo && myCourseInfo[0].course_name}</h6>
+      </div>
       <div className="listContainer">
-
         {/* Course name */}
         {unitsName.map((unitName, unitIndex) => {
           const filteredLessons = myCourseInfo.filter(
@@ -75,14 +74,18 @@ export const UnitsLessonList = ({ myCourseInfo, user, course_id }) => {
                         : closedHeight,
                       transition: "height 0.75s ease-in-out",
                     }}
+                    onClick={() =>
+                      navigate(
+                        `/courses/courseInfo/lessonInfo/${course_id}/${lesson.unit_id}/${lesson.lesson_id}`
+                      )
+                    }
                   >
                     <div className="lessonTitle">
-                      <div className="lessonText">
-                        <MdOutlinePlayLesson className="icon3" />{" "}
-                        {lesson.lesson_title}
-                      </div>
-
-                
+                      <p className="lessonText">
+                        <MdOutlinePlayLesson className="icon3 mb-1 me-1" /> 
+                         {lesson.lesson_title}
+                      </p>
+                      <BsArrowRightShort className="icon" /> 
                     </div>
                   </li>
                 ))}

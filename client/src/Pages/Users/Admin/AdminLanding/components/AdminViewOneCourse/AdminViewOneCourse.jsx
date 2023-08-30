@@ -16,6 +16,7 @@ import {
 } from "react-icons/bs";
 import { DroneMasterContext } from "../../../../../../context/DroneMasterProvider";
 import { Navigate, useNavigate } from "react-router-dom";
+import AdminLessonEditForm from "../AdminLessonEditForm/AdminLessonEditForm";
 
 const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
   const navigate = useNavigate()
@@ -26,6 +27,8 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
   const [unitEditForm, setUnitEditForm] = useState(false);
   const [showLessonCreationModal, setShowLessonCreationModal] = useState(false);
   const [unitId, setUnitId] = useState();
+  const [lessonId, setLessonId] = useState();
+  const [showLessonEditForm, setShowLessonEditForm] = useState(false);
 
   const enableResource = (resource_id) => {
     axios
@@ -45,6 +48,13 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
     setUnitId(u_id);
     setShowLessonCreationModal(true);
   };
+
+  const openLessonEditForm = (l_id) => {
+    setUnitId(l_id);
+    setShowLessonEditForm(true);
+  };
+
+  console.log("allinformatiooooooooooon", allInformation);
 
   useEffect(() => {
     axios
@@ -66,7 +76,8 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
     setUnitsName(uniqueUnitNames);
   }, [allInformation]);
 
-  const openUnitEditForm = () => {
+  const openUnitEditForm = (u_id) => {
+    setUnitId(u_id);
     setUnitEditForm(true);
   };
 
@@ -114,17 +125,40 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
       .catch((err) => console.log(err));
   };
 
-  const enableUnit = (unitId, isHidden) => {
+  const enableUnit = (unitId) => {
     axios
-      .put(`http://localhost:4000/disableUnit/${unitId}`)
-      .then((res) => console.log(res))
+      .put(`http://localhost:4000/enableUnits/${course_id}/${unitId}`)
+      .then((res) => {
+        setResEffect(!resEffect);
+        console.log(res);
+      })
       .catch((err) => console.log(err));
   };
 
-  const disableUnit = (unitId, isHidden) => {
+  const disableUnit = (unitId) => {
     axios
-      .put(`http://localhost:4000/disableUnit/${unitId}`)
-      .then((res) => console.log(res))
+      .put(`http://localhost:4000/disableUnits/${course_id}/${unitId}`)
+      .then((res) => {
+        setResEffect(!resEffect);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const enableLesson = (lessonId) => {
+    axios
+      .put(`http://localhost:4000/enableLessons/${lessonId}`)
+      .then((res) => {
+        setResEffect(!resEffect);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const disableLesson = (lessonId) => {
+    axios
+      .put(`http://localhost:4000/disableLessons/${lessonId}`)
+      .then((res) => {
+        setResEffect(!resEffect);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -146,26 +180,25 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
             <h6>
               Tema {unitIndex + 1}: {unitName}
             </h6>
-
             <div>
               <BsPlusCircleFill
                 className="icon"
                 onClick={() => OpenLessonCreateModal(unit_id[unitIndex])}
               />
-              <BsPencil onClick={openUnitEditForm} />
+              <span onClick={() => openUnitEditForm(unit_id[unitIndex])}>
+                <BsPencil />{" "}
+              </span>
               {allInformation
                 .filter((item) => item.unit_tittle === unitName)
                 .every((item) => !item.unit_is_hidden) ? (
-                <BsEyeSlash onClick={() => enableUnit(unitIndex)} />
+                <BsEye onClick={() => disableUnit(unit_id[unitIndex])} />
               ) : (
-                <BsEye onClick={() => disableUnit(unitIndex)} />
+                <BsEyeSlash onClick={() => enableUnit(unit_id[unitIndex])} />
+
               )}
             </div>
           </div>
-          <AdminUnitEdirForm
-            unitEditForm={unitEditForm}
-            setUnitEditForm={setUnitEditForm}
-          />
+
           <div
             className="dropdownContainer"
             onClick={() => toggleUnit(unitIndex)}
@@ -185,10 +218,39 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
                     <h6 className="lessonText">{lesson.lesson_title}</h6>
                   </div>
                   <div>
-                    <BsPencil />
-                    <BsEyeSlash />
-                    <BsEye />
                     <button className="btnOutline1" onClick={() => { navigate(`/courses/courseInfo/lessonInfo/${course_id}/${lesson.unit_id}/${lesson.lesson_id}`) }}>Ver más</button>
+
+                    <span onClick={() => openLessonEditForm(lesson.lesson_id)}>
+                      <BsPencil />
+                    </span>
+                    {lesson?.lesson_is_hidden === 1 ? (
+                      <span
+                        onClick={(e) => {
+                          e.preventDefault();
+                          enableLesson(lesson?.lesson_id);
+                        }}
+                      >
+                        <BsEye />
+                      </span>
+                    ) : (
+                      <span
+                        onClick={(e) => {
+                          e.preventDefault();
+                          disableLesson(lesson?.lesson_id);
+                        }}
+                      >
+                        <BsEyeSlash />
+                      </span>
+                    )}{" "}
+                    <AdminLessonEditForm
+                      showLessonEditForm={showLessonEditForm}
+                      setShowLessonEditForm={setShowLessonEditForm}
+                      lesson={lesson}
+                      unit_id={unitId}
+                      course_id={course_id}
+                      resEffect={resEffect}
+                      setResEffect={setResEffect}
+                    />
                   </div>
                   {console.log("asas", lesson.resource_id)}
                 </div>
@@ -240,7 +302,6 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
           </div>
         </div>
       ))}
-
       <LessonCreationModal
         setShowLessonCreationModal={setShowLessonCreationModal}
         showLessonCreationModal={showLessonCreationModal}
@@ -248,6 +309,15 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
         resEffect={resEffect}
         setResEffect={setResEffect}
         unitId={unitId}
+      />
+
+      <AdminUnitEdirForm
+        unitEditForm={unitEditForm}
+        setUnitEditForm={setUnitEditForm}
+        unit_id={unitId}
+        course_id={course_id}
+        resEffect={resEffect}
+        setResEffect={setResEffect}
       />
     </div>
   );

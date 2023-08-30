@@ -137,11 +137,11 @@ router.get(
 );
 
 //22.- Enable units
-//http://localhost:4000/enableUnit/:unit_id
-router.put("/disableUnits/:unit_id", commonControllers.enableUnits);
+//http://localhost:4000/enableUnit/:course_id/:unit_id
+router.put("/enableUnits/:course_id/:unit_id", commonControllers.enableUnits);
 
 //23.- Disable units
-//localhost:4000/disableUnit/:unit_id
-router.put("/disableUnits/:unit_id", commonControllers.disableUnits);
+//http://localhost:4000/disableUnit/:course_id/:unit_id
+router.put("/disableUnits/:course_id/:unit_id", commonControllers.disableUnits);
 
 module.exports = router;

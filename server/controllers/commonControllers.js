@@ -19,7 +19,7 @@ class commonControllers {
 
       // if there isn´t an user with this email
       if (!result || !result.length || result[0].is_deleted == 1) {
-        res.status(401).json("user is not registered");
+        res.status(401).json("Contraseña o email incorrectos");
       } else {
         // Correct email
         const [user] = result;
@@ -47,7 +47,7 @@ class commonControllers {
             res.status(200).json({ token, user: result[0] });
           } // Incorrect password
           else {
-            res.status(401).json("incorrect email or password");
+            res.status(401).json("Contraseña o email incorrectos");
           }
         });
       }
@@ -321,11 +321,12 @@ class commonControllers {
   };
 
   //21.- Enable units
-  //http://localhost:4000/enableUnit/:unit_id
+  //http://localhost:4000/enableUnit/:course_id/:unit_id
   enableUnits = (req, res) => {
-    const { unit_id } = req.params;
+    const { course_id, unit_id } = req.params;
+    console.log("req.params", req.params);
 
-    let sql = `UPDATE unit SET unit_is_hidden = 0 WHERE unitn_id = ${unit_id}`;
+    let sql = `UPDATE unit SET unit_is_hidden = 0 WHERE unit_id = ${unit_id} and course_id = ${course_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
@@ -333,10 +334,14 @@ class commonControllers {
   };
 
   //22.- Disable units
-  //http://localhost:4000/disableUnit/:unit_id
+  //http://localhost:4000/disableUnit/:course_id/:unit_id
   disableUnits = (req, res) => {
-    const { unit_id } = req.params;
-    let sql = `UPDATE unit SET unit_is_hidden = 1 WHERE unit_id = ${unit_id}`;
+    const { course_id, unit_id } = req.params;
+
+    console.log("cOURSE", course_id);
+    console.log("unittttt", unit_id);
+
+    let sql = `UPDATE unit SET unit_is_hidden = 1 WHERE unit_id = ${unit_id} and course_id = ${course_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);

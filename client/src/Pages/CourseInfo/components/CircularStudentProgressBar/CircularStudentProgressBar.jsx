@@ -14,7 +14,6 @@ export const CircularStudentProgressBar = ({
     (lessonsViewedByStudent / lessonsOneCourse) * 100
   );
 
- 
   useEffect(() => {
     const newProgreso = (lessonsViewedByStudent / lessonsOneCourse) * 100;
     setProgreso(newProgreso);
@@ -59,7 +58,7 @@ export const CircularStudentProgressBar = ({
               <h6 className="titleText text-center m-0">{course_name}</h6>
             </div>
           </div>
-          <div className="d-flex justify-content-center p-3 position-relative">
+          <div className="d-flex justify-content-center p-3 position-relative ">
             <Doughnut
               className="progressDoughnut position-relative"
               data={data}
@@ -68,8 +67,24 @@ export const CircularStudentProgressBar = ({
             <div className="percentageText d-flex justify-content-center pb-2">
               <h4>
                 {percentage}
-                <span style={{ color: "#f7ab16" }}>%</span>
+                <span >%</span>
               </h4>
+            </div>
+          </div>
+          <div className="legendContainer text-center pb-3">
+            <div className="legendItem">
+              <div
+                className="legendColor"
+                style={{ backgroundColor: "#f7ab16" }}
+              ></div>
+              <div className="legendLabel">Lecciones completadas</div>
+            </div>
+            <div className="legendItem">
+              <div
+                className="legendColor"
+                style={{ backgroundColor: "#9d9d9d" }}
+              ></div>
+              <div className="legendLabel"> Restantes</div>
             </div>
           </div>
         </div>
