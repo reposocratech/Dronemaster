@@ -1,24 +1,42 @@
 @import "../styles/variables";
 
 .main {
-  min-height: calc(100vh - 80px);
-  background-color: $PrimaryDarkColor;
-  background: none;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-color: #2b2a29 !important;
-  border: none !important;
+  // min-height: calc(100vh - 80px);
+  // background-color: $PrimaryDarkColor;
+  // background: none;
+  // color: white;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // border-color: #2b2a29 !important;
+  // border: none !important;
+}
+.modal-dialog{
+  max-height: none;
+}
+.modal-content {
+  background-color: transparent;
+  border: none;
+  min-height: 500px;
+
 }
 
-.modal-content {
+.bckModal {
   border: none;
+  background: transparent;
+  padding: 0 !important;
+  overflow: hidden;
+  // width: 50vw !important;
+  height: 60vh !important;
+  // position: fixed;
+  // left: 25%;
+  // top: 25%;
 }
+
 
 .formContainer {
-  width: 50vw !important;
-  height: 60vh !important;
+  width: 100% !important;
+  height: 100% !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
@@ -37,19 +55,8 @@
   padding: 40px;
 }
 
-.bckModal {
-  border: none;
-  background: #2b2a29;
-  padding: 0 !important;
-  width: 50vw !important;
-  height: 60vh !important;
-  position: fixed;
-  left: 25%;
-  top: 25%;
-}
-
 .form2 {
-  background-color: #d9d9d9bb;
+  background-color: #9d9d9dee;
   width: 50%;
   height: 100%;
   display: flex;
@@ -57,11 +64,11 @@
   align-items: center;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
-  padding: 40px;
+  padding: 20px 40px;
 }
 
 .form3 {
-  background-color: #d9d9d9bb;
+  background-color: #9d9d9dee;
   width: 50%;
   height: 100%;
   display: flex;
@@ -69,7 +76,7 @@
   align-items: center;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
-  padding: 40px;
+  padding: 20px 40px;
 }
 
 .form4 {
@@ -102,6 +109,31 @@
   text-decoration: none;
   font-weight: bold;
 }
+form {
+  width: 100%;
+  gap: 4px;
+
+
+  p{
+    margin-bottom: 0;
+  }
+}
+.inputContainer{
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+.textError{
+  position: absolute;
+  width: fit-content;
+  top: 7px;
+  right: calc(50% - 120px);
+  color: rgb(211, 0, 0);
+  font-style: italic;
+}
 
 .forminput {
   display: flex;
@@ -112,59 +144,131 @@
   margin-bottom: 15px;
   border-radius: 20px;
   border: none;
-  padding: 16px 19px;
-  background-color: #d9d9d9bb;
+  padding: 10px 19px;
+  background-color: #d9d9d9cf;
   color: black;
-  margin: 0px;
+  margin-bottom: 8px;
   font-size: 15px;
+}
+.buttonsCont {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.text {
+  text-align: center;
+}
+
+@media (max-width: 992px) {
 }
 
 /*Responsive Form*/
 
-@media screen and (max-width: 580px) {
+@media screen and (max-width: 992px) {
+  .modal-dialog {
+    max-width: 70vw;
+  }
   .formContainer {
-    width: 80vw;
-    height: 60vh;
+    flex-direction: column-reverse;
+  }
+
+  .formContainer2 {
     flex-direction: column;
-    padding: 20px;
+  }
+
+  .formContainer2,
+  .formContainer {
+    // width: 100vw;
+    height: 60vh;
+    // padding: 20px;
 
     .form1 {
       width: 100%;
-      height: 50%;
+      height: 100%;
       border-top-left-radius: 15px;
       border-top-right-radius: 15px;
-      border-bottom-left-radius: 0px;
-      border-bottom-right-radius: 0px;
-      padding: 20px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      padding: 10px 24px;
     }
 
     .form2 {
       width: 100%;
-      border-top-left-radius: 0px;
-      border-top-right-radius: 0px;
+      height: 100%;
+
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
       border-bottom-left-radius: 15px;
       border-bottom-right-radius: 15px;
-      padding: 40px;
+      padding: 20px;
+
     }
 
     .form3 {
+      height: 100%;
       width: 100%;
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-      border-bottom-left-radius: 0px;
-
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
       padding: 40px;
     }
 
     .form4 {
+      height: 100%;
       width: 100%;
-      border-bottom-right-radius: 0px;
-      border-top-left-radius: 0px;
-      border-top-right-radius: 0px;
-      border-bottom-left-radius: 15px;
-      border-bottom-right-radius: 15px;
-
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
       padding: 40px;
+    }
+
+    .form4,
+    .form3,
+    .form2,
+    .form1 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    .forminput {
+      max-width: 350px;
+    }
+  }
+}
+@media (max-width: 756px){
+  .textHidden{
+    display: none;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .modal-dialog {
+    max-width: none;
+    max-height: none;
+  }
+  .formContainer {
+    .form4,
+    .form3,
+    .form2,
+    .form1 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
     }
   }
 }

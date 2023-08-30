@@ -1,6 +1,6 @@
 @import "../../../../../public/styles/variables";
 
-.mainSection {
+.mainSectionStudent {
     background-color: $PrimaryDarkColor;
     display: flex;
     gap: 8px;
@@ -37,6 +37,7 @@
 
         //User Card
         .studentCard {
+            grid-area: studentCard;
             height: fit-content;
             display: flex;
             justify-content: start;
@@ -117,7 +118,7 @@
         }
 
         .userInfoCard {
-            grid-area: userInfo;
+            grid-area: userInfoCard;
             display: flex;
             flex-direction: column;
             gap: 8px;
@@ -130,6 +131,8 @@
 
             .cardBody {
                 padding: 0 20px;
+                margin: auto;
+                margin-left: 0;
 
                 .lineInfo {
                     display: flex;
@@ -149,6 +152,8 @@
 
         //Course List Card
         .courseListCard {
+            grid-area: courseListCard;
+
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -384,15 +389,15 @@
 
 //Media Tablet
 @media (max-width: 1200px) {
-    .mainSection {
+    .mainSectionStudent {
         flex-direction: column;
 
         .sideContent {
             width: 100%;
             display: grid;
             grid-template:
-                "studentCard userInfo"
-                "counter userInfo";
+                 "studentCard studentCard"
+                "courseListCard userInfoCard";
             grid-template-rows: 1fr auto;
 
             .studentCard {
@@ -417,15 +422,16 @@
 
 //Media Tablet Vertical
 @media (max-width: 768px) {
-    .mainSection {
+    .mainSectionStudent {
         flex-direction: column;
 
         .sideContent {
             width: 100%;
             display: grid;
             grid-template:
-                "studentCard counter"
-                "userInfo userInfo";
+                "studentCard "
+                "userInfoCard"
+                "courseListCard ";
 
             .counterContainer {
                 gap: 8px;
@@ -444,12 +450,12 @@
 }
 
 @media (max-width: 576px) {
-    .mainSection {
+    .mainSectionStudent {
         .sideContent {
             grid-template:
                 "studentCard"
-                "counter"
-                "userInfo";
+                "userInfoCard"
+                "courseListCard";
         }
     }
 }

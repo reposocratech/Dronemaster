@@ -13,9 +13,8 @@
     "video comments"
     "description comments"
     "none comments";
-  grid-template-columns:70% 30%;
-  grid-template-rows:   auto auto auto auto auto 0fr ;
-
+  grid-template-columns: 70% 30%;
+  grid-template-rows: auto auto auto auto auto 0fr;
 
   // Lesson title
   .courseNameCard {
@@ -27,7 +26,6 @@
     color: white;
     gap: 12px;
     margin-bottom: 12px;
-
 
     .cardTitle {
       display: flex;
@@ -53,14 +51,16 @@
   //Image or Video
   .introMultimedia {
     grid-area: video;
-    width: calc( 100% - 8px);
+    width: calc(100% - 8px);
     aspect-ratio: 16/9;
     position: relative;
     display: flex;
     justify-content: center;
-     margin-top: 8px;;
+    margin-top: 8px;
+    iframe,
     img {
       width: 100%;
+      height: 100%;
       object-fit: cover;
       object-position: center;
       border-radius: 8px;
@@ -70,7 +70,7 @@
   //Text card
   .courseTextInfoCard {
     grid-area: description;
-    width: calc( 100% - 8px);
+    width: calc(100% - 8px);
     max-height: fit-content;
     display: flex;
     flex-direction: column;
@@ -131,7 +131,7 @@
     padding: 12px;
     color: white;
     gap: 12px;
-     margin-top: 8px;;
+    margin-top: 8px;
 
     .listHeadline {
       padding: 8px 8px 0 8px;
@@ -192,16 +192,37 @@
             padding: 0 8px;
 
             .lessonTitle {
-              border-bottom: 1px solid $TertiaryDarkColor;
               display: flex;
               justify-content: space-between;
+              height: 30px;
+              border-bottom: 1px solid $TertiaryDarkColor;
               align-items: end;
+              gap: 3px;
 
               .lessonText {
-                width: calc(100% - 104px);
+                margin: 0;
+                align-self: end;
                 overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+              }
+              .openLessonButton {
+                background-color: transparent;
+                color: $PrimaryOrangeColor;
+                border: none;
+                align-self: end;
+                padding: 0;
+                width: 50px;
+                justify-self: end;
+              }
+            }
+            .lessonTitle:hover {
+              color: $PrimaryOrangeColor;
+              cursor: pointer;
+              .icon3,
+              .icon {
+                color: $PrimaryLightColor;
               }
             }
           }
@@ -209,8 +230,6 @@
       }
     }
   }
-
-
 
   //Coments Card
   .commentsCard {
@@ -225,7 +244,7 @@
     gap: 12px;
     margin-top: 8px;
     min-height: 250px;
-   
+
     .cardTitle {
       display: flex;
       align-items: center;
@@ -247,7 +266,7 @@
         background-color: #333333;
         padding: 8px;
         padding-bottom: 0;
-         margin-top: 8px;;
+        margin-top: 8px;
 
         .userImgContainer {
           overflow-y: hidden;
@@ -389,51 +408,41 @@
         }
       }
 
-      .noCommnetsContainer{
+      .noCommnetsContainer {
         margin-top: 12px;
         padding: 12px;
         width: 100%;
         background-color: #333333;
-        display:flex;
+        display: flex;
         flex-direction: column;
         align-items: center;
         border-radius: 8px;
         color: $TertiaryDarkColor;
-        p{
+        p {
           margin: 0;
           text-align: center;
-          
         }
       }
     }
-
-    
   }
-
- 
 
   .commentsCard::-webkit-scrollbar {
     width: 10px;
   }
-  
+
   .commentsCard::-webkit-scrollbar-thumb {
     background-color: #7d7c7c;
     border-radius: 5px;
   }
-  
+
   .commentsCard::-webkit-scrollbar-thumb:hover {
     background-color: #555;
   }
-  
+
   .commentsCard::-webkit-scrollbar-track {
     background-color: $CuaternaryDark;
     border-radius: 8px;
-
   }
-  
- 
-
-  
 
   //Resource Download Card
   .resourceDownloadCard {
@@ -494,36 +503,36 @@
 }
 
 //Media XL
-@media (max-width: 1400px){
-  .lessonInfoMainSection{
+@media (max-width: 1400px) {
+  .lessonInfoMainSection {
     padding: 4vh 4vw;
   }
 }
 
 //Media XL
-@media (max-width: 1200px){
-  .lessonInfoMainSection{
+@media (max-width: 1200px) {
+  .lessonInfoMainSection {
     grid-template-areas:
-    "CourseTitle "
-    "video"
-    "unitsList "
-    "resource "
-    "description"
-    "comments";
-  grid-template-columns:100%;
-  grid-template-rows:   auto auto auto auto auto auto ;
+      "CourseTitle "
+      "video"
+      "unitsList "
+      "resource "
+      "description"
+      "comments";
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto auto auto auto auto;
 
-  .courseNameCard,
-  .introMultimedia,
-  .courseTextInfoCard,
-  .allUnitsLessonCard,
-  .commentsCard,
-  .resourceDownloadCard{
-    width: 100%;
-  }
+    .courseNameCard,
+    .introMultimedia,
+    .courseTextInfoCard,
+    .allUnitsLessonCard,
+    .commentsCard,
+    .resourceDownloadCard {
+      width: 100%;
+    }
 
-  .commentsCard{
-    max-height: 400px;
-  }
+    .commentsCard {
+      max-height: 400px;
+    }
   }
 }

@@ -132,6 +132,7 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
                 <BsEye onClick={() => disableUnit(unit_id[unitIndex])} />
               ) : (
                 <BsEyeSlash onClick={() => enableUnit(unit_id[unitIndex])} />
+
               )}
             </div>
           </div>

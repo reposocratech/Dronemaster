@@ -22,7 +22,7 @@
     .categoryTitle {
       width: 100%;
       margin: 0;
-      padding: 2vh 2vw 0 2vw;
+      padding: 0 2vw 0 2vw;
       line-height: 40px;
     }
 
@@ -60,7 +60,7 @@
         width: 100%;
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: start;
         gap: 40px;
 
         .courseCard {
@@ -101,7 +101,7 @@
               .courseTitle {
                 width: 100%;
                 padding-top: 2px;
-                height: clamp(62px, 5.5vw, 65px);
+                // height: clamp(62px, 5.5vw, 65px);
                 border-bottom: $border-bottom;
                 text-align: center;
                 line-height: 28px;
@@ -124,6 +124,17 @@
                 .tag {
                   padding: 0 5px;
                   color: $TertiaryDarkColor;
+                }
+              }
+
+              .dateContainer{
+                display: flex;
+                align-items: center;
+                color: $TertiaryDarkColor;
+                gap: 8px;
+
+                .icon{
+                  color: $PrimaryOrangeColor;
                 }
               }
 

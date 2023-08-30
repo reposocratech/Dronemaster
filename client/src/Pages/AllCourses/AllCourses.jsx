@@ -31,13 +31,13 @@ export const AllCourses = () => {
   }, []);
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 900 && window.innerWidth < 1100) {
+      if (window.innerWidth >= 600 && window.innerWidth < 900) {
         setCounterRatio(1);
-      } else if (window.innerWidth >= 1100 && window.innerWidth < 1400) {
+      } else if (window.innerWidth >= 900 && window.innerWidth < 1200) {
         setCounterRatio(2);
-      } else if (window.innerWidth >= 1400 && window.innerWidth < 1700) {
+      } else if (window.innerWidth >= 1200 && window.innerWidth < 1500) {
         setCounterRatio(3);
-      } else if (window.innerWidth >= 1700) {
+      } else if (window.innerWidth >= 1500) {
         setCounterRatio(4);
       }
     };
