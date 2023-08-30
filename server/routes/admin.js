@@ -76,4 +76,11 @@ router.put(
 // http://localhost:4000/admin/inscriptionDates
 router.get("/inscriptionDates", adminControllers.viewInscriptionDates);
 
+// 17.- Delete resource into a lesson
+// http://localhost:4000/admin/deleteResource/:resource_id/:lesson_id
+router.delete(
+  "/deleteResource/:resource_id/:lesson_id",
+  adminControllers.deleteResource
+);
+
 module.exports = router;

@@ -60,8 +60,8 @@
 
 
     grid-template-columns: 1fr;
-    align-items: center;
-    place-items: center;
+    align-items: start;
+    place-items: start;
     grid-gap: 10px;
 
     .inputName {

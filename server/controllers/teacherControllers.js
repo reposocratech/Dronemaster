@@ -74,14 +74,24 @@ class teacherControllers {
   };
 
   // 8.- Delete resource into a lesson uploaded by a teachers
-  // http://localhost:4000/teachers/deleteResource/:user_id/:resource_id
+  // http://localhost:4000/teachers/deleteResource/:user_id/:resource_id/:lesson_id
   deleteTeacherResource = (req, res) => {
-    const { user_id, resource_id } = req.params;
+    const { user_id, resource_id, lesson_id } = req.params;
 
-    let sql = `DELETE FROM resource WHERE resource_id = ${resource_id} AND user_id = ${user_id}`;
+    let sql1 = `UPDATE lesson SET resource_id = null WHERE lesson_id = ${lesson_id}`;
 
-    connection.query(sql, (error, result) => {
-      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    connection.query(sql1, (error, result1) => {
+      if (error) {
+        res.status(400).json({ error });
+      } else {
+        let sql2 = `DELETE FROM resource WHERE resource_id = ${resource_id} AND created_by_user_id = ${user_id}`;
+
+        connection.query(sql2, (error, result2) => {
+          error
+            ? res.status(400).json({ error })
+            : res.status(200).json(result2);
+        });
+      }
     });
   };
 
@@ -90,7 +100,7 @@ class teacherControllers {
   selectAllTeacherResources = (req, res) => {
     const { user_id } = req.params;
 
-    let sql = `SELECT resource_id FROM resource WHERE user_id = ${user_id}`;
+    let sql = `SELECT resource_id FROM resource WHERE created_by_user_id = ${user_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);

@@ -41,7 +41,7 @@ router.get("/examName/:user_id/:course_id", teacherControllers.getExamName);
 // 8.- Delete resource into a lesson uploaded by a teachers
 // http://localhost:4000/teachers/deleteResource/:user_id/:resource_id
 router.delete(
-  "/deleteResource/:user_id/:resource_id",
+  "/deleteResource/:user_id/:resource_id/:lesson_id",
   teacherControllers.deleteTeacherResource
 );
 

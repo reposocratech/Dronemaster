@@ -11,6 +11,7 @@ export const AllCourses = () => {
   const [counter, setCounter] = useState(0);
   const [counterRatio, setCounterRatio] = useState(1);
   const { course } = useContext(DroneMasterContext);
+
   //Gets categories data
   useEffect(() => {
     axios
@@ -20,15 +21,18 @@ export const AllCourses = () => {
       })
       .catch((error) => console.log(error));
   }, []);
+
   //Gets course data
   useEffect(() => {
     axios
       .get("http://localhost:4000/courses/allCourses")
       .then((res) => {
         setCourseData(res.data);
+
       })
       .catch((error) => console.log(error));
   }, []);
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 900 && window.innerWidth < 1100) {
@@ -47,9 +51,12 @@ export const AllCourses = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  console.log(courseData);
+  console.log(categoryData);
   return (
     <section className="allCoursesContainer px-sm-5">
-      {!course &&
+      {(courseData && !course) &&
         categoryData?.map((cat) => {
           return (
             <CategoryContainer
@@ -60,7 +67,8 @@ export const AllCourses = () => {
             />
           );
         })}
-      {(course?.length === 0 || course === undefined) && (
+
+      {(course?.length === 0) && (
         <>
           <div className="categoryContainer">
             <h2 className="categoryTitle text-center text-md-start">
@@ -72,6 +80,7 @@ export const AllCourses = () => {
           </div>
         </>
       )}
+
       {course?.length > 0 && (
         <div className="allCoursesContainer p-0 px-sm-5">
           <div className="categoryContainer">
@@ -92,11 +101,11 @@ export const AllCourses = () => {
                 </div>
               )}
               <div className="courseCardContainer">
-                {course?.slice(counter, counter + counterRatio).map((elem) => {
+                {courseData?.slice(counter, counter + counterRatio).map((elem) => {
                   return <CourseCard oneCourse={elem} />;
                 })}
               </div>
-              {counter + counterRatio < course?.length ? (
+              {counter + counterRatio < courseData?.length ? (
                 <div className="navigationButtonContainerRight">
                   <MdNavigateNext
                     className="navigationButton"

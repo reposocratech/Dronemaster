@@ -1,4 +1,4 @@
-@import "../../../../../../../../public/styles/variables";
+@import "../../../../../../../public/styles/variables";
 
 .courseCreationModalContainer {
   backdrop-filter: blur(4px);
@@ -53,21 +53,17 @@
     }
   }
 
-  .modalBodyUser {
+  .modalBodyCategory {
     height: fit-content;
     padding: 12px clamp(20px, 6vw, 40px);
     background-color: #9d9d9d;
     width: 100%;
     display: grid;
     grid-template:
-      "inputName"
-      "inputLastName"
-      "inputEmail"
-      "inputPassword"
-      "inputType";
+      "inputName inputName";
 
     grid-template-columns: 1fr;
-    grid-template-rows: auto;
+    grid-template-rows: 1fr;
     align-items: center;
     place-items: center;
     grid-gap: 6px;
@@ -76,31 +72,10 @@
       grid-area: inputName;
     }
 
-    .inputLastName {
-      grid-area: inputLastName;
-    }
-
-    .inputEmail {
-      grid-area: inputEmail;
-    }
-
-    .inputPassword {
-      grid-area: inputPassword;
-    }
-
-    .inputType {
-      grid-area: inputType;
-    }
-
-    .inputName,
-    .inputLastName,
-    .inputEmail,
-    .inputPassword,
-    .inputType {
+    .inputName {
       padding: 0 8px;
       width: 100%;
     }
-
 
     .input2 {
       width: 100%;
@@ -129,12 +104,6 @@
     input[type="number"]::-webkit-inner-spin-button,
     input[type="number"]::-webkit-outer-spin-button {
       -webkit-appearance: none;
-    }
-
-    .errorMessage {
-      font-weight: bold;
-      color: $PrimaryOrangeColor;
-      padding-left: 10px;
     }
   }
 

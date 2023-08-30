@@ -217,6 +217,28 @@ class adminControllers {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
   };
+
+  // 17.- Delete resource into a lesson
+  // http://localhost:4000/admin/deleteResource/:resource_id/:lesson_id
+  deleteResource = (req, res) => {
+    const { resource_id, lesson_id } = req.params;
+
+    let sql1 = `UPDATE lesson SET resource_id = null WHERE lesson_id = ${lesson_id}`;
+
+    connection.query(sql1, (error, result1) => {
+      if (error) {
+        res.status(400).json({ error });
+      } else {
+        let sql2 = `DELETE FROM resource WHERE resource_id = ${resource_id}`;
+
+        connection.query(sql2, (error, result2) => {
+          error
+            ? res.status(400).json({ error })
+            : res.status(200).json(result2);
+        });
+      }
+    });
+  };
 }
 
 module.exports = new adminControllers();
