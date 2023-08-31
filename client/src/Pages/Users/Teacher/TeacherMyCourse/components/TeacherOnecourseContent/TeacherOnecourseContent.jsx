@@ -23,6 +23,7 @@ export const TeacherOnecourseContent = ({
   const [openUnits, setOpenUnits] = useState([]);
   const navigate = useNavigate();
   const [teacherResource, setTeacherResource] = useState([]);
+  const [file, setFile] = useState(false);
 
   console.log(myCourseInfo);
 
@@ -97,7 +98,6 @@ export const TeacherOnecourseContent = ({
   };
 
   const deleteResource = (lesson_id, resource_id) => {
-    console.log(lesson_id);
     axios
       .delete(
         `http://localhost:4000/teachers/deleteResource/${user.user_id}/${resource_id}/${lesson_id}`
@@ -106,6 +106,20 @@ export const TeacherOnecourseContent = ({
       .catch((err) => console.log(err));
   };
 
+  const uploadCourseExam = (e) => {
+    const newFormData = new FormData();
+    newFormData.append("file", e.target.files[0])
+
+    axios
+      .put(`http://localhost:4000/teachers/uploadCourseExam/${course_id}`, newFormData)
+      .then((res) => {
+        setFile(!file)
+        setResetUseEffect(!resetUseEffect)
+      })
+      .catch((err) => console.log(err))
+  }
+
+  console.log("esa infoooo", myCourseInfo);
   return (
     <div className="allUnitsLessonCard">
       <div className="cardTitle">
@@ -117,14 +131,40 @@ export const TeacherOnecourseContent = ({
             {[myCourseInfo && myCourseInfo[0].course_name]}
           </h5>
         </div>
-        <button
-          className="btnOutline1"
-          onClick={() =>
-            navigate(`/courses/courseInfo/${myCourseInfo[0].course_id}`)
+        <div className="d-flex justify-content-between d-sm-flex justify-content-sm-between" style={{ minWidth: "260px" }}>
+          {(myCourseInfo && myCourseInfo[0]?.exam_file === null) && <>
+            <label role="button" htmlFor="inputFile" className="btnOutline1">
+              Subir Examen
+            </label>
+            <input
+              type="file"
+              onChange={(e) => uploadCourseExam(e)}
+              className="d-none"
+              id="inputFile"
+            />
+          </>
           }
-        >
-          Ver más
-        </button>
+          {(myCourseInfo && myCourseInfo[0]?.exam_file !== null) && <>
+            <label role="button" htmlFor="inputFile" className="btnOutline1">
+              Cambiar Examen
+            </label>
+            <input
+              type="file"
+              onChange={(e) => uploadCourseExam(e)}
+              className="d-none"
+              id="inputFile"
+            />
+          </>}
+
+          <button
+            className="btnOutline1"
+            onClick={() =>
+              navigate(`/courses/courseInfo/${myCourseInfo[0].course_id}`)
+            }
+          >
+            Ver más
+          </button>
+        </div>
       </div>
 
       <div className="listContainer">
@@ -150,97 +190,64 @@ export const TeacherOnecourseContent = ({
             <ul>
               {myCourseInfo
                 .filter((item) => item.unit_tittle === unitName)
-                .map((lesson) => {
+                .map((lesson) => (
                   if (lesson.lesson_id !== null) {
                     return (
-                      <li
-                        key={lesson.lesson_id}
-                        className="listedLesson"
-                        style={{
-                          height: openUnits.includes(unitIndex)
-                            ? openedHeight
-                            : closedHeight,
-                          transition: "height 0.75s ease-in-out",
-                        }}
-                      >
-                        <div className="lessonTitle">
-                          <div className="lessonText">
-                            {lesson.lesson_title}
-                          </div>
-                          <div className="resourceContainer">
-                            {lesson.resource_id &&
-                              lesson?.resource_is_hidden === 1 && (
-                                <BsFillEyeFill
-                                  className="deleteIcon"
-                                  onClick={() =>
-                                    enableResource(lesson.resource_id)
-                                  }
-                                />
-                              )}
-                            {lesson.resource_id &&
-                              lesson?.resource_is_hidden === 0 && (
-                                <BsFillEyeFill
-                                  className="downloadIcon"
-                                  onClick={() =>
-                                    disableResource(lesson.resource_id)
-                                  }
-                                />
-                              )}
-                            {lesson.resource_id &&
-                              lesson?.resource_is_hidden === 0 && (
-                                <BsFillFileEarmarkArrowDownFill
-                                  className="downloadIcon"
-                                  onClick={() =>
-                                    downloadResource(lesson.resource_id)
-                                  }
-                                />
-                              )}
-                            {!lesson.resource_id && (
-                              <>
-                                <label
-                                  htmlFor={lesson.lesson_id}
-                                  className="d-inline"
-                                >
-                                  <BsFillFileArrowUpFill className="uploadIcon" />
-                                </label>
-                                <input
-                                  type="file"
-                                  onChange={(e) =>
-                                    uploadResource(
-                                      e,
-                                      lesson.lesson_id,
-                                      lesson.unit_id
-                                    )
-                                  }
-                                  className="d-none"
-                                  id={lesson.lesson_id}
-                                />
-                              </>
-                            )}
+                  <li
+                    key={lesson.lesson_id}
+                    className="listedLesson"
+                    style={{
+                      height: openUnits.includes(unitIndex)
+                        ? openedHeight
+                        : closedHeight,
+                      transition: "height 0.75s ease-in-out",
+                    }}
+                  >
+                    <div className="lessonTitle">
+                      <div className="lessonText"> <span className="navigateHover" role="button" onClick={() => navigate(`/courses/courseInfo/lessonInfo/${course_id}/${lesson.unit_id}/${lesson.lesson_id}`)}>{lesson.lesson_title}</span></div>
+                      <div className="resourceContainer">
+                        {(lesson.resource_id && lesson?.resource_is_hidden === 1) && (
+                          <BsFillEyeFill
+                            className="deleteIcon"
+                            onClick={() => enableResource(lesson.resource_id)}
+                          />
+                        )}
+                        {(lesson.resource_id && lesson?.resource_is_hidden === 0) && (
+                          <BsFillEyeFill
+                            className="downloadIcon"
+                            onClick={() => disableResource(lesson.resource_id)}
+                          />
+                        )}
+                        {(lesson.resource_id && lesson?.resource_is_hidden === 0) && <BsFillFileEarmarkArrowDownFill
+                          className="downloadIcon"
+                          onClick={() => downloadResource(lesson.resource_id)}
+                        />}
+                        {!lesson.resource_id && <>
+                          <label htmlFor={lesson.lesson_id} className="d-inline">
+                            <BsFillFileArrowUpFill className="uploadIcon" />
+                          </label>
+                          <input
+                            type="file"
+                            onChange={(e) => uploadResource(e, lesson.lesson_id, lesson.unit_id)
+                            }
+                            className="d-none"
+                            id={lesson.lesson_id}
+                          />
+                        </>}
 
-                            {teacherResource &&
-                              teacherResource.filter(
-                                (elem) =>
-                                  elem.resource_id === lesson.resource_id
-                              ).length > 0 &&
-                              lesson.resource_id &&
-                              lesson?.resource_is_hidden === 0 && (
-                                <BsFillFileEarmarkExcelFill
-                                  className="deleteIcon"
-                                  onClick={() =>
-                                    deleteResource(
-                                      lesson.lesson_id,
-                                      lesson.resource_id
-                                    )
-                                  }
-                                />
-                              )}
-                          </div>
-                        </div>
-                      </li>
-                    );
-                  }
-                })}
+                        {teacherResource && teacherResource.filter(
+                          (elem) => elem.resource_id === lesson.resource_id
+                        ).length > 0 && lesson.resource_id && lesson?.resource_is_hidden === 0 && (
+                            <BsFillFileEarmarkExcelFill
+                              className="deleteIcon"
+                              onClick={() => deleteResource(lesson.lesson_id, lesson.resource_id)}
+                            />
+                          )}
+                      </div>
+                    </div>
+                  </li>
+                ))}
+
             </ul>
           </div>
         ))}

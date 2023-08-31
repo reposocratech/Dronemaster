@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../AllCourses/allCoursesStyle.scss";
 import "./homeApp.scss";
 import { Container, Row, Col } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import { CourseCard } from "../../components/CardCourse/CourseCard";
 import drone_home from "../../../public/dashboard_images/drone_home.png";
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
-import { DroneMasterContext } from "../../context/DroneMasterProvider";
 
 const initialCounterValue = {
   TotalTeachers: 0,
@@ -23,8 +21,8 @@ const HomeApp = () => {
   const [counter, setCounter] = useState(0);
   const [counterRatio, setCounterRatio] = useState(1);
   const [counter1, setCounter1] = useState(0);
-  const navigate = useNavigate();
 
+  // We use a listener to get the current width for Responsive. Using a counter to know how many cards we need to show.
   const currentWidth = () => {
     const widthScreen = document.body.clientWidth;
     setWidth(widthScreen);
@@ -39,43 +37,14 @@ const HomeApp = () => {
   }, [width]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/counter")
-      .then((res) => {
-        setCounterInfo(res.data[0]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/topCourses")
-      .then((res) => {
-        setTopCourses(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/bestRatedCourses")
-      .then((res) => {
-        setBestRatedCourses(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 700 && window.innerWidth < 900) {
+      if (window.innerWidth >= 700 && window.innerWidth < 768) {
         setCounterRatio(1);
-      } else if (window.innerWidth >= 900 && window.innerWidth < 1200) {
+      } else if (window.innerWidth >= 768 && window.innerWidth < 1200) {
         setCounterRatio(2);
-      } else if (window.innerWidth >= 1200 && window.innerWidth < 1700) {
+      } else if (window.innerWidth >= 1200 && window.innerWidth < 1400) {
         setCounterRatio(3);
-      } else if (window.innerWidth >= 1700) {
+      } else if (window.innerWidth >= 1400) {
         setCounterRatio(4);
       }
     };
@@ -85,6 +54,35 @@ const HomeApp = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/counter")
+      .then((res) => {
+        setCounterInfo(res.data[0]);
+      })
+      .catch((err) => { });
+  }, []);
+
+  // Top course mapped. Getting the lastest courses ordered by course_id descent.
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/topCourses")
+      .then((res) => {
+        setTopCourses(res.data);
+      })
+      .catch((err) => { });
+  }, []);
+
+  // Best rated courses mapped. Getting the best rated courses.
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/bestRatedCourses")
+      .then((res) => {
+        setBestRatedCourses(res.data);
+      })
+      .catch((err) => { });
   }, []);
 
   return (
@@ -170,7 +168,7 @@ const HomeApp = () => {
           </div>
         </div>
       </div>
-      {topCourses > 0 &&
+      {topCourses.length > 0 &&
         <div className="allCoursesContainer p-0 px-sm-5">
           <div className="categoryContainer">
             <h2 className="categoryTitle text-center text-md-start">
@@ -219,7 +217,7 @@ const HomeApp = () => {
                 <div className="navigationButtonContainerLeft">
                   <MdNavigateBefore
                     className="navigationButton"
-                    onClick={() => setCounter1(counter1 - counterRatio1)}
+                    onClick={() => setCounter1(counter1 - counterRatio)}
                   />
                 </div>
               ) : (
@@ -229,16 +227,16 @@ const HomeApp = () => {
               )}
               <div className="courseCardContainer">
                 {bestRatedCourses
-                  ?.slice(counter1, counter1 + counterRatio1)
+                  ?.slice(counter1, counter1 + counterRatio)
                   .map((elem) => {
                     return <CourseCard key={elem.course_id} oneCourse={elem} />;
                   })}
               </div>
-              {counter1 + counterRatio1 < bestRatedCourses?.length ? (
+              {counter1 + counterRatio < bestRatedCourses?.length ? (
                 <div className="navigationButtonContainerRight">
                   <MdNavigateNext
                     className="navigationButton"
-                    onClick={() => setCounter1(counter1 + counterRatio1)}
+                    onClick={() => setCounter1(counter1 + counterRatio)}
                   />
                 </div>
               ) : (

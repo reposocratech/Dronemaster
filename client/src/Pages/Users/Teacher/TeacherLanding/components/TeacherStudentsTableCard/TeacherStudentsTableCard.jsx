@@ -30,7 +30,7 @@ export const TeacherStudentsTableCard = ({ myStudentsData }) => {
           <h5 className="titleText">Mis Alumnos</h5>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className="d-flex justify-content-center d-sm-flex justify-content-sm-end" onSubmit={handleSubmit(onSubmit)}>
           <div className="searchBar">
             <FiSearch />
             <input

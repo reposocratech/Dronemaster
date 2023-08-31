@@ -35,7 +35,6 @@
       // border-radius: 10px;
       border-top: 3px solid $PrimaryOrangeColor;
 
-
       .navigationButtonContainerLeft {
         display: flex;
         justify-content: start;
@@ -61,29 +60,26 @@
         display: flex;
         justify-content: center;
         align-items: start;
-        gap: 40px;
+        gap: 70px;
 
         .courseCard {
-          width: 300px;
+          width: 220px;
           display: flex;
           flex-direction: column;
           position: relative;
-
 
           .btnNormal {
             height: 40px;
             position: absolute;
             width: 120px;
-            left: calc(clamp(110px, 12.5vw, 165px) - 60px);
-            top: calc((clamp((123.75px / 2), 7vw, (185.63px / 2)) - 20px));
+            left: calc(115px - 60px);
+            top: calc((129.38px / 2) - 20px);
             display: none;
           }
 
-
-
           .courseCardContent {
             .coursePreviewContainer {
-              width: 300px;
+              width: 220px;
 
               .preview {
                 width: 100%;
@@ -121,13 +117,13 @@
                 }
               }
 
-              .dateContainer{
+              .dateContainer {
                 display: flex;
                 align-items: center;
                 color: $TertiaryDarkColor;
                 gap: 8px;
 
-                .icon{
+                .icon {
                   color: $PrimaryOrangeColor;
                 }
               }
@@ -146,7 +142,6 @@
 
                 .ratingCounter {
                   margin-bottom: 10px;
-
                   font-size: small;
                   color: $TertiaryDarkColor;
                 }
@@ -166,12 +161,9 @@
                   font-size: medium;
                 }
 
-
                 button {
                   display: none;
                 }
-
-
               }
 
               // media-query
@@ -183,14 +175,8 @@
                 }
               }
             }
-
-
           }
-
-
         }
-
-
 
         .courseCard:hover {
           .btnNormal {
@@ -201,10 +187,7 @@
 
           .courseCardContent {
             filter: brightness(0.3);
-
-
           }
-
         }
 
         // media-query -> cardCourse hover
@@ -218,7 +201,6 @@
               filter: brightness(1);
             }
           }
-
         }
       }
     }

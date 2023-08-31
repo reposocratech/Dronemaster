@@ -17,24 +17,27 @@ export const CategoryContainer = ({
     );
   }, [courseData]);
 
+  // We use a listener to get the current width for Responsive. Using a counter to know how many cards we need to show.
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 900 && window.innerWidth < 1100) {
+      if (window.innerWidth >= 700 && window.innerWidth < 768) {
         setCounterRatio(1);
-      } else if (window.innerWidth >= 1100 && window.innerWidth < 1400) {
+      } else if (window.innerWidth >= 768 && window.innerWidth < 1200) {
         setCounterRatio(2);
-      } else if (window.innerWidth >= 1400 && window.innerWidth < 1700) {
+      } else if (window.innerWidth >= 1200 && window.innerWidth < 1400) {
         setCounterRatio(3);
-      } else if (window.innerWidth >= 1700) {
+      } else if (window.innerWidth >= 1400 && window.innerWidth < 1700) {
         setCounterRatio(4);
-      }
-    };
-
+      } else if (window.innerWidth >= 1700) {
+        setCounterRatio(5);
+      };
+    }
     handleResize(); // Call initially
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
+
   }, []);
 
   return (

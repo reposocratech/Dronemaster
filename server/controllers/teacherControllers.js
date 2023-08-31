@@ -42,7 +42,7 @@ class teacherControllers {
   selectMyCourseInfo = (req, res) => {
     const { course_id } = req.params;
 
-    let sql = `SELECT course.score AS course_score, course.course_id, unit.unit_id, unit.unit_is_hidden, lesson.lesson_id, lesson.lesson_is_hidden, resource.resource_id, resource.resource_is_hidden, course.course_name, unit.unit_tittle, lesson.lesson_title FROM course LEFT JOIN unit ON course.course_id = unit.course_id LEFT JOIN lesson ON unit.course_id = lesson.course_id AND unit.unit_id = lesson.unit_id LEFT JOIN resource ON lesson.resource_id = resource.resource_id WHERE course.course_id = ${course_id}`;
+    let sql = `SELECT course.score AS course_score, course.course_id, course.exam_file, unit.unit_id, unit.unit_is_hidden, lesson.lesson_id, lesson.lesson_is_hidden, resource.resource_id, resource.resource_is_hidden, course.course_name, unit.unit_tittle, lesson.lesson_title FROM course LEFT JOIN unit ON course.course_id = unit.course_id LEFT JOIN lesson ON unit.course_id = lesson.course_id AND unit.unit_id = lesson.unit_id LEFT JOIN resource ON lesson.resource_id = resource.resource_id WHERE course.course_id = ${course_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
@@ -101,6 +101,32 @@ class teacherControllers {
     const { user_id } = req.params;
 
     let sql = `SELECT resource_id FROM resource WHERE created_by_user_id = ${user_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 10.- Upload course examName
+  // http://localhost:4000/teachers/uploadCourseExam/:course_id
+  uploadCourseExam = (req, res) => {
+    const { course_id } = req.params;
+
+    let exam_file = req.file.filename;
+
+    let sql = `UPDATE course SET exam_file = "${exam_file}" WHERE course_id = ${course_id}`;
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  // 11.- Get teacher email
+  // http://localhost:4000/teachers/teacherEmail/:course_id
+  getTeacherEmail = (req, res) => {
+    const { course_id } = req.params;
+
+    let sql = `SELECT user.email FROM user JOIN user_course ON user.user_id = user_course.user_id AND user_course.course_id = ${course_id} AND user.type = 1 ORDER BY user_course.start_date DESC`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);

@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { saveLocalStorageDroneMaster } from "../../../helper/localStorageDroneMaster";
 import { DroneMasterContext } from "../../../context/DroneMasterProvider";
 import "../../../../public/styles/registerLoginFormStyle.scss";
-
 import Modal from "react-bootstrap/Modal";
 
 const LoginModal = ({
@@ -15,6 +14,7 @@ const LoginModal = ({
 }) => {
   const [errorMessage, setErrorMessage] = useState();
   const closeLoginModal = () => {
+    setErrorMessage()
     setShowLoginModal(false);
     reset();
   };
@@ -31,6 +31,7 @@ const LoginModal = ({
       password: "",
     },
   });
+
   const onSubmit2 = (data) => {
     axios
       .post("http://localhost:4000/login", data)

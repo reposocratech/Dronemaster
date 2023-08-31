@@ -50,6 +50,8 @@ export const CourseOneLesson = () => {
       .catch((err) => console.log(err));
   };
 
+  console.log("esa lessssonnn", lessonData);
+
   return (
     <section className="lessonInfoMainSection">
       {/* Course name title */}
@@ -92,17 +94,31 @@ export const CourseOneLesson = () => {
         myCourseInfo={courseUnitsLessons}
         course_id={course_id}
       />
-      <div className="resourceDownloadCard">
-        <div className="titleCont">
-          <h6 className="mb-0">Recurso</h6>
-          <div className="downloadIconCont " onClick={handleDownload}>
-            <span className="dowloadText mb-0">Descargar</span>
-            <p className="icon2 mb-0">
-              <BsFileEarmarkArrowDownFill />
-            </p>
+
+      {lessonData?.resource_id !== null &&
+        <div className="resourceDownloadCard">
+          <div className="titleCont">
+            <h6 className="mb-0">Recurso</h6>
+            <div className="downloadIconCont " onClick={handleDownload}>
+              <span className="dowloadText mb-0">Descargar</span>
+              <p className="icon2 mb-0">
+                <BsFileEarmarkArrowDownFill />
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      }
+      {lessonData?.resource_id === null &&
+        <div className="resourceDownloadCard">
+          <div className="titleCont">
+            <h6 className="mb-0">Recurso</h6>
+            <div className="d-flex align-items-end ">
+              <p className="mb-0" style={{ fontSize: "14px", marginTop: "6px" }}>No hay recurso para descargar</p>
+            </div>
+          </div>
+        </div>
+      }
+
     </section>
   );
 };

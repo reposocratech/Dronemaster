@@ -95,7 +95,6 @@ export const LessonCreationModal = ({
             <input
               placeholder="Nombre de la unidad"
               {...register("lesson_url_video", {
-                required: "Debes rellenar el nombre del curso",
                 minLength: { value: 3, message: "Minimo de 3 letras" },
                 maxLength: { value: 100, message: "Maximo 100 caracteres" },
               })}

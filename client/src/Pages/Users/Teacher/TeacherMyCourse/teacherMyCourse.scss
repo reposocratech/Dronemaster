@@ -233,13 +233,17 @@
           display: flex;
           align-items: center;
           gap: 20px;
+          min-width: clamp(200px, 30vw, 230px);
 
           .titleText {
             margin: 0;
           }
         }
 
+
         .searchBar {
+          max-width: 300px;
+          min-width: 250px;
           border-radius: 20px;
           border: 2px solid $PrimaryOrangeColor;
           padding: 0 10px;
@@ -251,12 +255,25 @@
             width: 100%;
             border: none;
             background: transparent;
+            color: white;
           }
 
           input:focus {
             border: none;
             outline: none;
           }
+        }
+
+
+
+      }
+
+      @media (max-width: 576px) {
+        .cardTitle {
+          flex-direction: column;
+          padding: 0;
+          gap: 10px;
+
         }
       }
 
@@ -412,6 +429,13 @@
         }
       }
 
+      @media (max-width: 768px) {
+        .cardTitle {
+          flex-direction: column;
+          gap: 10px;
+        }
+      }
+
       .listContainer {
         padding: 0 12px;
         display: flex;
@@ -464,6 +488,10 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: end;
+
+                .navigateHover:hover {
+                  color: #f7ab16;
+                }
 
                 .lessonText {
                   width: calc(100% - 104px);
@@ -520,7 +548,6 @@
     text-align: center !important;
   }
 
-  .ocultado {}
 }
 
 //Media Tablet

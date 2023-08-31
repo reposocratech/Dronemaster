@@ -13,6 +13,14 @@ export const ExamCard = ({ setShowRatingModal, showRatingModal, counterRating, s
     const [fileExam, setFileExam] = useState();
     const [file, setFile] = useState();
     const [userStatus, setUserStatus] = useState()
+    const [teacherEmail, setTeacherEmail] = useState()
+
+    useEffect(() => {
+        axios
+            .get(`http://localhost:4000/teachers/teacherEmail/${courseMaterial[0]?.course_id}`)
+            .then((res) => setTeacherEmail(res.data[0].email))
+            .catch((err) => console.log(err))
+    }, [])
 
     useEffect(() => {
         axios
@@ -44,7 +52,7 @@ export const ExamCard = ({ setShowRatingModal, showRatingModal, counterRating, s
         setFile(e.target.files[0])
     }
 
-    const uploadFileExam = () => {
+    const uploadFileExam = async () => {
         const newFormData = new FormData()
         if (file !== undefined) {
             newFormData.append("file", file)
@@ -59,6 +67,20 @@ export const ExamCard = ({ setShowRatingModal, showRatingModal, counterRating, s
             })
             .catch((err) => console.log(err))
 
+        try {
+            const response = await fetch("http://localhost:4000/infoEmail", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ user_name: user.user_name, user_lastname: user.user_lastname, phone: user.phone, email: user.email, course_name: courseMaterial[0]?.course_name, status: 2, teacher_email: teacherEmail }),
+            });
+
+            const result = await response.json();
+
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     return (

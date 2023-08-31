@@ -34,11 +34,14 @@ router.put("/disableUser/:user_id", adminControllers.disableUser);
 
 // 8.- Passed course
 // localhost:4000/admin/passedCourse/:user_id
-router.put("/passedCourse/:user_id", adminControllers.passedCourse);
+router.put("/passedCourse/:user_id/:course_id", adminControllers.passedCourse);
 
 // 9.- Not passed course
 // localhost:4000/admin/notPassedCourse/:user_id
-router.put("/notPassedCourse/:user_id", adminControllers.notPassedCourse);
+router.put(
+  "/notPassedCourse/:user_id/:course_id",
+  adminControllers.notPassedCourse
+);
 
 // 10.- view All Courses (admin)
 // http://localhost:4000/admin/allCourses

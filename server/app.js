@@ -44,14 +44,46 @@ const transporter = nodemailer.createTransport({
 
 app.post("/infoEmail", async (req, res) => {
   try {
-    const { user_name, phone, email, description } = req.body;
+    const {
+      user_name,
+      user_lastname,
+      phone,
+      email,
+      course_name,
+      course_price,
+      start_date,
+      status,
+      teacher_email,
+      course_date,
+    } = req.body;
+    console.log(req.body);
+    const currentDate = new Date();
 
-    await transporter.sendMail({
-      from: email,
-      to: "javiergranadosmartin@gmail.com",
-      subject: `Contactar con ${user_name}`,
-      text: `Nombre: ${user_name}\nTeléfono: ${phone}\nEmail: ${email}\nDescripción: ${description}`,
-    });
+    if (status === 1) {
+      await transporter.sendMail({
+        from: "javiergranadosmartin@gmail.com",
+        to: `javiergranadosmartin@gmail.com,${teacher_email}`,
+        subject: `¡${user_name} ${user_lastname} inscrito en ${course_name}!`,
+        text: `Alumno: ${user_name} ${user_lastname}\nTeléfono: ${
+          phone !== null ? phone : ""
+        }\nEmail: ${email}\n\n${user_name} ${user_lastname} se ha inscrito en el ${course_name}${
+          course_date > currentDate
+            ? ` con fecha de inicio el ${start_date}.`
+            : "."
+        }`,
+      });
+    }
+
+    if (status === 2) {
+      await transporter.sendMail({
+        from: "javiergranadosmartin@gmail.com",
+        to: `javiergranadosmartin@gmail.com,${teacher_email}`,
+        subject: `¡${user_name} ${user_lastname} ha finalizado el ${course_name}!`,
+        text: `Alumno: ${user_name} ${user_lastname}\nTeléfono: ${
+          phone !== null ? phone : ""
+        }\nEmail: ${email}\n\n${user_name} ${user_lastname} ha finalizado el ${course_name}. Su examen está listo para corregir.`,
+      });
+    }
 
     res.json({ message: "Correo enviado exitosamente" });
   } catch (error) {

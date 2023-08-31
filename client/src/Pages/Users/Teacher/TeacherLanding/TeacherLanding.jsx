@@ -50,8 +50,11 @@ export const TeacherLanding = () => {
         counter += 1;
       }
     });
-    if (sum != 0 && counter != 0) {
+    if (sum != 0 && counter != 0 && counter !== undefined) {
       setAverageRating(sum / counter);
+    }
+    else {
+      setAverageRating(0)
     }
   }, [myCoursesData]);
 

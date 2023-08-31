@@ -98,7 +98,7 @@ export const StudentCourseTableInfo = ({
         <div className="coursesTableCard">
           <div className="cardTitle justify-content-center">
             <div className="titleStudent">
-              <h3 className="titleText text-center text-warning">
+              <h3 className="titleText text-center" style={{ color: "#f7ab16" }}>
                 Bienvenido de vuelta {user.user_name}
               </h3>
             </div>
@@ -140,11 +140,11 @@ export const StudentCourseTableInfo = ({
                 <table className="coursesTableStudent mb-4" key={unitIdx}>
                   <thead>
                     <tr style={{ paddingTop: "10px" }}>
-                      <th className="textReduce text-warning w-75">
+                      <th className="textReduce w-75" style={{ color: "#f7ab16" }}>
                         <div className="oculto">{unitName}</div>
                       </th>
-                      <th className="text-warning text-center">Estado</th>
-                      <th className="text-warning text-center">Recursos</th>
+                      <th className="text-center" style={{ color: "#f7ab16" }}>Estado</th>
+                      <th className="text-center" style={{ color: "#f7ab16" }}>Recursos</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -156,8 +156,8 @@ export const StudentCourseTableInfo = ({
                             <>
                               <tr tr key={lessonIdx}>
                                 <td className="textReduce text-start w-75 ps-3">
-                                  <div className="oculto">
-                                    {lesson.lesson_title}
+                                  <div className="oculto" >
+                                    <span className="navigateHover" role="button" onClick={() => navigate(`/courses/courseInfo/lessonInfo/${courseMaterial[0]?.course_id}/${lesson.unit_id}/${lesson.lesson_id}`)}>{lesson.lesson_title}</span>
                                   </div>
                                 </td>
                                 {lesson.resource_is_hidden === 0 && (
