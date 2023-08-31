@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
+import AdminUserEditInfoModal from "./components/AminUserEditInfoModal/AdminUserEditInfoModal";
+import { GiClassicalKnowledge } from "react-icons/gi";
 
 const UserMoreInfoCard = ({
   setMoreInformationStudent,
@@ -8,6 +10,8 @@ const UserMoreInfoCard = ({
   student,
 }) => {
   const [profileImg, setProfileImg] = useState();
+const [editUserForm, setEditUserForm] = useState(false)
+
 
   const closeInfoForm = () => {
     setMoreInformationStudent(false);
@@ -40,6 +44,11 @@ const UserMoreInfoCard = ({
       });
   };
 
+  const openUserEditForm = () => {
+    setEditUserForm(true)
+
+  }
+
   return (
     <Modal
       show={moreInformationStudent}
@@ -49,14 +58,14 @@ const UserMoreInfoCard = ({
     >
       <Modal.Header closeButton className="modalHeader">
         <div className="cardTitle">
-          {/*           <div className="iconContainer">
+                 <div className="iconContainer">
             <GiClassicalKnowledge />
-          </div> */}
+          </div> 
 
           <h4 className="titleText">Informacion de Usuario</h4>
         </div>
       </Modal.Header>
-      <Modal.Body className="modalBody1">
+      <Modal.Body className="modalBodyUser">
         <div className="imgGridContainer">
           <div className="imgContainer">
             <img src={student?.user_img} alt="" />
@@ -82,10 +91,15 @@ const UserMoreInfoCard = ({
             Habilitar
           </button>
         )}
-        <button className="btnNormal" onClick={closeInfoForm}>
+        <button className="btnNormal" onClick={ setEditUserForm}>
           Editar
         </button>
       </Modal.Footer>
+      <AdminUserEditInfoModal
+      editUserForm ={editUserForm}
+      setEditUserForm={setEditUserForm}
+      student={student}
+      />
     </Modal>
   );
 };

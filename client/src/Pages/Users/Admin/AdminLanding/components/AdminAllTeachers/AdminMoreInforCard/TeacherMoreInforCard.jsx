@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
+import AdminTeacherEditInfoModal from "../AdminTeacherEditInfoModal/AdminTeacherEditInfoModal";
 
 const TeacherMoreInforCard = ({
   setMoreInformationTeacher,
@@ -8,7 +9,7 @@ const TeacherMoreInforCard = ({
   teacher,
 }) => {
   const [profileImg, setProfileImg] = useState();
-
+  const [teacherEditForm, setTeacherEditForm] = useState(false);
   useEffect(() => {
     teacher &&
       setProfileImg(`http://localhost:4000/images/users/${teacher?.user_img}`);
@@ -81,10 +82,17 @@ const TeacherMoreInforCard = ({
             Habilitar
           </button>
         )}
-        <button className="btnNormal" onClick={closeInfoForm}>
+        <button className="btnNormal" onClick={setTeacherEditForm}>
           Editar
         </button>
       </Modal.Footer>
+
+      <AdminTeacherEditInfoModal
+      teacherEditForm ={teacherEditForm}
+        
+        setTeacherEditForm={setTeacherEditForm}
+      teacher={teacher}
+      />
     </Modal>
   );
 };

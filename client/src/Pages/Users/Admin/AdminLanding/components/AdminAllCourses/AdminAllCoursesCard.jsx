@@ -4,6 +4,7 @@ import { AiOutlineFolderOpen } from "react-icons/ai";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
 import { AiOutlineStar } from "react-icons/ai";
+import { FiSearch } from "react-icons/fi";
 import { BsPencil } from "react-icons/bs";
 import { BsEye } from "react-icons/bs";
 import { BsEyeSlash } from "react-icons/bs";
@@ -78,8 +79,9 @@ const AdminAllCoursesCard = ({}) => {
     }
   };
 
-  //Buscador
+  //SEARCH BAR FUNCTION 
   const onSubmit = (data) => {
+
     setsearchResultCourse(
       allCourses?.filter((course) =>
         course.course_name
@@ -87,6 +89,7 @@ const AdminAllCoursesCard = ({}) => {
           .includes(data.courseSearch.toLowerCase())
       )
     );
+    console.log("searchResultDataaaaaaa", data.courseSearch);
     reset();
   };
   return (
@@ -110,6 +113,7 @@ const AdminAllCoursesCard = ({}) => {
                 />
               </div>
             </form>
+
             {searchResultCourse && (
               <button
                 onClick={() => setsearchResultCourse()}
@@ -120,6 +124,43 @@ const AdminAllCoursesCard = ({}) => {
             )}
           </div>
         </div>
+        {searchResultCourse ? (
+          <>
+            {searchResultCourse?.length === 0 ? (
+              <p>Sin resultados de busqueda</p>
+            ) : (
+              <>
+                {searchResultCourse?.map((course) => {
+                  return (
+                    <div key={course.course_id} className="unitList">
+                      <div className="unitTittle">
+                        <h6>
+                          <AiOutlineFolderOpen className="icon2 me-2" />
+                          {course.course_name}
+                          <div>
+                            <AiOutlineClockCircle className="icon" />
+                            {course?.course_length}h
+                          </div>
+                          <div>
+                            <AiOutlineStar className="icon" /> {course?.score}
+                          </div>
+                          <div>
+                            <span
+                              onClick={() => {
+                                openUnitCreateModal;
+                              }}
+                            >
+                              <BsPlusCircleFill className="icon" />
+                            </span>
+                          </div>
+                          <span
+                            onClick={() => {
+                              openEditModal(true);
+                              setCourseId(course.course_id);
+                            }}
+                          >
+                            <BsPencil />
+                          </span>
 
         {searchResultCourse ? (
           <>
@@ -216,6 +257,7 @@ const AdminAllCoursesCard = ({}) => {
           </>
         ) : (
           <>
+
             {allCourses?.map((course, courseIdx) => {
               return (
                 <div key={course.course_id} className="courseListed">
@@ -297,6 +339,7 @@ const AdminAllCoursesCard = ({}) => {
                     openCourse={openCourse}
                     courseIdx={courseIdx}
                   />
+
                 </div>
               );
             })}
@@ -318,6 +361,22 @@ const AdminAllCoursesCard = ({}) => {
           setResEffect={setResEffect}
         />
       </div>
+
+      <CourseEditionModal
+        setShowCourseEditionModal={setShowCourseEditionModal}
+        showCourseEditionModal={showCourseEditionModal}
+        course={allCourses}
+        courseId={courseId}
+        setCourseId={setCourseId}
+      />
+
+      <UnitCreationModal
+        setShowUnitCreationModal={setShowUnitCreationModal}
+        showUnitCreationModal={showUnitCreationModal}
+        courseId={courseId}
+        resEffect={resEffect}
+        setResEffect={setResEffect}
+      />
     </div>
   );
 };

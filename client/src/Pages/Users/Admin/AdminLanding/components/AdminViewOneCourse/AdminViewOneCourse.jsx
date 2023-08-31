@@ -18,6 +18,7 @@ import { DroneMasterContext } from "../../../../../../context/DroneMasterProvide
 import { useNavigate } from "react-router-dom";
 import AdminLessonEditForm from "../AdminLessonEditForm/AdminLessonEditForm";
 
+
 const AdminViewOneCourse = ({
   course_id,
   resEffect,
@@ -25,6 +26,7 @@ const AdminViewOneCourse = ({
   openCourse,
   courseIdx,
 }) => {
+
   const navigate = useNavigate();
   const { user } = useContext(DroneMasterContext);
   const [allInformation, setAllInformation] = useState();
@@ -180,6 +182,7 @@ const AdminViewOneCourse = ({
   };
 
   return (
+
     <div className="unitsList">
       {unitsName.map((unitName, unitIndex) => {
         if (unitName !== null) {
@@ -408,8 +411,6 @@ const AdminViewOneCourse = ({
 
                     }
                     
-                    
-                   
                     )}
                 </div>
               </div>
@@ -417,6 +418,7 @@ const AdminViewOneCourse = ({
           );
         }
       })}
+
       <LessonCreationModal
         setShowLessonCreationModal={setShowLessonCreationModal}
         showLessonCreationModal={showLessonCreationModal}
@@ -435,6 +437,7 @@ const AdminViewOneCourse = ({
         unitInformation={unitInformation}
         setUnitInformation={setUnitInformation}
       />
+
       <AdminLessonEditForm
         showLessonEditForm={showLessonEditForm}
         setShowLessonEditForm={setShowLessonEditForm}
