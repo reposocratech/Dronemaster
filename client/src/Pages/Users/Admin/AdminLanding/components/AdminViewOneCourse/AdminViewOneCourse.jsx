@@ -216,9 +216,9 @@ const AdminViewOneCourse = ({
                 </div>
                 <div className="unitsButtonsContainer">
                   <span onClick={() => {
-                  openUnitEditForm(unit_id[unitIndex]);
-                  setUnitInformation(unitName);
-                }}>
+                    openUnitEditForm(unit_id[unitIndex]);
+                    setUnitInformation(unitName);
+                  }}>
                     <BsPencil className="icon" />
                   </span>
                   {allInformation
@@ -265,21 +265,21 @@ const AdminViewOneCourse = ({
                 {allInformation
                   .filter((item) => item.unit_tittle === unitName)
                   .map((lesson, lessonIdx) => {
-                    if(lesson.lesson_id !== null){
+                    if (lesson.lesson_id !== null) {
 
                       return (
                         <div key={lessonIdx} className="lessonRow">
                           <div className="lessonTitle">
                             <p className="lessonText">{lesson.lesson_title}</p>
                           </div>
-    
+
                           <div className="lessonFunctionsButtons">
                             <span
-                             onClick={() => {
-                              openLessonEditForm(true);
-                              setLessonId(lesson.lesson_id);
-                              setLessonInformation(lesson);
-                            }}
+                              onClick={() => {
+                                openLessonEditForm(true);
+                                setLessonId(lesson.lesson_id);
+                                setLessonInformation(lesson);
+                              }}
                             >
                               <BsPencil className="icon" />
                             </span>
@@ -313,17 +313,97 @@ const AdminViewOneCourse = ({
                               Ir a
                             </button>
                           </div>
-    
-                         
+                          <div>
+                            {allInformation
+                              .filter((item) => item.unit_tittle === unitName)
+                              .map((resource, resourceIdx) => {
+                                if (resource.lesson_id !== null && resource.lesson_id === lesson.lesson_id) {
+
+                                  return (
+                                    <div key={resourceIdx} className="resourceRow">
+                                      <div> Recurso</div>
+
+                                      <div className="resourceFunctionsButtonsCont">
+                                        {resource.resource_id &&
+                                          resource?.resource_is_hidden === 1 && (
+                                            <BsEye
+                                              className="deleteIcon "
+                                              onClick={() =>
+                                                enableResource(resource.resource_id)
+                                              }
+                                            />
+                                          )}
+                                        {resource.resource_id &&
+                                          resource?.resource_is_hidden === 0 && (
+                                            <BsEyeSlash
+                                              className=" deleteIcon"
+                                              onClick={() =>
+                                                disableResource(resource.resource_id)
+                                              }
+                                            />
+                                          )}
+                                        {resource.resource_id &&
+                                          resource?.resource_is_hidden === 0 && (
+                                            <BsFillFileEarmarkArrowDownFill
+                                              className="downloadIcon icon"
+                                              onClick={() =>
+                                                downloadResource(resource.resource_id)
+                                              }
+                                            />
+                                          )}
+                                        {!resource.resource_id && (
+                                          <>
+                                            <label
+                                              htmlFor={resource.lesson_id}
+                                              className="d-inline"
+                                            >
+                                              <BsFillFileArrowUpFill className="uploadIcon" />
+                                            </label>
+                                            <input
+                                              type="file"
+                                              onChange={(e) =>
+                                                uploadResource(
+                                                  e,
+                                                  resource.lesson_id,
+                                                  resource.unit_id
+                                                )
+                                              }
+                                              className="d-none"
+                                              id={resource.lesson_id}
+                                            />
+                                          </>
+                                        )}
+                                        {resource.resource_id &&
+                                          resource?.resource_is_hidden === 0 && (
+                                            <MdDeleteOutline
+                                              className="deleteIcon fs-5 "
+                                              onClick={() =>
+                                                deleteResource(
+                                                  resource.lesson_id,
+                                                  resource.resource_id
+                                                )
+                                              }
+                                            />
+                                          )}
+                                      </div>
+                                    </div>
+                                  )
+                                }
+
+                              }
+
+                              )}
+                          </div>
+
                         </div>
                       )
                     }
 
-                    
+
                   }
-                  
-                  
-                  
+
+
+
                   )}
                 {console.log(
                   allInformation.filter(
@@ -332,87 +412,7 @@ const AdminViewOneCourse = ({
                   )
                 )}
 
-                <div>
-                  {allInformation
-                    .filter((item) => item.unit_tittle === unitName)
-                    .map((resource, resourceIdx) => {
-                      if(resource.lesson_id !== null){
 
-                        return  (
-                          <div key={resourceIdx} className="resourceRow">
-                            <div> Recurso</div>
-    
-                            <div className="resourceFunctionsButtonsCont">
-                              {resource.resource_id &&
-                                resource?.resource_is_hidden === 1 && (
-                                  <BsEye
-                                    className="deleteIcon "
-                                    onClick={() =>
-                                      enableResource(resource.resource_id)
-                                    }
-                                  />
-                                )}
-                              {resource.resource_id &&
-                                resource?.resource_is_hidden === 0 && (
-                                  <BsEyeSlash
-                                    className=" deleteIcon"
-                                    onClick={() =>
-                                      disableResource(resource.resource_id)
-                                    }
-                                  />
-                                )}
-                              {resource.resource_id &&
-                                resource?.resource_is_hidden === 0 && (
-                                  <BsFillFileEarmarkArrowDownFill
-                                    className="downloadIcon icon"
-                                    onClick={() =>
-                                      downloadResource(resource.resource_id)
-                                    }
-                                  />
-                                )}
-                              {!resource.resource_id && (
-                                <>
-                                  <label
-                                    htmlFor={resource.lesson_id}
-                                    className="d-inline"
-                                  >
-                                    <BsFillFileArrowUpFill className="uploadIcon" />
-                                  </label>
-                                  <input
-                                    type="file"
-                                    onChange={(e) =>
-                                      uploadResource(
-                                        e,
-                                        resource.lesson_id,
-                                        resource.unit_id
-                                      )
-                                    }
-                                    className="d-none"
-                                    id={resource.lesson_id}
-                                  />
-                                </>
-                              )}
-                              {resource.resource_id &&
-                                resource?.resource_is_hidden === 0 && (
-                                  <MdDeleteOutline
-                                    className="deleteIcon fs-5 "
-                                    onClick={() =>
-                                      deleteResource(
-                                        resource.lesson_id,
-                                        resource.resource_id
-                                      )
-                                    }
-                                  />
-                                )}
-                            </div>
-                          </div>
-                        )
-                      }
-
-                    }
-                    
-                    )}
-                </div>
               </div>
             </div>
           );
