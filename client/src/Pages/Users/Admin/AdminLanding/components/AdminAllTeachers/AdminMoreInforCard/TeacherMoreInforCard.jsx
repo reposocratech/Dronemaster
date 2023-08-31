@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import AdminTeacherEditInfoModal from "../AdminTeacherEditInfoModal/AdminTeacherEditInfoModal";
+import "./TeacherMoreInfoCard.scss"
+
 
 const TeacherMoreInforCard = ({
   setMoreInformationTeacher,
@@ -46,6 +48,8 @@ const TeacherMoreInforCard = ({
       onHide={closeInfoForm}
       className="courseCreationModalContainer"
       animation={false}
+      centered
+
     >
       <Modal.Header closeButton className="modalHeader">
         <div className="cardTitle">
@@ -56,21 +60,40 @@ const TeacherMoreInforCard = ({
           <h4 className="titleText">Informacion de Usuario</h4>
         </div>
       </Modal.Header>
-      <Modal.Body className="modalBody1">
-        <div className="imgGridContainer">
-          <div className="imgContainer">
-            <img src={teacher?.user_img} alt="" />
-          </div>
+      <Modal.Body className="modalBodyTeacher1">
+
+      <div>
+            <div className="imgContainerTeacher">
+              {teacher?.user_img ? (
+                <>
+                  <img src={profileImg} alt="" />
+                </>
+              ) : (
+                <div className="defaultImg">
+                  <div className="defaultText">
+                    <h1 className="mb-0">
+                      {teacher?.user_name.at(0).toUpperCase()}
+                    </h1>
+                  </div>
+                </div>
+              )}
+            </div>
         </div>
-        <p>
+
+        <div className="d-flex flex-column align-items-start gap-1 inputName">   
+          <label className="ps-3 font">
           {" "}
-          Nombre Completo: {teacher?.user_name}
-          {teacher?.user_lastname}
-        </p>
-        <p> Antonio {teacher?.email}</p>
-        <p>Telefono {teacher?.phone}</p>
-        <p> Dirección {teacher?.address}</p>
-        <p>Estado: {teacher?.is_deleted === 0 ? "Activo" : "Inactivo"}</p>
+          Nombre: <span style={{ fontWeight: 'bold' }}>{teacher?.user_name}</span>
+        </label>
+        <label className="ps-3 font">Apellido:
+          {" "} <span style={{ fontWeight: 'bold' }}>{teacher?.user_lastname}</span>
+          
+        </label>
+        <label className="ps-3 font">Telefono <span style={{ fontWeight: 'bold' }}>{teacher?.labelhone}</span></label>
+        <label className="ps-3 font"> Dirección <span style={{ fontWeight: 'bold' }}>{teacher?.address} </span> </label>
+        <label className="ps-3 font">Estado: <span style={{ fontWeight: 'bold' }}>{teacher?.is_deleted === 0 ? "Activo" : "Inactivo"}</span> </label> 
+        </div>
+       
       </Modal.Body>
       <Modal.Footer className="modalFooter">
         {teacher?.is_deleted === 0 ? (
@@ -89,7 +112,7 @@ const TeacherMoreInforCard = ({
 
       <AdminTeacherEditInfoModal
       teacherEditForm ={teacherEditForm}
-        
+      setMoreInformationTeacher = {setMoreInformationTeacher}
         setTeacherEditForm={setTeacherEditForm}
       teacher={teacher}
       />
