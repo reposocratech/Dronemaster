@@ -64,6 +64,8 @@ export const TeacherMyCourse = () => {
       .catch((err) => console.log(err));
   }, [course_id, resetUseEffect]);
 
+  console.log(myCourseInfo);
+
   return (
     <section className="mainSectionOneCourse">
       <aside className="sideContent">

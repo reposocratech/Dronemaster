@@ -14,30 +14,43 @@ export const CourseDescription = ({ description }) => {
 
   const handleShowPart = () => {
     setShowFullDescription(false)
-    
+
   }
+
+  console.log(descriptionText);
 
   return (
     <div className="containerCourseDescription">
       <div className="headLineDescription">
         <h5 className="mb-1">Descripción</h5>
       </div>
-      <div className={showFullDescription ? "fullDescription descriptionContent" : "smallDescription descriptionContent"}>
-        {/* Mostrar solo las primeras 3 líneas del texto */}
-        <p >
-          {descriptionText}
-        </p>
-
-      </div>
-        {!showFullDescription ? (
-          <button className="showTextButton" onClick={handleShowFull}>
-            Ver más
-          </button>
-        ) : (
-          <button className="showTextButton" onClick={handleShowPart}>
-          Ver menos
-        </button>
-        )}
+      {
+        descriptionText !== "undefined" && <>
+          <div className={showFullDescription ? "fullDescription descriptionContent" : "smallDescription descriptionContent"}>
+            {/* Mostrar solo las primeras 3 líneas del texto */}
+            <p >
+              {descriptionText}
+            </p>
+          </div>
+          {!showFullDescription ? (
+            <button className="showTextButton" onClick={handleShowFull}>
+              Ver más
+            </button>
+          ) : (
+            <button className="showTextButton" onClick={handleShowPart}>
+              Ver menos
+            </button>
+          )}
+        </>
+      }
+      {descriptionText === "undefined" &&
+        <div className={showFullDescription ? "fullDescription descriptionContent" : "smallDescription descriptionContent"}>
+          {/* Mostrar solo las primeras 3 líneas del texto */}
+          <p >
+            No hay descripción para mostrar...
+          </p>
+        </div>
+      }
     </div>
   );
 };

@@ -15,7 +15,6 @@ export const AboutApp = () => {
         habilidades para aquellos que desean dominar las habilidades avanzadas
         necesarias para operar drones en contextos cruciales y específicos.
       </p>
-
       <div className="paragraph">
         <h3 className="text-warning text-center text-md-start">
           Nuestra Misión
@@ -28,13 +27,12 @@ export const AboutApp = () => {
           los datos resultantes de manera detallada, convirtiéndoles en pilotos
           altamente competentes.
         </p>
-        <p>
+        <p className=" text-center text-md-start">
           Buscamos ser el puente que conecta la tecnología dron con las
           necesidades cambiantes de diversos sectores, permitiendo a nuestros
           graduados aplicar sus habilidades de manera impactante en su trabajo
           diario.</p>
       </div>
-
       <div className="paragraph">
         <h3 className="text-warning text-center text-md-start">
           Visión
@@ -48,7 +46,6 @@ export const AboutApp = () => {
           sectores en todo el mundo.
         </p>
       </div>
-
       <div className="paragraph">
         <h3 className="text-warning text-center text-md-start">
           Valores
@@ -98,10 +95,6 @@ export const AboutApp = () => {
           </p>
         </div>
       </div>
-
-
-
-
       <p className="text-center text-warning fs-6 pt-4">
         ¡Explora, Aprende, Lidera con DroneMaster!
       </p>

@@ -28,6 +28,7 @@ export const CourseInfo = () => {
   const [userCourseRelationship, setUserCourseRelationship] = useState();
   const [lessonsOneCourse, setLessonsOneCourse] = useState(0);
   const [lessonsViewedByStudent, setLessonsViewedByStudent] = useState();
+  const [teacherEmail, setTeacherEmail] = useState()
   const { user, resetData, setResetData } = useContext(DroneMasterContext);
   const currentDate = new Date();
   const courseStartDate = new Date(courseGeneralInfo?.start_date);
@@ -130,17 +131,38 @@ export const CourseInfo = () => {
     setLessonsCount(lessonsSet.size);
   }, [courseUnitsLessons]);
 
-  const onSubmit = () => {
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/teachers/teacherEmail/${course_id}`)
+      .then((res) => setTeacherEmail(res.data[0].email))
+      .catch((err) => console.log(err))
+  }, [])
+
+  const onSubmit = async () => {
     axios
       .post(
         `http://localhost:4000/courses/payACourse/${user.user_id}/${course_id}/${courseGeneralInfo.price}`
       )
-      .then((res) => console.log(res))
+      .then((res) => setResetData(!resetData))
       .catch((err) => console.log(err));
 
-    setResetData(!resetData);
+    try {
+      const response = await fetch("http://localhost:4000/infoEmail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user_name: user.user_name, user_lastname: user.user_lastname, phone: user.phone, email: user.email, course_name: courseGeneralInfo.course_name, course_price: courseGeneralInfo.price, start_date: formattedStartDate, status: 1, teacher_email: teacherEmail, course_date: courseStartDate }),
+      });
+
+      const result = await response.json();
+
+    } catch (error) {
+      console.error(error);
+    }
   };
 
+  console.log(userCourseRelationship);
   return (
     <section className="courseInfoMainSection">
       {/* Course name title */}
@@ -265,7 +287,7 @@ export const CourseInfo = () => {
                 )}
 
                 {user && (
-                  <button className="btnNormal" onClick={onSubmit}>
+                  <button className="btnNormal align-self-center" style={{ width: "240px" }} onClick={onSubmit}>
                     INSCRIBETE
                   </button>
                 )}
@@ -279,14 +301,13 @@ export const CourseInfo = () => {
           )}
         {
           user?.type === 0 && <>
-            {(userCourseRelationship != undefined ||
-              userCourseRelationship?.length != 0) && (
-                <CircularStudentProgressBar
-                  lessonsOneCourse={lessonsOneCourse}
-                  lessonsViewedByStudent={lessonsViewedByStudent}
-                  course_name={courseGeneralInfo?.course_name}
-                />
-              )}
+            {userCourseRelationship?.length > 0 && (
+              <CircularStudentProgressBar
+                lessonsOneCourse={lessonsOneCourse}
+                lessonsViewedByStudent={lessonsViewedByStudent}
+                course_name={courseGeneralInfo?.course_name}
+              />
+            )}
           </>
         }
 

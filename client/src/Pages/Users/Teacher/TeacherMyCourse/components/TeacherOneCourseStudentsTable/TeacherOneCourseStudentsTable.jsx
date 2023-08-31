@@ -31,12 +31,12 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
 
     if (updatedStatus == 4) {
       axios
-        .put(`http://localhost:4000/admin/passedCourse/${user_id}`)
+        .put(`http://localhost:4000/admin/passedCourse/${user_id}/${course_id}`)
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
     } else if (updatedStatus == 3) {
       axios
-        .put(`http://localhost:4000/admin/notPassedCourse/${user_id}`)
+        .put(`http://localhost:4000/admin/notPassedCourse/${user_id}/${course_id}`)
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
     }
@@ -68,7 +68,7 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
           <h5 className="titleText">Alumnos del curso</h5>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className="d-flex justify-content-center d-sm-flex justify-content-sm-end" onSubmit={handleSubmit(onSubmit)}>
           <div className="searchBar">
             <FiSearch />
             <input

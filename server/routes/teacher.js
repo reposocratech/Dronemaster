@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+const multer = require("../middleware/multer");
 const teacherControllers = require("../controllers/teacherControllers");
 
 // 1.- Get all students (not deleted) of a teacher
@@ -51,5 +52,17 @@ router.get(
   "/teacherResources/:user_id",
   teacherControllers.selectAllTeacherResources
 );
+
+// 10.- Upload course examName
+// http://localhost:4000/teachers/uploadCourseExam/:course_id
+router.put(
+  "/uploadCourseExam/:course_id",
+  multer("coursesExam"),
+  teacherControllers.uploadCourseExam
+);
+
+// 11.- Get teacher email
+// http://localhost:4000/teachers/teacherEmail/:course_id
+router.get("/teacherEmail/:course_id", teacherControllers.getTeacherEmail);
 
 module.exports = router;

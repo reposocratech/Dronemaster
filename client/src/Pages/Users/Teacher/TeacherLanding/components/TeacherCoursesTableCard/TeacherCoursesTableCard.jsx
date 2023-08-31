@@ -70,7 +70,7 @@ export const TeacherCoursesTableCard = ({ myCoursesData, user_id }) => {
           <h5 className="titleText">Mis Cursos</h5>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className="d-flex justify-content-center d-sm-flex justify-content-sm-end" onSubmit={handleSubmit(onSubmit)}>
           <div className="searchBar">
             <FiSearch />
             <input
@@ -148,19 +148,22 @@ export const TeacherCoursesTableCard = ({ myCoursesData, user_id }) => {
                             </div>
                           </td>
                           <td>
-                            <button
-                              className="btnOutline1 "
-                              onClick={() => {
-                                navigate(
-                                  `/teacher/MyCourse/${course.course_id}`
-                                );
-                              }}
-                            >
-                              <span className="d-none d-md-flex">Info</span>
-                              <span className="d-md-none d-flex">
-                                <AiOutlineArrowRight />
-                              </span>
-                            </button>
+                            <div className="d-flex justify-content-center justify-content-md-start">
+                              <button
+                                className="btnOutline1 "
+                                onClick={() => {
+                                  navigate(
+                                    `/teacher/MyCourse/${course.course_id}`
+                                  );
+                                }}
+                              >
+                                <span className="d-none d-md-flex">Info</span>
+                                <span className="d-md-none d-flex">
+                                  <AiOutlineArrowRight />
+                                </span>
+                              </button>
+                            </div>
+
                           </td>
                         </tr>
                       );

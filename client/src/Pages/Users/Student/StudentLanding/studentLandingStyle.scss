@@ -234,6 +234,10 @@
             color: white;
             gap: 12px;
 
+            .navigateHover:hover {
+                color: $PrimaryOrangeColor;
+            }
+
             .cardTitle {
                 width: 100%;
                 display: flex;
@@ -311,6 +315,8 @@
                         width: 100%;
 
                         tr {
+
+
 
                             width: 100%;
                             border-bottom: 1px solid $TertiaryDarkColor;
@@ -397,7 +403,7 @@
             width: 100%;
             display: grid;
             grid-template:
-                 "studentCard studentCard"
+                "studentCard studentCard"
                 "courseListCard userInfoCard";
             grid-template-rows: 1fr auto;
 

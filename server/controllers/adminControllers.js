@@ -95,9 +95,9 @@ class adminControllers {
   // 8.- Passed course
   // localhost:4000/admin/passedCourse/:user_id
   passedCourse = (req, res) => {
-    const { user_id } = req.params;
+    const { user_id, course_id } = req.params;
 
-    let sql = `UPDATE user_course SET status = 4 WHERE user_id = "${user_id}"`;
+    let sql = `UPDATE user_course SET status = 4 WHERE user_id = ${user_id} AND course_id = ${course_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
@@ -107,9 +107,9 @@ class adminControllers {
   // 9.- Not passed course
   // localhost:4000/admin/notPassedCourse/:user_id
   notPassedCourse = (req, res) => {
-    const { user_id } = req.params;
+    const { user_id, course_id } = req.params;
 
-    let sql = `UPDATE user_course SET status = 3 WHERE user_id = ${user_id}`;
+    let sql = `UPDATE user_course SET status = 3 WHERE user_id = ${user_id} AND course_id = ${course_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);

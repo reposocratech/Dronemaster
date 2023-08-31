@@ -20,6 +20,7 @@ const AdminAllStudentsCard = ({
     axios
       .get("http://localhost:4000/admin/allStudents")
       .then((res) => {
+        console.log(res.data);
         setStudents(res.data);
       })
       .catch((err) => console.log(err));

@@ -15,7 +15,6 @@ const NavBarApp = () => {
   const [listCourses, setListCourses] = useState();
   const navigate = useNavigate();
   const {
-    course,
     setCourse,
     setToken,
     token,
@@ -121,7 +120,7 @@ const NavBarApp = () => {
               DroneMaster
             </Offcanvas.Title>
           </Offcanvas.Header>
-          <Offcanvas.Body className="bodyOffCanvas ps-4 gap-3 d-flex-column d-lg-flex justify-content-lg-between align-items-center">
+          <Offcanvas.Body className="bodyOffCanvas offcanvas-body ps-4 gap-3 d-flex-column d-lg-flex justify-content-lg-between align-items-center">
             <div className="search d-flex align-items-center gap-1 px-2">
               <FiSearch />
               <form onSubmit={handleSubmit(onSubmit)} className="w-100">
@@ -141,7 +140,7 @@ const NavBarApp = () => {
                   onClick={() => {
                     setCourse();
                   }}
-                  className="text-light"
+                  className="text-light buttonHover"
                   as={Link}
                   to="/allCourses"
                 >

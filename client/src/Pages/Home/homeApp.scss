@@ -6,7 +6,7 @@
     color: white;
 
     .homeInfo {
-        padding: clamp(8px, 20vw, 160px) clamp(8px, 3vw, 45px);
+        padding: clamp(8px, 20vw, 180px) clamp(8px, 3vw, 45px);
         padding-bottom: clamp(8px, 11vw, 160px);
 
         h1 {
@@ -23,11 +23,10 @@
             margin: 0;
             padding-bottom: 20px;
         }
-
     }
 
     .homeImage {
-        padding: clamp(8px, 18vw, 100px) clamp(8px, 3vw, 45px);
+        padding: clamp(8px, 18vw, 120px) clamp(8px, 3vw, 45px);
         display: flex;
         justify-content: center;
         align-items: start;
@@ -46,7 +45,7 @@
 
     .homeMessages {
         padding: 0px clamp(8px, 8vw, 300px);
-        padding-bottom: clamp(8px, 18vw, 125px);
+        padding-bottom: clamp(8px, 18vw, 180px);
 
         .homeOneMessage {
             padding-bottom: 50px;
@@ -109,18 +108,18 @@
         }
 
     }
-    //  //Tablet
-    //  @media (max-width: 1009px) {
 
-    //     .homeInfoMobile {
-    //         .infoLabel {
-    //             border-top-left-radius: 0px;
-    //             border-bottom-left-radius: 0px;
-    //         }
-    //     }
+    //Tablet
+    @media (max-width: 1009px) {
 
-    // }
+        .homeInfoMobile {
+            .infoLabel {
+                border-top-left-radius: 0px;
+                border-bottom-left-radius: 0px;
+            }
+        }
 
+    }
 
     // media query -> label info
     @media (max-width: 576px) {
