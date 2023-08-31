@@ -57,15 +57,15 @@ export const RatingModal = ({
 
   return (
     <Modal
-      show={showRatingModal ? showRatingModal : false}
+      show={showRatingModal}
       onHide={handleClose}
-      centered={true}
+      centered
       size="sm"
       fullscreen="false"
-      className="courseCreationModalContainer"
+      className="ratingModal"
     >
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Modal.Body className="d-flex-column align-items-center justify-content-center">
+        <Modal.Body className=" bodyRating">
           <h4>Puntua tu experiencia con este curso</h4>
           <div className="ratingStars">
             <label className="starLabel" htmlFor="radio1">

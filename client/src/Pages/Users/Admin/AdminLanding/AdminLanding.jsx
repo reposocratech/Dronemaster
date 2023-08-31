@@ -61,12 +61,14 @@ const AdminLanding = () => {
 
  
       
+
       <EditMyProfileModal
+
           showEditionModal={showEditionModal}
           setShowEditionModal={setShowEditionModal}
           user={user}
         />
-     
+
     </section>
   );
 };
