@@ -33,7 +33,7 @@ const NavBarApp = () => {
       .then((res) => {
         setListCourses(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   }, []);
 
   const onSubmit = (data) => {

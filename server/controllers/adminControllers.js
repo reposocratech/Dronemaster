@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 class adminControllers {
   // 1.- Create newUser
   // http://localhost:4000/admin/createUser
-
   createUser = (req, res) => {
     const { user_name, user_lastname, email, password, type } = req.body;
 
@@ -116,7 +115,7 @@ class adminControllers {
     });
   };
 
-  // 10.- Get All Courses (admin)
+  // 10.- view All Courses (admin)
   // http://localhost:4000/admin/allCourses
   viewAllCourses = (req, res) => {
     let sql = "SELECT * FROM course";
@@ -144,7 +143,6 @@ class adminControllers {
   // http://localhost:4000/admin/createUnit/:course_id
   createUnit = (req, res) => {
     const { course_id } = req.params;
-
     const { unit_tittle } = req.body;
 
     let sql = `INSERT INTO unit (course_id, unit_tittle) VALUES (${course_id}, "${unit_tittle}")`;
@@ -154,7 +152,7 @@ class adminControllers {
     });
   };
 
-  // 13.- Create Resource (admin y teacher)
+  // 13.- Create Resource (admin & teacher)
   // http://localhost:4000/admin/createResource/:user_id/:lesson_id
   createResource = (req, res) => {
     const { user_id, lesson_id } = req.params;
@@ -239,6 +237,7 @@ class adminControllers {
       }
     });
   };
+
   // 18.- EditLesson
   // http://localhost:4000/admin/editLesson/:course_id/:unit_id/:lesson_id
   editLesson = (req, res) => {

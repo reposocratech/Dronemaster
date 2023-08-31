@@ -3,7 +3,7 @@ import FormularioCreacionTeacher from "../FormulariosCreacion/FormularioCreacion
 import { CourseCreationModal } from "../../../../../Courses/components/CourseCreationModal/CourseCreationModal";
 import { CategoryCreationModal } from "../FormulariosCreacion/CategoryCreationModal";
 
-const AdminNewUserCard = () => {
+const AdminNewUserCard = ({ resEffect, setResEffect }) => {
   const [showModalForm, setShowModalForm] = useState(false);
   const [showCourseCreationModal, setShowCourseCreationModal] = useState(false);
   const [showCategoryCreationModal, setShowCategoryCreationModal] = useState(false)
@@ -27,6 +27,7 @@ const AdminNewUserCard = () => {
       <CourseCreationModal
         showCourseCreationModal={showCourseCreationModal}
         setShowCourseCreationModal={setShowCourseCreationModal}
+        resEffect={resEffect} setResEffect={setResEffect}
       />
       <button onClick={openCreateForm} className="btnOutline1">
         Añadir Usuario

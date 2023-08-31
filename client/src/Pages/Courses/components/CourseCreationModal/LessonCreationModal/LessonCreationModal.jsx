@@ -22,6 +22,7 @@ export const LessonCreationModal = ({
   } = useForm();
 
   const handleClose = () => {
+    reset();
     setShowLessonCreationModal(false);
   };
 
@@ -32,12 +33,12 @@ export const LessonCreationModal = ({
         data
       )
       .then((res) => {
-        setShowLessonCreationModal(false);
         reset();
+        setShowLessonCreationModal(false);
         setResEffect(!resEffect);
       })
       .catch((err) => {
-        console.log(err);
+        { }
       });
   };
 
@@ -68,7 +69,7 @@ export const LessonCreationModal = ({
             <input
               placeholder="Nombre de la lección"
               {...register("lesson_title", {
-                required: "Debes rellenar el nombre del curso",
+                required: "Debes rellenar el nombre de la lección",
                 minLength: { value: 3, message: "Minimo de 3 letras" },
                 maxLength: { value: 100, message: "Maximo 100 caracteres" },
               })}
@@ -80,7 +81,6 @@ export const LessonCreationModal = ({
             <label htmlFor="text_content" className="ps-3">
               Descripción
             </label>
-
             <textarea
               placeholder="#Descripción"
               {...register("text_content")}
@@ -93,7 +93,7 @@ export const LessonCreationModal = ({
               Url de video
             </label>
             <input
-              placeholder="Nombre de la unidad"
+              placeholder="url del video"
               {...register("lesson_url_video", {
                 minLength: { value: 3, message: "Minimo de 3 letras" },
                 maxLength: { value: 100, message: "Maximo 100 caracteres" },

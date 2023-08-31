@@ -15,7 +15,6 @@ const verify = (req, res, next) => {
 
   jwt.verify(token, process.env.SECRET, (error, decoded) => {
     if (error) {
-      console.log(error);
       return res.status(401).json(error);
     }
     next();

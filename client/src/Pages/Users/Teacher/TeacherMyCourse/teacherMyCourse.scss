@@ -358,6 +358,13 @@
                     }
                   }
 
+                  .tableExam {
+                    display: flex;
+                    justify-content: center;
+                  }
+
+
+
                   .inputCell {
                     justify-content: center;
                     width: 100%;
@@ -375,6 +382,12 @@
                         text-align: center;
                       }
                     }
+                  }
+                }
+
+                .tableExam {
+                  .icon:hover {
+                    color: $PrimaryOrangeColor;
                   }
                 }
 
@@ -507,6 +520,16 @@
                   align-items: center;
                   gap: 12px;
 
+                  .icon:hover {
+                    color: $PrimaryOrangeColor;
+                    cursor: pointer;
+                  }
+
+                  .deleteIcon:hover {
+                    cursor: pointer;
+                    color: rgb(255, 45, 45);
+                  }
+
                   .downloadIcon {
                     color: #018001;
                   }
@@ -517,7 +540,7 @@
                   }
 
                   .deleteIcon {
-                    color: #b85450;
+                    color: white;
                   }
 
                   .downloadIcon:hover,

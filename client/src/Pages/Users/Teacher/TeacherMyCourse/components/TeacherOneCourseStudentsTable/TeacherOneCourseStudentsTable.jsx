@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-
+import {
+  BsFillFileEarmarkArrowDownFill
+} from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
 import { AiOutlineUser } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
@@ -157,7 +159,7 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
                           </td>
                           <td>
                             {student.status !== 1 && (
-                              <AiFillFile
+                              <BsFillFileEarmarkArrowDownFill
                                 role="button"
                                 className="text-success"
                                 onClick={() => downloadExam(student.user_id)}
@@ -277,14 +279,17 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
                           </div>
                         </div>
                       </td>
-                      <td>
-                        {student.status !== 1 && (
-                          <AiFillFile
-                            role="button"
-                            className="text-success"
-                            onClick={() => downloadExam(student.user_id)}
-                          />
-                        )}
+                      <td className="ocultado">
+                        <div className="tableExam d-flex justify-content-center">
+                          {student.status !== 1 && (
+                            <BsFillFileEarmarkArrowDownFill
+                              role="button"
+                              className="icon mb-1"
+                              onClick={() => downloadExam(student.user_id)}
+                            />
+                          )}
+                        </div>
+
                       </td>
 
                       <td className=" buttonCell">

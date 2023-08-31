@@ -45,7 +45,7 @@ export const EditMyProfileModal = ({
         setResetData(!resetData);
         setFile();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
 
     setProfileImg();
   };
@@ -64,7 +64,7 @@ export const EditMyProfileModal = ({
       .then((res) => {
         setResetData(!resetData);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
 
     setShowEditionModal(false);
   };

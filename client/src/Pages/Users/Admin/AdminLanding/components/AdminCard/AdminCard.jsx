@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 const AdminCard = ({ setShowEditionModal }) => {
   const { user } = useContext(DroneMasterContext);
-
   const navigate = useNavigate();
 
   return (
@@ -24,7 +23,11 @@ const AdminCard = ({ setShowEditionModal }) => {
           <h6 className="name">
             {user?.user_name} {user?.user_lastname}{" "}
           </h6>
-          <p>{user?.type == 2 && "Admin"}</p>
+          <p>{user?.type == 2 && <>
+            <span role="button" className="textHover" onClick={() => navigate("/admin")}>Admin</span>
+            <span> / </span>
+            <span role="button" className="textHover" onClick={() => navigate("/teacher")}>Profesor</span>
+          </>}</p>
         </div>
         <div className="editionButton">
           <div className="editionButton">

@@ -15,17 +15,21 @@ import { BsPlusCircle } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { CourseEditionModal } from "../../../../../Courses/components/CourseEditionModal/CourseEditionModal";
 import { UnitCreationModal } from "../../../../../Courses/components/CourseCreationModal/UnitCreationModal/UnitCreationModal";
+import { useNavigate } from "react-router-dom";
 
-const AdminAllCoursesCard = ({ }) => {
+const AdminAllCoursesCard = ({ resEffect, setResEffect }) => {
+  const navigate = useNavigate()
   const [allCourses, setAllCourses] = useState();
   const [openCourse, setOpenCourse] = useState([]);
   const { reset, handleSubmit, register } = useForm();
   const [showCourseEditionModal, setShowCourseEditionModal] = useState(false);
   const [showUnitCreationModal, setShowUnitCreationModal] = useState(false);
-  const [resEffect, setResEffect] = useState(false);
+
   const [courseId, setCourseId] = useState();
   const [searchResultCourse, setsearchResultCourse] = useState();
-  const openEditModal = () => {
+  const openEditModal = (course_id) => {
+    console.log("el curse if", course_id);
+    setCourseId(course_id)
     setShowCourseEditionModal(true);
   };
   const openUnitCreateModal = () => {
@@ -37,7 +41,7 @@ const AdminAllCoursesCard = ({ }) => {
       .then((res) => {
         setAllCourses(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   }, [resEffect]);
   const enableCourse = (courseId) => {
     axios
@@ -46,7 +50,7 @@ const AdminAllCoursesCard = ({ }) => {
         setResEffect(!resEffect);
       })
       .catch((err) => {
-        console.log(err);
+        { }
       });
   };
   const disableCourse = (courseId) => {
@@ -56,7 +60,7 @@ const AdminAllCoursesCard = ({ }) => {
         setResEffect(!resEffect);
       })
       .catch((err) => {
-        console.log(err);
+        { }
       });
   };
   //DROPDOWN
@@ -141,7 +145,7 @@ const AdminAllCoursesCard = ({ }) => {
                         <div className="courseIconsFuncitionsButtonsContainer">
                           {/* Icon edition creation etc */}
                           <div className="iconFuncionsCont">
-                            <span className="icon" onClick={openEditModal}>
+                            <span className="icon" onClick={() => openEditModal(course.course_id)}>
                               <BsPencil />
                             </span>
                             {course?.course_is_hidden === 1 ? (
@@ -229,7 +233,7 @@ const AdminAllCoursesCard = ({ }) => {
                     <div className="courseIconsFuncitionsButtonsContainer">
                       {/* Icon edition creation etc */}
                       <div className="iconFuncionsCont">
-                        <span className="icon" onClick={openEditModal}>
+                        <span className="icon" onClick={() => openEditModal(course.course_id)}>
                           <BsPencil />
                         </span>
                         {course?.course_is_hidden === 1 ? (
@@ -253,7 +257,7 @@ const AdminAllCoursesCard = ({ }) => {
                             <BsEyeSlash />
                           </span>
                         )}
-                        <button className="btnOutline1">Ver más</button>
+                        <button className="btnOutline1" onClick={() => navigate(`/courses/courseInfo/${course.course_id}`)}>Ver más</button>
                       </div>
                       {/* Info icons */}
                       <div className="iconsInfoCont">

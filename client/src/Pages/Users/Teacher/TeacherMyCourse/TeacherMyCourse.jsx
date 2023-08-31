@@ -32,7 +32,7 @@ export const TeacherMyCourse = () => {
       .then((res) => {
         setInscriptionDates(res.data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => { });
   }, [course_id, resetUseEffect]);
 
   //Get all courses of the user
@@ -42,7 +42,7 @@ export const TeacherMyCourse = () => {
       .then((res) => {
         setMyCoursesData(res.data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => { });
   }, [user, resetUseEffect]);
 
   useEffect(() => {

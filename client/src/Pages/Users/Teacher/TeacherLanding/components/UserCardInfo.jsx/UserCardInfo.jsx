@@ -28,10 +28,9 @@ export const UserCardInfo = ({ user }) => {
             <span className="infoIcon">
               <FiMapPin />
             </span>
-            <p>{user?.address ? user.address : "..."}</p>
+            <p >{user?.address ? user.address : "..."}</p>
           </div>
         </div>
-
         <div>
           <div className="lineInfo">
             <span className="infoIcon">

@@ -26,7 +26,7 @@ export const TeacherLanding = () => {
       .then((res) => {
         setMyCoursesData(res.data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => { });
   }, [user]);
 
   //Get all students of the user
@@ -37,7 +37,7 @@ export const TeacherLanding = () => {
         .then((res) => {
           setMyStudentsData(res.data);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => { });
     }
   }, [user]);
 

@@ -3,6 +3,7 @@ import { FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 export const TeacherCard = ({ user, setShowEditionModal }) => {
+  const navigate = useNavigate()
 
   return (
     <div className="teacherCard">
@@ -19,13 +20,17 @@ export const TeacherCard = ({ user, setShowEditionModal }) => {
         </h6>
         <p>
           {user?.type == 1 && "Profesor"}
-          {user?.type == 2 && "Admin"}
+          {user?.type == 2 && <>
+            <span role="button" className="textHover" onClick={() => navigate("/admin")}>Admin</span>
+            <span> / </span>
+            <span role="button" className="textHover" onClick={() => navigate("/teacher")}>Profesor</span>
+          </>}
         </p>
       </div>
       <div className="editionButton">
         <div
           className="iconButton"
-          onClick={()=>setShowEditionModal(true)}
+          onClick={() => setShowEditionModal(true)}
         >
           <FaEdit />
         </div>

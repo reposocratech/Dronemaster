@@ -19,6 +19,7 @@ const AdminLanding = () => {
   const [moreInformationTeacher, setMoreInformationTeacher] = useState(false);
   const [showEditionModal, setShowEditionModal] = useState(false);
   const [moreInformationCourses, setMoreInformationCourses] = useState(false);
+  const [resEffect, setResEffect] = useState(false);
 
   const { user } = useContext(DroneMasterContext);
 
@@ -28,8 +29,8 @@ const AdminLanding = () => {
       .then((res) => {
         setInscriptionDates(res.data);
       })
-      .catch((error) => console.log(error));
-  }, []);
+      .catch((error) => { });
+  }, [resEffect]);
 
   return (
     <section className="mainSectionAdmin">
@@ -41,13 +42,14 @@ const AdminLanding = () => {
           inscriptionDates={inscriptionDates}
           setInscriptionDates={setInscriptionDates}
         />
-        <AdminNewUserCard />
+        <AdminNewUserCard resEffect={resEffect} setResEffect={setResEffect} />
       </aside>
 
       <div className="mainContainer">
         <AdminAllCoursesCard
           moreInformationCourses={moreInformationCourses}
           setMoreInformationCourses={setMoreInformationCourses}
+          resEffect={resEffect} setResEffect={setResEffect}
         />
         <AdminAllTeachersCard
           moreInformationTeacher={moreInformationTeacher}
@@ -59,15 +61,12 @@ const AdminLanding = () => {
         />
       </div>
 
- 
-      
-
       <EditMyProfileModal
+        showEditionModal={showEditionModal}
+        setShowEditionModal={setShowEditionModal}
+        user={user}
+      />
 
-          showEditionModal={showEditionModal}
-          setShowEditionModal={setShowEditionModal}
-          user={user}
-        />
 
     </section>
   );

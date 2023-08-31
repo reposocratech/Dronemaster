@@ -6,7 +6,6 @@
 
   .modalHeader {
     background-color: $CuaternaryDark;
-
   }
 
   .modalFooter {
@@ -66,47 +65,7 @@
       grid-area: inputName;
     }
 
-    .inputCategory {
-      grid-area: inputCategory;
-    }
-
-    .inputLength {
-      grid-area: inputLength;
-    }
-
-    .inputTeacher {
-      grid-area: inputTeacher;
-    }
-
-    .inputTags {
-      grid-area: inputTags;
-    }
-
-    .inputPrice {
-      grid-area: inputPrice;
-    }
-
-    .inputDescription {
-      grid-area: inputDescription;
-    }
-
-    .tagsList {
-      grid-area: tagsList;
-    }
-
-    .inputDate {
-      grid-area: inputDate;
-    }
-
-    .inputName,
-    .inputCategory,
-    .inputLength,
-    .inputTeacher,
-    .inputTags,
-    .inputPrice,
-    .inputDescription,
-    .tagsList,
-    .inputDate {
+    .inputName {
       padding: 0 8px;
       width: 100%;
     }
@@ -122,83 +81,15 @@
       color: $CuaternaryDark;
     }
 
-    .input1,
-    .input2,
-    .input3,
-    .tagListContainer {
-      width: 100%;
-      height: 40px;
-      border-radius: 10px;
-      border-style: solid;
-      background-color: rgba(255, 255, 255, 0.181);
-      padding: 0 20px;
-      border: 2px solid $PrimaryDarkColor;
-      color: $CuaternaryDark;
-    }
-
-    .input1:focus,
-    .input2:focus,
-    .input3:focus,
-    .tagListContainer:focus {
+    .inputUnit:focus {
       background-color: rgba(82, 82, 82, 0.181);
       outline: none;
       border: 2px solid $PrimaryOrangeColor;
     }
 
-    .input2 {
-      option {
-        background-color: rgba(82, 82, 82, 0.6);
-        color: white;
-      }
-    }
-
-    .tagListContainer,
-    .input3 {
-      height: 100%;
-    }
-
-    .tagListContainer {
-      p {
-        height: fit-content;
-      }
-
-      row-gap: 0;
-    }
-
     input[type="number"]::-webkit-inner-spin-button,
     input[type="number"]::-webkit-outer-spin-button {
       -webkit-appearance: none;
-    }
-
-    ;
-
-
-
-
-    .tagsList,
-    .inputDescription {
-      height: 100%;
-    }
-
-    .inputTags {
-      .input1 {
-        width: calc(100% - 85px);
-        border-top-right-radius: 0px;
-        border-bottom-right-radius: 0px;
-        border-right: none;
-      }
-
-      .addTagButton {
-        height: 40px;
-        width: 85px;
-        border-radius: 10px;
-        border-top-left-radius: 0px;
-        border-bottom-left-radius: 0px;
-        border-color: black;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
     }
 
     .errorMessage {
@@ -234,16 +125,13 @@
 @media (max-width: 992px) {
   .courseCreationModalContainer {
     .modalBody {
-
       display: flex;
       flex-direction: column;
 
       .tagsList {
         height: 120px;
       }
-
     }
-
   }
 }
 
@@ -256,7 +144,6 @@
       .tagsList {
         height: 120px;
       }
-
     }
   }
 }

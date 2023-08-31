@@ -12,6 +12,7 @@ export const CategoryCreationModal = ({ showCategoryCreationModal, setShowCatego
     } = useForm();
 
     const handleClose = () => {
+        reset();
         setShowCategoryCreationModal(false);
     }
 
@@ -19,10 +20,10 @@ export const CategoryCreationModal = ({ showCategoryCreationModal, setShowCatego
         axios
             .post("http://localhost:4000/courses/createCategory", data)
             .then((res) => {
-                setShowCategoryCreationModal(false);
                 reset();
+                setShowCategoryCreationModal(false);
             })
-            .catch((error) => console.log(error));
+            .catch((error) => { });
     };
 
     return (

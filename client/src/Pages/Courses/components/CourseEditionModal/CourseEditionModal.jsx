@@ -24,6 +24,7 @@ export const CourseEditionModal = ({
   const [teacherPrev_id, setTeacherPrev_id] = useState();
 
   const closeEditModal = () => {
+    reset()
     setShowCourseEditionModal(false);
   };
 
@@ -32,6 +33,7 @@ export const CourseEditionModal = ({
     handleSubmit,
     formState: { errors },
     setValue,
+    reset
   } = useForm();
 
   useEffect(() => {
@@ -45,7 +47,7 @@ export const CourseEditionModal = ({
           `http://localhost:4000/images/courses/${res.data[0].course_img}`
         );
       })
-      .catch((error) => console.log(error));
+      .catch((error) => { });
   }, [courseImg, courseId]);
 
   useEffect(() => {
@@ -54,7 +56,7 @@ export const CourseEditionModal = ({
       .then((res) => {
         setTagsList(res.data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => { });
   }, []);
 
   useEffect(() => {
@@ -63,7 +65,7 @@ export const CourseEditionModal = ({
       .then((res) => {
         setTeachersList(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   }, []);
 
   useEffect(() => {
@@ -72,7 +74,7 @@ export const CourseEditionModal = ({
       .then((res) => {
         setCategoriesList(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   }, []);
 
   const handleImgChange = (e) => {
@@ -97,9 +99,12 @@ export const CourseEditionModal = ({
           tagsList,
         }
       )
-      .then((res) => {})
+      .then((res) => {
+        reset()
+        setShowCourseEditionModal(false);
+      })
       .catch((err) => {
-        console.log(err);
+        { };
       });
 
     if (file) {
@@ -112,8 +117,8 @@ export const CourseEditionModal = ({
           `http://localhost:4000/courses/uploadCourseImage/${courseId}`,
           newFormData
         )
-        .then((res) => {})
-        .catch((error) => console.log(error));
+        .then((res) => { })
+        .catch((error) => { });
     }
   };
 
@@ -137,9 +142,9 @@ export const CourseEditionModal = ({
     if (tagId != undefined) {
       axios
         .put(`http://localhost:4000/admin/deleteCourseTag/${tagId}/${courseId}`)
-        .then((res) => {})
+        .then((res) => { })
         .catch((error) => {
-          console.log(error);
+          { };
         });
     }
 

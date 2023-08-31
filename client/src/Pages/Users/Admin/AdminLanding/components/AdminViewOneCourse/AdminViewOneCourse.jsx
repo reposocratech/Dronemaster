@@ -227,14 +227,14 @@ const AdminViewOneCourse = ({
                       (item) => !item.unit_is_hidden
                     ) ? (
                     <span>
-                      <BsEye
+                      <BsEyeSlash
                         className="icon"
                         onClick={() => disableUnit(unit_id[unitIndex])}
                       />
                     </span>
                   ) : (
                     <span>
-                      <BsEyeSlash
+                      <BsEye
                         className="icon"
                         onClick={() => enableUnit(unit_id[unitIndex])}
                       />

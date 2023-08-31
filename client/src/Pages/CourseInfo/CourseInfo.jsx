@@ -48,7 +48,7 @@ export const CourseInfo = () => {
       .then((res) => {
         setCourseUnitsLessons(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   }, [course_id]);
 
   //Gets general info of a course
@@ -59,7 +59,7 @@ export const CourseInfo = () => {
         setcouGeneralrseInfo(res.data[0]);
       })
       .catch((error) => {
-        console.log(error);
+        { };
       });
   }, [course_id]);
 
@@ -71,7 +71,7 @@ export const CourseInfo = () => {
         setTagList(res.data);
       })
       .catch((error) => {
-        console.log(error);
+        { };
       });
   }, []);
   //Check if user has already boy a course
@@ -82,7 +82,7 @@ export const CourseInfo = () => {
           `http://localhost:4000/myProfile/myCourse/${user.user_id}/${course_id}`
         )
         .then((res) => setUserCourseRelationship(res.data))
-        .catch((err) => console.log(err));
+        .catch((err) => { });
   }, [course_id, user]);
 
   useEffect(() => {
@@ -92,7 +92,7 @@ export const CourseInfo = () => {
         .then((res) => {
           setLessonsOneCourse(res.data[0].count_lessons_Course);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => { });
     }
   }, [course_id]);
 
@@ -105,7 +105,7 @@ export const CourseInfo = () => {
         .then((res) => {
           setLessonsViewedByStudent(res.data[0].count_lessons_viewed);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => { });
     }
   }, [course_id, user]);
 
@@ -113,7 +113,7 @@ export const CourseInfo = () => {
     //Counts units
     const unitSet = new Set();
     courseUnitsLessons?.forEach((item) => {
-      if (item.unit_id !== null) {
+      if (item.unit_id !== null && item.unit_is_hidden === 0) {
         unitSet.add(item.unit_id);
       }
     });
@@ -123,7 +123,7 @@ export const CourseInfo = () => {
     const lessonsSet = new Set();
 
     courseUnitsLessons?.forEach((item) => {
-      if (item.lesson_id !== null) {
+      if (item.lesson_id !== null && item.lesson_is_hidden === 0) {
         lessonsSet.add(item.lesson_id);
       }
     });
@@ -135,7 +135,7 @@ export const CourseInfo = () => {
     axios
       .get(`http://localhost:4000/teachers/teacherEmail/${course_id}`)
       .then((res) => setTeacherEmail(res.data[0].email))
-      .catch((err) => console.log(err))
+      .catch((err) => { })
   }, [])
 
   const onSubmit = async () => {
@@ -144,7 +144,7 @@ export const CourseInfo = () => {
         `http://localhost:4000/courses/payACourse/${user.user_id}/${course_id}/${courseGeneralInfo.price}`
       )
       .then((res) => setResetData(!resetData))
-      .catch((err) => console.log(err));
+      .catch((err) => { });
 
     try {
       const response = await fetch("http://localhost:4000/infoEmail", {

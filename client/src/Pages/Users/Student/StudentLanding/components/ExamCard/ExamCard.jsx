@@ -102,7 +102,6 @@ export const ExamCard = ({ setShowRatingModal, showRatingModal, counterRating, s
                     onClick={() => { setDownloadedExam(1) }}
                 />
                 <p className='fst-italic' style={{ color: '#f7ab16' }}>Descargar examen</p>
-
             </div>}
             {(downloadedExam === 1 && userStatus === 1) && <div className='d-flex justify-content-center gap-5'>
                 {!file && <>
@@ -112,29 +111,24 @@ export const ExamCard = ({ setShowRatingModal, showRatingModal, counterRating, s
                         className="inputFileExam text-center"
                         id="inputFile"
                     />
-
                     <label htmlFor="inputFile" className="inputImageLabel btnNormal" onChange={handleImgChange}>
                         Cargar Examen
                     </label></>}
 
                 {file && <button className='btnNormal' onClick={uploadFileExam}>Subir Examen</button>}
             </div>}
-
             {(userStatus === 2 || userStatus === 3 || userStatus === 4) && <div className='d-flex justify-content-center align-items-center gap-2'>
                 <p className='m-0'>Calificación:</p>
                 {userStatus === 3 && <h2 style={{ color: 'red', margin: '0' }}>NO APTO</h2>}
                 {userStatus === 4 && <h2 style={{ color: 'green', margin: '0' }}>APTO</h2>}
             </div>}
-
             {(downloadedExam === 1 && userStatus === 1) && <iframe
-                src={`http://localhost:4000/images/users/${fileExam}`}
+                src={`http://localhost:4000/images/coursesExam/${fileExam}`}
                 title="PDF Viewer"
                 width="100%"
                 height="700px"
             ></iframe>}
-
             <RatingModal setShowRatingModal={setShowRatingModal} showRatingModal={showRatingModal} score={score} counterRating={counterRating} setScore={setScore} setCounterRating={setCounterRating} />
-
         </div>
 
 
