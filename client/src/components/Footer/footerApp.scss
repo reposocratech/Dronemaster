@@ -9,7 +9,6 @@
     flex-direction: column;
     justify-content: center;
 
-
     .footerLine {
         border: 0.5px solid $PrimaryLightColor;
         width: 94vw;
@@ -77,7 +76,6 @@
             a:hover {
                 color: $PrimaryOrangeColor;
             }
-
         }
 
         .footerLinks {
@@ -97,6 +95,4 @@
             }
         }
     }
-
-
 }

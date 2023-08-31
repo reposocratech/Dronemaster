@@ -24,7 +24,7 @@ export const FooterApp = () => {
                 </div>
                 <hr className='footerLine' />
                 <div className='footer2 d-flex-column d-md-flex justify-content-md-between align-items-md-center text-center'>
-                    <img className='logoFooter pb-3 pb-md-0' src={logo_DroneMaster} alt="" />
+                    <img className='logoFooter pb-3 pb-md-0' src={logo_DroneMaster} alt="" onClick={() => { navigate('/') }} role='button' />
                     <div className='footerInfo pb-3 pb-md-0'>
                         <a href='#top' onClick={() => { navigate('/') }}>Inicio</a>
                         <a href='#top' onClick={() => { navigate('/about') }}>Acerca de</a>
@@ -40,8 +40,6 @@ export const FooterApp = () => {
                 </div>
                 <FormMailModal showMailModal={showMailModal} setShowMailModal={setShowMailModal} />
             </Row>
-
-
         </Container>
     )
 }

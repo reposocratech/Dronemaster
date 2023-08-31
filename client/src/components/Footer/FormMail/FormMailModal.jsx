@@ -47,13 +47,14 @@ export const FormMailModal = ({ showMailModal, setShowMailModal }) => {
         </div>
       </Modal.Header>
       <Modal.Body className="modalBodyMail">
-        <p className="question text-center">
-          ¿Tienes alguna duda, o quieres recibir información? llámanos o escríbenos un correo
-        </p>
-        <h6>Teléfono de contacto: <span className="fst-italic" >676767676</span></h6>
-        <h6>Correo electrónico: <span className="fst-italic" >dronemasterinfo@gmail.com</span></h6>
+        <div className="inputName">
+          <p className="question text-center">
+            ¿Tienes alguna duda, o quieres recibir información? llámanos o escríbenos un correo
+          </p>
+          <h6>Teléfono de contacto: <span className="fst-italic" >676767676</span></h6>
+          <h6>Correo electrónico: <span className="fst-italic" >dronemasterinfo@gmail.com</span></h6>
+        </div>
       </Modal.Body>
-
     </Modal>
   );
 };
