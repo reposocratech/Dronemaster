@@ -4,7 +4,6 @@ import { AiOutlineFolderOpen } from "react-icons/ai";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
 import { AiOutlineStar } from "react-icons/ai";
-import { FiSearch } from "react-icons/fi";
 import { BsPencil } from "react-icons/bs";
 import { BsEye } from "react-icons/bs";
 import { BsEyeSlash } from "react-icons/bs";
@@ -17,7 +16,7 @@ import { useForm } from "react-hook-form";
 import { CourseEditionModal } from "../../../../../Courses/components/CourseEditionModal/CourseEditionModal";
 import { UnitCreationModal } from "../../../../../Courses/components/CourseCreationModal/UnitCreationModal/UnitCreationModal";
 
-const AdminAllCoursesCard = ({}) => {
+const AdminAllCoursesCard = ({ }) => {
   const [allCourses, setAllCourses] = useState();
   const [openCourse, setOpenCourse] = useState([]);
   const { reset, handleSubmit, register } = useForm();
@@ -26,15 +25,12 @@ const AdminAllCoursesCard = ({}) => {
   const [resEffect, setResEffect] = useState(false);
   const [courseId, setCourseId] = useState();
   const [searchResultCourse, setsearchResultCourse] = useState();
-
   const openEditModal = () => {
     setShowCourseEditionModal(true);
   };
-
   const openUnitCreateModal = () => {
     setShowUnitCreationModal(true);
   };
-
   useEffect(() => {
     axios
       .get("http://localhost:4000/admin/allCourses")
@@ -43,7 +39,6 @@ const AdminAllCoursesCard = ({}) => {
       })
       .catch((err) => console.log(err));
   }, [resEffect]);
-
   const enableCourse = (courseId) => {
     axios
       .put(`http://localhost:4000/courses/enableCourse/${courseId}`)
@@ -54,7 +49,6 @@ const AdminAllCoursesCard = ({}) => {
         console.log(err);
       });
   };
-
   const disableCourse = (courseId) => {
     axios
       .put(`http://localhost:4000/courses/disableCourse/${courseId}`)
@@ -65,12 +59,9 @@ const AdminAllCoursesCard = ({}) => {
         console.log(err);
       });
   };
-
   //DROPDOWN
-
   const closedHeight = "0px";
   const openedHeight = "300px";
-
   const toggleCourse = (courseIdx) => {
     if (openCourse.includes(courseIdx)) {
       setOpenCourse(openCourse.filter((index) => index !== courseIdx));
@@ -78,10 +69,8 @@ const AdminAllCoursesCard = ({}) => {
       setOpenCourse([...openCourse, courseIdx]);
     }
   };
-
-  //SEARCH BAR FUNCTION 
+  //Buscador
   const onSubmit = (data) => {
-
     setsearchResultCourse(
       allCourses?.filter((course) =>
         course.course_name
@@ -89,11 +78,10 @@ const AdminAllCoursesCard = ({}) => {
           .includes(data.courseSearch.toLowerCase())
       )
     );
-    console.log("searchResultDataaaaaaa", data.courseSearch);
     reset();
   };
   return (
-    <div className="allUnitsLessonCard">
+    <div div className="allUnitsLessonCard" >
       <div className="adminCoursesList">
         <div className="cardTitle">
           <div className="listContainer">
@@ -113,7 +101,6 @@ const AdminAllCoursesCard = ({}) => {
                 />
               </div>
             </form>
-
             {searchResultCourse && (
               <button
                 onClick={() => setsearchResultCourse()}
@@ -124,44 +111,6 @@ const AdminAllCoursesCard = ({}) => {
             )}
           </div>
         </div>
-        {searchResultCourse ? (
-          <>
-            {searchResultCourse?.length === 0 ? (
-              <p>Sin resultados de busqueda</p>
-            ) : (
-              <>
-                {searchResultCourse?.map((course) => {
-                  return (
-                    <div key={course.course_id} className="unitList">
-                      <div className="unitTittle">
-                        <h6>
-                          <AiOutlineFolderOpen className="icon2 me-2" />
-                          {course.course_name}
-                          <div>
-                            <AiOutlineClockCircle className="icon" />
-                            {course?.course_length}h
-                          </div>
-                          <div>
-                            <AiOutlineStar className="icon" /> {course?.score}
-                          </div>
-                          <div>
-                            <span
-                              onClick={() => {
-                                openUnitCreateModal;
-                              }}
-                            >
-                              <BsPlusCircleFill className="icon" />
-                            </span>
-                          </div>
-                          <span
-                            onClick={() => {
-                              openEditModal(true);
-                              setCourseId(course.course_id);
-                            }}
-                          >
-                            <BsPencil />
-                          </span>
-
         {searchResultCourse ? (
           <>
             {searchResultCourse?.length === 0 ? (
@@ -241,7 +190,6 @@ const AdminAllCoursesCard = ({}) => {
                           </div>
                         </div>
                       </div>
-
                       <AdminViewOneCourse
                         course_id={course?.course_id}
                         resEffect={resEffect}
@@ -257,7 +205,6 @@ const AdminAllCoursesCard = ({}) => {
           </>
         ) : (
           <>
-
             {allCourses?.map((course, courseIdx) => {
               return (
                 <div key={course.course_id} className="courseListed">
@@ -331,7 +278,6 @@ const AdminAllCoursesCard = ({}) => {
                       </div>
                     </div>
                   </div>
-
                   <AdminViewOneCourse
                     course_id={course?.course_id}
                     resEffect={resEffect}
@@ -339,13 +285,11 @@ const AdminAllCoursesCard = ({}) => {
                     openCourse={openCourse}
                     courseIdx={courseIdx}
                   />
-
                 </div>
               );
             })}
           </>
         )}
-
         <CourseEditionModal
           setShowCourseEditionModal={setShowCourseEditionModal}
           showCourseEditionModal={showCourseEditionModal}
@@ -361,24 +305,19 @@ const AdminAllCoursesCard = ({}) => {
           setResEffect={setResEffect}
         />
       </div>
-
-      <CourseEditionModal
-        setShowCourseEditionModal={setShowCourseEditionModal}
-        showCourseEditionModal={showCourseEditionModal}
-        course={allCourses}
-        courseId={courseId}
-        setCourseId={setCourseId}
-      />
-
-      <UnitCreationModal
-        setShowUnitCreationModal={setShowUnitCreationModal}
-        showUnitCreationModal={showUnitCreationModal}
-        courseId={courseId}
-        resEffect={resEffect}
-        setResEffect={setResEffect}
-      />
-    </div>
+    </div >
   );
 };
-
 export default AdminAllCoursesCard;
+
+
+
+
+
+
+
+
+
+
+
+
