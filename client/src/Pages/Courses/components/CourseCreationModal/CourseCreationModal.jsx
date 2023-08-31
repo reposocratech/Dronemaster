@@ -3,6 +3,7 @@ import { Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { GiClassicalKnowledge } from "react-icons/gi";
+import { MdOutlineDeleteOutline } from "react-icons/md";
 import "./courseCreationModal.scss";
 import { DroneMasterContext } from "../../../../context/DroneMasterProvider";
 
@@ -65,6 +66,11 @@ export const CourseCreationModal = ({
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleDeleteTag = (tagName) => {
+    const updatedTagsList = tagsList.filter((tag) => tag !== tagName);
+    setTagsList(updatedTagsList);
   };
 
   return (
@@ -183,7 +189,7 @@ export const CourseCreationModal = ({
               type="number"
               placeholder="Precio"
               {...register("price", {
-                required: "Valor erroneo",
+                required: "Valor erróneo",
                 maxLength: { value: 8, message: "Maximo 99999'99 €" },
               })}
               id="price"
@@ -209,12 +215,12 @@ export const CourseCreationModal = ({
           {/* Tags Input Group */}
           <div className="d-flex flex-column align-items-start gap-1  inputTags">
             <label htmlFor="tag" className="ps-3">
-              #Tags
+              Tags
             </label>
             <div className="d-flex w-100">
               <input
                 value={tag}
-                placeholder="#Tags"
+                placeholder="Tags"
                 name="tag"
                 id="tag"
                 className="input1"
@@ -230,14 +236,21 @@ export const CourseCreationModal = ({
           </div>
 
           <div className="d-flex flex-column align-items-start gap-1 tagsList">
-            <div className="tagListContainer d-flex flex-wrap align-items-center ">
+            <div className="tagListContainer ">
+              <p>
+
               {tagsList?.map((tag, index) => {
                 return (
-                  <p key={index} className="me-1 mb-0 ">
+                  <span key={index} className="me-1 mb-0 ">
+                    <MdOutlineDeleteOutline
+                      className="deleteIcon"
+                      onClick={() => handleDeleteTag(tag)}
+                      />
                     #{tag}
-                  </p>
+                  </span>
                 );
               })}
+              </p>
             </div>
           </div>
 

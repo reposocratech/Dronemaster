@@ -37,15 +37,15 @@ const AdminAllTeachersCard = ({
 
   // Buscador
   const onSubmit = () => {
-    /*     setMoreInformationTeacher(true);
+    setMoreInformationTeacher(true);
     useEffect(() => {
       axios
-        .get(`http://localhost:4000/userInformation/${teacher.user_id}`)
+        .get(`http://localhost:4000/userInformation/${teachers.user_id}`)
         .then((res) => {
           setOneStudent(res.data);
         })
         .catch((err) => console.log(err));
-    }, [user]); */
+    }, [user]);
   };
 
   return (

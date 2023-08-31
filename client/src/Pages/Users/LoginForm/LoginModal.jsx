@@ -95,8 +95,9 @@ const LoginModal = ({
                   className="forminput"
                 />
                 <label htmlFor="password" className="textError">
-                  {errors.password?.message} {errorMessage}
+                  {errors.password?.message}
                 </label>
+                <p className="m-0 text-danger">{errorMessage}</p>
               </div>
               <div className=" buttonsCont my-2">
                 <button className="btnNormal "> Aceptar</button>

@@ -78,10 +78,6 @@ export const CourseEditionModal = ({
     setFile(e.target.files[0]);
   };
 
-  const handleClose = () => {
-    setShowCourseEditionModal(false);
-  };
-
   const handleTagsChange = (e) => {
     setTag(e.target.value);
   };
@@ -318,12 +314,12 @@ export const CourseEditionModal = ({
           {/* Tags Input Group */}
           <div className="d-flex flex-column align-items-start gap-1  inputTags">
             <label htmlFor="tag" className="ps-3">
-              #Tags
+              Tags
             </label>
             <div className="d-flex w-100">
               <input
                 value={tag}
-                placeholder="#Tags"
+                placeholder="Tags"
                 name="tag"
                 id="tag"
                 className="input1"
@@ -340,17 +336,20 @@ export const CourseEditionModal = ({
 
           <div className="d-flex flex-column align-items-start gap-1 tagsList">
             <div className="tagListContainer d-flex flex-wrap ">
+              <p>
+
               {tagsList?.map((tag, index) => {
                 return (
-                  <p key={index} className="m-0 me-3 ">
+                  <span key={index} className="m-0 me-3 ">
                     <MdOutlineDeleteOutline
                       className="deleteIcon"
                       onClick={() => handleDeleteTag(tag.tag_id, tag.tag_name)}
-                    />
+                      />
                     #{tag.tag_name}
-                  </p>
+                  </span>
                 );
               })}
+              </p>
             </div>
           </div>
 

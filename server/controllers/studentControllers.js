@@ -16,7 +16,7 @@ class studentControllers {
 
         connection.query(sql, (error, result) => {
           error
-            ? res.status(400).json({ error })
+            ? (error.errno === 1062 ? res.status(400).json("Lo sentimos, correo electrónico ya registrado")  : res.status(400).json({ error }) )
             : res.status(201).json(result);
         });
       });

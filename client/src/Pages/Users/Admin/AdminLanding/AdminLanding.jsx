@@ -18,6 +18,7 @@ const AdminLanding = () => {
   const [moreInformationStudent, setMoreInformationStudent] = useState(false);
   const [moreInformationTeacher, setMoreInformationTeacher] = useState(false);
   const [showEditionModal, setShowEditionModal] = useState(false);
+  const [moreInformationCourses, setMoreInformationCourses] = useState(false);
 
   const { user } = useContext(DroneMasterContext);
 
@@ -44,7 +45,10 @@ const AdminLanding = () => {
       </aside>
 
       <div className="mainContainer">
-        <AdminAllCoursesCard />
+        <AdminAllCoursesCard
+          moreInformationCourses={moreInformationCourses}
+          setMoreInformationCourses={setMoreInformationCourses}
+        />
         <AdminAllTeachersCard
           moreInformationTeacher={moreInformationTeacher}
           setMoreInformationTeacher={setMoreInformationTeacher}
