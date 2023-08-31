@@ -196,8 +196,10 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-
+color: white;
   .coursesTableCard,
+
+  
   .adminTableCard {
     display: flex;
     flex-direction: column;
@@ -252,7 +254,7 @@
         width: 100%;
 
         tr {
-          color: $TertiaryDarkColor;
+          color: white;
           border-bottom: 1px solid $TertiaryDarkColor;
 
           th {
@@ -397,3 +399,60 @@
     }
   }
 }
+
+
+
+.adminCard {
+  height: fit-content;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 20px;
+
+  .imgContainer {
+    width: 60px;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    background-color: $PrimaryDarkColor;
+    color: $PrimaryOrangeColor;
+
+    .avatarText {
+      margin: 0;
+    }
+  }
+}
+
+.avatarTextUser{
+  height: 25px;
+  width: 25px;
+  background-color: #f7ab16;
+  border-radius: 5px;
+  display: grid;
+  place-items: center;
+  color: white;
+  padding: 0;
+  margin: 0;
+}
+
+.tdImg {
+  .tableImg {
+    margin: auto;
+    height: 25px;
+    width: 25px;
+    background-color: $PrimaryOrangeColor;
+    border-radius: 5px;
+    display: grid;
+    place-items: center;
+
+    h6 {
+      margin: 0;
+    }
+  }
+}
+
+.tableCellName {
+  text-align: start;
+  padding: 0 8px;}

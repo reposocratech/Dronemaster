@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { GiClassicalKnowledge } from "react-icons/gi";
@@ -12,16 +12,19 @@ const AdminUnitEdirForm = ({
   course_id,
   resEffect,
   setResEffect,
+  unitInformation,
+  setUnitInformation,
 }) => {
   const closeUnitEditForm = () => {
     setUnitEditForm(false);
   };
-  console.log("unit_id", unit_id);
+  console.log("unitNameeeeee", unitInformation);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm();
 
   const [editUnit, setEditUnit] = useState();
@@ -37,6 +40,9 @@ const AdminUnitEdirForm = ({
       })
       .catch((err) => console.log(err));
   };
+  useEffect(() => {
+    unitInformation && setValue("unit_tittle", unitInformation || "");
+  }, [unitInformation, setValue]);
 
   return (
     <Modal show={unitEditForm} onHide={closeUnitEditForm}>

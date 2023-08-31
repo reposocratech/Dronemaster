@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineFolderOpen } from "react-icons/ai";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { AiOutlineStar } from "react-icons/ai";
+import { FiSearch } from "react-icons/fi";
 import { BsPencil } from "react-icons/bs";
 import { BsEye } from "react-icons/bs";
 import { BsEyeSlash } from "react-icons/bs";
@@ -21,10 +22,12 @@ const AdminAllCoursesCard = ({
 }) => {
   const [allCourses, setAllCourses] = useState();
   const [openCourse, setOpenCourse] = useState([]);
-  const { reset } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const [showCourseEditionModal, setShowCourseEditionModal] = useState(false);
   const [showUnitCreationModal, setShowUnitCreationModal] = useState(false);
   const [resEffect, setResEffect] = useState(false);
+  const [searchResultCourse, setsearchResultCourse] = useState();
+  const [courseId, setCourseId] = useState();
   const openEditModal = () => {
     setShowCourseEditionModal(true);
   };
@@ -76,15 +79,18 @@ const AdminAllCoursesCard = ({
       setOpenCourse([...openCourse, course]);
     }
   };
-  //Buscador
+
+  //BUSCADOR AÑADIDO HOY
   const onSubmit = (data) => {
-    setSearchResultData(
-      courses.filter((course) =>
+    console.log("DATAAAAAAAAA", data);
+    setsearchResultCourse(
+      allCourses?.filter((course) =>
         course.course_name
           .toLowerCase()
           .includes(data.courseSearch.toLowerCase())
       )
     );
+    console.log("searchResultDataaaaaaa", data.courseSearch);
     reset();
   };
 
@@ -99,92 +105,209 @@ const AdminAllCoursesCard = ({
               </div>
               <h5 className="titleText">Todos los Cursos</h5>
             </div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="searchBar">
+                <FiSearch />
+                <input
+                  type="text"
+                  placeholder="Buscar Curso..."
+                  {...register("courseSearch")}
+                />
+              </div>
+            </form>
+
+            {searchResultCourse && (
+              <button
+                onClick={() => setsearchResultCourse()}
+                className="btnOutline1 m-3"
+              >
+                Ver todos
+              </button>
+            )}
           </div>
         </div>
+        {searchResultCourse ? (
+          <>
+            {searchResultCourse?.length === 0 ? (
+              <p>Sin resultados de busqueda</p>
+            ) : (
+              <>
+                {searchResultCourse?.map((course) => {
+                  return (
+                    <div key={course.course_id} className="unitList">
+                      <div className="unitTittle">
+                        <h6>
+                          <AiOutlineFolderOpen className="icon2 me-2" />
+                          {course.course_name}
+                          <div>
+                            <AiOutlineClockCircle className="icon" />
+                            {course?.course_length}h
+                          </div>
+                          <div>
+                            <AiOutlineStar className="icon" /> {course?.score}
+                          </div>
+                          <div>
+                            <span
+                              onClick={() => {
+                                openUnitCreateModal;
+                              }}
+                            >
+                              <BsPlusCircleFill className="icon" />
+                            </span>
+                          </div>
+                          <span
+                            onClick={() => {
+                              openEditModal(true);
+                              setCourseId(course.course_id);
+                            }}
+                          >
+                            <BsPencil />
+                          </span>
 
-        {allCourses?.map((course) => {
-          return (
-            <div key={course.course_id} className="unitList">
-              <div className="unitTittle">
-                <h6>
-                  <AiOutlineFolderOpen className="icon2 me-2" />
-                  {course.course_name}
-                  <div>
-                    <AiOutlineClockCircle className="icon" />
-                    {course?.course_length}h
-                  </div>
-                  <div>
-                    <AiOutlineStar className="icon" /> {course?.score}
-                  </div>
-                  <div>
-                    <span onClick={openUnitCreateModal}>
-                      <BsPlusCircleFill className="icon" />
-                    </span>
+                          {course?.course_is_hidden === 1 ? (
+                            <span
+                              onClick={(e) => {
+                                e.preventDefault();
+                                enableCourse(course.course_id);
+                              }}
+                            >
+                              <BsEye />
+                            </span>
+                          ) : (
+                            <span
+                              onClick={(e) => {
+                                e.preventDefault();
+                                disableCourse(course.course_id);
+                              }}
+                            >
+                              <BsEyeSlash />
+                            </span>
+                          )}
+                          <button className="btnOutline1">Ver más</button>
+                        </h6>
 
-                    <UnitCreationModal
-                      setShowUnitCreationModal={setShowUnitCreationModal}
-                      showUnitCreationModal={showUnitCreationModal}
-                      course_id={course.course_id}
-                      resEffect={resEffect}
-                      setResEffect={setResEffect}
-                    />
-                  </div>
-                  <span onClick={openEditModal}>
-                    <BsPencil />
-                  </span>
+                        <div
+                          className="dropdownContainer"
+                          onClick={() => toggleCourse(course)}
+                        >
+                          {openCourse.includes(course) ? (
+                            <IoMdArrowDropup />
+                          ) : (
+                            <IoMdArrowDropdown />
+                          )}
+                        </div>
 
-                  {course?.course_is_hidden === 1 ? (
-                    <span
-                      onClick={(e) => {
-                        e.preventDefault();
-                        enableCourse(course.course_id);
-                      }}
+                        <div>
+                          <AdminViewOneCourse
+                            course_id={course?.course_id}
+                            resEffect={resEffect}
+                            setResEffect={setResEffect}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            {allCourses?.map((course) => {
+              return (
+                <div key={course.course_id} className="unitList">
+                  <div className="unitTittle">
+                    <h6>
+                      <AiOutlineFolderOpen className="icon2 me-2" />
+                      {course.course_name}
+                      <div>
+                        <AiOutlineClockCircle className="icon" />
+                        {course?.course_length}h
+                      </div>
+                      <div>
+                        <AiOutlineStar className="icon" /> {course?.score}
+                      </div>
+                      <div>
+                        <span
+                          onClick={() => {
+                            openUnitCreateModal(true);
+                            setCourseId(course.course_id);
+                          }}
+                        >
+                          <BsPlusCircleFill className="icon" />
+                        </span>
+                      </div>
+                      <span
+                        onClick={() => {
+                          openEditModal(true);
+                          setCourseId(course.course_id);
+                        }}
+                      >
+                        <BsPencil />
+                      </span>
+
+                      {course?.course_is_hidden === 1 ? (
+                        <span
+                          onClick={(e) => {
+                            e.preventDefault();
+                            enableCourse(course.course_id);
+                          }}
+                        >
+                          <BsEye />
+                        </span>
+                      ) : (
+                        <span
+                          onClick={(e) => {
+                            e.preventDefault();
+                            disableCourse(course.course_id);
+                          }}
+                        >
+                          <BsEyeSlash />
+                        </span>
+                      )}
+                      <button className="btnOutline1">Ver más</button>
+                    </h6>
+                    <div
+                      className="dropdownContainer"
+                      onClick={() => toggleCourse(course)}
                     >
-                      <BsEye />
-                    </span>
-                  ) : (
-                    <span
-                      onClick={(e) => {
-                        e.preventDefault();
-                        disableCourse(course.course_id);
-                      }}
-                    >
-                      <BsEyeSlash />
-                    </span>
-                  )}
-                  <button className="btnOutline1">Ver más</button>
-                </h6>
+                      {openCourse.includes(course) ? (
+                        <IoMdArrowDropup />
+                      ) : (
+                        <IoMdArrowDropdown />
+                      )}
+                    </div>
 
-                <CourseEditionModal
-                  setShowCourseEditionModal={setShowCourseEditionModal}
-                  showCourseEditionModal={showCourseEditionModal}
-                  course={course}
-                  course_id={course.course_id}
-                />
-
-                <div
-                  className="dropdownContainer"
-                  onClick={() => toggleCourse(course)}
-                >
-                  {openCourse.includes(course) ? (
-                    <IoMdArrowDropup />
-                  ) : (
-                    <IoMdArrowDropdown />
-                  )}
+                    <div>
+                      <AdminViewOneCourse
+                        course_id={course?.course_id}
+                        resEffect={resEffect}
+                        setResEffect={setResEffect}
+                      />
+                    </div>
+                  </div>
                 </div>
-
-                <div>
-                  <AdminViewOneCourse
-                    course_id={course?.course_id}
-                    resEffect={resEffect}
-                    setResEffect={setResEffect}
-                  />
-                </div>
-              </div>
-            </div>
-          );
-        })}
+              );
+            })}
+          </>
+        )}{" "}
       </div>
+
+      <CourseEditionModal
+        setShowCourseEditionModal={setShowCourseEditionModal}
+        showCourseEditionModal={showCourseEditionModal}
+        course={allCourses}
+        courseId={courseId}
+        setCourseId={setCourseId}
+      />
+
+      <UnitCreationModal
+        setShowUnitCreationModal={setShowUnitCreationModal}
+        showUnitCreationModal={showUnitCreationModal}
+        courseId={courseId}
+        resEffect={resEffect}
+        setResEffect={setResEffect}
+      />
     </div>
   );
 };

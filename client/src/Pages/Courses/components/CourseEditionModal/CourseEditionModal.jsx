@@ -11,7 +11,8 @@ import "./courseEditionModalStyle.scss";
 export const CourseEditionModal = ({
   setShowCourseEditionModal,
   showCourseEditionModal,
-  course_id,
+  courseId,
+  setCourseId,
 }) => {
   const [teachersList, setTeachersList] = useState();
   const [categoriesList, setCategoriesList] = useState();
@@ -26,6 +27,7 @@ export const CourseEditionModal = ({
     setShowCourseEditionModal(false);
   };
 
+  console.log("/////////////////////////", courseId);
   const {
     register,
     handleSubmit,
@@ -36,7 +38,7 @@ export const CourseEditionModal = ({
   useEffect(() => {
     axios
 
-      .get(`http://localhost:4000/courses/courseInfoEdition/${course_id}`)
+      .get(`http://localhost:4000/courses/courseInfoEdition/${courseId}`)
       .then((res) => {
         setCourseData(res.data[0]);
         setTeacherPrev_id(res.data[0].teacher_id);
@@ -45,11 +47,11 @@ export const CourseEditionModal = ({
         );
       })
       .catch((error) => console.log(error));
-  }, [courseImg, course_id]);
+  }, [courseImg, courseId]);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/courses/courseTags/${course_id}`)
+      .get(`http://localhost:4000/courses/courseTags/${courseId}`)
       .then((res) => {
         setTagsList(res.data);
       })
@@ -90,7 +92,7 @@ export const CourseEditionModal = ({
   const onSubmit = (data) => {
     axios
       .put(
-        `http://localhost:4000/courses/editCourse/${course_id}/${teacherPrev_id}`,
+        `http://localhost:4000/courses/editCourse/${courseId}/${teacherPrev_id}`,
         {
           data,
           tagsList,
@@ -108,7 +110,7 @@ export const CourseEditionModal = ({
 
       axios
         .put(
-          `http://localhost:4000/courses/uploadCourseImage/${course_id}`,
+          `http://localhost:4000/courses/uploadCourseImage/${courseId}`,
           newFormData
         )
         .then((res) => {})
@@ -135,9 +137,7 @@ export const CourseEditionModal = ({
     let url = "";
     if (tagId != undefined) {
       axios
-        .put(
-          `http://localhost:4000/admin/deleteCourseTag/${tagId}/${course_id}`
-        )
+        .put(`http://localhost:4000/admin/deleteCourseTag/${tagId}/${courseId}`)
         .then((res) => {})
         .catch((error) => {
           console.log(error);
@@ -337,18 +337,19 @@ export const CourseEditionModal = ({
           <div className="d-flex flex-column align-items-start gap-1 tagsList">
             <div className="tagListContainer d-flex flex-wrap ">
               <p>
-
-              {tagsList?.map((tag, index) => {
-                return (
-                  <span key={index} className="m-0 me-3 ">
-                    <MdOutlineDeleteOutline
-                      className="deleteIcon"
-                      onClick={() => handleDeleteTag(tag.tag_id, tag.tag_name)}
+                {tagsList?.map((tag, index) => {
+                  return (
+                    <span key={index} className="m-0 me-3 ">
+                      <MdOutlineDeleteOutline
+                        className="deleteIcon"
+                        onClick={() =>
+                          handleDeleteTag(tag.tag_id, tag.tag_name)
+                        }
                       />
-                    #{tag.tag_name}
-                  </span>
-                );
-              })}
+                      #{tag.tag_name}
+                    </span>
+                  );
+                })}
               </p>
             </div>
           </div>

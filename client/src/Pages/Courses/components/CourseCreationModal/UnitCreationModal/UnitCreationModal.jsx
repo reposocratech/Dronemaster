@@ -9,7 +9,7 @@ import "./unitCreationModal.scss";
 export const UnitCreationModal = ({
   setShowUnitCreationModal,
   showUnitCreationModal,
-  course_id,
+  courseId,
   setResEffect,
   resEffect,
 }) => {
@@ -26,7 +26,7 @@ export const UnitCreationModal = ({
 
   const onSubmit = (data) => {
     axios
-      .post(`http://localhost:4000/admin/createUnit/${course_id}`, data)
+      .post(`http://localhost:4000/admin/createUnit/${courseId}`, data)
       .then((res) => {
         setShowUnitCreationModal(false);
         reset();

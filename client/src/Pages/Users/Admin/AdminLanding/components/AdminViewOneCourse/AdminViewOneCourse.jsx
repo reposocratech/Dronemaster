@@ -19,8 +19,8 @@ import { Navigate, useNavigate } from "react-router-dom";
 import AdminLessonEditForm from "../AdminLessonEditForm/AdminLessonEditForm";
 
 const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
-  const navigate = useNavigate()
-  const { user } = useContext(DroneMasterContext)
+  const navigate = useNavigate();
+  const { user } = useContext(DroneMasterContext);
   const [allInformation, setAllInformation] = useState();
   const [unitsName, setUnitsName] = useState([]);
   const [openUnits, setOpenUnits] = useState([]);
@@ -29,6 +29,8 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
   const [unitId, setUnitId] = useState();
   const [lessonId, setLessonId] = useState();
   const [showLessonEditForm, setShowLessonEditForm] = useState(false);
+  const [unitInformation, setUnitInformation] = useState();
+  const [lessonInformation, setLessonInformation] = useState();
 
   const enableResource = (resource_id) => {
     axios
@@ -53,7 +55,6 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
     setUnitId(l_id);
     setShowLessonEditForm(true);
   };
-
 
   useEffect(() => {
     axios
@@ -80,7 +81,6 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
     setUnitEditForm(true);
   };
 
-
   //DROPDOWN
   const closedHeight = "0px";
   const openedHeight = "35px";
@@ -103,10 +103,9 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
         saveAs(
           `http://localhost:4000/images/resources/${res.data[0].resource_name}`,
           `${res.data[0].resource_name}`
-        )
-        setResEffect(!resEffect)
-      }
-      )
+        );
+        setResEffect(!resEffect);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -183,7 +182,12 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
                 className="icon"
                 onClick={() => OpenLessonCreateModal(unit_id[unitIndex])}
               />
-              <span onClick={() => openUnitEditForm(unit_id[unitIndex])}>
+              <span
+                onClick={() => {
+                  openUnitEditForm(unit_id[unitIndex]);
+                  setUnitInformation(unitName);
+                }}
+              >
                 <BsPencil />{" "}
               </span>
               {allInformation
@@ -192,7 +196,6 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
                 <BsEye onClick={() => disableUnit(unit_id[unitIndex])} />
               ) : (
                 <BsEyeSlash onClick={() => enableUnit(unit_id[unitIndex])} />
-
               )}
             </div>
           </div>
@@ -216,9 +219,23 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
                     <h6 className="lessonText">{lesson.lesson_title}</h6>
                   </div>
                   <div>
-                    <button className="btnOutline1" onClick={() => { navigate(`/courses/courseInfo/lessonInfo/${course_id}/${lesson.unit_id}/${lesson.lesson_id}`) }}>Ver más</button>
-
-                    <span onClick={() => openLessonEditForm(lesson.lesson_id)}>
+                    <button
+                      className="btnOutline1"
+                      onClick={() => {
+                        navigate(
+                          `/courses/courseInfo/lessonInfo/${course_id}/${lesson.unit_id}/${lesson.lesson_id}`
+                        );
+                      }}
+                    >
+                      Ver más
+                    </button>
+                    <span
+                      onClick={() => {
+                        openLessonEditForm(true);
+                        setLessonId(lesson.lesson_id);
+                        setLessonInformation(lesson);
+                      }}
+                    >
                       <BsPencil />
                     </span>
                     {lesson?.lesson_is_hidden === 1 ? (
@@ -240,15 +257,6 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
                         <BsEyeSlash />
                       </span>
                     )}{" "}
-                    <AdminLessonEditForm
-                      showLessonEditForm={showLessonEditForm}
-                      setShowLessonEditForm={setShowLessonEditForm}
-                      lesson={lesson}
-                      unit_id={unitId}
-                      course_id={course_id}
-                      resEffect={resEffect}
-                      setResEffect={setResEffect}
-                    />
                   </div>
                   {console.log("asas", lesson.resource_id)}
                 </div>
@@ -259,44 +267,64 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
                 .map((resource) => (
                   <div className="mb-4">
                     <div> Recurso: {resource.resource_id}</div>
-                    {(resource.resource_id && resource?.resource_is_hidden === 1) && (
-                      <BsFillEyeFill
-                        className="deleteIcon text-danger"
-                        onClick={() => enableResource(resource.resource_id)}
-                      />
+                    {resource.resource_id &&
+                      resource?.resource_is_hidden === 1 && (
+                        <BsFillEyeFill
+                          className="deleteIcon text-danger"
+                          onClick={() => enableResource(resource.resource_id)}
+                        />
+                      )}
+                    {resource.resource_id &&
+                      resource?.resource_is_hidden === 0 && (
+                        <BsFillEyeFill
+                          className="downloadIcon text-success"
+                          onClick={() => disableResource(resource.resource_id)}
+                        />
+                      )}
+                    {resource.resource_id &&
+                      resource?.resource_is_hidden === 0 && (
+                        <BsFillFileEarmarkArrowDownFill
+                          className="downloadIcon text-success"
+                          onClick={() => downloadResource(resource.resource_id)}
+                        />
+                      )}
+                    {!resource.resource_id && (
+                      <>
+                        <label
+                          htmlFor={resource.lesson_id}
+                          className="d-inline"
+                        >
+                          <BsFillFileArrowUpFill className="uploadIcon" />
+                        </label>
+                        <input
+                          type="file"
+                          onChange={(e) =>
+                            uploadResource(
+                              e,
+                              resource.lesson_id,
+                              resource.unit_id
+                            )
+                          }
+                          className="d-none"
+                          id={resource.lesson_id}
+                        />
+                      </>
                     )}
-                    {(resource.resource_id && resource?.resource_is_hidden === 0) && (
-                      <BsFillEyeFill
-                        className="downloadIcon text-success"
-                        onClick={() => disableResource(resource.resource_id)}
-                      />
-                    )}
-                    {(resource.resource_id && resource?.resource_is_hidden === 0) && <BsFillFileEarmarkArrowDownFill
-                      className="downloadIcon text-success"
-                      onClick={() => downloadResource(resource.resource_id)}
-                    />}
-                    {!resource.resource_id && <>
-                      <label htmlFor={resource.lesson_id} className="d-inline">
-                        <BsFillFileArrowUpFill className="uploadIcon" />
-                      </label>
-                      <input
-                        type="file"
-                        onChange={(e) => uploadResource(e, resource.lesson_id, resource.unit_id)
-                        }
-                        className="d-none"
-                        id={resource.lesson_id}
-                      />
-                    </>}
-                    {resource.resource_id && resource?.resource_is_hidden === 0 && (
-                      <BsFillFileEarmarkExcelFill
-                        className="deleteIcon"
-                        onClick={() => deleteResource(resource.lesson_id, resource.resource_id)}
-                      />
-                    )}
+                    {resource.resource_id &&
+                      resource?.resource_is_hidden === 0 && (
+                        <BsFillFileEarmarkExcelFill
+                          className="deleteIcon"
+                          onClick={() =>
+                            deleteResource(
+                              resource.lesson_id,
+                              resource.resource_id
+                            )
+                          }
+                        />
+                      )}
                   </div>
                 ))}
             </div>
-
           </div>
         </div>
       ))}
@@ -316,6 +344,23 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
         course_id={course_id}
         resEffect={resEffect}
         setResEffect={setResEffect}
+        unitInformation={unitInformation}
+        setUnitInformation={setUnitInformation}
+      />
+
+      <AdminLessonEditForm
+        showLessonEditForm={showLessonEditForm}
+        setShowLessonEditForm={setShowLessonEditForm}
+        lessonId={lessonId}
+        unit_id={unitId}
+        course_id={course_id}
+        resEffect={resEffect}
+        setResEffect={setResEffect}
+        setLessonId={setLessonId}
+        lessonInformation={lessonInformation}
+        setLessonInformation={setLessonInformation}
+        unitInformation={unitInformation}
+        setUnitInformation={setUnitInformation}
       />
     </div>
   );
