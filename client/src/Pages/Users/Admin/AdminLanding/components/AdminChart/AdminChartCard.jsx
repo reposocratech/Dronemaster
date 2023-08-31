@@ -100,7 +100,7 @@ const AdminChartCard = ({ inscriptionDates, setInscriptionDates }) => {
     maintainAspectRatio: false,
   };
   return (
-    <Container className="adminTableCard">
+    <Container className="adminChartCard">
       <div className="cardTitle">
         <div className="title">
           <div className="iconContainer">

@@ -32,7 +32,7 @@ const AdminLanding = () => {
   }, []);
 
   return (
-    <section className="mainSection">
+    <section className="mainSectionAdmin">
       <aside className="sideContent">
         <AdminCard setShowEditionModal={setShowEditionModal} />
         <AdminContadorCard />
@@ -59,14 +59,14 @@ const AdminLanding = () => {
         />
       </div>
 
-      <div>
-        {" "}
-        <EditMyProfileModal
+ 
+      
+        {/* <EditMyProfileModal
           showEditionModal={showEditionModal}
           setShowEditionModal={setShowEditionModal}
           user={user}
         />
-      </div>
+     */}
     </section>
   );
 };

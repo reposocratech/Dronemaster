@@ -20,7 +20,7 @@ const AdminNewUserCard = () => {
   }
 
   return (
-    <div className="d-flex-column d-xl-flex justify-content-between">
+    <div className="d-flex-column d-xl-flex justify-content-between creationButtonsCard">
       <button onClick={openCreateCourse} className="btnOutline1">
         Añadir Curso
       </button>

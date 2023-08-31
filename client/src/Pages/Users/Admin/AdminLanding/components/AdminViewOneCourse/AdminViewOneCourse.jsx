@@ -2,25 +2,31 @@ import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMdArrowDropup } from "react-icons/io";
-import { BsPlusCircleFill } from "react-icons/bs";
+import { BsPlusCircle } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
 import { BsEye } from "react-icons/bs";
 import { BsEyeSlash } from "react-icons/bs";
+import { MdDeleteOutline } from "react-icons/md";
 import AdminUnitEdirForm from "../AdminUnitEditForm/AdminUnitEdirForm";
 import { LessonCreationModal } from "../../../../../Courses/components/CourseCreationModal/LessonCreationModal/LessonCreationModal";
 import {
   BsFillFileEarmarkArrowDownFill,
   BsFillFileArrowUpFill,
   BsFillFileEarmarkExcelFill,
-  BsFillEyeFill,
 } from "react-icons/bs";
 import { DroneMasterContext } from "../../../../../../context/DroneMasterProvider";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AdminLessonEditForm from "../AdminLessonEditForm/AdminLessonEditForm";
 
-const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
-  const navigate = useNavigate()
-  const { user } = useContext(DroneMasterContext)
+const AdminViewOneCourse = ({
+  course_id,
+  resEffect,
+  setResEffect,
+  openCourse,
+  courseIdx,
+}) => {
+  const navigate = useNavigate();
+  const { user } = useContext(DroneMasterContext);
   const [allInformation, setAllInformation] = useState();
   const [unitsName, setUnitsName] = useState([]);
   const [openUnits, setOpenUnits] = useState([]);
@@ -29,6 +35,8 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
   const [unitId, setUnitId] = useState();
   const [lessonId, setLessonId] = useState();
   const [showLessonEditForm, setShowLessonEditForm] = useState(false);
+  const [unitInformation, setUnitInformation] = useState();
+  const [lessonInformation, setLessonInformation] = useState();
 
   const enableResource = (resource_id) => {
     axios
@@ -53,7 +61,6 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
     setUnitId(l_id);
     setShowLessonEditForm(true);
   };
-
 
   useEffect(() => {
     axios
@@ -80,10 +87,13 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
     setUnitEditForm(true);
   };
 
-
   //DROPDOWN
-  const closedHeight = "0px";
-  const openedHeight = "35px";
+  const closedHeight = "0";
+  const openedHeight = "fit-content";
+
+  const closedHeight2 = "0px";
+  const openedHeight2 = "fit-content";
+
   const toggleUnit = (unitIndex) => {
     if (openUnits.includes(unitIndex)) {
       // Si el índice ya está en el array, lo eliminamos
@@ -103,10 +113,9 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
         saveAs(
           `http://localhost:4000/images/resources/${res.data[0].resource_name}`,
           `${res.data[0].resource_name}`
-        )
-        setResEffect(!resEffect)
-      }
-      )
+        );
+        setResEffect(!resEffect);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -171,135 +180,243 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
   };
 
   return (
-    <div>
-      {unitsName.map((unitName, unitIndex) => (
-        <div key={unitIndex}>
-          <div className="d-flex me-4">
-            <h6>
-              Tema {unitIndex + 1}: {unitName}
-            </h6>
-            <div>
-              <BsPlusCircleFill
-                className="icon"
-                onClick={() => OpenLessonCreateModal(unit_id[unitIndex])}
-              />
-              <span onClick={() => openUnitEditForm(unit_id[unitIndex])}>
-                <BsPencil />{" "}
-              </span>
-              {allInformation
-                .filter((item) => item.unit_tittle === unitName)
-                .every((item) => !item.unit_is_hidden) ? (
-                <BsEye onClick={() => disableUnit(unit_id[unitIndex])} />
-              ) : (
-                <BsEyeSlash onClick={() => enableUnit(unit_id[unitIndex])} />
-
-              )}
-            </div>
-          </div>
-
-          <div
-            className="dropdownContainer"
-            onClick={() => toggleUnit(unitIndex)}
-          >
-            {openUnits.includes(unitIndex) ? (
-              <IoMdArrowDropup />
-            ) : (
-              <IoMdArrowDropdown />
-            )}
-          </div>
-          <div>
-            {allInformation
-              .filter((item) => item.unit_tittle === unitName)
-              .map((lesson) => (
-                <div className="listedLesson">
-                  <div className="lessonText">
-                    <h6 className="lessonText">{lesson.lesson_title}</h6>
-                  </div>
-                  <div>
-                    <button className="btnOutline1" onClick={() => { navigate(`/courses/courseInfo/lessonInfo/${course_id}/${lesson.unit_id}/${lesson.lesson_id}`) }}>Ver más</button>
-
-                    <span onClick={() => openLessonEditForm(lesson.lesson_id)}>
-                      <BsPencil />
-                    </span>
-                    {lesson?.lesson_is_hidden === 1 ? (
-                      <span
-                        onClick={(e) => {
-                          e.preventDefault();
-                          enableLesson(lesson?.lesson_id);
-                        }}
-                      >
-                        <BsEye />
-                      </span>
+    <div className="unitsList">
+      {unitsName.map((unitName, unitIndex) => {
+        if (unitName !== null) {
+          return (
+            <div
+              style={{
+                height: openCourse.includes(courseIdx)
+                  ? openedHeight
+                  : closedHeight,
+                transition: "height 0.75s ease-in-out",
+              }}
+              key={unitIndex}
+              className="unitListed"
+            >
+              <div className="unitRow">
+                <div className="unitTitleContainer">
+                  <h6>
+                    <span>Tema {unitIndex + 1}:</span>
+                    <span className="unitName"> {unitName}</span>
+                  </h6>
+                  <div
+                    className="dropdownContainer"
+                    onClick={() => toggleUnit(unitIndex)}
+                  >
+                    {openUnits.includes(unitIndex) ? (
+                      <IoMdArrowDropup />
                     ) : (
-                      <span
-                        onClick={(e) => {
-                          e.preventDefault();
-                          disableLesson(lesson?.lesson_id);
-                        }}
-                      >
-                        <BsEyeSlash />
-                      </span>
-                    )}{" "}
-                    <AdminLessonEditForm
-                      showLessonEditForm={showLessonEditForm}
-                      setShowLessonEditForm={setShowLessonEditForm}
-                      lesson={lesson}
-                      unit_id={unitId}
-                      course_id={course_id}
-                      resEffect={resEffect}
-                      setResEffect={setResEffect}
-                    />
+                      <IoMdArrowDropdown />
+                    )}
                   </div>
-                  {console.log("asas", lesson.resource_id)}
                 </div>
-              ))}
-            <div>
-              {allInformation
-                .filter((item) => item.unit_tittle === unitName)
-                .map((resource) => (
-                  <div className="mb-4">
-                    <div> Recurso: {resource.resource_id}</div>
-                    {(resource.resource_id && resource?.resource_is_hidden === 1) && (
-                      <BsFillEyeFill
-                        className="deleteIcon text-danger"
-                        onClick={() => enableResource(resource.resource_id)}
+                <div className="unitsButtonsContainer">
+                  <span onClick={() => {
+                  openUnitEditForm(unit_id[unitIndex]);
+                  setUnitInformation(unitName);
+                }}>
+                    <BsPencil className="icon" />
+                  </span>
+                  {allInformation
+                    .filter((item) => item.unit_tittle === unitName)
+                    .every(
+                      (item) => !item.unit_is_hidden
+                    ) ? (
+                    <span>
+                      <BsEye
+                        className="icon"
+                        onClick={() => disableUnit(unit_id[unitIndex])}
                       />
-                    )}
-                    {(resource.resource_id && resource?.resource_is_hidden === 0) && (
-                      <BsFillEyeFill
-                        className="downloadIcon text-success"
-                        onClick={() => disableResource(resource.resource_id)}
+                    </span>
+                  ) : (
+                    <span>
+                      <BsEyeSlash
+                        className="icon"
+                        onClick={() => enableUnit(unit_id[unitIndex])}
                       />
-                    )}
-                    {(resource.resource_id && resource?.resource_is_hidden === 0) && <BsFillFileEarmarkArrowDownFill
-                      className="downloadIcon text-success"
-                      onClick={() => downloadResource(resource.resource_id)}
-                    />}
-                    {!resource.resource_id && <>
-                      <label htmlFor={resource.lesson_id} className="d-inline">
-                        <BsFillFileArrowUpFill className="uploadIcon" />
-                      </label>
-                      <input
-                        type="file"
-                        onChange={(e) => uploadResource(e, resource.lesson_id, resource.unit_id)
-                        }
-                        className="d-none"
-                        id={resource.lesson_id}
-                      />
-                    </>}
-                    {resource.resource_id && resource?.resource_is_hidden === 0 && (
-                      <BsFillFileEarmarkExcelFill
-                        className="deleteIcon"
-                        onClick={() => deleteResource(resource.lesson_id, resource.resource_id)}
-                      />
-                    )}
-                  </div>
-                ))}
-            </div>
+                    </span>
+                  )}
+                  <span>
+                    <button
+                      className="buttonText"
+                      onClick={() => OpenLessonCreateModal(unit_id[unitIndex])}
+                    >
+                      Lección <BsPlusCircle className="icon" />
+                    </button>
+                  </span>
+                </div>
+              </div>
 
-          </div>
-        </div>
-      ))}
+              {/* Lessons */}
+
+              <div
+                style={{
+                  height: openUnits.includes(unitIndex)
+                    ? openedHeight
+                    : closedHeight,
+                  transition: "height 0.75s ease-in-out",
+                }}
+                className="lessonsList"
+              >
+                {allInformation
+                  .filter((item) => item.unit_tittle === unitName)
+                  .map((lesson, lessonIdx) => {
+                    if(lesson.lesson_id !== null){
+
+                      return (
+                        <div key={lessonIdx} className="lessonRow">
+                          <div className="lessonTitle">
+                            <p className="lessonText">{lesson.lesson_title}</p>
+                          </div>
+    
+                          <div className="lessonFunctionsButtons">
+                            <span
+                             onClick={() => {
+                              openLessonEditForm(true);
+                              setLessonId(lesson.lesson_id);
+                              setLessonInformation(lesson);
+                            }}
+                            >
+                              <BsPencil className="icon" />
+                            </span>
+                            {lesson?.lesson_is_hidden === 1 ? (
+                              <span
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  enableLesson(lesson?.lesson_id);
+                                }}
+                              >
+                                <BsEye className="icon" />
+                              </span>
+                            ) : (
+                              <span
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  disableLesson(lesson?.lesson_id);
+                                }}
+                              >
+                                <BsEyeSlash className="icon" />
+                              </span>
+                            )}
+                            <button
+                              className="btnOutline1"
+                              onClick={() => {
+                                navigate(
+                                  `/courses/courseInfo/lessonInfo/${course_id}/${lesson.unit_id}/${lesson.lesson_id}`
+                                );
+                              }}
+                            >
+                              Ir a
+                            </button>
+                          </div>
+    
+                         
+                        </div>
+                      )
+                    }
+
+                    
+                  }
+                  
+                  
+                  
+                  )}
+                {console.log(
+                  allInformation.filter(
+                    (item) =>
+                      item.unit_tittle === unitName && item.unit_tittle !== null
+                  )
+                )}
+
+                <div>
+                  {allInformation
+                    .filter((item) => item.unit_tittle === unitName)
+                    .map((resource, resourceIdx) => {
+                      if(resource.lesson_id !== null){
+
+                        return  (
+                          <div key={resourceIdx} className="resourceRow">
+                            <div> Recurso</div>
+    
+                            <div className="resourceFunctionsButtonsCont">
+                              {resource.resource_id &&
+                                resource?.resource_is_hidden === 1 && (
+                                  <BsEye
+                                    className="deleteIcon "
+                                    onClick={() =>
+                                      enableResource(resource.resource_id)
+                                    }
+                                  />
+                                )}
+                              {resource.resource_id &&
+                                resource?.resource_is_hidden === 0 && (
+                                  <BsEyeSlash
+                                    className=" deleteIcon"
+                                    onClick={() =>
+                                      disableResource(resource.resource_id)
+                                    }
+                                  />
+                                )}
+                              {resource.resource_id &&
+                                resource?.resource_is_hidden === 0 && (
+                                  <BsFillFileEarmarkArrowDownFill
+                                    className="downloadIcon icon"
+                                    onClick={() =>
+                                      downloadResource(resource.resource_id)
+                                    }
+                                  />
+                                )}
+                              {!resource.resource_id && (
+                                <>
+                                  <label
+                                    htmlFor={resource.lesson_id}
+                                    className="d-inline"
+                                  >
+                                    <BsFillFileArrowUpFill className="uploadIcon" />
+                                  </label>
+                                  <input
+                                    type="file"
+                                    onChange={(e) =>
+                                      uploadResource(
+                                        e,
+                                        resource.lesson_id,
+                                        resource.unit_id
+                                      )
+                                    }
+                                    className="d-none"
+                                    id={resource.lesson_id}
+                                  />
+                                </>
+                              )}
+                              {resource.resource_id &&
+                                resource?.resource_is_hidden === 0 && (
+                                  <MdDeleteOutline
+                                    className="deleteIcon fs-5 "
+                                    onClick={() =>
+                                      deleteResource(
+                                        resource.lesson_id,
+                                        resource.resource_id
+                                      )
+                                    }
+                                  />
+                                )}
+                            </div>
+                          </div>
+                        )
+                      }
+
+                    }
+                    
+                    
+                   
+                    )}
+                </div>
+              </div>
+            </div>
+          );
+        }
+      })}
       <LessonCreationModal
         setShowLessonCreationModal={setShowLessonCreationModal}
         showLessonCreationModal={showLessonCreationModal}
@@ -308,7 +425,6 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
         setResEffect={setResEffect}
         unitId={unitId}
       />
-
       <AdminUnitEdirForm
         unitEditForm={unitEditForm}
         setUnitEditForm={setUnitEditForm}
@@ -316,6 +432,22 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
         course_id={course_id}
         resEffect={resEffect}
         setResEffect={setResEffect}
+        unitInformation={unitInformation}
+        setUnitInformation={setUnitInformation}
+      />
+      <AdminLessonEditForm
+        showLessonEditForm={showLessonEditForm}
+        setShowLessonEditForm={setShowLessonEditForm}
+        lessonId={lessonId}
+        unit_id={unitId}
+        course_id={course_id}
+        resEffect={resEffect}
+        setResEffect={setResEffect}
+        setLessonId={setLessonId}
+        lessonInformation={lessonInformation}
+        setLessonInformation={setLessonInformation}
+        unitInformation={unitInformation}
+        setUnitInformation={setUnitInformation}
       />
     </div>
   );
