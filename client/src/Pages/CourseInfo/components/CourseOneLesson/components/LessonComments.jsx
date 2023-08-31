@@ -25,7 +25,7 @@ export const LessonComments = ({ user, course_id, unit_id, lesson_id }) => {
         setAllComments(res.data);
       })
       .catch((error) => {
-        console.log(error);
+        { };
       });
   }, [lesson_id, unit_id, course_id, resetComments]);
 
@@ -38,7 +38,7 @@ export const LessonComments = ({ user, course_id, unit_id, lesson_id }) => {
         setAllResponses(res.data);
       })
       .catch((error) => {
-        console.log(error);
+        { };
       });
   }, [lesson_id, unit_id, course_id, resetComments]);
 
@@ -52,7 +52,7 @@ export const LessonComments = ({ user, course_id, unit_id, lesson_id }) => {
         reset();
         setResetComments(!resetComments);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => { });
   };
 
   return (

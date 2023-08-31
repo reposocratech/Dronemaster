@@ -3,7 +3,7 @@ import axios from "axios";
 import './CourseCard.scss'
 import { useNavigate } from "react-router-dom";
 import { StarRating } from "../StarRating/StarRating";
-import{ BsCalendarDate } from "react-icons/bs"
+import { BsCalendarDate } from "react-icons/bs"
 
 export const CourseCard = ({ oneCourse }) => {
   const navigate = useNavigate();
@@ -13,10 +13,8 @@ export const CourseCard = ({ oneCourse }) => {
     axios
       .get(`http://localhost:4000/courses/courseTags/${oneCourse.course_id}`)
       .then((res) => setTagList(res.data))
-      .catch((error) => {
-        console.log(error);
-      });
-    return () => {};
+      .catch((error) => { });
+    return () => { };
   }, [oneCourse]);
 
   console.log(oneCourse);
@@ -24,7 +22,7 @@ export const CourseCard = ({ oneCourse }) => {
 
   const currentDate = new Date();
   const courseStartDate = new Date(oneCourse?.start_date);
-   const monthNames = [
+  const monthNames = [
     "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
     "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
   ];
@@ -51,23 +49,23 @@ export const CourseCard = ({ oneCourse }) => {
           />
         </div>
         <div className="courseCardBody">
-          <div  className="courseTitle">
+          <div className="courseTitle">
             <h4>{oneCourse.course_name}</h4>
           </div>
-            {tagList?.map((e) => {
-          <div className="tagList">
+          {tagList?.map((e) => {
+            <div className="tagList">
               return <span key={e.tag_id} className="tag">#{e.tag_name}</span>;
-          </div>
-        })}
+            </div>
+          })}
 
           {(oneCourse?.start_date && courseStartDate > currentDate) &&
-          <div className="dateContainer">
-            <BsCalendarDate className="icon"/>
-           <div>
-             {formattedStartDate}</div>
-          </div>
-           } 
-          {(oneCourse?.score != null &&  oneCourse?.score !== 0) &&(
+            <div className="dateContainer">
+              <BsCalendarDate className="icon" />
+              <div>
+                {formattedStartDate}</div>
+            </div>
+          }
+          {(oneCourse?.score != null && oneCourse?.score !== 0) && (
             <div className="courseScore">
               <h5>{oneCourse.score}</h5>
               <StarRating rating={oneCourse.score} />

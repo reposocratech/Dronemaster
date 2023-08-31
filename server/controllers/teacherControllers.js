@@ -111,7 +111,6 @@ class teacherControllers {
   // http://localhost:4000/teachers/uploadCourseExam/:course_id
   uploadCourseExam = (req, res) => {
     const { course_id } = req.params;
-
     let exam_file = req.file.filename;
 
     let sql = `UPDATE course SET exam_file = "${exam_file}" WHERE course_id = ${course_id}`;

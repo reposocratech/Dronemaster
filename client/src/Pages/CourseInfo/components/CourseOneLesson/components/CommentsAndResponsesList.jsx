@@ -30,22 +30,22 @@ export const CommentsAndResponsesList = ({
         setResponseInputForComment(-1);
         setResetComments(!resetComments);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   const handleCommentDisable = (commentId) => {
     axios
       .put(`http://localhost:4000/admin/disableComment/${commentId}`)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => { })
+      .catch((err) => { });
     setResetComments(!resetComments);
   };
 
   const handleCommentEnable = (commentId) => {
     axios
       .put(`http://localhost:4000/admin/enableComment/${commentId}`)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => { })
+      .catch((err) => { });
 
     setResetComments(!resetComments);
   };

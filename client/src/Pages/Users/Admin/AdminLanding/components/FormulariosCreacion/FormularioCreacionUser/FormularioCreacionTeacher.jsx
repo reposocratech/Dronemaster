@@ -14,6 +14,7 @@ const FormularioCreacionTeacher = ({ showModalForm, setShowModalForm }) => {
   } = useForm();
 
   const handleClose = () => {
+    reset()
     setShowModalForm(false)
   };
 
@@ -21,10 +22,10 @@ const FormularioCreacionTeacher = ({ showModalForm, setShowModalForm }) => {
     axios
       .post("http://localhost:4000/admin/createUser", data)
       .then((res) => {
-        setShowModalForm(false);
         reset();
+        setShowModalForm(false);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => { });
   };
 
   return (
@@ -68,7 +69,7 @@ const FormularioCreacionTeacher = ({ showModalForm, setShowModalForm }) => {
             </label>
             <input
               {...register("user_lastname", {
-                /* required: "Campo obligatorio", */
+                required: "Campo obligatorio",
                 maxLength: 1000,
               })}
               placeholder="Apellidos"
@@ -84,7 +85,7 @@ const FormularioCreacionTeacher = ({ showModalForm, setShowModalForm }) => {
             </label>
             <input
               {...register("email", {
-                /* required: "Campo obligatorio", */
+                required: "Campo obligatorio",
                 maxLength: 200,
               })}
               placeholder="Email"
@@ -100,12 +101,12 @@ const FormularioCreacionTeacher = ({ showModalForm, setShowModalForm }) => {
             </label>
             <input
               {...register("password", {
-                /* required: "Campo obligatorio", */
-                /*                   pattern: {
+                required: "Campo obligatorio",
+                pattern: {
                   value: /^[A-Za-z]+$/i,
                   maxLength: 150,
                   message: "Must contain minus, MAYS,, number and Symbol",
-                }, */
+                },
               })}
               placeholder="Contraseña"
               type="password"

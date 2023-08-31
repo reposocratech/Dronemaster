@@ -51,11 +51,11 @@ router.get("/allCourses", adminControllers.viewAllCourses);
 // http://localhost:4000/admin/createLesson/:course_id/:unit_id
 router.post("/createLesson/:course_id/:unit_id", adminControllers.createLesson);
 
-// 12.- Create Lesson (admin) ??
+// 12.- Create Lesson (admin)
 // http://localhost:4000/admin/createUnit/:course_id
 router.post("/createUnit/:course_id", adminControllers.createUnit);
 
-// 13.- Create Resource (admin)
+// 13.- Create Resource (admin & teacher)
 // http://localhost:4000/admin/createResource/:user_id/:lesson_id
 router.post(
   "/createResource/:user_id/:lesson_id",
@@ -65,8 +65,7 @@ router.post(
 
 // 14.- Select all units, lessons and resource from a course
 // http://localhost:4000/admin/courseInfo
-
-router.get("/courseInfo", multer("resources"), adminControllers.ViewCourseInfo);
+router.get("/courseInfo", adminControllers.ViewCourseInfo);
 
 // 15.- Delete a Tag from a course
 // http://localhost:4000/admin/deleteCourseTag/:tag_id/:course_id
@@ -88,7 +87,10 @@ router.delete(
 
 // 18.- EditLesson
 // http://localhost:4000/admin/editLesson/:course_id/:unit_id/:lesson_id
-router.put("/editLesson/:course_id/:unit_id/:lesson_id", adminControllers.editLesson);
+router.put(
+  "/editLesson/:course_id/:unit_id/:lesson_id",
+  adminControllers.editLesson
+);
 
 // 19.- EditUnit
 // http://localhost:4000/admin/editUnit/:course_id/:unit_id

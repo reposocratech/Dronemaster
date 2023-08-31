@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { GiClassicalKnowledge } from "react-icons/gi";
 import { DroneMasterContext } from "../../../../../../context/DroneMasterProvider";
-import { AiFillEye, AiFillFile } from "react-icons/ai";
+import { BsEye, BsFillFileEarmarkArrowDownFill } from "react-icons/bs";
 import "../../studentLandingStyle.scss";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -163,20 +163,20 @@ export const StudentCourseTableInfo = ({
                                 {lesson.resource_is_hidden === 0 && (
                                   <>
                                     <td>
-                                      <AiFillEye
+                                      <BsEye
                                         style={{
                                           color: selectedLessons.includes(
                                             lesson.lesson_id
                                           )
-                                            ? "green"
+                                            ? "#72BF44"
                                             : "white",
                                         }}
                                       />
                                     </td>
                                     <td>
-                                      <AiFillFile
+                                      <BsFillFileEarmarkArrowDownFill
                                         role="button"
-                                        className="text-success"
+                                        className="icon"
                                         onClick={() =>
                                           downloadResource(lesson.lesson_id)
                                         }

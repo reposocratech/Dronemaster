@@ -5,9 +5,10 @@ import { IoMdArrowDropup } from "react-icons/io";
 import {
   BsFillFileEarmarkArrowDownFill,
   BsFillFileArrowUpFill,
-  BsFillFileEarmarkExcelFill,
-  BsFillEyeFill,
+  BsEye,
+  BsEyeSlash
 } from "react-icons/bs";
+import { MdDeleteOutline } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { DroneMasterContext } from "../../../../../../context/DroneMasterProvider";
@@ -207,24 +208,24 @@ export const TeacherOnecourseContent = ({
                           <div className="lessonText"> <span className="navigateHover" role="button" onClick={() => navigate(`/courses/courseInfo/lessonInfo/${course_id}/${lesson.unit_id}/${lesson.lesson_id}`)}>{lesson.lesson_title}</span></div>
                           <div className="resourceContainer">
                             {(lesson.resource_id && lesson?.resource_is_hidden === 1) && (
-                              <BsFillEyeFill
-                                className="deleteIcon"
+                              <BsEye
+                                className="icon mb-1"
                                 onClick={() => enableResource(lesson.resource_id)}
                               />
                             )}
                             {(lesson.resource_id && lesson?.resource_is_hidden === 0) && (
-                              <BsFillEyeFill
-                                className="downloadIcon"
+                              <BsEyeSlash
+                                className="icon mb-1"
                                 onClick={() => disableResource(lesson.resource_id)}
                               />
                             )}
                             {(lesson.resource_id && lesson?.resource_is_hidden === 0) && <BsFillFileEarmarkArrowDownFill
-                              className="downloadIcon"
+                              className="icon mb-1"
                               onClick={() => downloadResource(lesson.resource_id)}
                             />}
                             {!lesson.resource_id && <>
                               <label htmlFor={lesson.lesson_id} className="d-inline">
-                                <BsFillFileArrowUpFill className="uploadIcon" />
+                                <BsFillFileArrowUpFill className="icon" style={{ marginBottom: "5PX" }} />
                               </label>
                               <input
                                 type="file"
@@ -239,8 +240,8 @@ export const TeacherOnecourseContent = ({
                             {teacherResource && teacherResource.filter(
                               (elem) => elem.resource_id === lesson.resource_id
                             ).length > 0 && lesson.resource_id && lesson?.resource_is_hidden === 0 && (
-                                <BsFillFileEarmarkExcelFill
-                                  className="deleteIcon"
+                                <MdDeleteOutline
+                                  className="deleteIcon fs-5 mb-1"
                                   onClick={() => deleteResource(lesson.lesson_id, lesson.resource_id)}
                                 />
                               )}

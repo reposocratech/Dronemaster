@@ -3,6 +3,7 @@ import { MdOutlinePlayLesson } from "react-icons/md";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import { AiOutlineFolderOpen } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios'
 
 export const CourseContentDropDownList = ({
   myCourseInfo,
@@ -13,6 +14,7 @@ export const CourseContentDropDownList = ({
 }) => {
   const [unitsName, setUnitsName] = useState([]);
   const [openUnits, setOpenUnits] = useState([]);
+  const [userAuth, setUserAuth] = useState()
   const navigate = useNavigate();
 
   // Takes uniques unit_title
@@ -22,7 +24,19 @@ export const CourseContentDropDownList = ({
 
   useEffect(() => {
     setUnitsName(uniqueUnitNames);
-  }, [myCourseInfo]);
+  }, [myCourseInfo, userAuth]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/getUserIdUserCourse/${user?.user_id}/${course_id}`)
+      .then((res) => {
+        console.log("esa datita", res.data[0]?.user_id);
+        setUserAuth(res.data[0].user_id)
+      })
+      .catch((err) => { })
+  }, [user?.user_id])
+
+  console.log("eeee", userAuth);
 
   const closedHeight = "0px";
   const openedHeight = "35px";
@@ -79,37 +93,55 @@ export const CourseContentDropDownList = ({
                 )}
               </div>
               <ol>
-                {filteredLessons.map((lesson) => (
-                  <li
-                    key={lesson.lesson_id}
-                    className="listedLesson"
-                    style={{
-                      height: openUnits.includes(unitIndex)
-                        ? openedHeight
-                        : closedHeight,
-                      transition: "height 0.75s ease-in-out",
-                    }}
-                  >
-                    <div className="lessonTitle">
-                      <div className="lessonText">
-                        <MdOutlinePlayLesson className="icon3" />{" "}
-                        {lesson.lesson_title}
-                      </div>
-                      {user && (
-                        <button
-                          className="openLessonButton"
-                          onClick={() =>
-                            navigate(
-                              `/courses/courseInfo/lessonInfo/${course_id}/${lesson.unit_id}/${lesson.lesson_id}`
-                            )
-                          }
-                        >
-                          Abrir
-                        </button>
-                      )}
-                    </div>
-                  </li>
-                ))}
+                {filteredLessons.map((lesson) => {
+                  if (lesson.lesson_is_hidden === 0) {
+                    return (
+                      <li
+                        key={lesson.lesson_id}
+                        className="listedLesson"
+                        style={{
+                          height: openUnits.includes(unitIndex)
+                            ? openedHeight
+                            : closedHeight,
+                          transition: "height 0.75s ease-in-out",
+                        }}
+                      >
+                        <div className="lessonTitle">
+                          <div className="lessonText">
+                            <MdOutlinePlayLesson className="icon3" />{" "}
+                            {lesson.lesson_title}
+                          </div>
+                          {(user && user.type === 2) && (
+                            <button
+                              className="openLessonButton"
+                              onClick={() =>
+                                navigate(
+                                  `/courses/courseInfo/lessonInfo/${course_id}/${lesson.unit_id}/${lesson.lesson_id}`
+                                )
+                              }
+                            >
+                              Abrir
+                            </button>
+                          )}
+                          {user?.user_id === userAuth && (
+                            <button
+                              className="openLessonButton"
+                              onClick={() =>
+                                navigate(
+                                  `/courses/courseInfo/lessonInfo/${course_id}/${lesson.unit_id}/${lesson.lesson_id}`
+                                )
+                              }
+                            >
+                              Abrir
+                            </button>
+                          )}
+                        </div>
+                      </li>
+                    )
+                  }
+                }
+
+                )}
               </ol>
             </div>
           );

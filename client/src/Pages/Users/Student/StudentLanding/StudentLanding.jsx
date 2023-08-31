@@ -34,7 +34,7 @@ const StudentLanding = () => {
       .then((res) => {
         setMyCoursesData(res.data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => { });
   }, [user, showEditionModal, showRatingModal, score, counterRating]);
 
   useEffect(() => {

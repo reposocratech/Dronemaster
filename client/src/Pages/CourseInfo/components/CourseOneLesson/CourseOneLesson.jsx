@@ -26,7 +26,7 @@ export const CourseOneLesson = () => {
       .then((res) => {
         setLessonData(res.data[0]);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   }, [course_id, unit_id, lesson_id]);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export const CourseOneLesson = () => {
       .then((res) => {
         setCourseUnitsLessons(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   }, [course_id]);
 
   const handleDownload = () => {
@@ -47,7 +47,7 @@ export const CourseOneLesson = () => {
           `${res.data[0].resource_name}`
         )
       )
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   console.log("esa lessssonnn", lessonData);

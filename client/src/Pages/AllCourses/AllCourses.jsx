@@ -20,7 +20,7 @@ export const AllCourses = () => {
       .then((res) => {
         setCategoryData(res.data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => { });
   }, []);
 
   //Getting all course data
@@ -30,7 +30,7 @@ export const AllCourses = () => {
       .then((res) => {
         setCourseData(res.data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => { });
   }, []);
 
   // We use a listener to get the current width for Responsive. Using a counter to know how many cards we need to show.

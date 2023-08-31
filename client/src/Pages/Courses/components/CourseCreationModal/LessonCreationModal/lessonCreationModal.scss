@@ -6,7 +6,6 @@
 
   .modalHeader {
     background-color: $CuaternaryDark;
-
   }
 
   .modalFooter {
@@ -61,7 +60,7 @@
     width: 100%;
     display: grid;
     grid-template:
-      "inputTilte"
+      "inputLessonTilte"
       "inputDescription"
       "inputUrl";
 
@@ -70,7 +69,7 @@
     place-items: center;
     grid-gap: 6px;
 
-    .inputTitle {
+    .inputLessonTitle {
       grid-area: inputTilte;
     }
 
@@ -78,19 +77,21 @@
       grid-area: inputDescription;
     }
 
-    .inputUrl {
+    .inputLessonUrl {
       grid-area: inputUrl;
     }
 
-    .inputTitle,
+    .inputLessonTitle,
     .inputDescription,
-    .inputUrl {
+    .inputLessonUrl {
       padding: 0 8px;
       width: 100%;
     }
 
+    .inputLessonTitle,
+    .inputLessonUrl,
     .inputLessonDescription {
-      width: 100%;
+      width: 350px;
       height: 40px;
       border-radius: 10px;
       border-style: solid;
@@ -100,23 +101,16 @@
       color: $CuaternaryDark;
     }
 
+    .inputLessonTitle:focus,
+    .inputLessonUrl:focus,
     .inputLessonDescription:focus {
       background-color: rgba(82, 82, 82, 0.181);
       outline: none;
       border: 2px solid $PrimaryOrangeColor;
     }
 
-    .tagListContainer,
     .inputLessonDescription {
       height: 100%;
-    }
-
-    .tagListContainer {
-      p {
-        height: fit-content;
-      }
-
-      row-gap: 0;
     }
 
     input[type="number"]::-webkit-inner-spin-button,
@@ -124,35 +118,8 @@
       -webkit-appearance: none;
     }
 
-    ;
-
-
-
-
-    .tagsList,
     .inputDescription {
       height: 100%;
-    }
-
-    .inputTags {
-      .input1 {
-        width: calc(100% - 85px);
-        border-top-right-radius: 0px;
-        border-bottom-right-radius: 0px;
-        border-right: none;
-      }
-
-      .addTagButton {
-        height: 40px;
-        width: 85px;
-        border-radius: 10px;
-        border-top-left-radius: 0px;
-        border-bottom-left-radius: 0px;
-        border-color: black;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
     }
 
     .errorMessage {

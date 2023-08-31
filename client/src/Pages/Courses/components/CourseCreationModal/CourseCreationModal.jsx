@@ -10,6 +10,7 @@ import { DroneMasterContext } from "../../../../context/DroneMasterProvider";
 export const CourseCreationModal = ({
   setShowCourseCreationModal,
   showCourseCreationModal,
+  resEffect, setResEffect
 }) => {
   const [teachersList, setTeachersList] = useState();
   const [categoriesList, setCategoriesList] = useState();
@@ -21,6 +22,7 @@ export const CourseCreationModal = ({
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm();
 
   useEffect(() => {
@@ -29,7 +31,7 @@ export const CourseCreationModal = ({
       .then((res) => {
         setTeachersList(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   }, []);
 
   useEffect(() => {
@@ -38,11 +40,12 @@ export const CourseCreationModal = ({
       .then((res) => {
         setCategoriesList(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   }, []);
 
   const handleClose = () => {
     setShowCourseCreationModal(false);
+    reset()
   };
 
   const handleTagsChange = (e) => {
@@ -61,11 +64,15 @@ export const CourseCreationModal = ({
         tagsList,
       })
       .then((res) => {
-        console.log(res);
+        reset()
+        setShowCourseCreationModal(false)
+        setResEffect(!resEffect)
+
       })
       .catch((err) => {
-        console.log(err);
+        { }
       });
+
   };
 
   const handleDeleteTag = (tagName) => {
@@ -186,6 +193,7 @@ export const CourseCreationModal = ({
               Precio (€)
             </label>
             <input
+              step="0.01" pattern="\d+(\.\d{1,2})?"
               type="number"
               placeholder="Precio"
               {...register("price", {
@@ -239,17 +247,17 @@ export const CourseCreationModal = ({
             <div className="tagListContainer ">
               <p>
 
-              {tagsList?.map((tag, index) => {
-                return (
-                  <span key={index} className="me-1 mb-0 ">
-                    <MdOutlineDeleteOutline
-                      className="deleteIcon"
-                      onClick={() => handleDeleteTag(tag)}
+                {tagsList?.map((tag, index) => {
+                  return (
+                    <span key={index} className="me-1 mb-0 ">
+                      <MdOutlineDeleteOutline
+                        className="deleteIcon"
+                        onClick={() => handleDeleteTag(tag)}
                       />
-                    #{tag}
-                  </span>
-                );
-              })}
+                      #{tag}
+                    </span>
+                  );
+                })}
               </p>
             </div>
           </div>

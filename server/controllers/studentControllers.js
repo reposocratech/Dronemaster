@@ -16,7 +16,11 @@ class studentControllers {
 
         connection.query(sql, (error, result) => {
           error
-            ? (error.errno === 1062 ? res.status(400).json("Lo sentimos, correo electrónico ya registrado")  : res.status(400).json({ error }) )
+            ? error.errno === 1062
+              ? res
+                  .status(400)
+                  .json("Lo sentimos, correo electrónico ya registrado")
+              : res.status(400).json({ error })
             : res.status(201).json(result);
         });
       });
@@ -47,7 +51,7 @@ class studentControllers {
     });
   };
 
-  // 3.- Get course material
+  // 4.- Get course material
   // http://localhost:4000/students/courseMaterial/:course:id
   getCourseMaterial = (req, res) => {
     const { course_id } = req.params;
@@ -59,7 +63,7 @@ class studentControllers {
     });
   };
 
-  // 3.- register all lessons viewed by student
+  // 5.- register all lessons viewed by student
   // http://localhost:4000/students/registerLessonViewed/:user_id/:lesson_id/:course_id
   registerLessonViewedByStudent = (req, res) => {
     const { user_id, lesson_id, course_id } = req.params;
@@ -85,7 +89,7 @@ class studentControllers {
     });
   };
 
-  // 3.- Get all lessons viewed by student
+  // 6.- Get all lessons viewed by student
   // http://localhost:4000/students/lessonViewed/:user_id/:course_id
   selectLessonViewedByStudent = (req, res) => {
     const { user_id, course_id } = req.params;
@@ -97,7 +101,7 @@ class studentControllers {
     });
   };
 
-  // 3.- Get count all lessons viewed by student per course
+  // 7.- Get count all lessons viewed by student per course
   // http://localhost:4000/students/lessonViewed/:user_id/:course_id
   selectCountLessonViewedByCourse = (req, res) => {
     const { user_id, course_id } = req.params;
@@ -109,7 +113,7 @@ class studentControllers {
     });
   };
 
-  // 3.- Get count all lessons course
+  // 8.- Get count all lessons course
   // http://localhost:4000/students/countLessonscourse/:user_id/:course_id
   selectCountLessonCourse = (req, res) => {
     const { course_id } = req.params;
@@ -121,7 +125,7 @@ class studentControllers {
     });
   };
 
-  // 4.- Upload student exam
+  // 9.- Upload student exam and change the student status
   // http://localhost:4000/students/uploadExam/:user_id/:course_id
   uploadStudentExam = (req, res) => {
     const { user_id, course_id } = req.params;
@@ -152,7 +156,7 @@ class studentControllers {
     });
   };
 
-  // 5.- Get student status
+  // 10.- Get student status
   // http://localhost:4000/students/studentStatus/:user_id/:course_id
   getStudentStatus = (req, res) => {
     const { user_id, course_id } = req.params;
@@ -164,7 +168,7 @@ class studentControllers {
     });
   };
 
-  // 6.- get course score and counter rating
+  // 11.- get course score and counter rating
   // http://localhost:4000/students/scoreCounterRating/:course_id
   getScoreAndCounterRating = (req, res) => {
     const { course_id } = req.params;
@@ -176,11 +180,10 @@ class studentControllers {
     });
   };
 
-  // 7.- Update score and counter rating
+  // 12.- Update score and counter rating
   // http://localhost:4000/students/updateScoreRating/:course_id/:score/:counter_rating
   updateScoreAndCounterRating = (req, res) => {
     const { course_id } = req.params;
-
     const { score, counter_rating } = req.body;
 
     let sql = `UPDATE course SET score = ${score}, counter_rating = ${counter_rating} WHERE course_id = ${course_id}`;

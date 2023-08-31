@@ -21,6 +21,7 @@ export const UnitCreationModal = ({
   } = useForm();
 
   const handleClose = () => {
+    reset();
     setShowUnitCreationModal(false);
   };
 
@@ -28,12 +29,12 @@ export const UnitCreationModal = ({
     axios
       .post(`http://localhost:4000/admin/createUnit/${courseId}`, data)
       .then((res) => {
-        setShowUnitCreationModal(false);
         reset();
+        setShowUnitCreationModal(false);
         setResEffect(!resEffect);
       })
       .catch((err) => {
-        console.log(err);
+        { }
       });
   };
 
@@ -64,7 +65,7 @@ export const UnitCreationModal = ({
             <input
               placeholder="Nombre de la unidad"
               {...register("unit_tittle", {
-                required: "Debes rellenar el nombre del curso",
+                required: "Debes rellenar el nombre de la unidad",
                 minLength: { value: 3, message: "Minimo de 3 letras" },
                 maxLength: { value: 100, message: "Maximo 100 caracteres" },
               })}

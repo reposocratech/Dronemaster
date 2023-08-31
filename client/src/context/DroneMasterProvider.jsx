@@ -44,7 +44,7 @@ const DroneMasterProvider = ({ children }) => {
           setUser(res.data[0]);
           setIsLogged(true);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => { });
     }
   }, [isLogged, resetData]);
   return (

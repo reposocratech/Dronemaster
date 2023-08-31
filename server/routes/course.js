@@ -14,10 +14,7 @@ router.put("/enableCourse/:course_id", courseControllers.enableCourse);
 
 // 3. Disable Course
 // http://localhost:4000/courses/disableCourse/:course_id
-router.put(
-  "/disableCourse/:course_id",
-  /* verify, */ courseControllers.disableCourse
-);
+router.put("/disableCourse/:course_id", courseControllers.disableCourse);
 
 // 4.- All courses
 // http://localhost:4000/courses/allCourses
@@ -38,7 +35,7 @@ router.post("/createCategory/", courseControllers.createCategory);
 // http://localhost:4000/courses/allCategories
 router.get("/allCategories", courseControllers.selectAllCourseCategories);
 
-// 8.- Get all tags of a Course (
+// 8.- Get all tags of a Course
 // http://localhost:4000/courses/courseTags/:course_id
 router.get("/courseTags/:course_id", courseControllers.selectAllCourseTags);
 

@@ -26,7 +26,7 @@ export const TeacherCoursesTableCard = ({ myCoursesData, user_id }) => {
           `http://localhost:4000/teachers/myCourses/studentCounter/${user_id}`
         )
         .then((res) => setStudentsNumber(res.data))
-        .catch((error) => console.log(error));
+        .catch((error) => { });
     }
   }, [user_id]);
 

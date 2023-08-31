@@ -22,7 +22,6 @@ class courseControllers {
     // Begin a database transaction
     connection.beginTransaction((error) => {
       if (error) {
-        console.error(error);
         return res.status(500).json("Internal Server Error");
       }
 
@@ -36,7 +35,6 @@ class courseControllers {
       connection.query(courseInsertQuery, (error, resultCourse) => {
         if (error) {
           connection.rollback(() => {
-            console.error(error);
             res.status(500).json("Internal Server Error");
           });
         } else {
@@ -51,7 +49,6 @@ class courseControllers {
           connection.query(userCourseInsertQuery, (error, resultUserCourse) => {
             if (error) {
               connection.rollback(() => {
-                console.error(error);
                 res.status(500).json("Internal Server Error");
               });
             } else {
@@ -92,7 +89,6 @@ class courseControllers {
                   connection.commit((error) => {
                     if (error) {
                       connection.rollback(() => {
-                        console.error(error);
                         res.status(500).json("Internal Server Error");
                       });
                     } else {
@@ -102,7 +98,6 @@ class courseControllers {
                 })
                 .catch((error) => {
                   connection.rollback(() => {
-                    console.error(error);
                     res.status(500).json("Internal Server Error");
                   });
                 });
@@ -173,7 +168,6 @@ class courseControllers {
     connection.query(courseUpdateQuery, (error) => {
       if (error) {
         connection.rollback(() => {
-          console.error(error);
           res.status(500).json("Internal Server Error");
         });
       } else {
@@ -188,7 +182,6 @@ class courseControllers {
         connection.query(userCourseUpdateQuery, (error, resultUpdate) => {
           if (error) {
             connection.rollback(() => {
-              console.error(error);
               res.status(500).json("Internal Server Error");
             });
           } else {
@@ -277,7 +270,7 @@ class courseControllers {
     });
   };
 
-  // 8.- Get all tags of a Course (
+  // 8.- Get all tags of a Course
   // http://localhost:4000/courses/courseTags/:course_id
   selectAllCourseTags = (req, res) => {
     const { course_id } = req.params;
@@ -319,7 +312,6 @@ class courseControllers {
   // http://localhost:4000/courses/uploadCourseImage/:course_id
   uploadCourseImage = (req, res) => {
     const { course_id } = req.params;
-
     const course_img = req.file.filename;
 
     let sql = `UPDATE course SET course_img = "${course_img}" WHERE course_id = ${course_id}`;
