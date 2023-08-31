@@ -269,49 +269,50 @@ const AdminViewOneCourse = ({
 
                       return (
                         <div key={lessonIdx} className="lessonRow">
-                          <div className="lessonTitle">
-                            <p className="lessonText">{lesson.lesson_title}</p>
-                          </div>
-
-                          <div className="lessonFunctionsButtons">
-                            <span
-                              onClick={() => {
-                                openLessonEditForm(true);
-                                setLessonId(lesson.lesson_id);
-                                setLessonInformation(lesson);
-                              }}
-                            >
-                              <BsPencil className="icon" />
-                            </span>
-                            {lesson?.lesson_is_hidden === 1 ? (
+                          <div className="lessonRowLine">
+                            <div className="lessonTitle">
+                              <p className="lessonText"><span>{lessonIdx + 1}.</span> {lesson.lesson_title}</p>
+                            </div>
+                            <div className="lessonFunctionsButtons">
                               <span
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  enableLesson(lesson?.lesson_id);
+                                onClick={() => {
+                                  openLessonEditForm(true);
+                                  setLessonId(lesson.lesson_id);
+                                  setLessonInformation(lesson);
                                 }}
                               >
-                                <BsEye className="icon" />
+                                <BsPencil className="icon" />
                               </span>
-                            ) : (
-                              <span
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  disableLesson(lesson?.lesson_id);
+                              {lesson?.lesson_is_hidden === 1 ? (
+                                <span
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    enableLesson(lesson?.lesson_id);
+                                  }}
+                                >
+                                  <BsEye className="icon" />
+                                </span>
+                              ) : (
+                                <span
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    disableLesson(lesson?.lesson_id);
+                                  }}
+                                >
+                                  <BsEyeSlash className="icon" />
+                                </span>
+                              )}
+                              <button
+                                className="btnOutline1"
+                                onClick={() => {
+                                  navigate(
+                                    `/courses/courseInfo/lessonInfo/${course_id}/${lesson.unit_id}/${lesson.lesson_id}`
+                                  );
                                 }}
                               >
-                                <BsEyeSlash className="icon" />
-                              </span>
-                            )}
-                            <button
-                              className="btnOutline1"
-                              onClick={() => {
-                                navigate(
-                                  `/courses/courseInfo/lessonInfo/${course_id}/${lesson.unit_id}/${lesson.lesson_id}`
-                                );
-                              }}
-                            >
-                              Ir a
-                            </button>
+                                Ir a
+                              </button>
+                            </div>
                           </div>
                           <div>
                             {allInformation

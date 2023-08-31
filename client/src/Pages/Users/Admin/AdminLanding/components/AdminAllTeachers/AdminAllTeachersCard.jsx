@@ -163,6 +163,7 @@ const AdminAllTeachersCard = ({
                               <button
                                 onClick={() => openTeacherForm(teacher.user_id)}
                                 className="btnOutline1"
+                                style={{ marginTop : "10px"}}
                               >
                                 Ver más
                               </button>
@@ -229,6 +230,7 @@ const AdminAllTeachersCard = ({
                           <button
                             onClick={() => openTeacherForm(teacher.user_id)}
                             className="btnOutline1"
+                            style={{ marginTop : "10px"}}
                           >
                             Ver más
                           </button>

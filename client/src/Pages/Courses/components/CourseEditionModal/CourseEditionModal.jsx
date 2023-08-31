@@ -28,7 +28,6 @@ export const CourseEditionModal = ({
     setShowCourseEditionModal(false);
   };
 
-  console.log("/////////////////////////", courseId);
   const {
     register,
     handleSubmit,

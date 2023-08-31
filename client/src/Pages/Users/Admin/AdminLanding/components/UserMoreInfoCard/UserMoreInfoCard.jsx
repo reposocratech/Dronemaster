@@ -3,6 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import AdminUserEditInfoModal from "./components/AminUserEditInfoModal/AdminUserEditInfoModal";
 import { GiClassicalKnowledge } from "react-icons/gi";
+import "./UserMoreInforCard.scss"
 
 const UserMoreInfoCard = ({
   setMoreInformationStudent,
@@ -12,6 +13,7 @@ const UserMoreInfoCard = ({
   const [profileImg, setProfileImg] = useState();
 const [editUserForm, setEditUserForm] = useState(false)
 
+console.log(editUserForm)
 
   const closeInfoForm = () => {
     setMoreInformationStudent(false);
@@ -21,6 +23,7 @@ const [editUserForm, setEditUserForm] = useState(false)
     student &&
       setProfileImg(`http://localhost:4000/images/users/${student?.user_img}`);
   }, [student?.user_id]);
+  console.log(profileImg)
 
   const setStudentEnable = () => {
     axios
@@ -52,10 +55,13 @@ const [editUserForm, setEditUserForm] = useState(false)
   return (
     <Modal
       show={moreInformationStudent}
-      onHide={closeInfoForm}
+      onHide={setMoreInformationStudent}
       className="courseCreationModalContainer"
       animation={false}
-    >
+      centered
+
+      
+      >
       <Modal.Header closeButton className="modalHeader">
         <div className="cardTitle">
                  <div className="iconContainer">
@@ -65,21 +71,35 @@ const [editUserForm, setEditUserForm] = useState(false)
           <h4 className="titleText">Informacion de Usuario</h4>
         </div>
       </Modal.Header>
-      <Modal.Body className="modalBodyUser">
-        <div className="imgGridContainer">
-          <div className="imgContainer">
-            <img src={student?.user_img} alt="" />
+      <Modal.Body className="modalBodyUser1">
+        <div>
+          <div className="imgContainerStudent">
+            {student?.user_img ? ( <><img src={profileImg} alt="" />
+            </>)
+            :(<div className="defaultImg">
+            <div className="defaultText">
+              <h1 className="mb-0">
+                {student?.user_name.at(0).toUpperCase()}
+              </h1>
+            </div>
+          </div>)}
           </div>
         </div>
-        <p>
+        <div  className="d-flex flex-column align-items-start gap-1 inputName">
+        <label className="ps-3 font">
           {" "}
-          Nombre Completo: {student?.user_name}
-          {student?.user_lastname}
-        </p>
-        <p> Email {student?.email}</p>
-        <p>Telefono {student?.phone}</p>
-        <p> Dirección {student?.address}</p>
-        <p>Estado: {student?.is_deleted === 0 ? "Activo" : "Inactivo"}</p>
+          Nombre: <span style={{ fontWeight: 'bold' }}>{student?.user_name}
+          </span>
+        </label>
+        <label className="ps-3 font">
+          {" "}
+          Apellido: <span style={{ fontWeight: 'bold' }}>{student?.user_lastname}</span> 
+        </label>
+        <label className="ps-3 font">Telefono: <span style={{ fontWeight: 'bold' }}>{student?.phone}</span></label>
+        <label className="ps-3 font"> Dirección: <span style={{ fontWeight: 'bold' }}>{student?.address}</span></label>
+        <label className="ps-3 font">Estado: <span style={{ fontWeight: 'bold' }}>{student?.is_deleted === 0 ? "Activo" : "Inactivo"}</span> </label>
+    </div>
+
       </Modal.Body>
       <Modal.Footer className="modalFooter">
         {student?.is_deleted === 0 ? (
@@ -96,9 +116,12 @@ const [editUserForm, setEditUserForm] = useState(false)
         </button>
       </Modal.Footer>
       <AdminUserEditInfoModal
+
       editUserForm ={editUserForm}
-      setEditUserForm={setEditUserForm}
+      setMoreInformationStudent ={setMoreInformationStudent}
+      moreInformationStudent ={moreInformationStudent}
       student={student}
+    
       />
     </Modal>
   );

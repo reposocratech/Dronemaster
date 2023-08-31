@@ -9,7 +9,7 @@ import { DroneMasterContext } from "../../../../../../../../context/DroneMasterP
 /* import "./editMyProfileModal.scss"; */
 
 
-const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student}) => {
+const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, setMoreInformationStudent, moreInformationStudent}) => {
 
     const [file, setFile] = useState();
   const { resetData, setResetData } = useContext(DroneMasterContext);
@@ -26,12 +26,6 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student})
       setProfileImg(`http://localhost:4000/images/users/${user?.user_img}`);
   }, [user]);
 
-/*   useEffect(() => {
-    //Set values of a user Data
-    for (const fieldName in user) {
-      setValue(fieldName, user[fieldName]);
-    }
-  }, [showEditionModal]); */
 
   useEffect(() => {
     student?.user_name &&
@@ -57,6 +51,8 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student})
       .then((res) => {
         setResetData(!resetData);
         setFile();
+        setMoreInformationStudent(false);
+       
       })
       .catch((err) => console.log(err));
 

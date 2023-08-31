@@ -7,6 +7,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { AiOutlinePhone } from "react-icons/ai";
 import { Container } from "react-bootstrap";
 import UserMoreInfoCard from "../UserMoreInfoCard/userMoreInfoCard";
+import { MdMargin } from "react-icons/md";
 
 const AdminAllStudentsCard = ({
   setMoreInformationStudent,
@@ -158,7 +159,8 @@ const AdminAllStudentsCard = ({
                             <div className="tableCellContent">
                               <button
                                 onClick={() => openInfoForm(student.user_id)}
-                                className="btnOutline1"
+                                className="btnOutline1 "
+                                style={{ marginTop : "10px"}}
                               >
                                 Ver más
                               </button>
@@ -224,7 +226,8 @@ const AdminAllStudentsCard = ({
                         <div className="tableCellContent">
                           <button
                             onClick={() => openInfoForm(student.user_id)}
-                            className="btnOutline1"
+                            className="btnOutline1 "
+                            style={{ marginTop : "10px"}}
                           >
                             Ver más
                           </button>

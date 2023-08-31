@@ -6,14 +6,19 @@ import { PiTrashBold } from "react-icons/pi";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { DroneMasterContext } from "../../../../../../../context/DroneMasterProvider";
+import "./AdminTeacherEditInfoModal.scss";
 
 
 
-const AdminTeacherEditInfoModal = ({user, teacher, teacherEditForm, setTeacherEditForm}) => {
+const AdminTeacherEditInfoModal = ({user, teacher, teacherEditForm, setTeacherEditForm, setMoreInformationTeacher}) => {
   const [file, setFile] = useState();
   const { resetData, setResetData } = useContext(DroneMasterContext);
   const { register, setValue, handleSubmit } = useForm();
   const [profileImg, setProfileImg] = useState();
+  
+  
+  const [resEffect, setResEffect ] = useState(false);
+
 
   const handleClose = () => {
     setShowEditionModal(false);
@@ -24,12 +29,6 @@ const AdminTeacherEditInfoModal = ({user, teacher, teacherEditForm, setTeacherEd
       setProfileImg(`http://localhost:4000/images/users/${user?.user_img}`);
   }, [user]);
 
-/*   useEffect(() => {
-    //Set values of a user Data
-    for (const fieldName in user) {
-      setValue(fieldName, user[fieldName]);
-    }
-  }, [showEditionModal]); */
 
   useEffect(() => {
     teacher?.user_name &&
@@ -75,6 +74,8 @@ const AdminTeacherEditInfoModal = ({user, teacher, teacherEditForm, setTeacherEd
       .then((res) => {
         setResetData(!resetData);
         setTeacherEditForm(false)
+        setMoreInformationTeacher(false)
+        setResEffect(!resEffect)
       })
       .catch((err) => console.log(err));
       
@@ -92,7 +93,7 @@ const AdminTeacherEditInfoModal = ({user, teacher, teacherEditForm, setTeacherEd
     onHide={closeTeacherUserForm}
     centered={true}
     size="lg"
-    className="editionModalContainer"
+    className="editionTeacherModalContainer"
   >
     <Modal.Header closeButton className="modalHeader">
       <div className="cardTitle">
@@ -105,7 +106,7 @@ const AdminTeacherEditInfoModal = ({user, teacher, teacherEditForm, setTeacherEd
     </Modal.Header>
 
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Modal.Body className="modalBody">
+      <Modal.Body className="modalEditTeacherBody">
         <div className="imgGridContainer">
           <div className="imgContainer">
             {teacher?.user_img ? (

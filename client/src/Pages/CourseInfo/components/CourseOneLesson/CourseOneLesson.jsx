@@ -50,7 +50,6 @@ export const CourseOneLesson = () => {
       .catch((err) => { });
   };
 
-  console.log("esa lessssonnn", lessonData);
 
   return (
     <section className="lessonInfoMainSection">
