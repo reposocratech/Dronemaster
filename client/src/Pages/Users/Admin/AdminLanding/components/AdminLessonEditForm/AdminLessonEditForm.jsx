@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
@@ -8,41 +8,56 @@ import { GiClassicalKnowledge } from "react-icons/gi";
 const AdminLessonEditForm = ({
   showLessonEditForm,
   setShowLessonEditForm,
+  lessonId,
   lesson,
   resEffect,
   setResEffect,
   unit_id,
   course_id,
+  setLessonId,
+  lessonInformation,
+  setLessonInformation,
+  unitInformation,
+  setUnitInformation,
 }) => {
   const closeLessonEditForm = () => {
     setShowLessonEditForm(false);
-    setResEffect(!resEffect);
   };
   const [editLesson, setEditLesson] = useState();
-
+  console.log("lessonInformatiooooooon", lessonInformation);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm();
 
-  const onSubmit = (data) => {
+  console.log("lessonId", lessonId);
+
+  const onSubmit4 = (data) => {
     axios
       .put(
-        `http://localhost:4000/admin/editLesson/${course_id}/${unit_id}/${lesson.lesson_id}`,
+        `http://localhost:4000/admin/editLesson/${course_id}/${unit_id}/${lessonId}`,
         data
       )
 
       .then((res) => {
-        console.log(res);
         setEditLesson(res.data);
+        console.log(res);
         closeLessonEditForm(true);
         setResEffect(!resEffect);
       })
 
       .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    lessonInformation?.lesson_title &&
+      setValue("lesson_title", lessonInformation.lesson_title || "");
+    lessonInformation?.lesson_content &&
+      setValue("lesson_content", lessonInformation.lesson_content || "");
+  }, [lessonInformation, setValue]);
 
   return (
     <Modal show={showLessonEditForm} onHide={closeLessonEditForm}>
@@ -59,7 +74,7 @@ const AdminLessonEditForm = ({
           <h4 className="titleText">Edición de la lección</h4>
         </div>
       </Modal.Header>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit4)}>
         <Modal.Body className="modalBody1">
           <div className="d-flex flex-column align-items-start gap-1 inputName">
             <label htmlFor="lesson_title" className="ps-3">
@@ -86,7 +101,7 @@ const AdminLessonEditForm = ({
               {...register("lesson_content", {
                 required: "Campo Obligatorio",
                 minLength: { value: 3, message: "Minimo de 3 letras" },
-                maxLength: { value: 250, message: "Maximo 100 caracteres" },
+                maxLength: { value: 250, message: "Maximo 250 caracteres" },
               })}
               className="input1"
               id="lesson_content"

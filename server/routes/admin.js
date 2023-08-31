@@ -86,12 +86,9 @@ router.delete(
   adminControllers.deleteResource
 );
 
-// 16.- EditLesson
+// 18.- EditLesson
 // http://localhost:4000/admin/editLesson/:course_id/:unit_id/:lesson_id
-router.put(
-  "/editLesson/:course_id/:unit_id/:lesson_id",
-  adminControllers.editLesson
-);
+router.put("/editLesson/:course_id/:unit_id/:lesson_id", adminControllers.editLesson);
 
 // 19.- EditUnit
 // http://localhost:4000/admin/editUnit/:course_id/:unit_id

@@ -1,8 +1,10 @@
-import axios from "axios";
+import axios, { all } from "axios";
 import React, { useEffect, useState } from "react";
 import { AiOutlineFolderOpen } from "react-icons/ai";
 import { AiOutlineClockCircle } from "react-icons/ai";
+import { FiSearch } from "react-icons/fi";
 import { AiOutlineStar } from "react-icons/ai";
+import { FiSearch } from "react-icons/fi";
 import { BsPencil } from "react-icons/bs";
 import { BsEye } from "react-icons/bs";
 import { BsEyeSlash } from "react-icons/bs";
@@ -10,21 +12,21 @@ import AdminViewOneCourse from "../AdminViewOneCourse/AdminViewOneCourse";
 import { BsBook } from "react-icons/bs";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMdArrowDropup } from "react-icons/io";
-import { BsPlusCircleFill } from "react-icons/bs";
+import { BsPlusCircle } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { CourseEditionModal } from "../../../../../Courses/components/CourseEditionModal/CourseEditionModal";
 import { UnitCreationModal } from "../../../../../Courses/components/CourseCreationModal/UnitCreationModal/UnitCreationModal";
 
-const AdminAllCoursesCard = ({
-  moreInformationCourses,
-  setMoreInformationCourses,
-}) => {
+const AdminAllCoursesCard = ({}) => {
   const [allCourses, setAllCourses] = useState();
   const [openCourse, setOpenCourse] = useState([]);
-  const { reset } = useForm();
+  const { reset, handleSubmit, register } = useForm();
   const [showCourseEditionModal, setShowCourseEditionModal] = useState(false);
   const [showUnitCreationModal, setShowUnitCreationModal] = useState(false);
   const [resEffect, setResEffect] = useState(false);
+  const [courseId, setCourseId] = useState();
+  const [searchResultCourse, setsearchResultCourse] = useState();
+
   const openEditModal = () => {
     setShowCourseEditionModal(true);
   };
@@ -69,28 +71,30 @@ const AdminAllCoursesCard = ({
   const closedHeight = "0px";
   const openedHeight = "300px";
 
-  const toggleCourse = (course) => {
-    if (openCourse.includes(course)) {
-      setOpenCourse(openCourse.filter((index) => index !== course));
+  const toggleCourse = (courseIdx) => {
+    if (openCourse.includes(courseIdx)) {
+      setOpenCourse(openCourse.filter((index) => index !== courseIdx));
     } else {
-      setOpenCourse([...openCourse, course]);
+      setOpenCourse([...openCourse, courseIdx]);
     }
   };
-  //Buscador
+
+  //SEARCH BAR FUNCTION 
   const onSubmit = (data) => {
-    setSearchResultData(
-      courses.filter((course) =>
+
+    setsearchResultCourse(
+      allCourses?.filter((course) =>
         course.course_name
           .toLowerCase()
           .includes(data.courseSearch.toLowerCase())
       )
     );
+    console.log("searchResultDataaaaaaa", data.courseSearch);
     reset();
   };
-
   return (
     <div className="allUnitsLessonCard">
-      <div className="adminTableCard">
+      <div className="adminCoursesList">
         <div className="cardTitle">
           <div className="listContainer">
             <div className="title">
@@ -99,92 +103,280 @@ const AdminAllCoursesCard = ({
               </div>
               <h5 className="titleText">Todos los Cursos</h5>
             </div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="searchBar">
+                <FiSearch />
+                <input
+                  type="text"
+                  placeholder="Buscar Curso..."
+                  {...register("courseSearch")}
+                />
+              </div>
+            </form>
+
+            {searchResultCourse && (
+              <button
+                onClick={() => setsearchResultCourse()}
+                className="btnOutline1 m-3"
+              >
+                Ver todos
+              </button>
+            )}
           </div>
         </div>
+        {searchResultCourse ? (
+          <>
+            {searchResultCourse?.length === 0 ? (
+              <p>Sin resultados de busqueda</p>
+            ) : (
+              <>
+                {searchResultCourse?.map((course) => {
+                  return (
+                    <div key={course.course_id} className="unitList">
+                      <div className="unitTittle">
+                        <h6>
+                          <AiOutlineFolderOpen className="icon2 me-2" />
+                          {course.course_name}
+                          <div>
+                            <AiOutlineClockCircle className="icon" />
+                            {course?.course_length}h
+                          </div>
+                          <div>
+                            <AiOutlineStar className="icon" /> {course?.score}
+                          </div>
+                          <div>
+                            <span
+                              onClick={() => {
+                                openUnitCreateModal;
+                              }}
+                            >
+                              <BsPlusCircleFill className="icon" />
+                            </span>
+                          </div>
+                          <span
+                            onClick={() => {
+                              openEditModal(true);
+                              setCourseId(course.course_id);
+                            }}
+                          >
+                            <BsPencil />
+                          </span>
 
-        {allCourses?.map((course) => {
-          return (
-            <div key={course.course_id} className="unitList">
-              <div className="unitTittle">
-                <h6>
-                  <AiOutlineFolderOpen className="icon2 me-2" />
-                  {course.course_name}
-                  <div>
-                    <AiOutlineClockCircle className="icon" />
-                    {course?.course_length}h
+        {searchResultCourse ? (
+          <>
+            {searchResultCourse?.length === 0 ? (
+              <p>Sin resultados de busqueda</p>
+            ) : (
+              <>
+                {searchResultCourse?.map((course, courseIdx) => {
+                  return (
+                    <div key={course.course_id} className="courseListed">
+                      <div className="courseRow">
+                        {/* CourseName */}
+                        <div className="courseNameIconCont">
+                          <h6 className="courseName">
+                            <AiOutlineFolderOpen className="icon me-1" />
+                            {course.course_name}
+                          </h6>
+                          <div
+                            className="iconInfoContainer"
+                            onClick={() => toggleCourse(courseIdx)}
+                          >
+                            {openCourse.includes(courseIdx) ? (
+                              <IoMdArrowDropup />
+                            ) : (
+                              <IoMdArrowDropdown />
+                            )}
+                          </div>
+                        </div>
+                        <div className="courseIconsFuncitionsButtonsContainer">
+                          {/* Icon edition creation etc */}
+                          <div className="iconFuncionsCont">
+                            <span className="icon" onClick={openEditModal}>
+                              <BsPencil />
+                            </span>
+                            {course?.course_is_hidden === 1 ? (
+                              <span
+                                className="icon"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  enableCourse(course.course_id);
+                                }}
+                              >
+                                <BsEye />
+                              </span>
+                            ) : (
+                              <span
+                                className="icon"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  disableCourse(course.course_id);
+                                }}
+                              >
+                                <BsEyeSlash />
+                              </span>
+                            )}
+                            <button className="btnOutline1">Ver más</button>
+                          </div>
+                          {/* Info icons */}
+                          <div className="iconsInfoCont">
+                            <div className="courseIconCont">
+                              <AiOutlineClockCircle className="icon" />
+                              {course?.course_length}h
+                            </div>
+                            <div className="courseIconCont">
+                              <AiOutlineStar className="icon" /> {course?.score}
+                            </div>
+                            <div className="courseIconCont">
+                              <button
+                                className="buttonText"
+                                onClick={() => {
+                                  openUnitCreateModal(true);
+                                  setCourseId(course.course_id);
+                                }}
+                              >
+                                Tema <BsPlusCircle className="icon" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <AdminViewOneCourse
+                        course_id={course?.course_id}
+                        resEffect={resEffect}
+                        setResEffect={setResEffect}
+                        openCourse={openCourse}
+                        courseIdx={courseIdx}
+                      />
+                    </div>
+                  );
+                })}
+              </>
+            )}
+          </>
+        ) : (
+          <>
+
+            {allCourses?.map((course, courseIdx) => {
+              return (
+                <div key={course.course_id} className="courseListed">
+                  <div className="courseRow">
+                    {/* CourseName */}
+                    <div className="courseNameIconCont">
+                      <h6 className="courseName">
+                        <AiOutlineFolderOpen className="icon me-1" />
+                        {course.course_name}
+                      </h6>
+                      <div
+                        className="iconInfoContainer"
+                        onClick={() => toggleCourse(courseIdx)}
+                      >
+                        {openCourse.includes(courseIdx) ? (
+                          <IoMdArrowDropup />
+                        ) : (
+                          <IoMdArrowDropdown />
+                        )}
+                      </div>
+                    </div>
+                    <div className="courseIconsFuncitionsButtonsContainer">
+                      {/* Icon edition creation etc */}
+                      <div className="iconFuncionsCont">
+                        <span className="icon" onClick={openEditModal}>
+                          <BsPencil />
+                        </span>
+                        {course?.course_is_hidden === 1 ? (
+                          <span
+                            className="icon"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              enableCourse(course.course_id);
+                            }}
+                          >
+                            <BsEye />
+                          </span>
+                        ) : (
+                          <span
+                            className="icon"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              disableCourse(course.course_id);
+                            }}
+                          >
+                            <BsEyeSlash />
+                          </span>
+                        )}
+                        <button className="btnOutline1">Ver más</button>
+                      </div>
+                      {/* Info icons */}
+                      <div className="iconsInfoCont">
+                        <div className="courseIconCont">
+                          <AiOutlineClockCircle className="icon" />
+                          {course?.course_length}h
+                        </div>
+                        <div className="courseIconCont">
+                          <AiOutlineStar className="icon" /> {course?.score}
+                        </div>
+                        <div className="courseIconCont">
+                          <button
+                            className="buttonText"
+                            onClick={() => {
+                              openUnitCreateModal(true);
+                              setCourseId(course.course_id);
+                            }}
+                          >
+                            Tema <BsPlusCircle className="icon" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <AiOutlineStar className="icon" /> {course?.score}
-                  </div>
-                  <div>
-                    <span onClick={openUnitCreateModal}>
-                      <BsPlusCircleFill className="icon" />
-                    </span>
 
-                    <UnitCreationModal
-                      setShowUnitCreationModal={setShowUnitCreationModal}
-                      showUnitCreationModal={showUnitCreationModal}
-                      course_id={course.course_id}
-                      resEffect={resEffect}
-                      setResEffect={setResEffect}
-                    />
-                  </div>
-                  <span onClick={openEditModal}>
-                    <BsPencil />
-                  </span>
-
-                  {course?.course_is_hidden === 1 ? (
-                    <span
-                      onClick={(e) => {
-                        e.preventDefault();
-                        enableCourse(course.course_id);
-                      }}
-                    >
-                      <BsEye />
-                    </span>
-                  ) : (
-                    <span
-                      onClick={(e) => {
-                        e.preventDefault();
-                        disableCourse(course.course_id);
-                      }}
-                    >
-                      <BsEyeSlash />
-                    </span>
-                  )}
-                  <button className="btnOutline1">Ver más</button>
-                </h6>
-
-                <CourseEditionModal
-                  setShowCourseEditionModal={setShowCourseEditionModal}
-                  showCourseEditionModal={showCourseEditionModal}
-                  course={course}
-                  course_id={course.course_id}
-                />
-
-                <div
-                  className="dropdownContainer"
-                  onClick={() => toggleCourse(course)}
-                >
-                  {openCourse.includes(course) ? (
-                    <IoMdArrowDropup />
-                  ) : (
-                    <IoMdArrowDropdown />
-                  )}
-                </div>
-
-                <div>
                   <AdminViewOneCourse
                     course_id={course?.course_id}
                     resEffect={resEffect}
                     setResEffect={setResEffect}
+                    openCourse={openCourse}
+                    courseIdx={courseIdx}
                   />
+
                 </div>
-              </div>
-            </div>
-          );
-        })}
+              );
+            })}
+          </>
+        )}
+
+        <CourseEditionModal
+          setShowCourseEditionModal={setShowCourseEditionModal}
+          showCourseEditionModal={showCourseEditionModal}
+          course={allCourses}
+          courseId={courseId}
+          setCourseId={setCourseId}
+        />
+        <UnitCreationModal
+          setShowUnitCreationModal={setShowUnitCreationModal}
+          showUnitCreationModal={showUnitCreationModal}
+          courseId={courseId}
+          resEffect={resEffect}
+          setResEffect={setResEffect}
+        />
       </div>
+
+      <CourseEditionModal
+        setShowCourseEditionModal={setShowCourseEditionModal}
+        showCourseEditionModal={showCourseEditionModal}
+        course={allCourses}
+        courseId={courseId}
+        setCourseId={setCourseId}
+      />
+
+      <UnitCreationModal
+        setShowUnitCreationModal={setShowUnitCreationModal}
+        showUnitCreationModal={showUnitCreationModal}
+        courseId={courseId}
+        resEffect={resEffect}
+        setResEffect={setResEffect}
+      />
     </div>
   );
 };

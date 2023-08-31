@@ -37,7 +37,7 @@ export const TeacherOnecourseContent = ({
     axios
       .get(`http://localhost:4000/teachers/teacherResources/${user?.user_id}`)
       .then((res) => {
-        setTeacherResource(res.data)
+        setTeacherResource(res.data);
       })
       .catch((err) => console.log(err));
   }, [myCourseInfo, resetUseEffect]);
@@ -91,10 +91,9 @@ export const TeacherOnecourseContent = ({
         saveAs(
           `http://localhost:4000/images/resources/${res.data[0].resource_name}`,
           `${res.data[0].resource_name}`
-        )
-        setResetUseEffect(!resetUseEffect)
-      }
-      )
+        );
+        setResetUseEffect(!resetUseEffect);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -192,6 +191,8 @@ export const TeacherOnecourseContent = ({
               {myCourseInfo
                 .filter((item) => item.unit_tittle === unitName)
                 .map((lesson) => (
+                  if (lesson.lesson_id !== null) {
+                    return (
                   <li
                     key={lesson.lesson_id}
                     className="listedLesson"
@@ -246,6 +247,7 @@ export const TeacherOnecourseContent = ({
                     </div>
                   </li>
                 ))}
+
             </ul>
           </div>
         ))}
