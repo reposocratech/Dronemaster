@@ -36,7 +36,7 @@ export const TeacherOnecourseContent = ({
     axios
       .get(`http://localhost:4000/teachers/teacherResources/${user?.user_id}`)
       .then((res) => {
-        setTeacherResource(res.data)
+        setTeacherResource(res.data);
       })
       .catch((err) => console.log(err));
   }, [myCourseInfo, resetUseEffect]);
@@ -90,10 +90,9 @@ export const TeacherOnecourseContent = ({
         saveAs(
           `http://localhost:4000/images/resources/${res.data[0].resource_name}`,
           `${res.data[0].resource_name}`
-        )
-        setResetUseEffect(!resetUseEffect)
-      }
-      )
+        );
+        setResetUseEffect(!resetUseEffect);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -151,61 +150,97 @@ export const TeacherOnecourseContent = ({
             <ul>
               {myCourseInfo
                 .filter((item) => item.unit_tittle === unitName)
-                .map((lesson) => (
-                  <li
-                    key={lesson.lesson_id}
-                    className="listedLesson"
-                    style={{
-                      height: openUnits.includes(unitIndex)
-                        ? openedHeight
-                        : closedHeight,
-                      transition: "height 0.75s ease-in-out",
-                    }}
-                  >
-                    <div className="lessonTitle">
-                      <div className="lessonText">{lesson.lesson_title}</div>
-                      <div className="resourceContainer">
-                        {(lesson.resource_id && lesson?.resource_is_hidden === 1) && (
-                          <BsFillEyeFill
-                            className="deleteIcon"
-                            onClick={() => enableResource(lesson.resource_id)}
-                          />
-                        )}
-                        {(lesson.resource_id && lesson?.resource_is_hidden === 0) && (
-                          <BsFillEyeFill
-                            className="downloadIcon"
-                            onClick={() => disableResource(lesson.resource_id)}
-                          />
-                        )}
-                        {(lesson.resource_id && lesson?.resource_is_hidden === 0) && <BsFillFileEarmarkArrowDownFill
-                          className="downloadIcon"
-                          onClick={() => downloadResource(lesson.resource_id)}
-                        />}
-                        {!lesson.resource_id && <>
-                          <label htmlFor={lesson.lesson_id} className="d-inline">
-                            <BsFillFileArrowUpFill className="uploadIcon" />
-                          </label>
-                          <input
-                            type="file"
-                            onChange={(e) => uploadResource(e, lesson.lesson_id, lesson.unit_id)
-                            }
-                            className="d-none"
-                            id={lesson.lesson_id}
-                          />
-                        </>}
+                .map((lesson) => {
+                  if (lesson.lesson_id !== null) {
+                    return (
+                      <li
+                        key={lesson.lesson_id}
+                        className="listedLesson"
+                        style={{
+                          height: openUnits.includes(unitIndex)
+                            ? openedHeight
+                            : closedHeight,
+                          transition: "height 0.75s ease-in-out",
+                        }}
+                      >
+                        <div className="lessonTitle">
+                          <div className="lessonText">
+                            {lesson.lesson_title}
+                          </div>
+                          <div className="resourceContainer">
+                            {lesson.resource_id &&
+                              lesson?.resource_is_hidden === 1 && (
+                                <BsFillEyeFill
+                                  className="deleteIcon"
+                                  onClick={() =>
+                                    enableResource(lesson.resource_id)
+                                  }
+                                />
+                              )}
+                            {lesson.resource_id &&
+                              lesson?.resource_is_hidden === 0 && (
+                                <BsFillEyeFill
+                                  className="downloadIcon"
+                                  onClick={() =>
+                                    disableResource(lesson.resource_id)
+                                  }
+                                />
+                              )}
+                            {lesson.resource_id &&
+                              lesson?.resource_is_hidden === 0 && (
+                                <BsFillFileEarmarkArrowDownFill
+                                  className="downloadIcon"
+                                  onClick={() =>
+                                    downloadResource(lesson.resource_id)
+                                  }
+                                />
+                              )}
+                            {!lesson.resource_id && (
+                              <>
+                                <label
+                                  htmlFor={lesson.lesson_id}
+                                  className="d-inline"
+                                >
+                                  <BsFillFileArrowUpFill className="uploadIcon" />
+                                </label>
+                                <input
+                                  type="file"
+                                  onChange={(e) =>
+                                    uploadResource(
+                                      e,
+                                      lesson.lesson_id,
+                                      lesson.unit_id
+                                    )
+                                  }
+                                  className="d-none"
+                                  id={lesson.lesson_id}
+                                />
+                              </>
+                            )}
 
-                        {teacherResource && teacherResource.filter(
-                          (elem) => elem.resource_id === lesson.resource_id
-                        ).length > 0 && lesson.resource_id && lesson?.resource_is_hidden === 0 && (
-                            <BsFillFileEarmarkExcelFill
-                              className="deleteIcon"
-                              onClick={() => deleteResource(lesson.lesson_id, lesson.resource_id)}
-                            />
-                          )}
-                      </div>
-                    </div>
-                  </li>
-                ))}
+                            {teacherResource &&
+                              teacherResource.filter(
+                                (elem) =>
+                                  elem.resource_id === lesson.resource_id
+                              ).length > 0 &&
+                              lesson.resource_id &&
+                              lesson?.resource_is_hidden === 0 && (
+                                <BsFillFileEarmarkExcelFill
+                                  className="deleteIcon"
+                                  onClick={() =>
+                                    deleteResource(
+                                      lesson.lesson_id,
+                                      lesson.resource_id
+                                    )
+                                  }
+                                />
+                              )}
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  }
+                })}
             </ul>
           </div>
         ))}

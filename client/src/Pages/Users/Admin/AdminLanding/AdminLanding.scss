@@ -1,40 +1,89 @@
 @import "../../../../../public/styles/variables";
 
-.mainAdmin {
-  min-height: calc(100vh - 80px);
-  background-color: $PrimaryDarkColor;
-  display: flex;
-  gap: 8px;
+.mainSectionAdmin {
+  min-height: 100vh;
   padding: 4vh 5vw;
-  color: white;
-}
-
-//Common Styles
-.iconContainer {
-  width: 40px;
-  aspect-ratio: 1/1;
-  border-radius: 100%;
   background-color: $PrimaryDarkColor;
-  display: grid;
-  place-items: center;
-  color: $PrimaryOrangeColor;
-  font-size: 20px;
-}
-
-//Aside
-.sideContent {
-  width: 30%;
+  color: white;
   display: flex;
-  flex-direction: column;
   gap: 8px;
+
+  // min-height: 100vh;
+  // background-color: $PrimaryDarkColor;
+  // display: grid;
+  // grid-template:
+  //   "AdminCard allUnitsLessonCard"
+  //   "counterCardContainer allTeachersCard"
+  //   "adminInfoCard allStudentsCard"
+  //   "adminChartCard none"
+  //   "creationButtonsCard none";
+  // grid-template-columns: 3fr 7fr;
+  // grid-template-rows: 1fr 1fr 1fr auto auto;
+  // gap: 8px;
+  // padding: 4vh 5vw;
+  // color: white;
+
+  // .AdminCard {
+  //   grid-area: AdminCard;
+  // }
+  // .counterCardContainer {
+  //   grid-area: counterCardContainer;
+  // }
+  // .adminInfoCard {
+  //   grid-area: adminInfoCard;
+  // }
+  // .adminChartCard {
+  //   grid-area: adminChartCard;
+  // }
+  // .creationButtonsCard {
+  //   grid-area: creationButtonsCard;
+  // }
+  // .allUnitsLessonCard {
+  //   grid-area: allUnitsLessonCard;
+  //   align-self: start
+  // }
+  // .allTeachersCard {
+  //   grid-area: allTeachersCard;
+  // }
+  // .allStudentsCard {
+  //   grid-area: allStudentsCard;
+  // }
+  .mainContainer,
+  .sideContent {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .sideContent {
+    width: 30%;
+  }
+  .mainContainer {
+    width: 70%;
+  }
 
   .AdminCard,
-  .counterCard,
-  .courseListCard,
-  .userInfoCard {
+  .adminInfoCard,
+  .adminChartCard,
+  .creationButtonsCard,
+  .allUnitsLessonCard,
+  .allTeachersCard,
+  .allStudentsCard,
+  .counterCard {
     background-color: $CuaternaryDark;
     border-radius: 12px;
     padding: 12px;
+    width: 100%;
+  }
+  //Common Styles
+  .iconContainer {
+    width: 40px;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+    background-color: $PrimaryDarkColor;
+    display: grid;
+    place-items: center;
+    color: $PrimaryOrangeColor;
+    font-size: 20px;
   }
 
   //User Card
@@ -91,13 +140,15 @@
     }
   }
 
-  //3 Counters style
-  .counterContainer {
+  //Counters style
+  .counterCardContainer {
     display: flex;
     justify-content: space-between;
+    gap: 8px;
+    width: 100%;
 
     .counterCard {
-      width: 32%;
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -117,9 +168,8 @@
       }
     }
   }
-
-  .userInfoCard {
-    grid-area: userInfo;
+  //Admin More Info Card
+  .adminInfoCard {
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -147,42 +197,256 @@
     }
   }
 
-  //Course List Card
-  .courseListCard {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
-    .cardTitle {
+  // All course Card
+  .allUnitsLessonCard {
+    .adminCoursesList {
       display: flex;
-      gap: 20px;
+      flex-direction: column;
+      padding: 10px 16px;
+      color: white;
+      gap: 12px;
 
-      .textContainer {
+      .cardTitle {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        align-items: center;
+        justify-content: space-between;
+        padding-right: 12px;
+        margin-bottom: 10px;
 
-        h6 {
-          margin: 0;
+        .title {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+
+          .titleText {
+            margin: 0;
+          }
+        }
+
+        .searchBar {
+          border-radius: 20px;
+          border: 2px solid $PrimaryOrangeColor;
+          padding: 0 10px;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+
+          input {
+            width: 100%;
+            border: none;
+            background: transparent;
+          }
+
+          input:focus {
+            border: none;
+            outline: none;
+          }
         }
       }
-    }
 
-    .cardBody {
-      padding: 0 20px;
+      //COurse List
+      .courseListed {
+        width: 100%;
+        padding: 0 2vw;
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
 
-      .courseList {
-        padding: 0;
-        .courseListRow {
-          font-size: 14px;
-          border-bottom: 1px solid $TertiaryDarkColor;
+        //Courses rows
+        .courseRow {
+          width: 100%;
           display: flex;
+          gap: 12px;
           justify-content: space-between;
           align-items: center;
+          border-bottom: 1px solid $TertiaryDarkColor;
 
-          .icon {
-            color: $PrimaryOrangeColor;
-            cursor: pointer;
+          // Course name
+          .courseNameIconCont {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            align-self: end;
+
+            h6 {
+              margin: 0;
+              font-size: large;
+              .icon {
+                color: $PrimaryOrangeColor;
+                font-size: 20px;
+              }
+            }
+          }
+          .courseIconsFuncitionsButtonsContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            align-items: end;
+            gap: 8px;
+
+            //Course Functions buttons
+            .iconFuncionsCont {
+              display: flex;
+              gap: 20px;
+              align-items: center;
+              .icon:hover {
+                color: $PrimaryOrangeColor;
+                cursor: pointer;
+              }
+            }
+            //Course icon Info
+            .iconsInfoCont {
+              display: flex;
+              flex-grow: 1;
+              gap: 40px;
+              align-items: center;
+
+              .courseIconCont {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+              }
+
+              .icon {
+                color: $PrimaryOrangeColor;
+              }
+
+              .buttonText{
+                border: none;
+                background-color: transparent;
+                color: white;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+              }.buttonText:hover{
+                
+                color: $PrimaryOrangeColor;
+
+              }
+            }
+          }
+        }
+
+        //Units List Cont
+        .unitsList {
+          display: flex;
+          flex-direction: column;
+          padding:0 0 0 12px ;
+
+          .unitListed {
+            overflow: hidden;
+            //Unit Row
+            .unitRow {
+              display: flex;
+              justify-content: space-between;
+              border-bottom: 1px solid $TertiaryDarkColor;
+              padding: 12px 0px 4px 10px;
+
+              //Unit title
+              .unitTitleContainer {
+                display: flex;
+                align-items: center;
+                h6 {
+                  margin: 0;
+                  span {
+                    color: $PrimaryOrangeColor;
+                  }
+                  .unitName{
+                  font-weight: 400;
+                    color: white;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1;
+                    -webkit-box-orient: vertical;
+                  }
+                }
+              }
+
+              //Unit Buttons
+              .unitsButtonsContainer {
+                display: flex;
+                gap: 20px;
+                align-items: center;
+                span {
+                  .icon:hover {
+                    color: $PrimaryOrangeColor;
+                    cursor: pointer;
+                  }
+                }
+                .buttonText{
+                  border: none;
+                  background-color: transparent;
+                  color: white;
+                  display: flex;
+                  align-items: center;
+                  gap: 4px;
+
+                  .icon{
+                    color: $PrimaryOrangeColor;
+                  }
+                }.buttonText:hover{
+                  color: $PrimaryOrangeColor;
+
+                }
+              }
+            }
+
+            //Lessons list
+            .lessonsList {
+              display: flex;
+              flex-direction: column;
+              padding: 0 0 0 20px;
+              overflow: hidden;
+
+              .lessonRow {
+                display: flex;
+                justify-content: space-between;
+                border-bottom: 1px solid $TertiaryDarkColor;
+                padding: 12px 10px 4px 10px;
+
+                .lessonTitle {
+                  .lessonText {
+                    margin: 0;
+                  }
+                }
+                .lessonFunctionsButtons {
+                  display: flex;
+                  gap: 20px;
+                  align-items: center;
+                  span {
+                    .icon:hover {
+                      color: $PrimaryOrangeColor;
+                      cursor: pointer;
+                    }
+                  }
+                }
+              }
+
+              //Resource
+              .resourceRow {
+                display: flex;
+                gap:10px;
+                
+                padding: 8px 10px 0px 10px;
+                margin-bottom: 20px;
+
+                .resourceFunctionsButtonsCont {
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                  font-size: 14px;
+
+                  .icon:hover{
+                    color: $PrimaryOrangeColor;
+                    cursor: pointer;
+                  }
+                  .deleteIcon:hover{
+                    cursor: pointer;
+                    color: rgb(255, 45, 45);
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -197,6 +461,7 @@
   flex-direction: column;
   gap: 8px;
 color: white;
+
   .coursesTableCard,
 
   
@@ -333,6 +598,7 @@ color: white;
   }
 }
 
+
 //Media Tablet
 @media (max-width: 1200px) {
   .mainSection {
@@ -456,3 +722,70 @@ color: white;
 .tableCellName {
   text-align: start;
   padding: 0 8px;}
+
+// //Media Tablet
+// @media (max-width: 1200px) {
+//   .mainSectionAdmin {
+//     flex-direction: column;
+//     .sideContent {
+//       width: 100%;
+//       display: grid;
+//       grid-template:
+//         "adminCard userInfo"
+//         "counter userInfo";
+//       grid-template-rows: 1fr auto;
+
+//       .adminCard {
+//         height: 100%;
+//       }
+
+//       .counterContainer {
+//         gap: 8px;
+//         height: 100%;
+//         .counterCard {
+//           flex-direction: row;
+//         }
+//       }
+//     }
+
+//     .mainContainer {
+//       width: 100%;
+//     }
+//   }
+// }
+// //Media Tablet Vertical
+// @media (max-width: 768px) {
+//   .mainSection {
+//     flex-direction: column;
+//     .sideContent {
+//       width: 100%;
+//       display: grid;
+//       grid-template:
+//         "adminCard counter"
+//         "userInfo userInfo";
+
+//       .counterContainer {
+//         gap: 8px;
+//         height: 100%;
+//         .counterCard {
+//           flex-direction: column;
+//         }
+//       }
+//     }
+
+//     .mainContainer {
+//       width: 100%;
+//     }
+//   }
+// }
+
+// @media (max-width: 576px) {
+//   .mainSection {
+//     .sideContent {
+//       grid-template:
+//         "adminCard"
+//         "counter"
+//         "userInfo";
+//     }
+//   }
+// }

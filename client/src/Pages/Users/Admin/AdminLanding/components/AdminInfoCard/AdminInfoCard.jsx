@@ -10,7 +10,7 @@ const AdminInfoCard = () => {
   const { user } = useContext(DroneMasterContext);
 
   return (
-    <div className="userInfoCard">
+    <div className="adminInfoCard">
       <div className="cardTitle">
         <div className="iconContainer">
           <BiSolidUserDetail />

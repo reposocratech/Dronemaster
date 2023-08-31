@@ -23,21 +23,25 @@ const AdminContadorCard = () => {
   }, []);
 
   return (
-    <div className="counterCard">
-      <div className="cardBody d-flex justify-content-center align-content-center">
+    <div className="counterCardContainer">
+     
         <div className="counterCard">
           <span className="iconContainer">
             <AiOutlineUser />
           </span>
-          <h6>Admin</h6>
-          <p>{counter.TotalAdmin}</p>
+          <div className="textContianer">
+            <h6  className="title">Admin</h6>
+            <p>{counter.TotalAdmin}</p>
+          </div>
         </div>
         <div className="counterCard">
           <span className="iconContainer">
             <AiOutlineUser />
           </span>
-          <h6>Profesores</h6>
-          <p>{counter.TotalTeachers}</p>
+          <div className="textContianer">
+            <h6  className="title">Profesores</h6>
+            <p>{counter.TotalTeachers}</p>
+          </div>
         </div>
         <div className="counterCard">
           <span className="iconContainer">
@@ -57,7 +61,7 @@ const AdminContadorCard = () => {
             <p>{counter.TotalCourse}</p>
           </div>
         </div>
-      </div>
+     
     </div>
   );
 };
