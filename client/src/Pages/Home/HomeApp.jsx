@@ -23,7 +23,6 @@ const HomeApp = () => {
   const [counter, setCounter] = useState(0);
   const [counterRatio, setCounterRatio] = useState(1);
   const [counter1, setCounter1] = useState(0);
-  const [counterRatio1, setCounterRatio1] = useState(1);
   const navigate = useNavigate();
 
   const currentWidth = () => {
@@ -70,18 +69,14 @@ const HomeApp = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 900 && window.innerWidth < 1100) {
+      if (window.innerWidth >= 700 && window.innerWidth < 900) {
         setCounterRatio(1);
-        setCounterRatio1(1);
-      } else if (window.innerWidth >= 1100 && window.innerWidth < 1400) {
+      } else if (window.innerWidth >= 900 && window.innerWidth < 1200) {
         setCounterRatio(2);
-        setCounterRatio1(2);
-      } else if (window.innerWidth >= 1400 && window.innerWidth < 1700) {
+      } else if (window.innerWidth >= 1200 && window.innerWidth < 1700) {
         setCounterRatio(3);
-        setCounterRatio1(3);
       } else if (window.innerWidth >= 1700) {
         setCounterRatio(4);
-        setCounterRatio1(4);
       }
     };
 
@@ -223,7 +218,7 @@ const HomeApp = () => {
               <div className="navigationButtonContainerLeft">
                 <MdNavigateBefore
                   className="navigationButton"
-                  onClick={() => setCounter1(counter1 - counterRatio1)}
+                  onClick={() => setCounter1(counter1 - counterRatio)}
                 />
               </div>
             ) : (
@@ -233,16 +228,16 @@ const HomeApp = () => {
             )}
             <div className="courseCardContainer">
               {bestRatedCourses
-                ?.slice(counter1, counter1 + counterRatio1)
+                ?.slice(counter1, counter1 + counterRatio)
                 .map((elem) => {
                   return <CourseCard key={elem.course_id} oneCourse={elem} />;
                 })}
             </div>
-            {counter1 + counterRatio1 < bestRatedCourses?.length ? (
+            {counter1 + counterRatio < bestRatedCourses?.length ? (
               <div className="navigationButtonContainerRight">
                 <MdNavigateNext
                   className="navigationButton"
-                  onClick={() => setCounter1(counter1 + counterRatio1)}
+                  onClick={() => setCounter1(counter1 + counterRatio)}
                 />
               </div>
             ) : (
