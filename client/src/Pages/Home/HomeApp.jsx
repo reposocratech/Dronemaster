@@ -170,84 +170,87 @@ const HomeApp = () => {
           </div>
         </div>
       </div>
-      <div className="allCoursesContainer p-0 px-sm-5">
-        <div className="categoryContainer">
-          <h2 className="categoryTitle text-center text-md-start">
-            Últimos cursos
-          </h2>
-          <div className="courseCardContainerWrapper">
-            {counter !== 0 ? (
-              <div className="navigationButtonContainerLeft">
-                <MdNavigateBefore
-                  className="navigationButton"
-                  onClick={() => setCounter(counter - counterRatio)}
-                />
+      {topCourses > 0 &&
+        <div className="allCoursesContainer p-0 px-sm-5">
+          <div className="categoryContainer">
+            <h2 className="categoryTitle text-center text-md-start">
+              Últimos cursos
+            </h2>
+            <div className="courseCardContainerWrapper">
+              {counter !== 0 ? (
+                <div className="navigationButtonContainerLeft">
+                  <MdNavigateBefore
+                    className="navigationButton"
+                    onClick={() => setCounter(counter - counterRatio)}
+                  />
+                </div>
+              ) : (
+                <div className="navigationButtonContainerLeft">
+                  <MdNavigateBefore className="navigationButton opacity-0" />
+                </div>
+              )}
+              <div className="courseCardContainer">
+                {topCourses
+                  ?.slice(counter, counter + counterRatio)
+                  .map((elem) => {
+                    return <CourseCard key={elem.course_id} oneCourse={elem} />;
+                  })}
               </div>
-            ) : (
-              <div className="navigationButtonContainerLeft">
-                <MdNavigateBefore className="navigationButton opacity-0" />
-              </div>
-            )}
-            <div className="courseCardContainer">
-              {topCourses
-                ?.slice(counter, counter + counterRatio)
-                .map((elem) => {
-                  return <CourseCard key={elem.course_id} oneCourse={elem} />;
-                })}
+              {counter + counterRatio < topCourses?.length ? (
+                <div className="navigationButtonContainerRight">
+                  <MdNavigateNext
+                    className="navigationButton"
+                    onClick={() => setCounter(counter + counterRatio)}
+                  />
+                </div>
+              ) : (
+                <div className="navigationButtonContainerRight">
+                  <MdNavigateNext className="navigationButton opacity-0" />
+                </div>
+              )}
             </div>
-            {counter + counterRatio < topCourses?.length ? (
-              <div className="navigationButtonContainerRight">
-                <MdNavigateNext
-                  className="navigationButton"
-                  onClick={() => setCounter(counter + counterRatio)}
-                />
+          </div>
+          <div className="categoryContainer pt-4">
+            <h2 className="categoryTitle text-center text-md-start">
+              Cursos mejor valorados
+            </h2>
+            <div className="courseCardContainerWrapper">
+              {counter1 !== 0 ? (
+                <div className="navigationButtonContainerLeft">
+                  <MdNavigateBefore
+                    className="navigationButton"
+                    onClick={() => setCounter1(counter1 - counterRatio1)}
+                  />
+                </div>
+              ) : (
+                <div className="navigationButtonContainerLeft">
+                  <MdNavigateBefore className="navigationButton opacity-0" />
+                </div>
+              )}
+              <div className="courseCardContainer">
+                {bestRatedCourses
+                  ?.slice(counter1, counter1 + counterRatio1)
+                  .map((elem) => {
+                    return <CourseCard key={elem.course_id} oneCourse={elem} />;
+                  })}
               </div>
-            ) : (
-              <div className="navigationButtonContainerRight">
-                <MdNavigateNext className="navigationButton opacity-0" />
-              </div>
-            )}
+              {counter1 + counterRatio1 < bestRatedCourses?.length ? (
+                <div className="navigationButtonContainerRight">
+                  <MdNavigateNext
+                    className="navigationButton"
+                    onClick={() => setCounter1(counter1 + counterRatio1)}
+                  />
+                </div>
+              ) : (
+                <div className="navigationButtonContainerRight">
+                  <MdNavigateNext className="navigationButton opacity-0" />
+                </div>
+              )}
+            </div>
           </div>
         </div>
-        <div className="categoryContainer pt-4">
-          <h2 className="categoryTitle text-center text-md-start">
-            Cursos mejor valorados
-          </h2>
-          <div className="courseCardContainerWrapper">
-            {counter1 !== 0 ? (
-              <div className="navigationButtonContainerLeft">
-                <MdNavigateBefore
-                  className="navigationButton"
-                  onClick={() => setCounter1(counter1 - counterRatio)}
-                />
-              </div>
-            ) : (
-              <div className="navigationButtonContainerLeft">
-                <MdNavigateBefore className="navigationButton opacity-0" />
-              </div>
-            )}
-            <div className="courseCardContainer">
-              {bestRatedCourses
-                ?.slice(counter1, counter1 + counterRatio)
-                .map((elem) => {
-                  return <CourseCard key={elem.course_id} oneCourse={elem} />;
-                })}
-            </div>
-            {counter1 + counterRatio < bestRatedCourses?.length ? (
-              <div className="navigationButtonContainerRight">
-                <MdNavigateNext
-                  className="navigationButton"
-                  onClick={() => setCounter1(counter1 + counterRatio)}
-                />
-              </div>
-            ) : (
-              <div className="navigationButtonContainerRight">
-                <MdNavigateNext className="navigationButton opacity-0" />
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+      }
+
     </Container>
   );
 };
