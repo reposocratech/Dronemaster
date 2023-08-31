@@ -54,7 +54,6 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
     setShowLessonEditForm(true);
   };
 
-  console.log("allinformatiooooooooooon", allInformation);
 
   useEffect(() => {
     axios
@@ -81,7 +80,6 @@ const AdminViewOneCourse = ({ course_id, resEffect, setResEffect }) => {
     setUnitEditForm(true);
   };
 
-  console.log("alll", allInformation);
 
   //DROPDOWN
   const closedHeight = "0px";

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "../../../../public/styles/registerLoginFormStyle.scss";
 import { Col, Row } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
+import { useState } from "react";
 
 const RegisterModal = ({
   showRegisterModal,
@@ -11,6 +12,7 @@ const RegisterModal = ({
   setShowLoginModal,
   openLoginModal,
 }) => {
+  const [errorMessage, setErrorMessage] = useState()
   const closeRegisterModal = () => {
     setShowRegisterModal(false);
     reset()
@@ -37,7 +39,7 @@ const RegisterModal = ({
         setShowRegisterModal(false);
         reset();
       })
-      .catch((error) => console.log(error));
+      .catch((error) => setErrorMessage(error.response.data));
   };
   return (
     <Modal
@@ -124,6 +126,7 @@ const RegisterModal = ({
                     className="forminput"
                   />
                   <label htmlFor="password" className="textError">{errors.password?.message}</label>
+                  <p className="text-danger mb-2">{errorMessage}</p>
                 </div>
                 <div className="buttonsCont">
                   <button className="btnNormal me-3"> Aceptar</button>
