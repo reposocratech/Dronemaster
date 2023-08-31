@@ -12,8 +12,8 @@ const AdminCard = ({ setShowEditionModal }) => {
     <div className="AdminCard">
       <div className="adminCard">
         <div className="imgContainer">
-          {user?.img ? (
-            <img src={`http://localhost:4000/images/user/${user.img}`} />
+          {user?.user_img ? (
+            <img src={`http://localhost:4000/images/users/${user.user_img}`} />
           ) : (
             <h2 className="avatarText">
               {user?.user_name.at(0).toUpperCase()}

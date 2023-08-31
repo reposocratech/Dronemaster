@@ -1,4 +1,4 @@
-@import "../../../public/styles/variables";
+ @import "../../../public/styles/variables";
 
 .courseInfoMainSection {
   min-height: calc(100vh - 80px);
@@ -264,14 +264,14 @@
   //Aside
   .rightAsideSection {
     grid-area: rightAsideSection;
-    min-width: 300px;
-    max-width: 400px;
     display: flex;
     flex-direction: column;
     gap: 8px;
     margin-top: 15px;
-
+    
     .courseMultimediaInfoCard {
+      min-width: 300px;
+      max-width: 400px;
       position: sticky;
       top: 15px;
       display: flex;

@@ -19,8 +19,8 @@ const AdminInfoCard = () => {
           <h6 className="titleText">Mis Datos</h6>
         </div>
       </div>
-      <div className="cardBody d-flex flex-md-column flex-xxl-row">
-        <div>
+      <div className="cardBody d-flex justify-content-evenly flex-column flex-xxl-row h-100">
+        <div className="h-100 d-flex flex-column" >
           <div className="lineInfo">
             <span className="infoIcon">
               <HiOutlineMail />
@@ -31,23 +31,23 @@ const AdminInfoCard = () => {
             <span className="infoIcon">
               <FiMapPin />
             </span>
-            <p>{user?.address ? user.address : "..."}</p>
+            <p>{user?.address ? user.address : "Contenido pendiente"}</p>
           </div>
         </div>
 
-        <div>
+        <div className="h-100  d-flex flex-column" >
           <div className="lineInfo">
             <span className="infoIcon">
               <AiOutlinePhone />
             </span>
-            <p>{user?.phone ? user.phone : "..."} </p>
+            <p>{user?.phone ? user.phone : "Contenido pendiente"} </p>
           </div>
 
           <div className="lineInfo">
             <span className="infoIcon">
               <AiOutlineIdcard />
             </span>
-            <p>{user?.passport ? user.passport : "..."}</p>
+            <p>{user?.passport ? user.passport : "Contenido pendiente"}</p>
           </div>
         </div>
       </div>

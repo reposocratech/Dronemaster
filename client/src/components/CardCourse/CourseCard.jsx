@@ -19,7 +19,6 @@ export const CourseCard = ({ oneCourse }) => {
     return () => {};
   }, [oneCourse]);
 
-  console.log(oneCourse);
 
 
   const currentDate = new Date();
@@ -46,7 +45,7 @@ export const CourseCard = ({ oneCourse }) => {
         <div className="coursePreviewContainer">
           <img
             className="preview"
-            src="/images/courseImages/curso1.jpg"
+            src={oneCourse?.course_img ? `http://localhost:4000/images/courses/${oneCourse.course_img}` : `http://localhost:4000/images/courses/courseDefaultImg.jpg`}
             alt=""
           />
         </div>

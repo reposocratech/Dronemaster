@@ -269,17 +269,27 @@
         margin-top: 8px;
 
         .userImgContainer {
-          overflow-y: hidden;
           display: flex;
           align-items: center;
+          justify-content: start;
           gap: 15px;
-
+     
           img {
             border-radius: 100%;
             width: 30px;
             height: 100%;
             object-fit: cover;
             object-position: center;
+          }
+          .avatarText{
+            background-color: $PrimaryDarkColor;
+            color: $PrimaryOrangeColor;  border-radius: 100%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 0.5px solid $PrimaryOrangeColor;
           }
         }
 
