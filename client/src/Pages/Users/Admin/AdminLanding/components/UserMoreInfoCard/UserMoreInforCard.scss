@@ -1,8 +1,13 @@
-/* @import "../../../../../../../../public/style.variables";
- */
+ @import "../../../../../../../public/styles/variables";
+
 .courseCreationModalContainer {
   backdrop-filter: blur(10px);
   background-color: none;
+/*   height: 80vh;
+  width: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
 
   .modalHeader {
     background-color: $CuaternaryDark;
@@ -50,164 +55,150 @@
     }
   }
   
-  .modalBodyUser {
+  .font{
 
-    background-color: #9d9d9d;
-    display: grid;
-    grid-template:
-      "inputImage inputName inputLastname"
-      "inputImage inputPassport inputPhone"
-      "inputImage inputAddress inputAddress";
+    font-size: 16px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: white;
+    word-spacing: 5px;
+    
+  }
 
-    grid-template-columns: 1fr 1fr 1fr;
-    align-items: center;
-    place-items: center;
-    grid-gap: 10px;
+  .defaultImg {
+    position: relative;
 
-    .inputName {
-      grid-area: inputName;
-    }
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
 
-    .inputLastname {
-      grid-area: inputLastname;
-    }
-
-    .inputPassport {
-      grid-area: inputPassport;
-    }
-
-    .inputPhone {
-      grid-area: inputPhone;
-    }
-
-    .inputAddress {
-      grid-area: inputAddress;
-    }
-
-    .inputName,
-    .inputLastname,
-    .inputPassport,
-    .inputPhone,
-    .inputAddress {
-      padding: 0 8px;
-      width: 100%;
-    }
-
-    .imgGridContainer {
-      grid-area: inputImage;
+    .defaultText {
       width: 100%;
       height: 100%;
       display: flex;
-      flex-direction: column;
-      gap: 10px;
-      justify-content: space-evenly;
       align-items: center;
+      justify-content: center;
+      color: $PrimaryOrangeColor;
+      background-color: $PrimaryDarkColor;
+      border-radius: 50px;
 
-      .imgContainer {
+    }
+  }
+
+  .imgGridContainer {
+    grid-area: inputImage;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: space-evenly;
+    align-items: center;
+
+    .imgContainer {
+      position: relative;
+height: 40vh;
+      width: 20vw;
+      aspect-ratio: 1/1;
+      border-radius: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $PrimaryDarkColor;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 100%;
+        object-position: center;
+      }
+
+      .defaultImg {
         position: relative;
 
-        width: 120px;
-        aspect-ratio: 1/1;
-        border-radius: 100%;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: $PrimaryDarkColor;
+        flex-direction: column;
+        text-align: center;
+        width: 100%;
 
-        img {
+        .defaultText {
           width: 100%;
           height: 100%;
-          object-fit: cover;
-          border-radius: 100%;
-          object-position: center;
-        }
-
-        .defaultImg {
-          position: relative;
-
           display: flex;
-          flex-direction: column;
-          text-align: center;
-          width: 100%;
+          align-items: center;
+          justify-content: center;
+          color: $PrimaryOrangeColor;
 
-          .defaultText {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: $PrimaryOrangeColor;
-
-          }
-        }
-
-        .deleteImgButton {
-          display: none;
-          position: absolute;
-          top: 5px;
-          left: 5px;
-          aspect-ratio: 1/1;
-          padding: 4px;
-          background-color: red;
-          color: white;
-        }
-
-        .deleteImgButton:hover {
-          background-color: rgb(128, 3, 3);
         }
       }
 
-      .imgContainer:hover {
-        .defaultImg {
-          .defaultText {
-            display: flex;
-          }
-        }
-
-        .deleteImgButton {
-          display: flex;
-        }
-      }
-
-      input[type="file"].inputFile {
+      .deleteImgButton {
         display: none;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        aspect-ratio: 1/1;
+        padding: 4px;
+        background-color: red;
+        color: white;
+      }
+
+      .deleteImgButton:hover {
+        background-color: rgb(128, 3, 3);
       }
     }
 
-    .inputImageLabel {
-      width: 150px;
-      background-color: transparent;
-      text-align: center;
-      font-size: small;
-      padding: 4px;
-      border: 2px solid $PrimaryOrangeColor;
-      font-weight: 400;
-      margin-bottom: 5px;
-      cursor: pointer;
+    .imgContainer:hover {
+      .defaultImg {
+        .defaultText {
+          display: flex;
+        }
+      }
+
+      .deleteImgButton {
+        display: flex;
+      }
     }
 
-    .inputImageLabel:hover {
-      color: black;
+    input[type="file"].inputFile {
+      display: none;
     }
+  }
 
-    .input1 {
-      width: 100%;
-      height: 40px;
-      border-radius: 20px;
-      border-style: solid;
-      background-color: rgba(255, 255, 255, 0.181);
-      padding: 0 20px;
-      border: 2px solid $PrimaryDarkColor;
+  .inputImageLabel {
+    width: 150px;
+    background-color: transparent;
+    text-align: center;
+    font-size: small;
+    padding: 4px;
+    border: 2px solid $PrimaryOrangeColor;
+    font-weight: 400;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
 
-    }
+  .inputImageLabel:hover {
+    color: black;
+  }
 
-    .input1:focus {
-      background-color: rgba(82, 82, 82, 0.181);
-      outline: none;
-      border: 2px solid $PrimaryOrangeColor;
+  .input1 {
+    width: 100%;
+    height: 40px;
+    border-radius: 20px;
+    border-style: solid;
+    background-color: rgba(255, 255, 255, 0.181);
+    padding: 0 20px;
+    border: 2px solid $PrimaryDarkColor;
+
+  }
+
+  .input1:focus {
+    background-color: rgba(82, 82, 82, 0.181);
+    outline: none;
+    border: 2px solid $PrimaryOrangeColor;
 
 
-    }
   }
 
   @media (max-width: 992px) {
@@ -236,3 +227,101 @@
     }
   }
 }
+
+.modalBodyUser1 {
+
+  background-color: #9d9d9d;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: auto;
+
+
+   .imgContainerStudent {
+      position: relative;
+
+      width: 120px;
+      aspect-ratio: 1/1;
+      border-radius: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $PrimaryDarkColor;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 100%;
+        object-position: center;
+      }
+
+  
+  .imgGridContainerStudent {
+    grid-area: inputImage;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: space-evenly;
+    align-items: center;
+
+ 
+
+      .defaultImg {
+        position: relative;
+
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        width: 100%;
+
+        .defaultText {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: $PrimaryOrangeColor;
+
+        }
+      }
+
+      .deleteImgButton {
+        display: none;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        aspect-ratio: 1/1;
+        padding: 4px;
+        background-color: red;
+        color: white;
+      }
+
+      .deleteImgButton:hover {
+        background-color: rgb(128, 3, 3);
+      }
+    }
+
+    .imgContainer:hover {
+      .defaultImg {
+        .defaultText {
+          display: flex;
+        }
+      }
+
+      .deleteImgButton {
+        display: flex;
+      }
+    }
+
+    input[type="file"].inputFile {
+      display: none;
+    }
+  }
+
+
+
+}
+
