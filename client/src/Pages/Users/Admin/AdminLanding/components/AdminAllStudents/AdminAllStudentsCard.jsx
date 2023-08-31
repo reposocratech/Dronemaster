@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useId, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiSearch } from "react-icons/fi";
 import { AiOutlineUser } from "react-icons/ai";
@@ -12,21 +12,20 @@ const AdminAllStudentsCard = ({
   setMoreInformationStudent,
   moreInformationStudent,
 }) => {
-  const [students, setStudents] = useState();
+  const [students, setStudents] = useState([]);
   const { register, handleSubmit } = useForm();
-  const [oneStudent, setOneStudent] = useState();
+  const [oneStudent, setOneStudent] = useState(null);
 
   useEffect(() => {
     axios
-
       .get("http://localhost:4000/admin/allStudents")
       .then((res) => {
         setStudents(res.data);
       })
       .catch((err) => console.log(err));
-  }, [oneStudent, moreInformationStudent]);
+  }, [moreInformationStudent]);
 
-  const openInfoForm2 = (userId) => {
+  const openInfoForm = (userId) => {
     axios
       .get(`http://localhost:4000/userInformation/${userId}`)
       .then((res) => {
@@ -36,8 +35,24 @@ const AdminAllStudentsCard = ({
     setMoreInformationStudent(true);
   };
 
-  // Buscador
-  const onSubmit = () => {};
+  const onSubmit = (data) => {
+    console.log("Dataaaaa", data);
+    const name = data.studentSearch;
+
+    console.log(name);
+
+    if (!name) {
+      setOneStudent(null);
+    } else {
+      const studentFound = students.filter((elem) =>
+        elem.user_name.toLowerCase().includes(name.toLowerCase())
+      );
+      setOneStudent(studentFound.length > 0 ? studentFound[0] : null);
+    }
+
+    console.log("oneStudent", oneStudent);
+    console.log("studentFound", studentFound);
+  };
 
   return (
     <Container className="adminTableCard">
@@ -81,135 +96,75 @@ const AdminAllStudentsCard = ({
             </tr>
           </thead>
           <tbody>
-            {students ? (
-              <>
-                {students.length == 0 ? (
-                  <p>Sin resultados de busqueda</p>
-                ) : (
-                  <>
-                    {students?.map((student) => {
-                      return (
-                        <tr key={student?.user_id}>
-                          <td>
-                            <div className="tableImg">
-                              {student?.user_img ? (
-                                <img
-                                  src={`http://localhost:4000/images/user/${student?.user_img}`}
-                                />
-                              ) : (
-                                <h6 className="avatarText">
-                                  {student.user_name.at(0).toUpperCase()}
-                                </h6>
-                              )}
-                            </div>
-                          </td>
-                          <td className="tableCellName">{student.user_name}</td>
-                          <td>
-                            <div className="tableCell">
-                              {student.user_lastname}
-                            </div>
-                          </td>
-                          <td>
-                            <div className="tableCell iconCell">
-                              <div className="tableCellContent">
-                                <HiOutlineMail className="icon text-warning" />
-                                <span className="d-none d-md-inline ">
-                                  {student.email}
-                                </span>
-                              </div>
-                            </div>
-                          </td>
-
-                          <td>
-                            <div className="tableCell iconCell">
-                              <div className="tableCellContent">
-                                <AiOutlinePhone className="icon text-warning" />
-                                <span className="d-none d-md-inline ">
-                                  {student.phone}
-                                </span>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <div className="tableCell iconCell">
-                              <div className="tableCellContent">
-                                <button
-                                  onClick={() =>
-                                    openInfoForm2(student?.user_id)
-                                  }
-                                  className="btnOutline1"
-                                >
-                                  Ver más
-                                </button>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </>
-                )}
-                <UserMoreInfoCard
-                  moreInformationStudent={moreInformationStudent}
-                  setMoreInformationStudent={setMoreInformationStudent}
-                  student={oneStudent}
-                />
-              </>
+            {!oneStudent ? (
+              <tr>
+                <td colSpan={6}>Sin resultados de búsqueda</td>
+              </tr>
             ) : (
-              <>
-                {students?.map((student) => {
-                  return (
-                    <tr key={student.user_id}>
-                      <td className="tdImg">
-                        <div className="tableImg">
-                          {student?.student_img ? (
-                            <img
-                              src={`http://localhost:4000/images/user/${student.user_img}`}
-                            />
-                          ) : (
-                            <h6 className="avatarText">
-                              {student?.user_name.at(0).toUpperCase()}
-                            </h6>
-                          )}
-                        </div>
-                      </td>
-                      <td className="tableCellName">{student.user_name}</td>
-                      <td>
-                        <div className="tableCell">{student.user_lastname}</div>
-                      </td>
-                      <td>
-                        <div className="tableCell iconCell">
-                          <div className="tableCellContent">
-                            <HiOutlineMail className="icon" />
-                            <span className="d-none d-md-inline ">
-                              {student.email}
-                            </span>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div className="tableCell iconCell">
-                          <div className="tableCellContent">
-                            <AiOutlinePhone className="icon" />
-                            <span className="d-none d-md-inline ">
-                              {student.phone}
-                            </span>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </>
-            )}
+              studentFound?.map((student) => (
+                <tr key={student?.user_id}>
+                  <td>
+                    <div className="tableImg">
+                      {student?.user_img ? (
+                        <img
+                          src={`http://localhost:4000/images/user/${student?.user_img}`}
+                        />
+                      ) : (
+                        <h6 className="avatarText">
+                          {student.user_name.at(0).toUpperCase()}
+                        </h6>
+                      )}
+                    </div>
+                  </td>
+                  <td className="tableCellName">{student.user_name}</td>
+                  <td>
+                    <div className="tableCell">{student.user_lastname}</div>
+                  </td>
+                  <td>
+                    <div className="tableCell iconCell">
+                      <div className="tableCellContent">
+                        <HiOutlineMail className="icon text-warning" />
+                        <span className="d-none d-md-inline ">
+                          {student.email}
+                        </span>
+                      </div>
+                    </div>
+                  </td>
 
-            <UserMoreInfoCard
-              moreInformationStudent={moreInformationStudent}
-              setMoreInformationStudent={setMoreInformationStudent}
-              student={oneStudent}
-            />
+                  <td>
+                    <div className="tableCell iconCell">
+                      <div className="tableCellContent">
+                        <AiOutlinePhone className="icon text-warning" />
+                        <span className="d-none d-md-inline ">
+                          {student.phone}
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div className="tableCell iconCell">
+                      <div className="tableCellContent">
+                        <button
+                          onClick={() => openInfoForm(student?.user_id)}
+                          className="btnOutline1"
+                        >
+                          Ver más
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
+        {oneStudent && (
+          <UserMoreInfoCard
+            moreInformationStudent={moreInformationStudent}
+            setMoreInformationStudent={setMoreInformationStudent}
+            student={oneStudent}
+          />
+        )}
       </div>
     </Container>
   );

@@ -15,7 +15,10 @@ import { useForm } from "react-hook-form";
 import { CourseEditionModal } from "../../../../../Courses/components/CourseEditionModal/CourseEditionModal";
 import { UnitCreationModal } from "../../../../../Courses/components/CourseCreationModal/UnitCreationModal/UnitCreationModal";
 
-const AdminAllCoursesCard = () => {
+const AdminAllCoursesCard = ({
+  moreInformationCourses,
+  setMoreInformationCourses,
+}) => {
   const [allCourses, setAllCourses] = useState();
   const [openCourse, setOpenCourse] = useState([]);
   const { reset } = useForm();
