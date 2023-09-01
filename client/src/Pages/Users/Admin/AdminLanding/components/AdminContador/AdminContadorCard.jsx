@@ -19,49 +19,49 @@ const AdminContadorCard = () => {
       .then((res) => {
         setCounter(res.data[0]);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   }, []);
 
   return (
     <div className="counterCardContainer">
-     
-        <div className="counterCard">
-          <span className="iconContainer">
-            <AiOutlineUser />
-          </span>
-          <div className="textContianer">
-            <h6  className="title">Admin</h6>
-            <p>{counter.TotalAdmin}</p>
-          </div>
+
+      <div className="counterCard">
+        <span className="iconContainer">
+          <AiOutlineUser />
+        </span>
+        <div className="textContianer">
+          <h6 className="title">Admin</h6>
+          <p>{counter.TotalAdmin}</p>
         </div>
-        <div className="counterCard">
-          <span className="iconContainer">
-            <AiOutlineUser />
-          </span>
-          <div className="textContianer">
-            <h6  className="title">Profesores</h6>
-            <p>{counter.TotalTeachers}</p>
-          </div>
+      </div>
+      <div className="counterCard">
+        <span className="iconContainer">
+          <AiOutlineUser />
+        </span>
+        <div className="textContianer">
+          <h6 className="title">Profesores</h6>
+          <p>{counter.TotalTeachers}</p>
         </div>
-        <div className="counterCard">
-          <span className="iconContainer">
-            <AiOutlineUser />
-          </span>
-          <div className="textContianer">
-            <h6 className="title">Alumnos</h6>
-            <p>{counter.TotalStudents}</p>
-          </div>
+      </div>
+      <div className="counterCard">
+        <span className="iconContainer">
+          <AiOutlineUser />
+        </span>
+        <div className="textContianer">
+          <h6 className="title">Alumnos</h6>
+          <p>{counter.TotalStudents}</p>
         </div>
-        <div className="counterCard">
-          <span className="iconContainer">
-            <BsBook />
-          </span>
-          <div className="textContianer">
-            <h6 className="title">Cursos</h6>
-            <p>{counter.TotalCourse}</p>
-          </div>
+      </div>
+      <div className="counterCard">
+        <span className="iconContainer">
+          <BsBook />
+        </span>
+        <div className="textContianer">
+          <h6 className="title">Cursos</h6>
+          <p>{counter.TotalCourse}</p>
         </div>
-     
+      </div>
+
     </div>
   );
 };

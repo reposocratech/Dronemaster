@@ -28,7 +28,6 @@ const AdminAllCoursesCard = ({ resEffect, setResEffect }) => {
   const [courseId, setCourseId] = useState();
   const [searchResultCourse, setsearchResultCourse] = useState();
   const openEditModal = (course_id) => {
-    console.log("el curse if", course_id);
     setCourseId(course_id)
     setShowCourseEditionModal(true);
   };

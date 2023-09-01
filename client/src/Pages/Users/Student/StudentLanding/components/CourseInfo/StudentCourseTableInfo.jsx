@@ -33,7 +33,7 @@ export const StudentCourseTableInfo = ({
         .then((res) => {
           setLessonsViewedByStudent(res.data[0].count_lessons_viewed);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => { });
     }
   }, [resetUseEffect, courseId]);
   useEffect(() => {
@@ -43,7 +43,7 @@ export const StudentCourseTableInfo = ({
         .then((res) => {
           setLessonsOneCourse(res.data[0].count_lessons_Course);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => { });
     }
   }, [resetUseEffect, courseId]);
   useEffect(() => {
@@ -55,7 +55,7 @@ export const StudentCourseTableInfo = ({
         .then((res) => {
           setLessonViewed(res.data.map((elem) => elem.lesson_id));
         })
-        .catch((err) => console.log(err));
+        .catch((err) => { });
     }
   }, [resetUseEffect, user, courseId]);
   useEffect(() => {
@@ -79,7 +79,7 @@ export const StudentCourseTableInfo = ({
         toggleLesson(lesson_id);
         setResetUseEffect(!resetUseEffect);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
 
     axios
       .get(`http://localhost:4000/resourceName/${lesson_id}`)
@@ -89,7 +89,7 @@ export const StudentCourseTableInfo = ({
           `${res.data[0].resource_name}`
         )
       )
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   return (

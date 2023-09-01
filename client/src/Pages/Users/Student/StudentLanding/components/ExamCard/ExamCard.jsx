@@ -19,7 +19,7 @@ export const ExamCard = ({ setShowRatingModal, showRatingModal, counterRating, s
         axios
             .get(`http://localhost:4000/teachers/teacherEmail/${courseMaterial[0]?.course_id}`)
             .then((res) => setTeacherEmail(res.data[0].email))
-            .catch((err) => console.log(err))
+            .catch((err) => { })
     }, [])
 
     useEffect(() => {
@@ -29,7 +29,7 @@ export const ExamCard = ({ setShowRatingModal, showRatingModal, counterRating, s
                 setScore(parseFloat(res.data[0].score))
                 setCounterRating(parseInt(res.data[0].counter_rating))
             })
-            .catch((err) => console.log(err))
+            .catch((err) => { })
     }, [showRatingModal, score, counterRating])
 
 
@@ -38,14 +38,14 @@ export const ExamCard = ({ setShowRatingModal, showRatingModal, counterRating, s
         axios
             .get(`http://localhost:4000/students/studentStatus/${user.user_id}/${courseMaterial[0]?.course_id}`)
             .then((res) => setUserStatus(res.data[0].status))
-            .catch((err) => console.log(err))
+            .catch((err) => { })
     }, [courseMaterial, downloadedExam, userStatus])
 
     useEffect(() => {
         axios
             .get(`http://localhost:4000/downloadExam/${courseMaterial[0]?.course_id}`)
             .then((res) => setFileExam(res.data[0].exam_file))
-            .catch((err) => console.log(err))
+            .catch((err) => { })
     }, [courseMaterial, downloadedExam, userStatus])
 
     const handleImgChange = (e) => {
@@ -65,7 +65,7 @@ export const ExamCard = ({ setShowRatingModal, showRatingModal, counterRating, s
                 setDownloadedExam(3)
                 setUserStatus(2)
             })
-            .catch((err) => console.log(err))
+            .catch((err) => { })
 
         try {
             const response = await fetch("http://localhost:4000/infoEmail", {

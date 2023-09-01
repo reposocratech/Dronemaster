@@ -25,7 +25,7 @@ const AdminAllTeachersCard = ({
       .then((res) => {
         setTeachers(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   }, []);
 
   const openTeacherForm = (userId) => {
@@ -34,15 +34,12 @@ const AdminAllTeachersCard = ({
       .then((res) => {
         setOneTeacher(res.data[0]);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
     setMoreInformationTeacher(true);
   };
 
-  console.log("TEACHERS", teachers);
-
   // Buscador
   const onSubmit = (data) => {
-    console.log("DATAAAAAAAAA", data);
     setSearchResultData(
       teachers?.filter((teacher) =>
         teacher.user_name
@@ -50,7 +47,6 @@ const AdminAllTeachersCard = ({
           .includes(data.teacherSearch.toLowerCase())
       )
     );
-    console.log("searchResultDataaaaaaa", data.teacherSearch);
     reset();
   };
 
@@ -163,7 +159,7 @@ const AdminAllTeachersCard = ({
                               <button
                                 onClick={() => openTeacherForm(teacher.user_id)}
                                 className="btnOutline1"
-                                style={{ marginTop : "10px"}}
+                                style={{ marginTop: "10px" }}
                               >
                                 Ver más
                               </button>
@@ -230,7 +226,7 @@ const AdminAllTeachersCard = ({
                           <button
                             onClick={() => openTeacherForm(teacher.user_id)}
                             className="btnOutline1"
-                            style={{ marginTop : "10px"}}
+                            style={{ marginTop: "10px" }}
                           >
                             Ver más
                           </button>

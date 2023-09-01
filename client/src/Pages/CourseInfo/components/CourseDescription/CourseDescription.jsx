@@ -17,8 +17,6 @@ export const CourseDescription = ({ description }) => {
 
   }
 
-  console.log(descriptionText);
-
   return (
     <div className="containerCourseDescription">
       <div className="headLineDescription">

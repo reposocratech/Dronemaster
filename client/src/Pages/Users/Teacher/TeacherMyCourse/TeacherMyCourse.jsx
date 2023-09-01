@@ -52,7 +52,7 @@ export const TeacherMyCourse = () => {
       .then((res) => {
         setMyOneCourseStudentsData(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   }, [course_id, resetUseEffect]);
   //Get all info of a course
   useEffect(() => {
@@ -61,10 +61,8 @@ export const TeacherMyCourse = () => {
       .then((res) => {
         setMyCourseInfo(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   }, [course_id, resetUseEffect]);
-
-  console.log(myCourseInfo);
 
   return (
     <section className="mainSectionOneCourse">

@@ -18,7 +18,6 @@ const AdminUnitEdirForm = ({
   const closeUnitEditForm = () => {
     setUnitEditForm(false);
   };
-  console.log("unitNameeeeee", unitInformation);
   const {
     register,
     handleSubmit,
@@ -33,12 +32,11 @@ const AdminUnitEdirForm = ({
     axios
       .put(`http://localhost:4000/admin/editUnit/${course_id}/${unit_id}`, data)
       .then((res) => {
-        console.log(res);
         setEditUnit(res.data);
         closeUnitEditForm(true);
         setResEffect(!resEffect);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
   useEffect(() => {
     unitInformation && setValue("unit_tittle", unitInformation || "");

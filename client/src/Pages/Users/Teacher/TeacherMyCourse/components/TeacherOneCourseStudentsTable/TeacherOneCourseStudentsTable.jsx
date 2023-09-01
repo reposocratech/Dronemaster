@@ -15,8 +15,6 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
   const { register, handleSubmit, reset } = useForm();
   const [searchResultData, setSearchResultData] = useState();
 
-  console.log(myOneCourseStudentsData);
-
   const onSubmit = (data) => {
     setSearchResultData(
       myOneCourseStudentsData.filter((student) =>
@@ -34,30 +32,28 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
     if (updatedStatus == 4) {
       axios
         .put(`http://localhost:4000/admin/passedCourse/${user_id}/${course_id}`)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        .then((res) => { })
+        .catch((err) => { });
     } else if (updatedStatus == 3) {
       axios
         .put(`http://localhost:4000/admin/notPassedCourse/${user_id}/${course_id}`)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        .then((res) => { })
+        .catch((err) => { });
     }
   };
 
   const downloadExam = (student_id) => {
     axios
       .get(`http://localhost:4000/teachers/examName/${student_id}/${course_id}`)
-      .then((res) => {
-        console.log(res);
-        saveAs(
-          `http://localhost:4000/images/exams/${res.data[0].student_exam_file}`,
-          `${res.data[0].student_exam_file}`
-        )
-      }
+      .then((res) => saveAs(
+        `http://localhost:4000/images/exams/${res.data[0].student_exam_file}`,
+        `${res.data[0].student_exam_file}`
+      )
+
 
 
       )
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   return (

@@ -103,7 +103,6 @@ const FormularioCreacionTeacher = ({ showModalForm, setShowModalForm }) => {
               {...register("password", {
                 required: "Campo obligatorio",
                 pattern: {
-                  value: /^[A-Za-z]+$/i,
                   maxLength: 150,
                   message: "Must contain minus, MAYS,, number and Symbol",
                 },

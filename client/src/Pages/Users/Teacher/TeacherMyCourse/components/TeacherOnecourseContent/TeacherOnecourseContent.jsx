@@ -26,8 +26,6 @@ export const TeacherOnecourseContent = ({
   const [teacherResource, setTeacherResource] = useState([]);
   const [file, setFile] = useState(false);
 
-  console.log(myCourseInfo);
-
   // Takes uniques unit_title
   const uniqueUnitNames = Array.from(
     new Set(myCourseInfo?.map((item) => item.unit_tittle))
@@ -40,7 +38,7 @@ export const TeacherOnecourseContent = ({
       .then((res) => {
         setTeacherResource(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   }, [myCourseInfo, resetUseEffect]);
 
   const closedHeight = "0px";
@@ -56,7 +54,7 @@ export const TeacherOnecourseContent = ({
         newFormData
       )
       .then((res) => setResetUseEffect(!resetUseEffect))
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   const toggleUnit = (unitIndex) => {
@@ -73,19 +71,17 @@ export const TeacherOnecourseContent = ({
     axios
       .put(`http://localhost:4000/enableResource/${resource_id}`)
       .then((res) => setResetUseEffect(!resetUseEffect))
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   const disableResource = (resource_id) => {
     axios
       .put(`http://localhost:4000/disableResource/${resource_id}`)
       .then((res) => setResetUseEffect(!resetUseEffect))
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   const downloadResource = (resource_id) => {
-    console.log(resource_id);
-
     axios
       .get(`http://localhost:4000/resourceName/${resource_id}`)
       .then((res) => {
@@ -95,7 +91,7 @@ export const TeacherOnecourseContent = ({
         );
         setResetUseEffect(!resetUseEffect);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   const deleteResource = (lesson_id, resource_id) => {
@@ -104,7 +100,7 @@ export const TeacherOnecourseContent = ({
         `http://localhost:4000/teachers/deleteResource/${user.user_id}/${resource_id}/${lesson_id}`
       )
       .then((res) => setResetUseEffect(!resetUseEffect))
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   const uploadCourseExam = (e) => {
@@ -117,10 +113,8 @@ export const TeacherOnecourseContent = ({
         setFile(!file)
         setResetUseEffect(!resetUseEffect)
       })
-      .catch((err) => console.log(err))
+      .catch((err) => { })
   }
-
-  console.log("esa infoooo", myCourseInfo);
   return (
     <div className="allUnitsLessonCard">
       <div className="cardTitle">

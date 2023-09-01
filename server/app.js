@@ -55,7 +55,6 @@ app.post("/infoEmail", async (req, res) => {
       teacher_email,
       course_date,
     } = req.body;
-    console.log(req.body);
     const currentDate = new Date();
 
     if (status === 1) {

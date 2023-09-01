@@ -30,13 +30,10 @@ export const CourseContentDropDownList = ({
     axios
       .get(`http://localhost:4000/getUserIdUserCourse/${user?.user_id}/${course_id}`)
       .then((res) => {
-        console.log("esa datita", res.data[0]?.user_id);
         setUserAuth(res.data[0].user_id)
       })
       .catch((err) => { })
   }, [user?.user_id])
-
-  console.log("eeee", userAuth);
 
   const closedHeight = "0px";
   const openedHeight = "35px";
