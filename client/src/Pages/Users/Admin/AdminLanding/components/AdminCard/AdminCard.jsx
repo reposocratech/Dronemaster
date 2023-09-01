@@ -8,8 +8,8 @@ const AdminCard = ({ setShowEditionModal }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="AdminCard">
-      <div className="adminCard">
+    <div className="AdminCard ">
+      <div className="adminCard w-100 ">
         <div className="imgContainer">
           {user?.user_img ? (
             <img src={`http://localhost:4000/images/users/${user.user_img}`} />

@@ -48,7 +48,7 @@ const UserMoreInfoCard = ({
   return (
     <Modal
       show={moreInformationStudent}
-      onHide={setMoreInformationStudent}
+      onHide={closeInfoForm}
       className="courseCreationModalContainer"
       animation={false}
       centered
@@ -105,16 +105,17 @@ const UserMoreInfoCard = ({
           </button>
         )}
         <button className="btnNormal" onClick={setEditUserForm}>
+        <button className="btnNormal" onClick={openUserEditForm}>
           Editar
         </button>
       </Modal.Footer>
       <AdminUserEditInfoModal
-
-        editUserForm={editUserForm}
-        setMoreInformationStudent={setMoreInformationStudent}
-        moreInformationStudent={moreInformationStudent}
-        student={student}
-
+      editUserForm ={editUserForm}
+      setMoreInformationStudent ={setMoreInformationStudent}
+      moreInformationStudent ={moreInformationStudent}
+      student={student}
+       setEditUserForm ={setEditUserForm}
+       closeInfoForm = {closeInfoForm}
       />
     </Modal>
   );

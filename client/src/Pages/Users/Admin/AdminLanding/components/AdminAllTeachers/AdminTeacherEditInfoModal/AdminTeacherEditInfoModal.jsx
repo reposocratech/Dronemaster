@@ -15,10 +15,7 @@ const AdminTeacherEditInfoModal = ({ user, teacher, teacherEditForm, setTeacherE
   const { resetData, setResetData } = useContext(DroneMasterContext);
   const { register, setValue, handleSubmit } = useForm();
   const [profileImg, setProfileImg] = useState();
-
-
   const [resEffect, setResEffect] = useState(false);
-
 
   const handleClose = () => {
     setShowEditionModal(false);
@@ -75,7 +72,6 @@ const AdminTeacherEditInfoModal = ({ user, teacher, teacherEditForm, setTeacherE
         setResetData(!resetData);
         setTeacherEditForm(false)
         setMoreInformationTeacher(false)
-        setResEffect(!resEffect)
       })
       .catch((err) => { });
 
