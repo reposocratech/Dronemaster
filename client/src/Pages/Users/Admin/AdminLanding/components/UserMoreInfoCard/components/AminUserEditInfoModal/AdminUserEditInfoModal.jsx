@@ -8,10 +8,8 @@ import { DroneMasterContext } from "../../../../../../../../context/DroneMasterP
 
 /* import "./editMyProfileModal.scss"; */
 
-
 const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, setMoreInformationStudent, moreInformationStudent, closeInfoForm}) => {
-
-    const [file, setFile] = useState();
+  const [file, setFile] = useState();
   const { resetData, setResetData } = useContext(DroneMasterContext);
   const { register, setValue, handleSubmit } = useForm();
   const [profileImg, setProfileImg] = useState();
@@ -30,13 +28,13 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, 
   useEffect(() => {
     student?.user_name &&
       setValue("user_name", student.user_name || "");
-      student?.user_lastname &&
+    student?.user_lastname &&
       setValue("user_lastname", student.user_lastname || "");
-      student?.email &&
+    student?.email &&
       setValue("email", student.email || "");
-      student?.phone &&
+    student?.phone &&
       setValue("phone", student.phone || "");
-      student?.address &&
+    student?.address &&
       setValue("address", student.address || "");
   }, [student, setValue]);
 
@@ -52,9 +50,9 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, 
         setResetData(!resetData);
         setFile();
         setMoreInformationStudent(false);
-       
+
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
 
     setProfileImg();
   };
@@ -76,9 +74,9 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, 
         closeInfoForm()
         
       })
-      .catch((err) => console.log(err));
-      
-    
+      .catch((err) => { });
+
+
   };
 
   const closeEditUserForm = () => {

@@ -18,7 +18,7 @@ export const TeacherCoursesCard = ({ myCoursesData }) => {
           course_info: res.data,
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   return (

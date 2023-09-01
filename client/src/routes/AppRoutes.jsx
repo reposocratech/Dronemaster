@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import jwtDecode from 'jwt-decode'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import NavBarApp from "../components/NavBar/NavBarApp";
@@ -12,8 +13,11 @@ import { TeacherLanding } from "../Pages/Users/Teacher/TeacherLanding/TeacherLan
 import { CourseInfo } from "../Pages/CourseInfo/CourseInfo";
 import { TeacherMyCourse } from "../Pages/Users/Teacher/TeacherMyCourse/TeacherMyCourse";
 import { CourseOneLesson } from "../Pages/CourseInfo/components/CourseOneLesson/CourseOneLesson";
+import { DroneMasterContext } from "../context/DroneMasterProvider";
 
 const AppRoutes = () => {
+  const { user } = useContext(DroneMasterContext)
+
   return (
     <Container fluid className="p-0">
       <BrowserRouter>
@@ -22,7 +26,10 @@ const AppRoutes = () => {
           <Route path="/" element={<HomeApp />} />
           <Route path="/allCourses" element={<AllCourses />} />
           <Route path="/about" element={<AboutApp />} />
-          <Route path="/admin" element={<AdminLanding />} />
+
+          {user && user.type === 2 && <Route path="/admin" element={<AdminLanding />} />}
+
+
           <Route path="/student" element={<StudentLanding />} />
           <Route
             path="/courses/courseInfo/:course_id"
@@ -33,11 +40,17 @@ const AppRoutes = () => {
             path="/courses/courseInfo/lessonInfo/:course_id/:unit_id/:lesson_id"
             element={<CourseOneLesson />}
           />
-          <Route path="/teacher" element={<TeacherLanding />} />
-          <Route
-            path="/teacher/MyCourse/:course_id"
-            element={<TeacherMyCourse />}
-          />
+
+          {user && user.type !== 0 && <>
+            <Route path="/teacher" element={<TeacherLanding />} />
+            <Route
+              path="/teacher/MyCourse/:course_id"
+              element={<TeacherMyCourse />}
+            />
+          </>}
+
+
+
         </Routes>
         <FooterApp />
       </BrowserRouter>

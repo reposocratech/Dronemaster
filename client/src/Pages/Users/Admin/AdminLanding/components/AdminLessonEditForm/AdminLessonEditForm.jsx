@@ -24,7 +24,6 @@ const AdminLessonEditForm = ({
     setShowLessonEditForm(false);
   };
   const [editLesson, setEditLesson] = useState();
-  console.log("lessonInformatiooooooon", lessonInformation);
   const {
     register,
     handleSubmit,
@@ -33,7 +32,6 @@ const AdminLessonEditForm = ({
     setValue,
   } = useForm();
 
-  console.log("lessonId", lessonId);
 
   const onSubmit4 = (data) => {
     axios
@@ -44,12 +42,11 @@ const AdminLessonEditForm = ({
 
       .then((res) => {
         setEditLesson(res.data);
-        console.log(res);
         closeLessonEditForm(true);
         setResEffect(!resEffect);
       })
 
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   useEffect(() => {

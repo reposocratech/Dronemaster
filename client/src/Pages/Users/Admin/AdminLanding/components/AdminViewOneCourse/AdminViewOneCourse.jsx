@@ -44,14 +44,14 @@ const AdminViewOneCourse = ({
     axios
       .put(`http://localhost:4000/enableResource/${resource_id}`)
       .then((res) => setResEffect(!resEffect))
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   const disableResource = (resource_id) => {
     axios
       .put(`http://localhost:4000/disableResource/${resource_id}`)
       .then((res) => setResEffect(!resEffect))
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   const OpenLessonCreateModal = (u_id) => {
@@ -70,7 +70,7 @@ const AdminViewOneCourse = ({
       .then((res) => {
         setAllInformation(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   }, [course_id, resEffect]);
 
   const uniqueUnitNames = Array.from(
@@ -107,7 +107,6 @@ const AdminViewOneCourse = ({
   };
 
   const downloadResource = (resource_id) => {
-    console.log(resource_id);
 
     axios
       .get(`http://localhost:4000/resourceName/${resource_id}`)
@@ -118,7 +117,7 @@ const AdminViewOneCourse = ({
         );
         setResEffect(!resEffect);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   const uploadResource = (e, lesson_id, unit_id) => {
@@ -131,7 +130,7 @@ const AdminViewOneCourse = ({
         newFormData
       )
       .then((res) => setResEffect(!resEffect))
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   const enableUnit = (unitId) => {
@@ -139,9 +138,8 @@ const AdminViewOneCourse = ({
       .put(`http://localhost:4000/enableUnits/${course_id}/${unitId}`)
       .then((res) => {
         setResEffect(!resEffect);
-        console.log(res);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   const disableUnit = (unitId) => {
@@ -150,7 +148,7 @@ const AdminViewOneCourse = ({
       .then((res) => {
         setResEffect(!resEffect);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   const enableLesson = (lessonId) => {
@@ -159,7 +157,7 @@ const AdminViewOneCourse = ({
       .then((res) => {
         setResEffect(!resEffect);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   const disableLesson = (lessonId) => {
@@ -168,17 +166,16 @@ const AdminViewOneCourse = ({
       .then((res) => {
         setResEffect(!resEffect);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   const deleteResource = (lesson_id, resource_id) => {
-    console.log(lesson_id);
     axios
       .delete(
         `http://localhost:4000/admin/deleteResource/${resource_id}/${lesson_id}`
       )
       .then((res) => setResEffect(!resEffect))
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   return (
@@ -406,14 +403,6 @@ const AdminViewOneCourse = ({
 
 
                   )}
-                {console.log(
-                  allInformation.filter(
-                    (item) =>
-                      item.unit_tittle === unitName && item.unit_tittle !== null
-                  )
-                )}
-
-
               </div>
             </div>
           );

@@ -23,9 +23,7 @@ const TeacherMoreInforCard = ({
       .then((res) => {
         setMoreInformationTeacher(false);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => { });
   };
 
   const setTeacherDisable = () => {
@@ -34,9 +32,7 @@ const TeacherMoreInforCard = ({
       .then((res) => {
         setMoreInformationTeacher(false);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => { });
   };
 
   const closeInfoForm = () => {
@@ -62,38 +58,38 @@ const TeacherMoreInforCard = ({
       </Modal.Header>
       <Modal.Body className="modalBodyTeacher1">
 
-      <div>
-            <div className="imgContainerTeacher">
-              {teacher?.user_img ? (
-                <>
-                  <img src={profileImg} alt="" />
-                </>
-              ) : (
-                <div className="defaultImg">
-                  <div className="defaultText">
-                    <h1 className="mb-0">
-                      {teacher?.user_name.at(0).toUpperCase()}
-                    </h1>
-                  </div>
+        <div>
+          <div className="imgContainerTeacher">
+            {teacher?.user_img ? (
+              <>
+                <img src={profileImg} alt="" />
+              </>
+            ) : (
+              <div className="defaultImg">
+                <div className="defaultText">
+                  <h1 className="mb-0">
+                    {teacher?.user_name.at(0).toUpperCase()}
+                  </h1>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="d-flex flex-column align-items-start gap-1 inputName">   
+        <div className="d-flex flex-column align-items-start gap-1 inputName">
           <label className="ps-3 font">
-          {" "}
-          Nombre: <span style={{ fontWeight: 'bold' }}>{teacher?.user_name}</span>
-        </label>
-        <label className="ps-3 font">Apellido:
-          {" "} <span style={{ fontWeight: 'bold' }}>{teacher?.user_lastname}</span>
-          
-        </label>
-        <label className="ps-3 font">Telefono <span style={{ fontWeight: 'bold' }}>{teacher?.labelhone}</span></label>
-        <label className="ps-3 font"> Dirección <span style={{ fontWeight: 'bold' }}>{teacher?.address} </span> </label>
-        <label className="ps-3 font">Estado: <span style={{ fontWeight: 'bold' }}>{teacher?.is_deleted === 0 ? "Activo" : "Inactivo"}</span> </label> 
+            {" "}
+            Nombre: <span style={{ fontWeight: 'bold' }}>{teacher?.user_name}</span>
+          </label>
+          <label className="ps-3 font">Apellido:
+            {" "} <span style={{ fontWeight: 'bold' }}>{teacher?.user_lastname}</span>
+
+          </label>
+          <label className="ps-3 font">Telefono <span style={{ fontWeight: 'bold' }}>{teacher?.labelhone}</span></label>
+          <label className="ps-3 font"> Dirección <span style={{ fontWeight: 'bold' }}>{teacher?.address} </span> </label>
+          <label className="ps-3 font">Estado: <span style={{ fontWeight: 'bold' }}>{teacher?.is_deleted === 0 ? "Activo" : "Inactivo"}</span> </label>
         </div>
-       
+
       </Modal.Body>
       <Modal.Footer className="modalFooter">
         {teacher?.is_deleted === 0 ? (
@@ -111,10 +107,10 @@ const TeacherMoreInforCard = ({
       </Modal.Footer>
 
       <AdminTeacherEditInfoModal
-      teacherEditForm ={teacherEditForm}
-      setMoreInformationTeacher = {setMoreInformationTeacher}
+        teacherEditForm={teacherEditForm}
+        setMoreInformationTeacher={setMoreInformationTeacher}
         setTeacherEditForm={setTeacherEditForm}
-      teacher={teacher}
+        teacher={teacher}
       />
     </Modal>
   );

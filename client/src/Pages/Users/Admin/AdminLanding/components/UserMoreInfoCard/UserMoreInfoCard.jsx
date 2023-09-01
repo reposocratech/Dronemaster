@@ -11,9 +11,7 @@ const UserMoreInfoCard = ({
   student,
 }) => {
   const [profileImg, setProfileImg] = useState();
-const [editUserForm, setEditUserForm] = useState(false)
-
-console.log(editUserForm)
+  const [editUserForm, setEditUserForm] = useState(false)
 
   const closeInfoForm = () => {
     setMoreInformationStudent(false);
@@ -23,7 +21,6 @@ console.log(editUserForm)
     student &&
       setProfileImg(`http://localhost:4000/images/users/${student?.user_img}`);
   }, [student?.user_id]);
-  console.log(profileImg)
 
   const setStudentEnable = () => {
     axios
@@ -31,9 +28,7 @@ console.log(editUserForm)
       .then((res) => {
         setMoreInformationStudent(false);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => { });
   };
 
   const setStudentDisable = () => {
@@ -42,9 +37,7 @@ console.log(editUserForm)
       .then((res) => {
         setMoreInformationStudent(false);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => { });
   };
 
   const openUserEditForm = () => {
@@ -60,13 +53,13 @@ console.log(editUserForm)
       animation={false}
       centered
 
-      
-      >
+
+    >
       <Modal.Header closeButton className="modalHeader">
         <div className="cardTitle">
-                 <div className="iconContainer">
+          <div className="iconContainer">
             <GiClassicalKnowledge />
-          </div> 
+          </div>
 
           <h4 className="titleText">Informacion de Usuario</h4>
         </div>
@@ -74,31 +67,31 @@ console.log(editUserForm)
       <Modal.Body className="modalBodyUser1">
         <div>
           <div className="imgContainerStudent">
-            {student?.user_img ? ( <><img src={profileImg} alt="" />
+            {student?.user_img ? (<><img src={profileImg} alt="" />
             </>)
-            :(<div className="defaultImg">
-            <div className="defaultText">
-              <h1 className="mb-0">
-                {student?.user_name.at(0).toUpperCase()}
-              </h1>
-            </div>
-          </div>)}
+              : (<div className="defaultImg">
+                <div className="defaultText">
+                  <h1 className="mb-0">
+                    {student?.user_name.at(0).toUpperCase()}
+                  </h1>
+                </div>
+              </div>)}
           </div>
         </div>
-        <div  className="d-flex flex-column align-items-start gap-1 inputName">
-        <label className="ps-3 font">
-          {" "}
-          Nombre: <span style={{ fontWeight: 'bold' }}>{student?.user_name}
-          </span>
-        </label>
-        <label className="ps-3 font">
-          {" "}
-          Apellido: <span style={{ fontWeight: 'bold' }}>{student?.user_lastname}</span> 
-        </label>
-        <label className="ps-3 font">Telefono: <span style={{ fontWeight: 'bold' }}>{student?.phone}</span></label>
-        <label className="ps-3 font"> Dirección: <span style={{ fontWeight: 'bold' }}>{student?.address}</span></label>
-        <label className="ps-3 font">Estado: <span style={{ fontWeight: 'bold' }}>{student?.is_deleted === 0 ? "Activo" : "Inactivo"}</span> </label>
-    </div>
+        <div className="d-flex flex-column align-items-start gap-1 inputName">
+          <label className="ps-3 font">
+            {" "}
+            Nombre: <span style={{ fontWeight: 'bold' }}>{student?.user_name}
+            </span>
+          </label>
+          <label className="ps-3 font">
+            {" "}
+            Apellido: <span style={{ fontWeight: 'bold' }}>{student?.user_lastname}</span>
+          </label>
+          <label className="ps-3 font">Telefono: <span style={{ fontWeight: 'bold' }}>{student?.phone}</span></label>
+          <label className="ps-3 font"> Dirección: <span style={{ fontWeight: 'bold' }}>{student?.address}</span></label>
+          <label className="ps-3 font">Estado: <span style={{ fontWeight: 'bold' }}>{student?.is_deleted === 0 ? "Activo" : "Inactivo"}</span> </label>
+        </div>
 
       </Modal.Body>
       <Modal.Footer className="modalFooter">
@@ -111,19 +104,18 @@ console.log(editUserForm)
             Habilitar
           </button>
         )}
+        <button className="btnNormal" onClick={setEditUserForm}>
         <button className="btnNormal" onClick={openUserEditForm}>
           Editar
         </button>
       </Modal.Footer>
       <AdminUserEditInfoModal
-
       editUserForm ={editUserForm}
       setMoreInformationStudent ={setMoreInformationStudent}
       moreInformationStudent ={moreInformationStudent}
       student={student}
        setEditUserForm ={setEditUserForm}
        closeInfoForm = {closeInfoForm}
-    
       />
     </Modal>
   );

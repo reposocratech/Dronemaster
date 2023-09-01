@@ -43,7 +43,7 @@ const StudentLanding = () => {
       .then((res) => {
         setBestRatedCourses(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   }, []);
 
 

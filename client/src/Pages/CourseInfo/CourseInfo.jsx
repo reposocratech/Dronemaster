@@ -162,7 +162,6 @@ export const CourseInfo = () => {
     }
   };
 
-  console.log(userCourseRelationship);
   return (
     <section className="courseInfoMainSection">
       {/* Course name title */}

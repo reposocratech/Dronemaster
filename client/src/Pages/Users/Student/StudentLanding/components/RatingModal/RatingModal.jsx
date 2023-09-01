@@ -37,7 +37,7 @@ export const RatingModal = ({
           setCounterRating(newCounterRating);
           setShowRatingModal(false);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => { });
     } else {
       const newScore = (score * counterRating + rating) / newCounterRating;
       const info = { score: newScore, counter_rating: newCounterRating };
@@ -51,7 +51,7 @@ export const RatingModal = ({
           setCounterRating(newCounterRating);
           setShowRatingModal(false);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => { });
     }
   };
 

@@ -15,7 +15,7 @@ export const StudentCoursesCard = ({ myCoursesData, setCourseId }) => {
         setCourseMaterial(res.data)
         setCourseId(course_id)
       })
-      .catch((err) => console.log(err))
+      .catch((err) => { })
   }
 
   return (

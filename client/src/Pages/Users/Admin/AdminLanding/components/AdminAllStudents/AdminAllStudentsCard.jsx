@@ -22,10 +22,9 @@ const AdminAllStudentsCard = ({
     axios
       .get("http://localhost:4000/admin/allStudents")
       .then((res) => {
-        console.log(res.data);
         setStudents(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   }, [moreInformationStudent]);
 
   const openInfoForm = (userId) => {
@@ -34,12 +33,11 @@ const AdminAllStudentsCard = ({
       .then((res) => {
         setOneStudent(res.data[0]);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
     setMoreInformationStudent(true);
   };
 
   const onSubmit = (data) => {
-    console.log("DATAAAAAAAAA", data);
     setsearchResultStudent(
       students?.filter((student) =>
         student.user_name
@@ -47,7 +45,6 @@ const AdminAllStudentsCard = ({
           .includes(data.studentSearch.toLowerCase())
       )
     );
-    console.log("searchResultDataaaaaaa", data.studentSearch);
     reset();
   };
 
