@@ -160,9 +160,9 @@ const AdminAllStudentsCard = ({
                               <button
                                 onClick={() => openInfoForm(student.user_id)}
                                 className="btnOutline1 "
-                                style={{ marginTop : "10px"}}
+                                style={{ marginTop: "10px" }}
                               >
-                                Ver más
+                                Info
                               </button>
                             </div>
                           </div>
@@ -183,8 +183,8 @@ const AdminAllStudentsCard = ({
                 {students?.map((student) => {
                   return (
                     <tr key={student?.user_id}>
-                      <td >
-                        <div >
+                      <td>
+                        <div>
                           {student?.student_img ? (
                             <img
                               src={`http://localhost:4000/images/user/${student.user_img}`}
@@ -205,9 +205,9 @@ const AdminAllStudentsCard = ({
                       <td>
                         <div className="tableCell iconCell">
                           <div className="tableCellContent">
-                            <HiOutlineMail className="icon text-warning" />
+                            <HiOutlineMail className="icon text-warning" /> 
                             <span className="d-none d-md-inline ">
-                              {student?.email}
+                               {student?.email}
                             </span>
                           </div>
                         </div>
@@ -227,9 +227,9 @@ const AdminAllStudentsCard = ({
                           <button
                             onClick={() => openInfoForm(student.user_id)}
                             className="btnOutline1 "
-                            style={{ marginTop : "10px"}}
+                            style={{ marginTop: "10px" }}
                           >
-                            Ver más
+                            Info
                           </button>
                         </div>
                       </div>
