@@ -55,7 +55,7 @@ console.log(editUserForm)
   return (
     <Modal
       show={moreInformationStudent}
-      onHide={setMoreInformationStudent}
+      onHide={closeInfoForm}
       className="courseCreationModalContainer"
       animation={false}
       centered
@@ -111,7 +111,7 @@ console.log(editUserForm)
             Habilitar
           </button>
         )}
-        <button className="btnNormal" onClick={ setEditUserForm}>
+        <button className="btnNormal" onClick={openUserEditForm}>
           Editar
         </button>
       </Modal.Footer>
@@ -121,6 +121,8 @@ console.log(editUserForm)
       setMoreInformationStudent ={setMoreInformationStudent}
       moreInformationStudent ={moreInformationStudent}
       student={student}
+       setEditUserForm ={setEditUserForm}
+       closeInfoForm = {closeInfoForm}
     
       />
     </Modal>

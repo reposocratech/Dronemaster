@@ -9,7 +9,7 @@ import { DroneMasterContext } from "../../../../../../../../context/DroneMasterP
 /* import "./editMyProfileModal.scss"; */
 
 
-const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, setMoreInformationStudent, moreInformationStudent}) => {
+const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, setMoreInformationStudent, moreInformationStudent, closeInfoForm}) => {
 
     const [file, setFile] = useState();
   const { resetData, setResetData } = useContext(DroneMasterContext);
@@ -73,6 +73,8 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, 
       .then((res) => {
         setResetData(!resetData);
         setEditUserForm(false)
+        closeInfoForm()
+        
       })
       .catch((err) => console.log(err));
       
