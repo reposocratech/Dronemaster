@@ -100,26 +100,30 @@ const AdminChartCard = ({ inscriptionDates, setInscriptionDates }) => {
     maintainAspectRatio: false,
   };
   return (
-    <Container className="adminChartCard">
-      <div className="cardTitle">
-        <div className="title">
-          <div className="iconContainer">
-            <AiOutlineLineChart />{" "}
-          </div>
-          <div>
-            <h5 className="titleText">Inscripciones</h5>
-          </div>
-        </div>
+    <>
+      {inscriptionDates?.length > 0 && (
+        <Container className="adminChartCard">
+          <div className="cardTitle">
+            <div className="title d-flex align-items-center gap-3">
+              <div className="iconContainer">
+                <AiOutlineLineChart />{" "}
+              </div>
+              <div>
+                <h5 className="titleText m-0">Inscripciones</h5>
+              </div>
+            </div>
 
-        <div className="adTable">
-          {chartData ? (
-            <Line data={chartData} options={options} className="grafica" />
-          ) : (
-            <h5 className="text-center">Sin resultados</h5>
-          )}
-        </div>
-      </div>
-    </Container>
+            <div className="adTable">
+              {chartData ? (
+                <Line data={chartData} options={options} className="grafica" />
+              ) : (
+                <h5 className="text-center">Sin resultados</h5>
+              )}
+            </div>
+          </div>
+        </Container>
+      )}
+    </>
   );
 };
 
