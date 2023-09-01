@@ -165,7 +165,7 @@ const AdminAllTeachersCard = ({
                                 className="btnOutline1"
                                 style={{ marginTop : "10px"}}
                               >
-                                Ver más
+                               Info
                               </button>
                             </div>
                           </div>
@@ -232,7 +232,7 @@ const AdminAllTeachersCard = ({
                             className="btnOutline1"
                             style={{ marginTop : "10px"}}
                           >
-                            Ver más
+                            Info
                           </button>
                         </div>
                       </div>

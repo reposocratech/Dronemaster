@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import { GiClassicalKnowledge } from "react-icons/gi";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-
+import "../AdminLessonEditForm/AdminLessonEditForm.scss"
 const AdminUnitEdirForm = ({
   unitEditForm,
   setUnitEditForm,

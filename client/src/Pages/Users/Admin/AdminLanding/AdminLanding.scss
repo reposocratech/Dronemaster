@@ -49,6 +49,7 @@
     justify-content: start;
     align-items: center;
     gap: 20px;
+    
     .imgContainer {
       width: 60px;
       aspect-ratio: 1/1;
@@ -338,7 +339,8 @@
               }
             }
 
-//Lessons list
+
+            //Lessons list
             .lessonsList {
               display: flex;
               flex-direction: column;
@@ -538,7 +540,14 @@
       }
     }
   }
+  .searchBar{
+    input{
+
+      color: white!important;
+    }
+  }
 }
+
 //Media Tablet
 @media (max-width: 1200px) {
   .mainSection {
@@ -675,6 +684,7 @@
         .cardBody {
           margin: auto;
           margin-left: 10px;
+          width: 100%;
           div {
             gap: 15px;
           }
@@ -726,6 +736,7 @@
     }
   }
 }
+
 @media (max-width: 576px) {
   .mainSectionAdmin {
     .sideContent {
@@ -748,6 +759,8 @@
           "a b"
           "c d";
         justify-content: unset;
+       
+          
         .counterCard {
           width: 100%;
           gap: 12px;
@@ -766,7 +779,27 @@
         }
       }
     }
+    .mainContainer{
+      .adminTableCard{
+        .cardTitle{
+          flex-direction: column;
+          gap: 8px;
+
+          form{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .searchBar{
+              width: 100%;
+            }
+          }
+        }
+      } 
+    }
     .allUnitsLessonCard {
+      
       .adminCoursesList {
         .cardTitle {
           .listContainer {
