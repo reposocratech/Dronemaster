@@ -17,7 +17,6 @@ const AdminTeacherEditInfoModal = ({user, teacher, teacherEditForm, setTeacherEd
   const [profileImg, setProfileImg] = useState();
   
   
-  const [resEffect, setResEffect ] = useState(false);
 
 
   const handleClose = () => {
@@ -75,7 +74,6 @@ const AdminTeacherEditInfoModal = ({user, teacher, teacherEditForm, setTeacherEd
         setResetData(!resetData);
         setTeacherEditForm(false)
         setMoreInformationTeacher(false)
-        setResEffect(!resEffect)
       })
       .catch((err) => console.log(err));
       
