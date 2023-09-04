@@ -129,6 +129,7 @@
       }
     }
 
+    //User info card
     .userInfoCard {
       grid-area: userInfo;
       display: flex;
@@ -136,28 +137,39 @@
       gap: 8px;
 
       .cardTitle {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .cardBody {
-        padding: 0 20px;
-        justify-content: space-evenly;
-
-        .lineInfo {
           display: flex;
           align-items: center;
           gap: 10px;
+      }
 
-          p {
-            margin: 3px;
-          }
+      .cardBody {
+          padding: 0 20px;
+          margin: auto;
+          margin-left: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
 
-          .infoIcon {
-            color: $TertiaryDarkColor;
+          
+
+          .lineInfo {
+              display: flex;
+              align-items: end;
+              gap: 10px;
+
+              p {
+                  margin: 0;
+                  align-self: end;
+              }
+              .noInfoText{
+                  font-style: italic;
+                  color: $TertiaryDarkColor;
+              }
+
+              .infoIcon {
+                  color: $PrimaryOrangeColor;
+              }
           }
-        }
       }
     }
 

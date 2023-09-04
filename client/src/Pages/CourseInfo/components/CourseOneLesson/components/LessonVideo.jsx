@@ -12,12 +12,12 @@ export const LessonVideo = ({ videoUrl }) => {
           width="640"
           height="360"
           src={`https://www.youtube.com/embed/${videoId}`}
-          title="YouTube Video"
+          title="Lesson Video"
           allowFullScreen
         ></iframe>
       ) : (
         <img
-          src="http://localhost:4000/images/resources/leccion1.jpg"
+          src="http://localhost:4000/images/courses/DefaultLesson.jpg"
           alt="Course image"
         />
       )}

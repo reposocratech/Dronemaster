@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 import { CourseCard } from "../../../../components/CardCourse/CourseCard";
+import { TbDrone } from "react-icons/tb"
+
 
 export const CategoryContainer = ({
   courseData,
@@ -42,7 +44,7 @@ export const CategoryContainer = ({
 
   return (
     <div className="categoryContainer">
-      <h2 className="categoryTitle text-center text-md-start">{category_name}</h2>
+      <h4 className="categoryTitle text-center text-md-start"><span className="iconCat"><TbDrone/></span>{category_name}</h4>
       <div className="courseCardContainerWrapper">
         {counter !== 0 ?
           <div className="navigationButtonContainerLeft">

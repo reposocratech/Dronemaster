@@ -104,7 +104,7 @@ const UserMoreInfoCard = ({
             Habilitar
           </button>
         )}
-        <button className="btnNormal" onClick={setEditUserForm}>
+
         <button className="btnNormal" onClick={openUserEditForm}>
           Editar
         </button>

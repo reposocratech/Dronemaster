@@ -27,13 +27,14 @@ export const CourseContentDropDownList = ({
   }, [myCourseInfo, userAuth]);
 
   useEffect(() => {
+    user &&
     axios
       .get(`http://localhost:4000/getUserIdUserCourse/${user?.user_id}/${course_id}`)
       .then((res) => {
         setUserAuth(res.data[0].user_id)
       })
       .catch((err) => { })
-  }, [user?.user_id])
+  }, [user, course_id])
 
   const closedHeight = "0px";
   const openedHeight = "35px";
@@ -105,7 +106,7 @@ export const CourseContentDropDownList = ({
                       >
                         <div className="lessonTitle">
                           <div className="lessonText">
-                            <MdOutlinePlayLesson className="icon3" />{" "}
+                            <MdOutlinePlayLesson className="icon3" />
                             {lesson.lesson_title}
                           </div>
                           {(user && user.type === 2) && (
@@ -120,7 +121,7 @@ export const CourseContentDropDownList = ({
                               Abrir
                             </button>
                           )}
-                          {user?.user_id === userAuth && (
+                          { user && user.user_id === userAuth && (
                             <button
                               className="openLessonButton"
                               onClick={() =>

@@ -32,7 +32,6 @@ export const CourseCard = ({ oneCourse }) => {
   const formattedStartDate = `${day} de ${month} de ${year}`;
 
 
-
   return (
     <div
       className="courseCard"
@@ -49,13 +48,15 @@ export const CourseCard = ({ oneCourse }) => {
         </div>
         <div className="courseCardBody">
           <div className="courseTitle">
-            <h4>{oneCourse.course_name}</h4>
+            <h5 className="mb-0">{oneCourse.course_name}</h5>
           </div>
+          {tagList && 
+          <div className="tagList">
           {tagList?.map((e) => {
-            <div className="tagList">
-              return <span key={e.tag_id} className="tag">#{e.tag_name}</span>;
-            </div>
+            return <span key={e.tag_id} className="tag">#{e.tag_name}</span>;
           })}
+            </div>
+        }
 
           {(oneCourse?.start_date && courseStartDate > currentDate) &&
             <div className="dateContainer">

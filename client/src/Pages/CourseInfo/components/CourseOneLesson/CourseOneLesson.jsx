@@ -66,14 +66,11 @@ export const CourseOneLesson = () => {
       </div>
       {/* Main Section */}
 
-      {/* Introduccion Video or Image*/}
+      {/* Lesson Video or Image*/}
       <LessonVideo videoUrl={lessonData?.lesson_url_video} />
-      {/* <div className="introMultimedia">
-        <img
-          src="http://localhost:4000/images/resources/leccion1.jpg"
-          alt="Course image"
-        />
-      </div> */}
+        
+    
+    
 
       <div className="courseTextInfoCard">
         {/* Course Description */}

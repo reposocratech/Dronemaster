@@ -152,17 +152,17 @@ const AdminAllStudentsCard = ({
                               </div>
                             </div>
                           </td>
-                          <div className="tableCell iconCell">
+                          <td className="tableCell iconCell">
                             <div className="tableCellContent">
                               <button
                                 onClick={() => openInfoForm(student.user_id)}
                                 className="btnOutline1 "
-                                style={{ marginTop: "10px" }}
+                               
                               >
                                 Info
                               </button>
                             </div>
-                          </div>
+                          </td>
                         </tr>
                       );
                     })}
@@ -219,17 +219,16 @@ const AdminAllStudentsCard = ({
                           </div>
                         </div>
                       </td>
-                      <div className="tableCell iconCell">
+                      <td className="tableCell iconCell">
                         <div className="tableCellContent">
                           <button
                             onClick={() => openInfoForm(student.user_id)}
                             className="btnOutline1 "
-                            style={{ marginTop: "10px" }}
                           >
                             Info
                           </button>
                         </div>
-                      </div>
+                      </td>
                     </tr>
                   );
                 })}

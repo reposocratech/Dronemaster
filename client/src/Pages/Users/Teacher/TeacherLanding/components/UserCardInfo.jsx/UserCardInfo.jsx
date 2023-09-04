@@ -13,39 +13,58 @@ export const UserCardInfo = ({ user }) => {
           <BiSolidUserDetail />
         </div>
         <div className="title">
-          <h6 className="titleText">Mis Datos</h6>
+          <h6 className="titleText mb-0">Mis Datos</h6>
         </div>
       </div>
-      <div className="cardBody d-flex flex-md-column flex-xxl-row">
-        <div>
+      <div className="cardBody">
+     
+          {/* User Email */}
+
           <div className="lineInfo">
             <span className="infoIcon">
               <HiOutlineMail />
             </span>
             <p>{user?.email}</p>
           </div>
+
+          {/* User Address */}
+
           <div className="lineInfo">
             <span className="infoIcon">
               <FiMapPin />
             </span>
-            <p >{user?.address ? user.address : "..."}</p>
+            {user?.address ? (
+              <p> {user.address} </p>
+            ) : (
+              <p className="noInfoText"> Información no disponible </p>
+            )}
           </div>
-        </div>
-        <div>
+   
+
+          {/* User phone */}
           <div className="lineInfo">
             <span className="infoIcon">
               <AiOutlinePhone />
             </span>
-            <p>{user?.phone ? user.phone : "..."} </p>
+            {user?.phone ? (
+              <p> {user.phone} </p>
+            ) : (
+              <p className="noInfoText"> Información no disponible </p>
+            )}
           </div>
 
+          {/* User Identification */}
           <div className="lineInfo">
             <span className="infoIcon">
               <AiOutlineIdcard />
             </span>
-            <p>{user?.passport ? user.passport : "..."}</p>
+            {user?.passport ? (
+              <p> {user.passport} </p>
+            ) : (
+              <p className="noInfoText"> Información no disponible </p>
+            )}
           </div>
-        </div>
+        
       </div>
     </div>
   );

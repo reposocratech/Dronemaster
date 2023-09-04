@@ -143,18 +143,28 @@
                 padding: 0 20px;
                 margin: auto;
                 margin-left: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+
+                
 
                 .lineInfo {
                     display: flex;
-                    align-items: center;
+                    align-items: end;
                     gap: 10px;
 
                     p {
                         margin: 0;
+                        align-self: end;
+                    }
+                    .noInfoText{
+                        font-style: italic;
+                        color: $TertiaryDarkColor;
                     }
 
                     .infoIcon {
-                        color: $TertiaryDarkColor;
+                        color: $PrimaryOrangeColor;
                     }
                 }
             }
@@ -185,6 +195,11 @@
 
             .cardBody {
                 padding: 0 20px;
+
+                .noCoursesText{
+                    color: $TertiaryDarkColor;
+                    text-align: center;
+                }
 
                 .courseList {
                     padding: 0;
@@ -230,6 +245,25 @@
             padding: 18px;
             color: white;
             gap: 12px;
+
+            .adviceTitle{
+                width: 100%;
+                text-align: center;
+                margin: 0;
+            }
+            hr{
+                width: 100%;
+                color: $PrimaryOrangeColor;
+                border-width: 2px;
+                opacity: 1;
+                margin: 8px;
+            }
+
+            .adviceText{
+                padding: 8px 24px;
+                text-align: center;
+
+            }
         }
 
         .coursesTableCard,
@@ -263,6 +297,12 @@
                     .titleText {
                         margin: 0;
                     }
+                    button{
+                        white-space: nowrap;
+                        padding: 4px 12px;
+                        width:85px;
+                        height: fit-content;
+                    }
                 }
 
                 .searchBar {
@@ -289,6 +329,7 @@
             .cardBody {
                 width: 100%;
                 padding: 0 2vw;
+                
 
                 .coursesTableStudent {
                     width: 100%;
@@ -300,7 +341,7 @@
                         th {
                             font-weight: 400;
                             text-align: start;
-                            height: 50px;
+                            height: 30px;
 
                             .oculto {
                                 overflow: hidden;
@@ -432,6 +473,7 @@
 
                 .counterCardStudent {
                     flex-direction: row;
+
                 }
             }
         }

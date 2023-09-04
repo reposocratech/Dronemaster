@@ -1,4 +1,4 @@
-import axios, { all } from "axios";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { AiOutlineFolderOpen } from "react-icons/ai";
 import { AiOutlineClockCircle } from "react-icons/ai";
@@ -27,6 +27,9 @@ const AdminAllCoursesCard = ({ resEffect, setResEffect }) => {
 
   const [courseId, setCourseId] = useState();
   const [searchResultCourse, setsearchResultCourse] = useState();
+
+
+
   const openEditModal = (course_id) => {
     setCourseId(course_id)
     setShowCourseEditionModal(true);
@@ -34,6 +37,7 @@ const AdminAllCoursesCard = ({ resEffect, setResEffect }) => {
   const openUnitCreateModal = () => {
     setShowUnitCreationModal(true);
   };
+
   useEffect(() => {
     axios
       .get("http://localhost:4000/admin/allCourses")
@@ -42,6 +46,7 @@ const AdminAllCoursesCard = ({ resEffect, setResEffect }) => {
       })
       .catch((err) => { });
   }, [resEffect]);
+
   const enableCourse = (courseId) => {
     axios
       .put(`http://localhost:4000/courses/enableCourse/${courseId}`)
@@ -183,7 +188,7 @@ const AdminAllCoursesCard = ({ resEffect, setResEffect }) => {
                               <button
                                 className="buttonText"
                                 onClick={() => {
-                                  openUnitCreateModal(true);
+                                  openUnitCreateModal();
                                   setCourseId(course.course_id);
                                 }}
                               >
@@ -271,7 +276,7 @@ const AdminAllCoursesCard = ({ resEffect, setResEffect }) => {
                           <button
                             className="buttonText"
                             onClick={() => {
-                              openUnitCreateModal(true);
+                              openUnitCreateModal();
                               setCourseId(course.course_id);
                             }}
                           >

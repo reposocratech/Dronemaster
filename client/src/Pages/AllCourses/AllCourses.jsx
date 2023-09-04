@@ -65,14 +65,14 @@ export const AllCourses = () => {
           máximo! Siempre estamos aquí para apoyarte en esta emocionante aventura.
           ¡Adelante, tú puedes hacerlo!</p>
         {categoryData?.map((cat) => {
-          return (<>
+          return (
             <CategoryContainer
               key={cat.category_id}
               category_id={cat.category_id}
               category_name={cat.category_name}
               courseData={courseData}
             />
-          </>
+          
           );
         })}
       </>

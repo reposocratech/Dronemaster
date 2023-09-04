@@ -68,26 +68,50 @@ class commonControllers {
   // http://localhost:4000/editMyProfile/:user_id
   editMyProfile = (req, res) => {
     const { user_id } = req.params;
-    const { user_name, user_lastname, passport, address, phone } = JSON.parse(
-      req.body.editedUser
-    );
-
+    const {
+      user_name ,
+      user_lastname,
+      passport  ,
+      address ,
+      phone ,
+    } = JSON.parse(req.body.editedUser);
+  
     let img = "";
-
-    let sql = `UPDATE user SET user_name = "${user_name}", user_lastname = "${user_lastname}", passport = "${passport}", address = "${address}",  phone = "${phone}"  WHERE user_id = ${user_id}`;
-
+    let setClause = "";
+  
+    if (user_name !== null && user_name !== undefined ) {
+      setClause += `user_name = "${user_name}", `;
+    }
+    if (user_lastname !== null && user_lastname !== undefined ) {
+      setClause += `user_lastname = "${user_lastname}", `;
+    }
+    if (passport !== null && passport!== undefined ) {
+      setClause += `passport = "${passport}", `;
+    }
+    if (address !== null && address!== undefined ) {
+      setClause += `address = "${address}", `;
+    }
+    if (phone !== null && phone!== undefined ) {
+      setClause += `phone = "${phone}", `;
+    }
+  
+    // Elimina la coma extra al final de la cadena setClause
+    setClause = setClause.slice(0, -2);
+  
+    let sql = `UPDATE user SET ${setClause} WHERE user_id = ${user_id}`;
+  
     if (req.file != undefined) {
       img = req.file.filename;
-      sql = `UPDATE user SET user_name = "${user_name}", user_lastname = "${user_lastname}", passport = "${passport}", address = "${address}",  phone = "${phone}", user_img = "${img}" WHERE user_id = ${user_id}`;
+      sql = `UPDATE user SET ${setClause}, user_img = "${img}" WHERE user_id = ${user_id}`;
     }
-
+  
     connection.query(sql, (error, result) => {
       error
         ? res.status(400).json({ error })
         : res.status(200).json({ result, img });
     });
   };
-
+  
   // 4.- Add commentary
   // http://localhost:4000/addCommentary/:user_id/:course_id/:unit_id/:lesson_id
   addComentary = (req, res) => {

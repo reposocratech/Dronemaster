@@ -20,22 +20,38 @@ export const EditMyProfileModal = ({
 
   const handleClose = () => {
     setShowEditionModal(false);
-  };
+  }; 
+  
 
   useEffect(() => {
-    user &&
+    user?.user_img &&
       setProfileImg(`http://localhost:4000/images/users/${user?.user_img}`);
   }, [user]);
-
   useEffect(() => {
     //Set values of a user Data
     for (const fieldName in user) {
-      setValue(fieldName, user[fieldName]);
+     
+        setValue(fieldName, user[fieldName]);
+      
     }
   }, [showEditionModal]);
 
   const handleImgChange = (e) => {
     setFile(e.target.files[0]);
+    setProfileImg(e.target.files[0])
+
+    const newFormData = new FormData();
+
+    newFormData.append("editedUser", JSON.stringify({user_name: `${user.user_name}`})); 
+
+    newFormData.append("file", e.target.files[0])
+
+    axios
+      .put(`http://localhost:4000/editMyProfile/${user.user_id}`, newFormData)
+      .then((res) => {
+        setResetData(!resetData);
+      })
+      .catch((err) => {});
   };
 
   const handleDeleteButton = () => {
@@ -45,15 +61,19 @@ export const EditMyProfileModal = ({
         setResetData(!resetData);
         setFile();
       })
-      .catch((err) => { });
+      .catch((err) => {});
 
     setProfileImg();
   };
 
   const onSubmit = (data) => {
+
+    console.log(data);
     const newFormData = new FormData();
 
     newFormData.append("editedUser", JSON.stringify(data));
+
+    
 
     if (file !== undefined) {
       newFormData.append("file", file);
@@ -64,7 +84,7 @@ export const EditMyProfileModal = ({
       .then((res) => {
         setResetData(!resetData);
       })
-      .catch((err) => { });
+      .catch((err) => {});
 
     setShowEditionModal(false);
   };
@@ -83,7 +103,7 @@ export const EditMyProfileModal = ({
             <BiSolidUserDetail />
           </div>
 
-          <h4 className="titleText">Editas mis datos</h4>
+          <h4 className="titleText">Edita mis datos</h4>
         </div>
       </Modal.Header>
 
@@ -91,7 +111,7 @@ export const EditMyProfileModal = ({
         <Modal.Body className="modalBody">
           <div className="imgGridContainer">
             <div className="imgContainer">
-              {user?.user_img ? (
+              {profileImg ? (
                 <>
                   <img src={profileImg} alt="" />
                   <Button

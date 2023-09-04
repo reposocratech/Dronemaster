@@ -20,7 +20,7 @@ const AdminNewUserCard = ({ resEffect, setResEffect }) => {
   }
 
   return (
-    <div className="d-flex-column d-xl-flex justify-content-between creationButtonsCard">
+    <div className="creationButtonsCard">
       <button onClick={openCreateCourse} className="btnOutline1">
         Añadir Curso
       </button>

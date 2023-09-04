@@ -59,7 +59,10 @@ const StudentLanding = () => {
       </aside>
       <div className="mainContainer">
         {myCoursesData?.length === 0 && (
-          <div className="topCourses justify-content-center flex-wrap gap-5 pt-5 ">
+          <div className="topCourses justify-content-center flex-wrap gap-2 pt-5 ">
+            <h3 className="adviceTitle">Descubre Nuestros Cursos Destacados</h3>
+            <hr />
+            <p className="adviceText"> Descubre nuestros cursos estrella y despega en el mundo de los drones. Aprende desde cero o mejora tus habilidades con la mejor experiencia de aprendizaje. ¡Eleva tus conocimientos con nuestros cursos recomendados!</p>
             {bestRatedCourses.map((oneCourse) => {
               return (
                 <CourseCard key={oneCourse.course_id} oneCourse={oneCourse} />
