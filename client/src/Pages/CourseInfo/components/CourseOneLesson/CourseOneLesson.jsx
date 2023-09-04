@@ -18,6 +18,7 @@ export const CourseOneLesson = () => {
 
   const { user } = useContext(DroneMasterContext);
 
+  // Getting lesson info
   useEffect(() => {
     axios
       .get(
@@ -29,6 +30,7 @@ export const CourseOneLesson = () => {
       .catch((err) => { });
   }, [course_id, unit_id, lesson_id]);
 
+  // Getting course info
   useEffect(() => {
     axios
       .get(`http://localhost:4000/teachers/myCourses/courseInfo/${course_id}`)
@@ -38,6 +40,7 @@ export const CourseOneLesson = () => {
       .catch((err) => { });
   }, [course_id]);
 
+  // Getting resource name to download
   const handleDownload = () => {
     axios
       .get(`http://localhost:4000/resourceName/${lessonData?.resource_id}`)
@@ -49,7 +52,6 @@ export const CourseOneLesson = () => {
       )
       .catch((err) => { });
   };
-
 
   return (
     <section className="lessonInfoMainSection">
@@ -65,18 +67,12 @@ export const CourseOneLesson = () => {
         </div>
       </div>
       {/* Main Section */}
-
       {/* Lesson Video or Image*/}
       <LessonVideo videoUrl={lessonData?.lesson_url_video} />
-        
-    
-    
-
       <div className="courseTextInfoCard">
         {/* Course Description */}
         <CourseDescription description={lessonData?.lesson_content} />
       </div>
-
       {/* Side section */}
       <LessonComments
         user={user}
@@ -84,13 +80,11 @@ export const CourseOneLesson = () => {
         unit_id={unit_id}
         lesson_id={lesson_id}
       />
-
       {/* Course Units & Lessons List */}
       <UnitsLessonList
         myCourseInfo={courseUnitsLessons}
         course_id={course_id}
       />
-
       {lessonData?.resource_id !== null &&
         <div className="resourceDownloadCard">
           <div className="titleCont">
@@ -114,7 +108,6 @@ export const CourseOneLesson = () => {
           </div>
         </div>
       }
-
     </section>
   );
 };

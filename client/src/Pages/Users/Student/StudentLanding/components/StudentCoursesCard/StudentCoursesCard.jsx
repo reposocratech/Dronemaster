@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { GiClassicalKnowledge } from "react-icons/gi";
 import { BiRightArrowAlt } from "react-icons/bi";
 import axios from "axios";
@@ -7,6 +7,7 @@ import { DroneMasterContext } from "../../../../../../context/DroneMasterProvide
 export const StudentCoursesCard = ({ myCoursesData, setCourseId }) => {
   const { setCourseMaterial } = useContext(DroneMasterContext);
 
+  // Getting all student courses
   const showCourse = (course_id) => {
     axios
       .get(`http://localhost:4000/teachers/myCourses/courseInfo/${course_id}`)
@@ -14,7 +15,7 @@ export const StudentCoursesCard = ({ myCoursesData, setCourseId }) => {
         setCourseMaterial(res.data);
         setCourseId(course_id);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   return (
@@ -32,11 +33,11 @@ export const StudentCoursesCard = ({ myCoursesData, setCourseId }) => {
       <div className="cardBody">
         {myCoursesData?.length === 0 && (
           <div className="d-flex flex-column align-items-center">
-          <p className="noCoursesText">
-            ¿Listo para comenzar tu viaje de aprendizaje en drones? 
-          </p>
-          <button className="btnNormal">Nuentros Cursos</button>
-          <p className="noCoursesText mb-0 fst-italic"> ¡Explora nuestra gama de cursos!</p>
+            <p className="noCoursesText">
+              ¿Listo para comenzar tu viaje de aprendizaje en drones?
+            </p>
+            <button className="btnNormal">Nuentros Cursos</button>
+            <p className="noCoursesText mb-0 fst-italic"> ¡Explora nuestra gama de cursos!</p>
           </div>
         )}
         <ul className="courseList">

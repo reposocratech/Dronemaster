@@ -4,7 +4,6 @@ import { BiSolidUserDetail } from "react-icons/bi";
 import { PiTrashBold } from "react-icons/pi";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-
 import "./editMyProfileModal.scss";
 import { DroneMasterContext } from "../../context/DroneMasterProvider";
 
@@ -18,32 +17,31 @@ export const EditMyProfileModal = ({
   const { register, setValue, handleSubmit } = useForm();
   const [profileImg, setProfileImg] = useState();
 
+  // Function to close the modal
   const handleClose = () => {
     setShowEditionModal(false);
-  }; 
-  
+  };
 
+  // Getting the user profile image
   useEffect(() => {
     user?.user_img &&
       setProfileImg(`http://localhost:4000/images/users/${user?.user_img}`);
   }, [user]);
+
+  // Set values of a user Data
   useEffect(() => {
-    //Set values of a user Data
     for (const fieldName in user) {
-     
-        setValue(fieldName, user[fieldName]);
-      
+      setValue(fieldName, user[fieldName]);
     }
   }, [showEditionModal]);
 
+  // Function to change the user profile image
   const handleImgChange = (e) => {
     setFile(e.target.files[0]);
     setProfileImg(e.target.files[0])
 
     const newFormData = new FormData();
-
-    newFormData.append("editedUser", JSON.stringify({user_name: `${user.user_name}`})); 
-
+    newFormData.append("editedUser", JSON.stringify({ user_name: `${user.user_name}` }));
     newFormData.append("file", e.target.files[0])
 
     axios
@@ -51,9 +49,10 @@ export const EditMyProfileModal = ({
       .then((res) => {
         setResetData(!resetData);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
+  // Function to delete the user profile image
   const handleDeleteButton = () => {
     axios
       .put(`http://localhost:4000/myProfile/deleteImage/${user.user_id}`)
@@ -61,19 +60,15 @@ export const EditMyProfileModal = ({
         setResetData(!resetData);
         setFile();
       })
-      .catch((err) => {});
+      .catch((err) => { });
 
     setProfileImg();
   };
 
+  // Function to edit the user profile
   const onSubmit = (data) => {
-
-    console.log(data);
     const newFormData = new FormData();
-
     newFormData.append("editedUser", JSON.stringify(data));
-
-    
 
     if (file !== undefined) {
       newFormData.append("file", file);
@@ -84,8 +79,7 @@ export const EditMyProfileModal = ({
       .then((res) => {
         setResetData(!resetData);
       })
-      .catch((err) => {});
-
+      .catch((err) => { });
     setShowEditionModal(false);
   };
 
@@ -106,7 +100,6 @@ export const EditMyProfileModal = ({
           <h4 className="titleText">Edita mis datos</h4>
         </div>
       </Modal.Header>
-
       <form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body className="modalBody">
           <div className="imgGridContainer">
@@ -132,7 +125,6 @@ export const EditMyProfileModal = ({
                 </div>
               )}
             </div>
-
             {/* Image Input Group */}
             <input
               type="file"
@@ -140,12 +132,10 @@ export const EditMyProfileModal = ({
               className="inputFile"
               id="inputFile"
             />
-
             <label htmlFor="inputFile" className="inputImageLabel btnNormal">
               Selecciona Imagen
             </label>
           </div>
-
           {/* Name Input Group */}
           <div className="d-flex flex-column align-items-start gap-1 inputName">
             <label htmlFor="user_name" className="ps-3">
@@ -158,7 +148,6 @@ export const EditMyProfileModal = ({
               id="user_name"
             />
           </div>
-
           {/* Lastame Input Group */}
           <div className="d-flex flex-column align-items-start gap-1 inputLastname">
             <label htmlFor="user_lastname" className="ps-3">
@@ -171,7 +160,6 @@ export const EditMyProfileModal = ({
               className="input1"
             />
           </div>
-
           {/* Name Input Group */}
           <div className="d-flex flex-column align-items-start gap-1 inputPassport">
             <label htmlFor="passport" className="ps-3">
@@ -184,7 +172,6 @@ export const EditMyProfileModal = ({
               className="input1"
             />
           </div>
-
           {/* Name Input Group */}
           <div className="d-flex flex-column align-items-start gap-1 inputPhone">
             <label htmlFor="phone" className="ps-3">
@@ -197,7 +184,6 @@ export const EditMyProfileModal = ({
               className="input1"
             />
           </div>
-
           {/* Name Input Group */}
           <div className="d-flex flex-column align-items-start gap-1  inputAddress">
             <label htmlFor="address" className="ps-3">

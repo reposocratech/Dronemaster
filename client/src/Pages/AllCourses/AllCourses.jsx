@@ -72,7 +72,6 @@ export const AllCourses = () => {
               category_name={cat.category_name}
               courseData={courseData}
             />
-          
           );
         })}
       </>

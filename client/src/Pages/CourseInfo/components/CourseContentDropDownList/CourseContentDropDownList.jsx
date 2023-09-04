@@ -26,28 +26,31 @@ export const CourseContentDropDownList = ({
     setUnitsName(uniqueUnitNames);
   }, [myCourseInfo, userAuth]);
 
+  // Getting user id to check if user is suscribed into a course
   useEffect(() => {
     user &&
-    axios
-      .get(`http://localhost:4000/getUserIdUserCourse/${user?.user_id}/${course_id}`)
-      .then((res) => {
-        setUserAuth(res.data[0].user_id)
-      })
-      .catch((err) => { })
+      axios
+        .get(`http://localhost:4000/getUserIdUserCourse/${user?.user_id}/${course_id}`)
+        .then((res) => {
+          setUserAuth(res.data[0].user_id)
+        })
+        .catch((err) => { })
   }, [user, course_id])
 
   const closedHeight = "0px";
   const openedHeight = "35px";
 
+  // Function to prepare the dropdwon
   const toggleUnit = (unitIndex) => {
     if (openUnits.includes(unitIndex)) {
-      // Si el índice ya está en el array, lo eliminamos
+      // If index exist inside the array, it is deleted
       setOpenUnits(openUnits.filter((index) => index !== unitIndex));
     } else {
-      // Si el índice no está en el array, lo agregamos
+      // If index doesn`t exist inside the array, it is added
       setOpenUnits([...openUnits, unitIndex]);
     }
   };
+
   return (
     <div className="allUnitsLessonCard">
       <div className="listContainer">
@@ -121,7 +124,7 @@ export const CourseContentDropDownList = ({
                               Abrir
                             </button>
                           )}
-                          { user && user.user_id === userAuth && (
+                          {user && user.user_id === userAuth && (
                             <button
                               className="openLessonButton"
                               onClick={() =>

@@ -25,18 +25,20 @@ const StudentLanding = () => {
   const [showRatingModal, setShowRatingModal] = useState(false)
   const [score, setScore] = useState()
   const [counterRating, setCounterRating] = useState()
-  //Get all courses of the user
 
-
+  // Get all courses of the user
   useEffect(() => {
-    axios
-      .get(`http://localhost:4000/showMyCourses/${user?.user_id}`)
-      .then((res) => {
-        setMyCoursesData(res.data);
-      })
-      .catch((error) => { });
+    if (user) {
+      axios
+        .get(`http://localhost:4000/showMyCourses/${user?.user_id}`)
+        .then((res) => {
+          setMyCoursesData(res.data);
+        })
+        .catch((error) => { });
+    }
   }, [user, showEditionModal, showRatingModal, score, counterRating]);
 
+  // Get 4 best rated courses
   useEffect(() => {
     axios
       .get("http://localhost:4000/bestRatedCourses")
@@ -46,17 +48,18 @@ const StudentLanding = () => {
       .catch((err) => { });
   }, []);
 
-
   const examAvailable = lessonsViewedByStudent / lessonsOneCourse;
 
   return (
     <div className="mainSectionStudent">
+
       <aside className="sideContent">
         <StudentCard user={user} setShowEditionModal={setShowEditionModal} />
         <UserCardInfo user={user} />
         <StudentCoursesCard myCoursesData={myCoursesData} setCourseId={setCourseId} />
         {courseId !== 0 && <CircularBarProgress lessonsOneCourse={lessonsOneCourse} lessonsViewedByStudent={lessonsViewedByStudent} courseId={courseId} myCoursesData={myCoursesData} />}
       </aside>
+
       <div className="mainContainer">
         {myCoursesData?.length === 0 && (
           <div className="topCourses justify-content-center flex-wrap gap-2 pt-5 ">
@@ -86,11 +89,13 @@ const StudentLanding = () => {
         </div>}
 
       </div>
+
       <EditMyProfileModal
         showEditionModal={showEditionModal}
         setShowEditionModal={setShowEditionModal}
         user={user}
       />
+
     </div>
   );
 };

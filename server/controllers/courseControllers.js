@@ -149,8 +149,6 @@ class courseControllers {
   editCourse = (req, res) => {
     const { course_id, teacherPrev_id } = req.params;
 
-    console.log(req.body.data);
-
     const {
       course_name,
       course_length,
@@ -167,7 +165,7 @@ class courseControllers {
     // Update course table
     let courseUpdateQuery = `UPDATE course SET course_name='${course_name}', course_length=${course_length}, price=${price}, course_description='${course_description}', category_id=${category_id}, start_date="${start_date}" WHERE course_id = ${course_id}`;
 
-    if(start_date === ""){
+    if (start_date === "") {
       courseUpdateQuery = `UPDATE course SET course_name='${course_name}', course_length=${course_length}, price=${price}, course_description='${course_description}', category_id=${category_id} WHERE course_id = ${course_id}`;
     }
 

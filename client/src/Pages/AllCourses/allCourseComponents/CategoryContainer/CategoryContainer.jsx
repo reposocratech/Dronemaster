@@ -39,12 +39,11 @@ export const CategoryContainer = ({
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-
   }, []);
 
   return (
     <div className="categoryContainer">
-      <h4 className="categoryTitle text-center text-md-start"><span className="iconCat"><TbDrone/></span>{category_name}</h4>
+      <h4 className="categoryTitle text-center text-md-start"><span className="iconCat"><TbDrone /></span>{category_name}</h4>
       <div className="courseCardContainerWrapper">
         {counter !== 0 ?
           <div className="navigationButtonContainerLeft">

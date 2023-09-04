@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import jwtDecode from 'jwt-decode'
+import React, { useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import NavBarApp from "../components/NavBar/NavBarApp";
@@ -29,7 +28,6 @@ const AppRoutes = () => {
 
           {user && user.type === 2 && <Route path="/admin" element={<AdminLanding />} />}
 
-
           <Route path="/student" element={<StudentLanding />} />
           <Route
             path="/courses/courseInfo/:course_id"
@@ -48,9 +46,6 @@ const AppRoutes = () => {
               element={<TeacherMyCourse />}
             />
           </>}
-
-
-
         </Routes>
         <FooterApp />
       </BrowserRouter>
