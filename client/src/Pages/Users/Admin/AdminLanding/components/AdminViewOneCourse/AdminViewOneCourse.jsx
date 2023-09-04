@@ -18,7 +18,6 @@ import { DroneMasterContext } from "../../../../../../context/DroneMasterProvide
 import { useNavigate } from "react-router-dom";
 import AdminLessonEditForm from "../AdminLessonEditForm/AdminLessonEditForm";
 
-
 const AdminViewOneCourse = ({
   course_id,
   resEffect,
@@ -26,7 +25,6 @@ const AdminViewOneCourse = ({
   openCourse,
   courseIdx,
 }) => {
-
   const navigate = useNavigate();
   const { user } = useContext(DroneMasterContext);
   const [allInformation, setAllInformation] = useState();
@@ -40,29 +38,38 @@ const AdminViewOneCourse = ({
   const [unitInformation, setUnitInformation] = useState();
   const [lessonInformation, setLessonInformation] = useState();
 
+  //Enable resource
   const enableResource = (resource_id) => {
     axios
       .put(`http://localhost:4000/enableResource/${resource_id}`)
       .then((res) => setResEffect(!resEffect))
-      .catch((err) => { });
+      .catch((err) => {});
   };
+
+  //Disable resource
 
   const disableResource = (resource_id) => {
     axios
       .put(`http://localhost:4000/disableResource/${resource_id}`)
       .then((res) => setResEffect(!resEffect))
-      .catch((err) => { });
+      .catch((err) => {});
   };
+
+  //Open the modal which creates a new Lesson
 
   const OpenLessonCreateModal = (u_id) => {
     setUnitId(u_id);
     setShowLessonCreationModal(true);
   };
 
+  //Open the modal which opens the edit Lesson form
+
   const openLessonEditForm = (l_id) => {
     setUnitId(l_id);
     setShowLessonEditForm(true);
   };
+
+  // Brings the information of one course
 
   useEffect(() => {
     axios
@@ -70,15 +77,21 @@ const AdminViewOneCourse = ({
       .then((res) => {
         setAllInformation(res.data);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   }, [course_id, resEffect]);
+
+  // Brings the name of single units
 
   const uniqueUnitNames = Array.from(
     new Set(allInformation?.map((item) => item.unit_tittle))
   );
+
+  // Brings the id of single units
   const unit_id = Array.from(
     new Set(allInformation?.map((item) => item.unit_id))
   );
+
+  //Sets the information of the Units
 
   useEffect(() => {
     setUnitsName(uniqueUnitNames);
@@ -106,8 +119,9 @@ const AdminViewOneCourse = ({
     }
   };
 
-  const downloadResource = (resource_id) => {
+  // Let the admin to download the resource
 
+  const downloadResource = (resource_id) => {
     axios
       .get(`http://localhost:4000/resourceName/${resource_id}`)
       .then((res) => {
@@ -117,8 +131,10 @@ const AdminViewOneCourse = ({
         );
         setResEffect(!resEffect);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
+
+  // Let the admin to upload the resource
 
   const uploadResource = (e, lesson_id, unit_id) => {
     const newFormData = new FormData();
@@ -130,44 +146,50 @@ const AdminViewOneCourse = ({
         newFormData
       )
       .then((res) => setResEffect(!resEffect))
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
+  // Enable units
   const enableUnit = (unitId) => {
     axios
       .put(`http://localhost:4000/enableUnits/${course_id}/${unitId}`)
       .then((res) => {
         setResEffect(!resEffect);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
+  // Disable units
   const disableUnit = (unitId) => {
     axios
       .put(`http://localhost:4000/disableUnits/${course_id}/${unitId}`)
       .then((res) => {
         setResEffect(!resEffect);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
+  // Enable lessons
   const enableLesson = (lessonId) => {
     axios
       .put(`http://localhost:4000/enableLessons/${lessonId}`)
       .then((res) => {
         setResEffect(!resEffect);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
+  // Disable lessons
   const disableLesson = (lessonId) => {
     axios
       .put(`http://localhost:4000/disableLessons/${lessonId}`)
       .then((res) => {
         setResEffect(!resEffect);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
+
+  // Delete resource
 
   const deleteResource = (lesson_id, resource_id) => {
     axios
@@ -175,11 +197,10 @@ const AdminViewOneCourse = ({
         `http://localhost:4000/admin/deleteResource/${resource_id}/${lesson_id}`
       )
       .then((res) => setResEffect(!resEffect))
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   return (
-
     <div className="unitsList">
       {unitsName.map((unitName, unitIndex) => {
         if (unitName !== null) {
@@ -194,6 +215,7 @@ const AdminViewOneCourse = ({
               key={unitIndex}
               className="unitListed"
             >
+              {/*  Unit Information */}
               <div className="unitRow">
                 <div className="unitTitleContainer">
                   <h6>
@@ -212,17 +234,17 @@ const AdminViewOneCourse = ({
                   </div>
                 </div>
                 <div className="unitsButtonsContainer">
-                  <span onClick={() => {
-                    openUnitEditForm(unit_id[unitIndex]);
-                    setUnitInformation(unitName);
-                  }}>
+                  <span
+                    onClick={() => {
+                      openUnitEditForm(unit_id[unitIndex]);
+                      setUnitInformation(unitName);
+                    }}
+                  >
                     <BsPencil className="icon" />
                   </span>
                   {allInformation
                     .filter((item) => item.unit_tittle === unitName)
-                    .every(
-                      (item) => !item.unit_is_hidden
-                    ) ? (
+                    .every((item) => !item.unit_is_hidden) ? (
                     <span>
                       <BsEyeSlash
                         className="icon"
@@ -263,12 +285,14 @@ const AdminViewOneCourse = ({
                   .filter((item) => item.unit_tittle === unitName)
                   .map((lesson, lessonIdx) => {
                     if (lesson.lesson_id !== null) {
-
                       return (
                         <div key={lessonIdx} className="lessonRow">
                           <div className="lessonRowLine">
                             <div className="lessonTitle">
-                              <p className="lessonText"><span>{lessonIdx + 1}.</span> {lesson.lesson_title}</p>
+                              <p className="lessonText">
+                                <span>{lessonIdx + 1}.</span>{" "}
+                                {lesson.lesson_title}
+                              </p>
                             </div>
                             <div className="lessonFunctionsButtons">
                               <span
@@ -315,37 +339,51 @@ const AdminViewOneCourse = ({
                             {allInformation
                               .filter((item) => item.unit_tittle === unitName)
                               .map((resource, resourceIdx) => {
-                                if (resource.lesson_id !== null && resource.lesson_id === lesson.lesson_id) {
-
+                                if (
+                                  resource.lesson_id !== null &&
+                                  resource.lesson_id === lesson.lesson_id
+                                ) {
                                   return (
-                                    <div key={resourceIdx} className="resourceRow">
+                                    <div
+                                      key={resourceIdx}
+                                      className="resourceRow"
+                                    >
                                       <div> Recurso</div>
 
                                       <div className="resourceFunctionsButtonsCont">
                                         {resource.resource_id &&
-                                          resource?.resource_is_hidden === 1 && (
+                                          resource?.resource_is_hidden ===
+                                            1 && (
                                             <BsEye
                                               className="deleteIcon "
                                               onClick={() =>
-                                                enableResource(resource.resource_id)
+                                                enableResource(
+                                                  resource.resource_id
+                                                )
                                               }
                                             />
                                           )}
                                         {resource.resource_id &&
-                                          resource?.resource_is_hidden === 0 && (
+                                          resource?.resource_is_hidden ===
+                                            0 && (
                                             <BsEyeSlash
                                               className=" deleteIcon"
                                               onClick={() =>
-                                                disableResource(resource.resource_id)
+                                                disableResource(
+                                                  resource.resource_id
+                                                )
                                               }
                                             />
                                           )}
                                         {resource.resource_id &&
-                                          resource?.resource_is_hidden === 0 && (
+                                          resource?.resource_is_hidden ===
+                                            0 && (
                                             <BsFillFileEarmarkArrowDownFill
                                               className="downloadIcon icon"
                                               onClick={() =>
-                                                downloadResource(resource.resource_id)
+                                                downloadResource(
+                                                  resource.resource_id
+                                                )
                                               }
                                             />
                                           )}
@@ -372,7 +410,8 @@ const AdminViewOneCourse = ({
                                           </>
                                         )}
                                         {resource.resource_id &&
-                                          resource?.resource_is_hidden === 0 && (
+                                          resource?.resource_is_hidden ===
+                                            0 && (
                                             <MdDeleteOutline
                                               className="deleteIcon fs-5 "
                                               onClick={() =>
@@ -385,29 +424,21 @@ const AdminViewOneCourse = ({
                                           )}
                                       </div>
                                     </div>
-                                  )
+                                  );
                                 }
-
-                              }
-
-                              )}
+                              })}
                           </div>
-
                         </div>
-                      )
+                      );
                     }
-
-
-                  }
-
-
-
-                  )}
+                  })}
               </div>
             </div>
           );
         }
       })}
+
+      {/* Modals */}
 
       <LessonCreationModal
         setShowLessonCreationModal={setShowLessonCreationModal}

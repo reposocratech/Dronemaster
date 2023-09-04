@@ -23,7 +23,7 @@ export const CourseEditionModal = ({
   const [teacherPrev_id, setTeacherPrev_id] = useState();
 
   const closeEditModal = () => {
-    reset()
+    reset();
     setShowCourseEditionModal(false);
   };
 
@@ -32,9 +32,9 @@ export const CourseEditionModal = ({
     handleSubmit,
     formState: { errors },
     setValue,
-    reset
+    reset,
   } = useForm();
-  
+
   useEffect(() => {
     axios
       .get(`http://localhost:4000/courses/courseInfoEdition/${courseId}`)
@@ -45,9 +45,8 @@ export const CourseEditionModal = ({
           `http://localhost:4000/images/courses/${res.data[0].course_img}`
         );
       })
-      .catch((error) => { });
+      .catch((error) => {});
   }, [courseImg, courseId]);
-
 
   useEffect(() => {
     axios
@@ -55,7 +54,7 @@ export const CourseEditionModal = ({
       .then((res) => {
         setTagsList(res.data);
       })
-      .catch((error) => { });
+      .catch((error) => {});
   }, [courseId]);
 
   useEffect(() => {
@@ -64,7 +63,7 @@ export const CourseEditionModal = ({
       .then((res) => {
         setTeachersList(res.data);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   }, []);
 
   useEffect(() => {
@@ -73,7 +72,7 @@ export const CourseEditionModal = ({
       .then((res) => {
         setCategoriesList(res.data);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   }, []);
 
   const handleImgChange = (e) => {
@@ -99,12 +98,10 @@ export const CourseEditionModal = ({
         }
       )
       .then((res) => {
-        reset()
+        reset();
         setShowCourseEditionModal(false);
       })
-      .catch((err) => {
-        console.log(err)
-      });
+      .catch((err) => {});
 
     if (file) {
       const newFormData = new FormData();
@@ -116,8 +113,8 @@ export const CourseEditionModal = ({
           `http://localhost:4000/courses/uploadCourseImage/${courseId}`,
           newFormData
         )
-        .then((res) => { })
-        .catch((error) => console.log(err));
+        .then((res) => {})
+        .catch((error) => {});
     }
   };
   useEffect(() => {
@@ -140,9 +137,10 @@ export const CourseEditionModal = ({
     if (tagId != undefined) {
       axios
         .put(`http://localhost:4000/admin/deleteCourseTag/${tagId}/${courseId}`)
-        .then((res) => { })
+        .then((res) => {})
         .catch((error) => {
-          { };
+          {
+          }
         });
     }
 
@@ -295,7 +293,8 @@ export const CourseEditionModal = ({
               })}
               id="price"
               className="input1"
-              step="0.01" pattern="\d+(\.\d{1,2})?"
+              step="0.01"
+              pattern="\d+(\.\d{1,2})?"
             />
             <span className="errorMessage">{errors.price?.message}</span>
           </div>

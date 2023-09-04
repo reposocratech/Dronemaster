@@ -12,11 +12,16 @@ const AdminAllTeachersCard = ({
   moreInformationTeacher,
   setUser,
   user,
+  resEffect,
+  setResEffect,
 }) => {
   const [teachers, setTeachers] = useState();
   const { register, handleSubmit, reset } = useForm();
   const [oneTeacher, setOneTeacher] = useState();
   const [searchResultData, setSearchResultData] = useState();
+  const [resetInfoTeacher, setResetInfoTeacher] = useState(false);
+
+  //Bring the list of all teachers.
 
   useEffect(() => {
     axios
@@ -25,8 +30,10 @@ const AdminAllTeachersCard = ({
       .then((res) => {
         setTeachers(res.data);
       })
-      .catch((err) => { });
-  }, []);
+      .catch((err) => {});
+  }, [moreInformationTeacher, resetInfoTeacher]);
+
+  // Open a card with the information of one teacher.
 
   const openTeacherForm = (userId) => {
     axios
@@ -34,11 +41,11 @@ const AdminAllTeachersCard = ({
       .then((res) => {
         setOneTeacher(res.data[0]);
       })
-      .catch((err) => { });
+      .catch((err) => {});
     setMoreInformationTeacher(true);
   };
 
-  // Buscador
+  // Bar seacher of one teacher
   const onSubmit = (data) => {
     setSearchResultData(
       teachers?.filter((teacher) =>
@@ -113,7 +120,7 @@ const AdminAllTeachersCard = ({
                       return (
                         <tr key={teacher?.user_id}>
                           <td>
-                            <div >
+                            <div>
                               {teacher?.user_img ? (
                                 <img
                                   src={`http://localhost:4000/images/user/${teacher?.user_img}`}
@@ -159,9 +166,8 @@ const AdminAllTeachersCard = ({
                               <button
                                 onClick={() => openTeacherForm(teacher.user_id)}
                                 className="btnOutline1"
-                               
                               >
-                               Info
+                                Info
                               </button>
                             </div>
                           </td>
@@ -175,6 +181,8 @@ const AdminAllTeachersCard = ({
                   moreInformationTeacher={moreInformationTeacher}
                   setMoreInformationTeacher={setMoreInformationTeacher}
                   teacher={oneTeacher}
+                  resetInfoTeacher={resetInfoTeacher}
+                  setResetInfoTeacher={setResetInfoTeacher}
                 />
               </>
             ) : (
@@ -226,7 +234,6 @@ const AdminAllTeachersCard = ({
                           <button
                             onClick={() => openTeacherForm(teacher.user_id)}
                             className="btnOutline1"
-                           
                           >
                             Info
                           </button>
@@ -241,6 +248,8 @@ const AdminAllTeachersCard = ({
               moreInformationTeacher={moreInformationTeacher}
               setMoreInformationTeacher={setMoreInformationTeacher}
               teacher={oneTeacher}
+              resetInfoTeacher={resetInfoTeacher}
+              setResetInfoTeacher={setResetInfoTeacher}
             />
           </tbody>
         </table>

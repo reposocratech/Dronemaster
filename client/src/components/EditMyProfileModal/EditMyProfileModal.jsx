@@ -20,8 +20,7 @@ export const EditMyProfileModal = ({
 
   const handleClose = () => {
     setShowEditionModal(false);
-  }; 
-  
+  };
 
   useEffect(() => {
     user?.user_img &&
@@ -30,21 +29,22 @@ export const EditMyProfileModal = ({
   useEffect(() => {
     //Set values of a user Data
     for (const fieldName in user) {
-     
-        setValue(fieldName, user[fieldName]);
-      
+      setValue(fieldName, user[fieldName]);
     }
   }, [showEditionModal]);
 
   const handleImgChange = (e) => {
     setFile(e.target.files[0]);
-    setProfileImg(e.target.files[0])
+    setProfileImg(e.target.files[0]);
 
     const newFormData = new FormData();
 
-    newFormData.append("editedUser", JSON.stringify({user_name: `${user.user_name}`})); 
+    newFormData.append(
+      "editedUser",
+      JSON.stringify({ user_name: `${user.user_name}` })
+    );
 
-    newFormData.append("file", e.target.files[0])
+    newFormData.append("file", e.target.files[0]);
 
     axios
       .put(`http://localhost:4000/editMyProfile/${user.user_id}`, newFormData)
@@ -67,13 +67,9 @@ export const EditMyProfileModal = ({
   };
 
   const onSubmit = (data) => {
-
-    console.log(data);
     const newFormData = new FormData();
 
     newFormData.append("editedUser", JSON.stringify(data));
-
-    
 
     if (file !== undefined) {
       newFormData.append("file", file);

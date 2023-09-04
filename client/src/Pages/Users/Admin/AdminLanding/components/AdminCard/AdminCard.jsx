@@ -10,6 +10,7 @@ const AdminCard = ({ setShowEditionModal }) => {
   return (
     <div className="AdminCard ">
       <div className="adminCard w-100 ">
+        {/* Admin User Picture */}
         <div className="imgContainer">
           {user?.user_img ? (
             <img src={`http://localhost:4000/images/users/${user.user_img}`} />
@@ -19,15 +20,33 @@ const AdminCard = ({ setShowEditionModal }) => {
             </h2>
           )}
         </div>
+
+        {/* Admin User Personal information */}
         <div className="textContainer">
           <h6 className="name">
             {user?.user_name} {user?.user_lastname}{" "}
           </h6>
-          <p>{user?.type == 2 && <>
-            <span role="button" className="textHover" onClick={() => navigate("/admin")}>Admin</span>
-            <span> / </span>
-            <span role="button" className="textHover" onClick={() => navigate("/teacher")}>Profesor</span>
-          </>}</p>
+          <p>
+            {user?.type == 2 && (
+              <>
+                <span
+                  role="button"
+                  className="textHover"
+                  onClick={() => navigate("/admin")}
+                >
+                  Admin
+                </span>
+                <span> / </span>
+                <span
+                  role="button"
+                  className="textHover"
+                  onClick={() => navigate("/teacher")}
+                >
+                  Profesor
+                </span>
+              </>
+            )}
+          </p>
         </div>
         <div className="editionButton">
           <div className="editionButton">

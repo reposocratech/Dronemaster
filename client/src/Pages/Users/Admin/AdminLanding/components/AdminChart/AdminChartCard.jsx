@@ -27,6 +27,7 @@ ChartJS.register(
 const AdminChartCard = ({ inscriptionDates, setInscriptionDates }) => {
   const [chartData, setChartData] = useState(null);
 
+  // Sets the months in the chart
   const countDatesPerMonth = (dateArray) => {
     const counts = Array(12).fill(0);
 
@@ -40,6 +41,8 @@ const AdminChartCard = ({ inscriptionDates, setInscriptionDates }) => {
 
     return counts;
   };
+
+  //Sets the information of the inscriptions in the year
 
   useEffect(() => {
     if (inscriptionDates && inscriptionDates.length > 0) {
@@ -76,6 +79,7 @@ const AdminChartCard = ({ inscriptionDates, setInscriptionDates }) => {
     }
   }, [inscriptionDates]);
 
+  //Sets the chart design.
   const options = {
     plugins: {
       legend: {
@@ -99,10 +103,12 @@ const AdminChartCard = ({ inscriptionDates, setInscriptionDates }) => {
 
     maintainAspectRatio: false,
   };
+
   return (
     <>
       {inscriptionDates?.length > 0 && (
         <Container className="adminChartCard">
+          {/* Shows info when the data base has inscriptions */}
           <div className="cardTitle">
             <div className="title d-flex align-items-center gap-3">
               <div className="iconContainer">
@@ -112,7 +118,7 @@ const AdminChartCard = ({ inscriptionDates, setInscriptionDates }) => {
                 <h5 className="titleText m-0">Inscripciones</h5>
               </div>
             </div>
-
+            {/* Shows note above when the data base is empty of information */}
             <div className="adTable">
               {chartData ? (
                 <Line data={chartData} options={options} className="grafica" />
