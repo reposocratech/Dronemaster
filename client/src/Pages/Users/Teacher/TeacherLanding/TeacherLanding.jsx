@@ -26,10 +26,10 @@ export const TeacherLanding = () => {
       .then((res) => {
         setMyCoursesData(res.data);
       })
-      .catch((error) => { });
+      .catch((error) => {});
   }, [user]);
 
-  //Get all students of the user
+  //Get all students of the user (teacher)
   useEffect(() => {
     if (user) {
       axios
@@ -37,10 +37,11 @@ export const TeacherLanding = () => {
         .then((res) => {
           setMyStudentsData(res.data);
         })
-        .catch((error) => { });
+        .catch((error) => {});
     }
   }, [user]);
 
+  //Calculate average rating of every course from a teacher
   useEffect(() => {
     let sum = 0;
     let counter = 0;
@@ -52,9 +53,8 @@ export const TeacherLanding = () => {
     });
     if (sum != 0 && counter != 0 && counter !== undefined) {
       setAverageRating(sum / counter);
-    }
-    else {
-      setAverageRating(0)
+    } else {
+      setAverageRating(0);
     }
   }, [myCoursesData]);
 
@@ -63,33 +63,44 @@ export const TeacherLanding = () => {
       <aside className="sideContent">
         <TeacherCard user={user} setShowEditionModal={setShowEditionModal} />
 
+        {/* Counters (courses, students, rating) */}
         <div className="counterContainer">
+          {/* Rating counter */}
           <CounterCard
             title={"Puntación media"}
             counter={`${averageRating?.toFixed(1)}/5`}
           >
             <AiFillStar />
           </CounterCard>
+
+          {/* Students counter */}
           <CounterCard
             title={"Alumnos totales"}
             counter={myStudentsData?.length}
           >
             <AiOutlineUser />
           </CounterCard>
+          {/* Courses counter */}
           <CounterCard title={"Cursos totales"} counter={myCoursesData?.length}>
             <GiClassicalKnowledge />
           </CounterCard>
         </div>
+        {/* User information card */}
         <UserCardInfo user={user} />
       </aside>
       <div className="mainContainer">
+
+        {/* All courses of a teacher */}
         <TeacherCoursesTableCard
           myCoursesData={myCoursesData}
           myStudentsData={myStudentsData}
           user_id={user?.user_id}
         />
+        {/* All students of a teacher */}
         <TeacherStudentsTableCard myStudentsData={myStudentsData} />
       </div>
+
+      {/* User edition Form */}
       <EditMyProfileModal
         showEditionModal={showEditionModal}
         setShowEditionModal={setShowEditionModal}

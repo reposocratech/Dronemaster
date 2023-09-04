@@ -13,13 +13,9 @@ const LoginModal = ({
   openRegisterModal,
 }) => {
   const [errorMessage, setErrorMessage] = useState();
-  const closeLoginModal = () => {
-    setErrorMessage()
-    setShowLoginModal(false);
-    reset();
-  };
-  const navigate = useNavigate();
   const { setUser, setIsLogged } = useContext(DroneMasterContext);
+  const navigate = useNavigate();
+  // React hook form imports
   const {
     register,
     handleSubmit,
@@ -32,6 +28,14 @@ const LoginModal = ({
     },
   });
 
+  // Close modal form and reset inputs values
+  const closeLoginModal = () => {
+    setErrorMessage()
+    setShowLoginModal(false);
+    reset();
+  };
+
+  //Send form data to the server route and navigate to the user landing
   const onSubmit2 = (data) => {
     axios
       .post("http://localhost:4000/login", data)
@@ -69,6 +73,7 @@ const LoginModal = ({
           <div className="form3">
             <form onSubmit={handleSubmit(onSubmit2)}>
               <div className="inputContainer">
+                {/* Email input */}
                 <input
                   {...register("email", {
                     required: "Campo obligatorio",
@@ -84,6 +89,7 @@ const LoginModal = ({
                   {errors.email?.message}
                 </label>
               </div>
+              {/* Password input */}
               <div className="inputContainer">
                 <input
                   {...register("password", {
@@ -100,6 +106,7 @@ const LoginModal = ({
                 </label>
                 <p className="m-0 text-danger">{errorMessage}</p>
               </div>
+              {/* Submit & cancel button */}
               <div className=" buttonsCont my-2">
                 <button className="btnNormal "> Aceptar</button>
                 <button

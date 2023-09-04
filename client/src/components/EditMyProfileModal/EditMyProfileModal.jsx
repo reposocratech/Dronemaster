@@ -11,6 +11,8 @@ export const EditMyProfileModal = ({
   setShowEditionModal,
   showEditionModal,
   user,
+  resEffect,
+  setResEffect
 }) => {
   const [file, setFile] = useState();
   const { resetData, setResetData } = useContext(DroneMasterContext);
@@ -67,6 +69,7 @@ export const EditMyProfileModal = ({
 
   // Function to edit the user profile
   const onSubmit = (data) => {
+    
     const newFormData = new FormData();
     newFormData.append("editedUser", JSON.stringify(data));
 
@@ -78,6 +81,7 @@ export const EditMyProfileModal = ({
       .put(`http://localhost:4000/editMyProfile/${user.user_id}`, newFormData)
       .then((res) => {
         setResetData(!resetData);
+        setResEffect(!resEffect)
       })
       .catch((err) => { });
     setShowEditionModal(false);
@@ -87,7 +91,7 @@ export const EditMyProfileModal = ({
     <Modal
       show={showEditionModal}
       onHide={handleClose}
-      centered={true}
+      centered
       size="lg"
       className="editionModalContainer"
     >

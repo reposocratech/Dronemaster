@@ -8,6 +8,7 @@ export const TeacherCard = ({ user, setShowEditionModal }) => {
   return (
     <div className="teacherCard">
       <div className="imgContainer">
+        {/* If user_img exists use img if not set the first name letter  */}
         {user?.user_img ? (
           <img src={`http://localhost:4000/images/users/${user.user_img}`} />
         ) : (

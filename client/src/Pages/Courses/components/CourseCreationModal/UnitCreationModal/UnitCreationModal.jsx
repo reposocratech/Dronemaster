@@ -44,7 +44,7 @@ export const UnitCreationModal = ({
     <Modal
       show={showUnitCreationModal ? showUnitCreationModal : false}
       onHide={handleClose}
-      centered={true}
+      centered
       size="md"
       fullscreen="false"
       className="unitCreationModalContainer"

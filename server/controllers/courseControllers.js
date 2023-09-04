@@ -148,7 +148,6 @@ class courseControllers {
   // http://localhost:4000/courses/editCourse/:course_id/:teacherPrev_id
   editCourse = (req, res) => {
     const { course_id, teacherPrev_id } = req.params;
-
     const {
       course_name,
       course_length,
@@ -157,7 +156,6 @@ class courseControllers {
       teacher_id,
       category_id,
       start_date,
-      // start_date,
     } = req.body.data;
 
     const tagsList = req.body.tagsList || []; // In case tagsList is not present

@@ -9,6 +9,7 @@ export const TeacherStudentsTableCard = ({ myStudentsData }) => {
   const { register, handleSubmit, reset } = useForm();
   const [searchResultData, setSearchResultData] = useState();
 
+  //Submit search (filter and set state with the matched elements)
   const onSubmit = (data) => {
     setSearchResultData(
       myStudentsData.filter((student) =>
@@ -34,6 +35,7 @@ export const TeacherStudentsTableCard = ({ myStudentsData }) => {
           <div className="searchBar">
             <FiSearch />
             <input
+              autoComplete="off"
               type="text"
               placeholder="Buscar alumno..."
               {...register("studentSearch")}

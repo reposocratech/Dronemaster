@@ -71,6 +71,7 @@ const AdminAllTeachersCard = ({
           <div className="searchBar">
             <FiSearch />
             <input
+                autoComplete="off"
               type="text"
               placeholder="Buscar Profesor..."
               {...register("teacherSearch")}

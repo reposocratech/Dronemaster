@@ -103,7 +103,6 @@ const AdminLessonEditForm = ({
             <textarea
               placeholder="Descripción"
               {...register("lesson_content", {
-                required: "Campo Obligatorio",
                 minLength: { value: 3, message: "Minimo de 3 letras" },
                 maxLength: { value: 250, message: "Maximo 250 caracteres" },
               })}
