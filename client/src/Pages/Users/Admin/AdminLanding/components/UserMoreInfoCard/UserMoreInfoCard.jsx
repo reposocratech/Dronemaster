@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import AdminUserEditInfoModal from "./components/AminUserEditInfoModal/AdminUserEditInfoModal";
@@ -6,8 +6,8 @@ import { GiClassicalKnowledge } from "react-icons/gi";
 import "./UserMoreInforCard.scss";
 
 const UserMoreInfoCard = ({
-  setMoreInformationStudent,
-  moreInformationStudent,
+  setMoreInformationStudentModal,
+  moreInformationStudentModal,
   student,
 }) => {
   const [profileImg, setProfileImg] = useState();
@@ -26,7 +26,7 @@ const UserMoreInfoCard = ({
     axios
       .put(`http://localhost:4000/admin/enableUser/${student?.user_id}`)
       .then((res) => {
-        setMoreInformationStudent(false);
+        setMoreInformationStudentModal(false);
       })
       .catch((err) => {});
   };
@@ -37,7 +37,7 @@ const UserMoreInfoCard = ({
     axios
       .put(`http://localhost:4000/admin/disableUser/${student?.user_id}`)
       .then((res) => {
-        setMoreInformationStudent(false);
+        setMoreInformationStudentModal(false);
       })
       .catch((err) => {});
   };
@@ -51,12 +51,12 @@ const UserMoreInfoCard = ({
   //Close the card with the information of the Student
 
   const closeInfoForm = () => {
-    setMoreInformationStudent(false);
+    setMoreInformationStudentModal(false);
   };
 
   return (
     <Modal
-      show={moreInformationStudent}
+      show={moreInformationStudentModal}
       onHide={closeInfoForm}
       className="courseCreationModalContainer"
       animation={false}
@@ -134,8 +134,8 @@ const UserMoreInfoCard = ({
       </Modal.Footer>
       <AdminUserEditInfoModal
         editUserForm={editUserForm}
-        setMoreInformationStudent={setMoreInformationStudent}
-        moreInformationStudent={moreInformationStudent}
+        setMoreInformationStudentModal={setMoreInformationStudentModal}
+        moreInformationStudentModal={moreInformationStudentModal}
         student={student}
         setEditUserForm={setEditUserForm}
         closeInfoForm={closeInfoForm}

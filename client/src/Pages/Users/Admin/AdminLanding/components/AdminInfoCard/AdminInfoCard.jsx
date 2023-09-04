@@ -2,9 +2,8 @@ import React, { useContext } from "react";
 import { DroneMasterContext } from "../../../../../../context/DroneMasterProvider";
 import { BiSolidUserDetail } from "react-icons/bi";
 import { HiOutlineMail } from "react-icons/hi";
-import { AiOutlinePhone } from "react-icons/ai";
+import { AiOutlinePhone, AiOutlineIdcard } from "react-icons/ai";
 import { FiMapPin } from "react-icons/fi";
-import { AiOutlineIdcard } from "react-icons/ai";
 
 const AdminInfoCard = () => {
   //Brings the personal info of the adminInfoCard

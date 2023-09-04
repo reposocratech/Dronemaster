@@ -190,7 +190,7 @@ export const CourseEditionModal = ({
           {/* Image Container */}
 
           <div className="imgContainer">
-            {courseData && <img src={courseImg} alt="" />}
+            {courseData && courseData.course_img && <img src={courseImg} alt="" />}
           </div>
           {/* Image Input Group */}
           <div className="inputFileContainer">

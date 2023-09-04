@@ -8,19 +8,17 @@ import { DroneMasterContext } from "../../../../../../../context/DroneMasterProv
 import "./AdminTeacherEditInfoModal.scss";
 
 const AdminTeacherEditInfoModal = ({
-  user,
   teacher,
   teacherEditForm,
   setTeacherEditForm,
-  setMoreInformationTeacher,
   closeInfoTeacherForm,
   setResetInfoTeacher,
   resetInfoTeacher,
 }) => {
   const [file, setFile] = useState();
-  const { resetData, setResetData } = useContext(DroneMasterContext);
-  const { register, setValue, handleSubmit } = useForm();
   const [profileImg, setProfileImg] = useState();
+  const { register, setValue, handleSubmit } = useForm();
+  const { resetData, setResetData } = useContext(DroneMasterContext);
 
   // Set the picture of the profile
 
@@ -78,7 +76,7 @@ const AdminTeacherEditInfoModal = ({
         setResetInfoTeacher(!resetInfoTeacher);
         /* setResetData(!resetData); */
         setTeacherEditForm(false);
-        /* setMoreInformationTeacher(false) */
+        /* setMoreInformationTeacherModal(false) */
         closeInfoTeacherForm();
       })
       .catch((err) => {});

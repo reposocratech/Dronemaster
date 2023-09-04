@@ -1,25 +1,20 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { HiOutlineMail } from "react-icons/hi";
-import { AiOutlinePhone } from "react-icons/ai";
-import { AiOutlineUser } from "react-icons/ai";
-import { FiSearch } from "react-icons/fi";
 import { useForm } from "react-hook-form";
+import { HiOutlineMail } from "react-icons/hi";
+import { AiOutlinePhone, AiOutlineUser } from "react-icons/ai";
+import { FiSearch } from "react-icons/fi";
 import TeacherMoreInforCard from "./AdminMoreInforCard/TeacherMoreInforCard";
 
 const AdminAllTeachersCard = ({
-  setMoreInformationTeacher,
-  moreInformationTeacher,
-  setUser,
-  user,
-  resEffect,
-  setResEffect,
+  setMoreInformationTeacherModal,
+  moreInformationTeacherModal,
 }) => {
   const [teachers, setTeachers] = useState();
-  const { register, handleSubmit, reset } = useForm();
   const [oneTeacher, setOneTeacher] = useState();
   const [searchResultData, setSearchResultData] = useState();
   const [resetInfoTeacher, setResetInfoTeacher] = useState(false);
+  const { register, handleSubmit, reset } = useForm();
 
   //Bring the list of all teachers.
 
@@ -31,7 +26,7 @@ const AdminAllTeachersCard = ({
         setTeachers(res.data);
       })
       .catch((err) => {});
-  }, [moreInformationTeacher, resetInfoTeacher]);
+  }, [moreInformationTeacherModal, resetInfoTeacher]);
 
   // Open a card with the information of one teacher.
 
@@ -42,7 +37,7 @@ const AdminAllTeachersCard = ({
         setOneTeacher(res.data[0]);
       })
       .catch((err) => {});
-    setMoreInformationTeacher(true);
+    setMoreInformationTeacherModal(true);
   };
 
   // Bar seacher of one teacher
@@ -179,8 +174,8 @@ const AdminAllTeachersCard = ({
                 )}
 
                 <TeacherMoreInforCard
-                  moreInformationTeacher={moreInformationTeacher}
-                  setMoreInformationTeacher={setMoreInformationTeacher}
+                  moreInformationTeacherModal={moreInformationTeacherModal}
+                  setMoreInformationTeacherModal={setMoreInformationTeacherModal}
                   teacher={oneTeacher}
                   resetInfoTeacher={resetInfoTeacher}
                   setResetInfoTeacher={setResetInfoTeacher}
@@ -246,8 +241,8 @@ const AdminAllTeachersCard = ({
               </>
             )}
             <TeacherMoreInforCard
-              moreInformationTeacher={moreInformationTeacher}
-              setMoreInformationTeacher={setMoreInformationTeacher}
+              moreInformationTeacherModal={moreInformationTeacherModal}
+              setMoreInformationTeacherModal={setMoreInformationTeacherModal}
               teacher={oneTeacher}
               resetInfoTeacher={resetInfoTeacher}
               setResetInfoTeacher={setResetInfoTeacher}

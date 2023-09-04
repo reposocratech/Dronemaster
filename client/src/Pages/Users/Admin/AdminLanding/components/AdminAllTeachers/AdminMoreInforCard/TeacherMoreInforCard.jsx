@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import AdminTeacherEditInfoModal from "../AdminTeacherEditInfoModal/AdminTeacherEditInfoModal";
 import "./TeacherMoreInfoCard.scss";
 
 const TeacherMoreInforCard = ({
-  setMoreInformationTeacher,
-  moreInformationTeacher,
+  setMoreInformationTeacherModal,
+  moreInformationTeacherModal,
   teacher,
   setResetInfoTeacher,
   resetInfoTeacher,
@@ -27,7 +27,7 @@ const TeacherMoreInforCard = ({
     axios
       .put(`http://localhost:4000/admin/enableUser/${teacher?.user_id}`)
       .then((res) => {
-        setMoreInformationTeacher(false);
+        setMoreInformationTeacherModal(false);
       })
       .catch((err) => {});
   };
@@ -37,18 +37,18 @@ const TeacherMoreInforCard = ({
     axios
       .put(`http://localhost:4000/admin/disableUser/${teacher?.user_id}`)
       .then((res) => {
-        setMoreInformationTeacher(false);
+        setMoreInformationTeacherModal(false);
       })
       .catch((err) => {});
   };
 
   //Close the card with the information of the Teacher
   const closeInfoTeacherForm = () => {
-    setMoreInformationTeacher(false);
+    setMoreInformationTeacherModal(false);
   };
   return (
     <Modal
-      show={moreInformationTeacher}
+      show={moreInformationTeacherModal}
       onHide={closeInfoTeacherForm}
       className="courseCreationModalContainer"
       animation={false}
@@ -126,7 +126,7 @@ const TeacherMoreInforCard = ({
 
       <AdminTeacherEditInfoModal
         teacherEditForm={teacherEditForm}
-        setMoreInformationTeacher={setMoreInformationTeacher}
+        setMoreInformationTeacherModal={setMoreInformationTeacherModal}
         setTeacherEditForm={setTeacherEditForm}
         teacher={teacher}
         closeInfoTeacherForm={closeInfoTeacherForm}

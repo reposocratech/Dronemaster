@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import "./AdminLanding.scss";
+import { DroneMasterContext } from "../../../../context/DroneMasterProvider";
 import AdminCard from "./components/AdminCard/AdminCard";
 import AdminInfoCard from "./components/AdminInfoCard/AdminInfoCard";
 import AdminContadorCard from "./components/AdminContador/AdminContadorCard";
@@ -10,12 +10,12 @@ import AdminAllStudentsCard from "./components/AdminAllStudents/AdminAllStudents
 import AdminChartCard from "./components/AdminChart/AdminChartCard";
 import AdminNewUserCard from "./components/AdminNewUser/AdminNewUserCard";
 import { EditMyProfileModal } from "../../../../components/EditMyProfileModal/EditMyProfileModal";
-import { DroneMasterContext } from "../../../../context/DroneMasterProvider";
+import "./AdminLanding.scss";
 
 const AdminLanding = () => {
   const [inscriptionDates, setInscriptionDates] = useState();
-  const [moreInformationStudent, setMoreInformationStudent] = useState(false);
-  const [moreInformationTeacher, setMoreInformationTeacher] = useState(false);
+  const [moreInformationStudentModal, setMoreInformationStudentModal] = useState(false);
+  const [moreInformationTeacherModal, setMoreInformationTeacherModal] = useState(false);
   const [showEditionModal, setShowEditionModal] = useState(false);
   const [moreInformationCourses, setMoreInformationCourses] = useState(false);
   const [resEffect, setResEffect] = useState(false);
@@ -64,13 +64,13 @@ const AdminLanding = () => {
         />
         {/* Shows the list of all teacher */}
         <AdminAllTeachersCard
-          moreInformationTeacher={moreInformationTeacher}
-          setMoreInformationTeacher={setMoreInformationTeacher}
+          moreInformationTeacherModal={moreInformationTeacherModal}
+          setMoreInformationTeacherModal={setMoreInformationTeacherModal}
         />
         {/* Shows the list of all students */}
         <AdminAllStudentsCard
-          moreInformationStudent={moreInformationStudent}
-          setMoreInformationStudent={setMoreInformationStudent}
+          moreInformationStudentModal={moreInformationStudentModal}
+          setMoreInformationStudentModal={setMoreInformationStudentModal}
         />
       </div>
 

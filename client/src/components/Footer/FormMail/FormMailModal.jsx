@@ -13,7 +13,7 @@ export const FormMailModal = ({ showMailModal, setShowMailModal }) => {
     <Modal
       show={showMailModal}
       onHide={handleClose}
-      centered={true}
+      centered
       size="md"
       className="editionModalContainer"
     >

@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import "../../../../public/styles/registerLoginFormStyle.scss";
 import Modal from "react-bootstrap/Modal";
 import { useState } from "react";
+import "../../../../public/styles/registerLoginFormStyle.scss";
 
 const RegisterModal = ({
   showRegisterModal,

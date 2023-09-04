@@ -9,28 +9,21 @@ const AdminLessonEditForm = ({
   showLessonEditForm,
   setShowLessonEditForm,
   lessonId,
-  lesson,
   resEffect,
   setResEffect,
   unit_id,
   course_id,
-  setLessonId,
   lessonInformation,
-  setLessonInformation,
-  unitInformation,
-  setUnitInformation,
 }) => {
   const closeLessonEditForm = () => {
     setShowLessonEditForm(false);
   };
-  const [editLesson, setEditLesson] = useState();
 
   // Reach Hook Form
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
     setValue,
   } = useForm();
 
@@ -43,7 +36,6 @@ const AdminLessonEditForm = ({
       )
 
       .then((res) => {
-        setEditLesson(res.data);
         closeLessonEditForm(true);
         setResEffect(!resEffect);
       })
