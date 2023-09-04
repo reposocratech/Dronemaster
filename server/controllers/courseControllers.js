@@ -149,7 +149,7 @@ class courseControllers {
   editCourse = (req, res) => {
     const { course_id, teacherPrev_id } = req.params;
 
-    console.log(req.body.data);
+  
 
     const {
       course_name,

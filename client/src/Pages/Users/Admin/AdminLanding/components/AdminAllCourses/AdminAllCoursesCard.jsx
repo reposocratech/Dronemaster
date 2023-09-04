@@ -103,6 +103,7 @@ const AdminAllCoursesCard = ({ resEffect, setResEffect }) => {
               <div className="searchBar">
                 <FiSearch />
                 <input
+                autoComplete="off"
                   type="text"
                   placeholder="Buscar Curso..."
                   {...register("courseSearch")}
@@ -304,6 +305,8 @@ const AdminAllCoursesCard = ({ resEffect, setResEffect }) => {
           course={allCourses}
           courseId={courseId}
           setCourseId={setCourseId}
+          resEffect={resEffect} setResEffect={setResEffect}
+          
         />
         <UnitCreationModal
           setShowUnitCreationModal={setShowUnitCreationModal}

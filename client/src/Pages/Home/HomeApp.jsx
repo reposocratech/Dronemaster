@@ -28,6 +28,7 @@ const HomeApp = () => {
     setWidth(widthScreen);
   };
 
+  // Set listeners to watch the window width
   useEffect(() => {
     window.addEventListener("resize", currentWidth);
 
@@ -36,6 +37,7 @@ const HomeApp = () => {
     };
   }, [width]);
 
+  // Set a ratio of course show depending on the window width
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 700 && window.innerWidth < 768) {
@@ -49,13 +51,16 @@ const HomeApp = () => {
       }
     };
 
-    handleResize(); // Call initially
+    // Call initially
+    handleResize(); 
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
 
+
+  // Get info of how many students, teachers and courses has the app in total
   useEffect(() => {
     axios
       .get("http://localhost:4000/counter")

@@ -62,6 +62,7 @@ const AdminAllStudentsCard = ({
           <div className="searchBar">
             <FiSearch />
             <input
+              autoComplete="off"
               type="text"
               placeholder="Buscar Alumno..."
               {...register("studentSearch")}

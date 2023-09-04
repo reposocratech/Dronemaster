@@ -2,7 +2,6 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import "../../../../public/styles/registerLoginFormStyle.scss";
-import { Col, Row } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { useState } from "react";
 
@@ -13,10 +12,8 @@ const RegisterModal = ({
   openLoginModal,
 }) => {
   const [errorMessage, setErrorMessage] = useState();
-  const closeRegisterModal = () => {
-    setShowRegisterModal(false);
-    reset();
-  };
+
+  // React hook form imports
   const {
     register,
     handleSubmit,
@@ -31,6 +28,13 @@ const RegisterModal = ({
     },
   });
 
+  // Close form modal and reset inputs values
+  const closeRegisterModal = () => {
+    setShowRegisterModal(false);
+    reset();
+  };
+
+  // Send form data to server route, close register modal & open login modal
   const onSubmit = (data) => {
     axios
       .post("http://localhost:4000/students/registerStudent", data)
@@ -41,6 +45,7 @@ const RegisterModal = ({
       })
       .catch((error) => setErrorMessage(error.response.data));
   };
+
   return (
     <Modal
       show={showRegisterModal}

@@ -12,6 +12,8 @@ export const CourseEditionModal = ({
   setShowCourseEditionModal,
   showCourseEditionModal,
   courseId,
+  resEffect,
+  setResEffect
 }) => {
   const [teachersList, setTeachersList] = useState();
   const [categoriesList, setCategoriesList] = useState();
@@ -36,26 +38,31 @@ export const CourseEditionModal = ({
   } = useForm();
   
   useEffect(() => {
-    axios
+    if(courseId){
+
+      axios
       .get(`http://localhost:4000/courses/courseInfoEdition/${courseId}`)
       .then((res) => {
         setCourseData(res.data[0]);
         setTeacherPrev_id(res.data[0].teacher_id);
         setCourseImg(
           `http://localhost:4000/images/courses/${res.data[0].course_img}`
-        );
-      })
-      .catch((error) => { });
+          );
+        })
+        .catch((error) => { });
+      }
   }, [courseImg, courseId]);
 
 
   useEffect(() => {
+    if(courseId){
     axios
       .get(`http://localhost:4000/courses/courseTags/${courseId}`)
       .then((res) => {
         setTagsList(res.data);
       })
       .catch((error) => { });
+    }
   }, [courseId]);
 
   useEffect(() => {
@@ -101,9 +108,10 @@ export const CourseEditionModal = ({
       .then((res) => {
         reset()
         setShowCourseEditionModal(false);
+        setResEffect(!resEffect)
       })
       .catch((err) => {
-        console.log(err)
+        {}
       });
 
     if (file) {
@@ -117,7 +125,7 @@ export const CourseEditionModal = ({
           newFormData
         )
         .then((res) => { })
-        .catch((error) => console.log(err));
+        .catch((error) => {});
     }
   };
   useEffect(() => {
@@ -154,9 +162,9 @@ export const CourseEditionModal = ({
     <Modal
       show={showCourseEditionModal}
       onHide={closeEditModal}
-      centered={true}
+      centered
       size="xl"
-      fullscreen="false"
+      fullscreen={false}
       className="courseEditionModalContainer"
       animation={false}
     >

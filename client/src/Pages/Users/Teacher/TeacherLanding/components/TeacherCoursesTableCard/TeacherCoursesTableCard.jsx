@@ -19,6 +19,7 @@ export const TeacherCoursesTableCard = ({ myCoursesData, user_id }) => {
 
   const navigate = useNavigate();
 
+  // Counts all students of a Teacher
   useEffect(() => {
     if (user_id) {
       axios
@@ -26,10 +27,11 @@ export const TeacherCoursesTableCard = ({ myCoursesData, user_id }) => {
           `http://localhost:4000/teachers/myCourses/studentCounter/${user_id}`
         )
         .then((res) => setStudentsNumber(res.data))
-        .catch((error) => { });
+        .catch((error) => {});
     }
   }, [user_id]);
 
+  // Filter all students and divide it by course
   useEffect(() => {
     const updatedCoursesData = myCoursesData?.map((course) => {
       const matchingStudent = studentsNumber?.find(
@@ -50,6 +52,7 @@ export const TeacherCoursesTableCard = ({ myCoursesData, user_id }) => {
     setCoursesDataCompleted(updatedCoursesData);
   }, [studentsNumber, myCoursesData]);
 
+  //Submit search (filter and set state with the matched elements)
   const onSubmit = (data) => {
     setSearchResultData(
       coursesDataCompleted.filter((course) =>
@@ -70,10 +73,14 @@ export const TeacherCoursesTableCard = ({ myCoursesData, user_id }) => {
           <h5 className="titleText">Mis Cursos</h5>
         </div>
 
-        <form className="d-flex justify-content-center d-sm-flex justify-content-sm-end" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className="d-flex justify-content-center d-sm-flex justify-content-sm-end"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="searchBar">
             <FiSearch />
             <input
+              autoComplete="off"
               type="text"
               placeholder="Buscar curso..."
               {...register("courseSearch")}
@@ -163,7 +170,6 @@ export const TeacherCoursesTableCard = ({ myCoursesData, user_id }) => {
                                 </span>
                               </button>
                             </div>
-
                           </td>
                         </tr>
                       );

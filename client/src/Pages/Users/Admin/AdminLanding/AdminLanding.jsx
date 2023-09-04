@@ -65,6 +65,7 @@ const AdminLanding = () => {
         showEditionModal={showEditionModal}
         setShowEditionModal={setShowEditionModal}
         user={user}
+        
       />
 
 
