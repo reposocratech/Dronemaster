@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 export const CounterCard = ({ children, title, counter }) => {
+ 
   return (
     <div className="counterCard">
       <div className="iconContainer">{children}</div>

@@ -55,6 +55,11 @@ export const LessonComments = ({ user, course_id, unit_id, lesson_id }) => {
       .catch((error) => { });
   };
 
+const shouldDisplayNoComments =
+  allComments?.length === 0 ||
+  allComments?.every((comment) => comment.comment_is_hidden === 1);
+
+
   return (
     <div className="commentsCard">
       {/* Card title */}
@@ -62,7 +67,7 @@ export const LessonComments = ({ user, course_id, unit_id, lesson_id }) => {
         <div className="iconContainer">
           <GoCommentDiscussion />
         </div>
-        <h6 className="mb-0">Comentarios</h6>
+        <h6 className="mb-1">Comentarios</h6>
       </div>
       {/* Card Body */}
       <div className="commentCardBody">
@@ -101,7 +106,7 @@ export const LessonComments = ({ user, course_id, unit_id, lesson_id }) => {
         </form>
         <hr className="w-100" />
 
-        {allComments?.length === 0 && (
+        {shouldDisplayNoComments && (
           <div className="noCommnetsContainer">
             <p className="noCommentsText">
               Sé el primero en <br /> comentar tu experiancia

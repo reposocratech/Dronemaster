@@ -149,6 +149,8 @@ class courseControllers {
   editCourse = (req, res) => {
     const { course_id, teacherPrev_id } = req.params;
 
+    console.log(req.body.data);
+
     const {
       course_name,
       course_length,
@@ -164,6 +166,10 @@ class courseControllers {
 
     // Update course table
     let courseUpdateQuery = `UPDATE course SET course_name='${course_name}', course_length=${course_length}, price=${price}, course_description='${course_description}', category_id=${category_id}, start_date="${start_date}" WHERE course_id = ${course_id}`;
+
+    if(start_date === ""){
+      courseUpdateQuery = `UPDATE course SET course_name='${course_name}', course_length=${course_length}, price=${price}, course_description='${course_description}', category_id=${category_id} WHERE course_id = ${course_id}`;
+    }
 
     connection.query(courseUpdateQuery, (error) => {
       if (error) {
@@ -301,7 +307,7 @@ class courseControllers {
   selectCourseEditionInfo = (req, res) => {
     const { course_id } = req.params;
 
-    let sql = `SELECT course.course_id, course.course_img, course.course_name, course.course_length, course.price, course.course_description,user.user_name, user.user_id AS teacher_id, course.category_id, course.start_date, course.created_by_user_id FROM course JOIN user_course ON course.course_id = user_course.course_id JOIN user ON user_course.user_id = user.user_id WHERE course.course_id = ${course_id} AND user.type != 0;`;
+    let sql = `SELECT course.*, user.user_id AS teacher_id, user.user_name AS teacher_name, user.user_lastname AS teacher_lastname FROM course LEFT JOIN user_course ON course.course_id = user_course.course_id LEFT JOIN user ON user_course.user_id = user.user_id AND (user.type = 1 OR user.type = 2) WHERE course.course_id = ${course_id}`;
 
     connection.query(sql, (error, result) => {
       error ? res.status(400).json({ error }) : res.status(200).json(result);

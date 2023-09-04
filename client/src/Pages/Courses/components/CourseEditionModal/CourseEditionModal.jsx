@@ -12,7 +12,6 @@ export const CourseEditionModal = ({
   setShowCourseEditionModal,
   showCourseEditionModal,
   courseId,
-  setCourseId,
 }) => {
   const [teachersList, setTeachersList] = useState();
   const [categoriesList, setCategoriesList] = useState();
@@ -35,10 +34,9 @@ export const CourseEditionModal = ({
     setValue,
     reset
   } = useForm();
-
+  
   useEffect(() => {
     axios
-
       .get(`http://localhost:4000/courses/courseInfoEdition/${courseId}`)
       .then((res) => {
         setCourseData(res.data[0]);
@@ -50,6 +48,7 @@ export const CourseEditionModal = ({
       .catch((error) => { });
   }, [courseImg, courseId]);
 
+
   useEffect(() => {
     axios
       .get(`http://localhost:4000/courses/courseTags/${courseId}`)
@@ -57,7 +56,7 @@ export const CourseEditionModal = ({
         setTagsList(res.data);
       })
       .catch((error) => { });
-  }, []);
+  }, [courseId]);
 
   useEffect(() => {
     axios
@@ -104,7 +103,7 @@ export const CourseEditionModal = ({
         setShowCourseEditionModal(false);
       })
       .catch((err) => {
-        { };
+        console.log(err)
       });
 
     if (file) {
@@ -118,10 +117,9 @@ export const CourseEditionModal = ({
           newFormData
         )
         .then((res) => { })
-        .catch((error) => { });
+        .catch((error) => console.log(err));
     }
   };
-
   useEffect(() => {
     courseData?.course_name &&
       setValue("course_name", courseData.course_name || "");
@@ -135,7 +133,7 @@ export const CourseEditionModal = ({
     courseData?.start_date &&
       courseData.start_date != null &&
       setValue("start_date", courseData.start_date.slice(0, 10) || "");
-  }, [courseData, setValue]);
+  }, [courseData, setValue, showCourseEditionModal]);
 
   const handleDeleteTag = (tagId, tagName) => {
     let url = "";
@@ -297,6 +295,7 @@ export const CourseEditionModal = ({
               })}
               id="price"
               className="input1"
+              step="0.01" pattern="\d+(\.\d{1,2})?"
             />
             <span className="errorMessage">{errors.price?.message}</span>
           </div>

@@ -113,11 +113,11 @@ export const StudentCourseTableInfo = ({
       {courseMaterial && (
         <div className="coursesTableCard">
           <div className="cardTitle">
-            <div className="title w-100 d-flex">
+            <div className="titleStudent w-100 d-flex">
               <div className="iconContainer">
                 <GiClassicalKnowledge />
               </div>
-              <div className="d-flex justify-content-between w-100">
+              <div className="d-flex justify-content-between align-items-center w-100">
                 <h5 className="titleText">
                   {courseMaterial && courseMaterial[0]?.course_name}
                 </h5>
@@ -129,7 +129,7 @@ export const StudentCourseTableInfo = ({
                     );
                   }}
                 >
-                  ver más
+                  Ver más
                 </button>
               </div>
             </div>

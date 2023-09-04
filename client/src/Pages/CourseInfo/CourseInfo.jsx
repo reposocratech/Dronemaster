@@ -63,6 +63,7 @@ export const CourseInfo = () => {
       });
   }, [course_id]);
 
+
   //Gets tags of a course
   useEffect(() => {
     axios
@@ -73,8 +74,9 @@ export const CourseInfo = () => {
       .catch((error) => {
         { };
       });
-  }, []);
-  //Check if user has already boy a course
+  }, [course_id]);
+
+  //Check if user has already buy a course
   useEffect(() => {
     user &&
       axios
@@ -84,7 +86,8 @@ export const CourseInfo = () => {
         .then((res) => setUserCourseRelationship(res.data))
         .catch((err) => { });
   }, [course_id, user]);
-
+  
+  // Count lessons of a course
   useEffect(() => {
     if (course_id) {
       axios
@@ -96,6 +99,8 @@ export const CourseInfo = () => {
     }
   }, [course_id]);
 
+
+  //Count lessons already viewed
   useEffect(() => {
     if (course_id && user) {
       axios
@@ -109,8 +114,8 @@ export const CourseInfo = () => {
     }
   }, [course_id, user]);
 
+  //Counts units
   useEffect(() => {
-    //Counts units
     const unitSet = new Set();
     courseUnitsLessons?.forEach((item) => {
       if (item.unit_id !== null && item.unit_is_hidden === 0) {
@@ -131,6 +136,7 @@ export const CourseInfo = () => {
     setLessonsCount(lessonsSet.size);
   }, [courseUnitsLessons]);
 
+  //Gets course teacher's email to send a email when a new Students inscribe to the course
   useEffect(() => {
     axios
       .get(`http://localhost:4000/teachers/teacherEmail/${course_id}`)
@@ -138,6 +144,7 @@ export const CourseInfo = () => {
       .catch((err) => { })
   }, [])
 
+  //Submit insciption & send an email
   const onSubmit = async () => {
     axios
       .post(
@@ -182,7 +189,10 @@ export const CourseInfo = () => {
 
         <div className="introMultimedia">
           <img
-            src="http://localhost:4000/images/courses/courseDefaultImg.jpg"
+            src={userCourseRelationship?.length === 0 || userCourseRelationship === undefined  ? 
+              "http://localhost:4000/images/courses/courseDefaultImg.jpg" :
+               courseGeneralInfo?.course_img ? `http://localhost:4000/images/courses/${courseGeneralInfo.course_img}` : `http://localhost:4000/images/courses/courseDefaultImg.jpg}`
+            }
             alt="Course image"
           />
           <img
@@ -285,7 +295,7 @@ export const CourseInfo = () => {
                   </div>
                 )}
 
-                {user && (
+                {user && user?.type === 0 && (
                   <button className="btnNormal align-self-center" style={{ width: "240px" }} onClick={onSubmit}>
                     INSCRIBETE
                   </button>
@@ -299,16 +309,15 @@ export const CourseInfo = () => {
             </div>
           )}
         {
-          user?.type === 0 && <>
-            {userCourseRelationship?.length > 0 && (
+          user?.type === 0 && userCourseRelationship?.length > 0 && 
               <CircularStudentProgressBar
                 lessonsOneCourse={lessonsOneCourse}
                 lessonsViewedByStudent={lessonsViewedByStudent}
                 course_name={courseGeneralInfo?.course_name}
               />
-            )}
-          </>
-        }
+            }
+          
+       
 
       </aside>
     </section>

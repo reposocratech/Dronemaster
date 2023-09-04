@@ -11,45 +11,63 @@ const AdminInfoCard = () => {
 
   return (
     <div className="adminInfoCard">
-      <div className="cardTitle">
+   <div className="cardTitle">
         <div className="iconContainer">
           <BiSolidUserDetail />
         </div>
         <div className="title">
-          <h6 className="titleText">Mis Datos</h6>
+          <h6 className="titleText mb-0">Mis Datos</h6>
         </div>
       </div>
-      <div className="cardBody d-flex justify-content-evenly flex-column flex-xxl-row h-100">
-        <div className="h-100 d-flex flex-column" >
+      <div className="cardBody">
+     
+          {/* User Email */}
+
           <div className="lineInfo">
             <span className="infoIcon">
               <HiOutlineMail />
             </span>
             <p>{user?.email}</p>
           </div>
+
+          {/* User Address */}
+
           <div className="lineInfo">
             <span className="infoIcon">
               <FiMapPin />
             </span>
-            <p>{user?.address ? user.address : "Contenido pendiente"}</p>
+            {user?.address ? (
+              <p> {user.address} </p>
+            ) : (
+              <p className="noInfoText"> Información no disponible </p>
+            )}
           </div>
-        </div>
+   
 
-        <div className="h-100  d-flex flex-column" >
+          {/* User phone */}
           <div className="lineInfo">
             <span className="infoIcon">
               <AiOutlinePhone />
             </span>
-            <p>{user?.phone ? user.phone : "Contenido pendiente"} </p>
+            {user?.phone ? (
+              <p> {user.phone} </p>
+            ) : (
+              <p className="noInfoText"> Información no disponible </p>
+            )}
           </div>
 
+          {/* User Identification */}
           <div className="lineInfo">
             <span className="infoIcon">
               <AiOutlineIdcard />
             </span>
-            <p>{user?.passport ? user.passport : "Contenido pendiente"}</p>
+            {user?.passport ? (
+              <p> {user.passport} </p>
+            ) : (
+              <p className="noInfoText"> Información no disponible </p>
+            )}
           </div>
-        </div>
+        
       </div>
     </div>
   );

@@ -131,6 +131,7 @@ const NavBarApp = () => {
                   type="text"
                   className="border-bg-transparent border-0 bg-transparent text-light w-100"
                   placeholder="Buscar curso..."
+                  autoComplete="off"
                 />
               </form>
             </div>

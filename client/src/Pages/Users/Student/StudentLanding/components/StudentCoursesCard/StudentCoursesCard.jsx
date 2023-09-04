@@ -5,18 +5,17 @@ import axios from "axios";
 import { DroneMasterContext } from "../../../../../../context/DroneMasterProvider";
 
 export const StudentCoursesCard = ({ myCoursesData, setCourseId }) => {
-  const { setCourseMaterial } = useContext(DroneMasterContext)
-
+  const { setCourseMaterial } = useContext(DroneMasterContext);
 
   const showCourse = (course_id) => {
     axios
       .get(`http://localhost:4000/teachers/myCourses/courseInfo/${course_id}`)
       .then((res) => {
-        setCourseMaterial(res.data)
-        setCourseId(course_id)
+        setCourseMaterial(res.data);
+        setCourseId(course_id);
       })
-      .catch((err) => { })
-  }
+      .catch((err) => {});
+  };
 
   return (
     <div className="courseListCard">
@@ -31,6 +30,15 @@ export const StudentCoursesCard = ({ myCoursesData, setCourseId }) => {
       </div>
       {/* Card Body */}
       <div className="cardBody">
+        {myCoursesData?.length === 0 && (
+          <div className="d-flex flex-column align-items-center">
+          <p className="noCoursesText">
+            ¿Listo para comenzar tu viaje de aprendizaje en drones? 
+          </p>
+          <button className="btnNormal">Nuentros Cursos</button>
+          <p className="noCoursesText mb-0 fst-italic"> ¡Explora nuestra gama de cursos!</p>
+          </div>
+        )}
         <ul className="courseList">
           {myCoursesData?.map((course, index) => {
             return (
@@ -43,7 +51,8 @@ export const StudentCoursesCard = ({ myCoursesData, setCourseId }) => {
                   }}
                 >
                   {course.course_name} <BiRightArrowAlt className="icon" />
-                </li></div>
+                </li>
+              </div>
             );
           })}
         </ul>

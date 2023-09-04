@@ -154,29 +154,34 @@
 
     .cardBody {
       padding: 0 20px;
-      overflow: hidden;
+      margin: auto;
+      margin-left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
 
       .lineInfo {
         display: flex;
-        align-items: center;
+        align-items: end;
         gap: 10px;
 
         p {
           margin: 0;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          max-width: 50%;
+          align-self: end;
+        }
+        .noInfoText {
+          font-style: italic;
+          color: $TertiaryDarkColor;
         }
 
         .infoIcon {
-          color: $TertiaryDarkColor;
+          color: $PrimaryOrangeColor;
         }
       }
     }
   }
 
-
-// All course Card
+  // All course Card
   .allUnitsLessonCard {
     .adminCoursesList {
       display: flex;
@@ -273,8 +278,7 @@
             }
           }
 
-
-.courseIconsFuncitionsButtonsContainer {
+          .courseIconsFuncitionsButtonsContainer {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -330,7 +334,9 @@
         .unitsList {
           display: flex;
           flex-direction: column;
-          padding: 0 0 0 12px;
+          padding: 0 4px 4px 12px;
+          background-color: #4f4f4f;
+          border-radius: 0 0 8px 8px;
 
           .unitListed {
             overflow: hidden;
@@ -397,18 +403,20 @@
               }
             }
 
-
             //Lessons list
             .lessonsList {
               display: flex;
               flex-direction: column;
-              padding: 0 0 0 20px;
+              padding: 0 4px 4px 20px;
               overflow: hidden;
+              background-color: #444444;
+              border-radius: 0 0 8px 8px;
+
+
 
               .lessonRow {
                 display: flex;
                 flex-direction: column;
-                border-bottom: 1px solid $TertiaryDarkColor;
                 padding: 12px 0px 4px 10px;
 
                 .lessonRowLine {
@@ -473,6 +481,19 @@
     }
   }
 
+  //Creation buttons
+  .creationButtonsCard {
+    row-gap: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+
+    button {
+      padding: 8px 12px;
+      white-space: nowrap;
+    }
+  }
   //Main
   .mainContainer {
     width: calc(70% - 8px);
@@ -535,7 +556,7 @@
         }
       }
 
-.cardBody {
+      .cardBody {
         width: 100%;
         padding: 0 2vw;
 
@@ -633,82 +654,9 @@
       }
     }
   }
-  .searchBar{
-    input{
-
-      color: white!important;
-    }
-  }
-}
-
-//Media Tablet
-@media (max-width: 1200px) {
-  .mainSection {
-    flex-direction: column;
-
-    .sideContent {
-      width: 100%;
-      display: grid;
-      grid-template:
-        "adminCard userInfo"
-        "counter userInfo";
-      grid-template-rows: 1fr auto;
-
-      .adminCard {
-        height: 100%;
-      }
-
-      .counterContainer {
-        gap: 8px;
-        height: 100%;
-
-        .counterCard {
-          flex-direction: row;
-        }
-      }
-    }
-
-    .mainContainer {
-      width: 100%;
-    }
-  }
-}
-
-//Media Tablet Vertical
-@media (max-width: 768px) {
-  .mainSection {
-    flex-direction: column;
-
-    .sideContent {
-      width: 100%;
-      display: grid;
-      grid-template:
-        "adminCard counter"
-        "userInfo userInfo";
-
-      .counterContainer {
-        gap: 8px;
-        height: 100%;
-
-        .counterCard {
-          flex-direction: column;
-        }
-      }
-    }
-
-    .mainContainer {
-      width: 100%;
-    }
-  }
-}
-
-@media (max-width: 576px) {
-  .mainSection {
-    .sideContent {
-      grid-template:
-        "adminCard"
-        "counter"
-        "userInfo";
+  .searchBar {
+    input {
+      color: white !important;
     }
   }
 }
@@ -739,7 +687,7 @@
 .avatarTextUser {
   height: 25px;
   width: 25px;
-  background-color: #F7AB16;
+  background-color: #f7ab16;
   border-radius: 5px;
   display: grid;
   place-items: center;
@@ -814,9 +762,9 @@
       .creationButtonsCard {
         grid-area: creationButtonsCard;
         display: flex;
-        flex-direction: row;
+        flex-wrap: wrap;
         align-items: center;
-        justify-content: space-evenly !important;
+        justify-content: space-evenly;
       }
 
       .counterContainer {
@@ -872,7 +820,6 @@
         "counterCardContainer"
         "adminInfoCard"
         "adminChartCard"
-        "creationButtonsCard"
         "creationButtonsCard";
       grid-template-rows: auto;
       grid-template-columns: 100%;
@@ -885,7 +832,7 @@
           "a b"
           "c d";
         justify-content: unset;
-        
+
         .counterCard {
           width: 100%;
           gap: 12px;
@@ -905,26 +852,31 @@
           }
         }
       }
+
+      .creationButtonsCard {
+        flex-wrap: wrap;
+        row-gap: 8px;
+      }
     }
 
-    .mainContainer{
-      .adminTableCard{
-        .cardTitle{
+    .mainContainer {
+      .adminTableCard {
+        .cardTitle {
           flex-direction: column;
           gap: 8px;
 
-          form{
+          form {
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
 
-            .searchBar{
+            .searchBar {
               width: 100%;
             }
           }
         }
-      } 
+      }
     }
 
     .allUnitsLessonCard {

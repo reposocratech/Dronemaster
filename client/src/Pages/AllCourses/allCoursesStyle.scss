@@ -24,6 +24,14 @@
       margin: 0;
       padding: 0 2vw 0 2vw;
       line-height: 40px;
+      display: flex;
+      gap: 8px;
+
+      .iconCat{
+        color: $PrimaryOrangeColor;
+        display: flex;
+        align-items: center;
+      }
     }
 
     .courseCardContainerWrapper {
@@ -33,7 +41,7 @@
       padding: 4vh 0vw 2vh 0vw;
       // background-color: $CuaternaryDark;
       // border-radius: 10px;
-      border-top: 3px solid $PrimaryOrangeColor;
+      border-top: 2px solid $PrimaryOrangeColor;
 
       .navigationButtonContainerLeft {
         display: flex;
@@ -91,14 +99,14 @@
             .courseCardBody {
               display: flex;
               flex-direction: column;
-              padding: 10px;
+              padding: 10px 0px;
               padding-top: 0;
 
               .courseTitle {
                 width: 100%;
                 padding-top: 4px;
                 border-bottom: $border-bottom;
-                text-align: center;
+                text-align: start;
               }
 
               .tagList {
