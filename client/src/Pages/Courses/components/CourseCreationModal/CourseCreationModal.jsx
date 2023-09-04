@@ -88,7 +88,7 @@ export const CourseCreationModal = ({
     <Modal
       show={showCourseCreationModal ? showCourseCreationModal : false}
       onHide={handleClose}
-      centered={true}
+      centered
       size="xl"
       fullscreen="false"
       className="courseCreationModalContainer"

@@ -1,4 +1,3 @@
-import { Col, Row } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
 import "./FormularionCreacionUser.scss";
@@ -36,7 +35,7 @@ const FormularioCreacionTeacher = ({ showModalForm, setShowModalForm }) => {
     <Modal
       show={showModalForm}
       onHide={handleClose}
-      centered={true}
+      centered
       fullscreen="false"
       className="courseCreationModalContainer"
     >

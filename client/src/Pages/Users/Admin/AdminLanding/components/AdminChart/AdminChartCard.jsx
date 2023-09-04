@@ -24,7 +24,7 @@ ChartJS.register(
   Filler
 );
 
-const AdminChartCard = ({ inscriptionDates, setInscriptionDates }) => {
+const AdminChartCard = ({ inscriptionDates }) => {
   const [chartData, setChartData] = useState(null);
 
   // Sets the months in the chart

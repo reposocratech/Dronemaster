@@ -13,20 +13,22 @@ import { CourseInfo } from "../Pages/CourseInfo/CourseInfo";
 import { TeacherMyCourse } from "../Pages/Users/Teacher/TeacherMyCourse/TeacherMyCourse";
 import { CourseOneLesson } from "../Pages/CourseInfo/components/CourseOneLesson/CourseOneLesson";
 import { DroneMasterContext } from "../context/DroneMasterProvider";
+import { ErrorPage } from "../Pages/ErrorPage/ErrorPage";
 
 const AppRoutes = () => {
   const { user } = useContext(DroneMasterContext)
 
   return (
-    <Container fluid className="p-0">
+  
       <BrowserRouter>
         <NavBarApp />
         <Routes>
           <Route path="/" element={<HomeApp />} />
+          <Route path='*' element={<ErrorPage />}/>
           <Route path="/allCourses" element={<AllCourses />} />
           <Route path="/about" element={<AboutApp />} />
 
-          {user && user.type === 2 && <Route path="/admin" element={<AdminLanding />} />}
+          {(user && user.type == 2) && <Route path="/admin" element={<AdminLanding />} />}
 
           <Route path="/student" element={<StudentLanding />} />
           <Route
@@ -39,7 +41,7 @@ const AppRoutes = () => {
             element={<CourseOneLesson />}
           />
 
-          {user && user.type !== 0 && <>
+          {(user && user.type !== 0) && <>
             <Route path="/teacher" element={<TeacherLanding />} />
             <Route
               path="/teacher/MyCourse/:course_id"
@@ -49,7 +51,7 @@ const AppRoutes = () => {
         </Routes>
         <FooterApp />
       </BrowserRouter>
-    </Container>
+    
   );
 };
 

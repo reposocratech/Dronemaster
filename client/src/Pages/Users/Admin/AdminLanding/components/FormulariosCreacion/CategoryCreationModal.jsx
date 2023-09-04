@@ -34,7 +34,7 @@ export const CategoryCreationModal = ({
     <Modal
       show={showCategoryCreationModal}
       onHide={handleClose}
-      centered={true}
+      centered
       fullscreen="false"
       className="courseCreationModalContainer"
     >

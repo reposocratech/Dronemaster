@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { GiClassicalKnowledge } from "react-icons/gi";
 import { useForm } from "react-hook-form";
@@ -13,9 +12,7 @@ const AdminUnitEdirForm = ({
   resEffect,
   setResEffect,
   unitInformation,
-  setUnitInformation,
 }) => {
-  const [editUnit, setEditUnit] = useState();
 
   //Closes the modal which edits the Units
   const closeUnitEditForm = () => {
@@ -35,7 +32,6 @@ const AdminUnitEdirForm = ({
     axios
       .put(`http://localhost:4000/admin/editUnit/${course_id}/${unit_id}`, data)
       .then((res) => {
-        setEditUnit(res.data);
         closeUnitEditForm(true);
         setResEffect(!resEffect);
       })

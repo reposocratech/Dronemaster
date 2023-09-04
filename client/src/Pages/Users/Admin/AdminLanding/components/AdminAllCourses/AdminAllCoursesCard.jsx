@@ -1,35 +1,26 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { AiOutlineFolderOpen } from "react-icons/ai";
-import { AiOutlineClockCircle } from "react-icons/ai";
-import { FiSearch } from "react-icons/fi";
-import { AiOutlineStar } from "react-icons/ai";
-import { BsPencil } from "react-icons/bs";
-import { BsEye } from "react-icons/bs";
-import { BsEyeSlash } from "react-icons/bs";
-import AdminViewOneCourse from "../AdminViewOneCourse/AdminViewOneCourse";
-import { BsBook } from "react-icons/bs";
-import { IoMdArrowDropdown } from "react-icons/io";
-import { IoMdArrowDropup } from "react-icons/io";
-import { BsPlusCircle } from "react-icons/bs";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { AiOutlineFolderOpen, AiOutlineClockCircle, AiOutlineStar } from "react-icons/ai";
+import { FiSearch } from "react-icons/fi";
+import { BsPencil, BsEye, BsEyeSlash, BsBook, BsPlusCircle } from "react-icons/bs";
+import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
+import AdminViewOneCourse from "../AdminViewOneCourse/AdminViewOneCourse";
 import { CourseEditionModal } from "../../../../../Courses/components/CourseEditionModal/CourseEditionModal";
 import { UnitCreationModal } from "../../../../../Courses/components/CourseCreationModal/UnitCreationModal/UnitCreationModal";
-import { useNavigate } from "react-router-dom";
 
 const AdminAllCoursesCard = ({ resEffect, setResEffect }) => {
-  const navigate = useNavigate()
   const [allCourses, setAllCourses] = useState();
   const [openCourse, setOpenCourse] = useState([]);
-  const { reset, handleSubmit, register } = useForm();
   const [showCourseEditionModal, setShowCourseEditionModal] = useState(false);
   const [showUnitCreationModal, setShowUnitCreationModal] = useState(false);
-
   const [courseId, setCourseId] = useState();
   const [searchResultCourse, setsearchResultCourse] = useState();
+  const { reset, handleSubmit, register } = useForm();
+  const navigate = useNavigate()
 
 // Open the Edit Form Modal of one course
-
   const openEditModal = (course_id) => {
     setCourseId(course_id)
     setShowCourseEditionModal(true);
@@ -98,7 +89,7 @@ const AdminAllCoursesCard = ({ resEffect, setResEffect }) => {
     reset();
   };
   return (
-    <div div className="allUnitsLessonCard" >
+    <div className="allUnitsLessonCard" >
       <div className="adminCoursesList">
         <div className="cardTitle">
           <div className="listContainer">

@@ -36,8 +36,8 @@ app.use("/", commonRouter);
 const transporter = nodemailer.createTransport({
   service: "Gmail",
   auth: {
-    user: "javiergranadosmartin@gmail.com",
-    pass: "czljtozzgifcewxf",
+    user: "droneMasterEmail",
+    pass: "contraseñaDroneMasterEmail",
   },
 });
 
@@ -59,8 +59,8 @@ app.post("/infoEmail", async (req, res) => {
 
     if (status === 1) {
       await transporter.sendMail({
-        from: "javiergranadosmartin@gmail.com",
-        to: `javiergranadosmartin@gmail.com,${teacher_email}`,
+        from: "droneMasterEmail",
+        to: `droneMasterEmail,${teacher_email}`,
         subject: `¡${user_name} ${user_lastname} inscrito en ${course_name}!`,
         text: `Alumno: ${user_name} ${user_lastname}\nTeléfono: ${
           phone !== null ? phone : ""
@@ -74,8 +74,8 @@ app.post("/infoEmail", async (req, res) => {
 
     if (status === 2) {
       await transporter.sendMail({
-        from: "javiergranadosmartin@gmail.com",
-        to: `javiergranadosmartin@gmail.com,${teacher_email}`,
+        from: "droneMasterEmail",
+        to: `droneMasterEmail,${teacher_email}`,
         subject: `¡${user_name} ${user_lastname} ha finalizado el ${course_name}!`,
         text: `Alumno: ${user_name} ${user_lastname}\nTeléfono: ${
           phone !== null ? phone : ""

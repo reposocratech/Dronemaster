@@ -33,7 +33,7 @@ const AdminContadorCard = () => {
         <span className="iconContainer">
           <AiOutlineUser />
         </span>
-        Admin Counter
+       
         <div className="textContianer">
           <h6 className="title">Admin</h6>
           <p>{counter.TotalAdmin}</p>

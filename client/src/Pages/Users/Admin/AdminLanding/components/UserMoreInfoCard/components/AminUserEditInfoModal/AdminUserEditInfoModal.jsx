@@ -6,13 +6,17 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { DroneMasterContext } from "../../../../../../../../context/DroneMasterProvider";
 
-
-const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, setMoreInformationStudent, moreInformationStudent, closeInfoForm}) => {
+const AdminUserEditInfoModal = ({
+  editUserForm,
+  setEditUserForm,
+  student,
+  setMoreInformationStudentModal,
+  closeInfoForm,
+}) => {
   const [file, setFile] = useState();
   const { resetData, setResetData } = useContext(DroneMasterContext);
   const { register, setValue, handleSubmit } = useForm();
   const [profileImg, setProfileImg] = useState();
-
 
   // Set the picture of the profile
 
@@ -21,28 +25,21 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, 
       setProfileImg(`http://localhost:4000/images/users/${student?.user_img}`);
   }, [student]);
 
-
-// Brings the info of the student from the data base before the update
+  // Brings the info of the student from the data base before the update
   useEffect(() => {
-    student?.user_name &&
-      setValue("user_name", student.user_name || "");
+    student?.user_name && setValue("user_name", student.user_name || "");
     student?.user_lastname &&
       setValue("user_lastname", student.user_lastname || "");
-    student?.email &&
-      setValue("email", student.email || "");
-    student?.phone &&
-      setValue("phone", student.phone || "");
-    student?.address &&
-      setValue("address", student.address || "");
+    student?.email && setValue("email", student.email || "");
+    student?.phone && setValue("phone", student.phone || "");
+    student?.address && setValue("address", student.address || "");
   }, [student, setValue]);
 
-  // 
+  //
 
   const handleImgChange = (e) => {
     setFile(e.target.files[0]);
   };
-
-
 
   const handleDeleteButton = () => {
     axios
@@ -50,15 +47,14 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, 
       .then((res) => {
         setResetData(!resetData);
         setFile();
-        setMoreInformationStudent(false);
-
+        setMoreInformationStudentModal(false);
       })
-      .catch((err) => { });
+      .catch((err) => {});
 
     setProfileImg();
   };
 
-// Saves the updated information
+  // Saves the updated information
 
   const onSubmit = (data) => {
     const newFormData = new FormData();
@@ -70,28 +66,27 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, 
     }
 
     axios
-      .put(`http://localhost:4000/editMyProfile/${student.user_id}`, newFormData)
+      .put(
+        `http://localhost:4000/editMyProfile/${student.user_id}`,
+        newFormData
+      )
       .then((res) => {
         setResetData(!resetData);
-        setEditUserForm(false)
-        closeInfoForm()
-        
+        setEditUserForm(false);
+        closeInfoForm();
       })
-      .catch((err) => { });
-
-
+      .catch((err) => {});
   };
-// Closes the edit form modal
+  // Closes the edit form modal
   const closeEditUserForm = () => {
-    setEditUserForm(false)
-
-  }
+    setEditUserForm(false);
+  };
 
   return (
     <Modal
       show={editUserForm}
       onHide={closeEditUserForm}
-      centered={true}
+      centered
       size="lg"
       className="editionModalContainer"
     >
@@ -138,7 +133,6 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, 
               className="inputFile"
               id="inputFile"
               autoComplete="off"
-              
             />
 
             <label htmlFor="inputFile" className="inputImageLabel btnNormal">
@@ -226,7 +220,7 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, 
         </Modal.Footer>
       </form>
     </Modal>
-  )
-}
+  );
+};
 
-export default AdminUserEditInfoModal
+export default AdminUserEditInfoModal;

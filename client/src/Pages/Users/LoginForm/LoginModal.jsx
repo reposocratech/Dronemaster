@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { saveLocalStorageDroneMaster } from "../../../helper/localStorageDroneMaster";
 import { DroneMasterContext } from "../../../context/DroneMasterProvider";
-import "../../../../public/styles/registerLoginFormStyle.scss";
 import Modal from "react-bootstrap/Modal";
+import "../../../../public/styles/registerLoginFormStyle.scss";
 
 const LoginModal = ({
   setShowLoginModal,

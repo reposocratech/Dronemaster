@@ -2,20 +2,17 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiSearch } from "react-icons/fi";
-import { AiOutlineUser } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
-import { AiOutlinePhone } from "react-icons/ai";
-import { Container } from "react-bootstrap";
+import { AiOutlineUser, AiOutlinePhone } from "react-icons/ai";
 import UserMoreInfoCard from "../UserMoreInfoCard/userMoreInfoCard";
-import { MdMargin } from "react-icons/md";
 
 const AdminAllStudentsCard = ({
-  setMoreInformationStudent,
-  moreInformationStudent,
+  setMoreInformationStudentModal,
+  moreInformationStudentModal,
 }) => {
-  const [students, setStudents] = useState([]);
   const { register, handleSubmit, reset } = useForm();
-  const [oneStudent, setOneStudent] = useState(null);
+  const [students, setStudents] = useState([]);
+  const [oneStudent, setOneStudent] = useState();
   const [searchResultStudent, setsearchResultStudent] = useState();
 
 //Brings the list of all students
@@ -27,7 +24,7 @@ const AdminAllStudentsCard = ({
         setStudents(res.data);
       })
       .catch((err) => { });
-  }, [moreInformationStudent]);
+  }, [moreInformationStudentModal]);
   
   //Opens a card with the information of one student
   const openInfoForm = (userId) => {
@@ -37,7 +34,7 @@ const AdminAllStudentsCard = ({
         setOneStudent(res.data[0]);
       })
       .catch((err) => { });
-    setMoreInformationStudent(true);
+    setMoreInformationStudentModal(true);
   };
 
   // Bar Searcher of one student
@@ -176,8 +173,8 @@ const AdminAllStudentsCard = ({
                 )}
 
                 <UserMoreInfoCard
-                  moreInformationStudent={moreInformationStudent}
-                  setMoreInformationStudent={setMoreInformationStudent}
+                  moreInformationStudentModal={moreInformationStudentModal}
+                  setMoreInformationStudentModal={setMoreInformationStudentModal}
                   student={oneStudent}
                 />
               </>
@@ -241,8 +238,8 @@ const AdminAllStudentsCard = ({
               </>
             )}
             <UserMoreInfoCard
-              moreInformationStudent={moreInformationStudent}
-              setMoreInformationStudent={setMoreInformationStudent}
+              moreInformationStudentModal={moreInformationStudentModal}
+              setMoreInformationStudentModal={setMoreInformationStudentModal}
               student={oneStudent}
             />
           </tbody>
