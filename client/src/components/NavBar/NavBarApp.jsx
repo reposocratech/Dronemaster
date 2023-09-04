@@ -27,6 +27,7 @@ const NavBarApp = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
 
+  // Getting all courses
   useEffect(() => {
     axios
       .get("http://localhost:4000/courses/allCourses")
@@ -36,6 +37,7 @@ const NavBarApp = () => {
       .catch((err) => { });
   }, []);
 
+  // Function to find the name wrote into the input inside listCourses state
   const onSubmit = (data) => {
     let name = data.course_name;
     reset();
@@ -47,16 +49,19 @@ const NavBarApp = () => {
     navigate("/allCourses");
   };
 
+  // Function to open the login modal
   const openLoginModal = () => {
     setShowLoginModal(true);
     setShowRegisterModal(false);
   };
 
+  // Function to open the register modal
   const openRegisterModal = () => {
     setShowRegisterModal(true);
     setShowLoginModal(false);
   };
 
+  // Function to logout 
   const logoutUser = () => {
     navigate("/");
     delLocalStorage("token");
@@ -66,6 +71,7 @@ const NavBarApp = () => {
     setCourseMaterial();
   };
 
+  // Function to navigate inside the diferents route depends the users type
   const routeType = (user) => {
     let route = "";
 
@@ -76,7 +82,6 @@ const NavBarApp = () => {
     } else if (user?.type === 2) {
       route = "admin";
     }
-
     return route;
   };
 

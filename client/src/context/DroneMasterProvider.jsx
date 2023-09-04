@@ -3,36 +3,16 @@ import { getLocalStorage } from "../helper/localStorageDroneMaster";
 import jwDecode from "jwt-decode";
 import axios from "axios";
 export const DroneMasterContext = createContext();
+
 const DroneMasterProvider = ({ children }) => {
   const [token, setToken] = useState();
   const [user, setUser] = useState();
   const [isLogged, setIsLogged] = useState();
   const [course, setCourse] = useState();
-  const [showLogin, setShowLogin] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
-  const [filter, setFilter] = useState();
   const [courseMaterial, setCourseMaterial] = useState();
   const [resetData, setResetData] = useState(false);
 
-  const openRegister = () => {
-    setShowRegister(!showRegister);
-    setShowLogin(false);
-  };
-  const openLogin = () => {
-    setShowLogin(!showLogin);
-    setShowRegister(false);
-  };
-  const openHome = () => {
-    setShowLogin(false);
-    setShowRegister(false);
-  };
-  useEffect(() => {
-    if (!showLogin && !showRegister) {
-      setFilter();
-    } else {
-      setFilter("blur");
-    }
-  }, [showLogin, showRegister]);
+  // Getting token from localStorage and decode to set user
   useEffect(() => {
     const tokenLocalStorage = getLocalStorage("token");
     setToken(tokenLocalStorage);
@@ -47,6 +27,7 @@ const DroneMasterProvider = ({ children }) => {
         .catch((err) => { });
     }
   }, [isLogged, resetData]);
+
   return (
     <div>
       <DroneMasterContext.Provider
@@ -59,15 +40,6 @@ const DroneMasterProvider = ({ children }) => {
           setIsLogged,
           course,
           setCourse,
-          showLogin,
-          setShowLogin,
-          showRegister,
-          setShowRegister,
-          openLogin,
-          openRegister,
-          filter,
-          setFilter,
-          openHome,
           courseMaterial,
           setCourseMaterial,
           resetData,

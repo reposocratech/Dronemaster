@@ -18,6 +18,8 @@ const AdminAllStudentsCard = ({
   const [oneStudent, setOneStudent] = useState(null);
   const [searchResultStudent, setsearchResultStudent] = useState();
 
+//Brings the list of all students
+
   useEffect(() => {
     axios
       .get("http://localhost:4000/admin/allStudents")
@@ -26,7 +28,8 @@ const AdminAllStudentsCard = ({
       })
       .catch((err) => { });
   }, [moreInformationStudent]);
-
+  
+  //Opens a card with the information of one student
   const openInfoForm = (userId) => {
     axios
       .get(`http://localhost:4000/userInformation/${userId}`)
@@ -36,6 +39,8 @@ const AdminAllStudentsCard = ({
       .catch((err) => { });
     setMoreInformationStudent(true);
   };
+
+  // Bar Searcher of one student
 
   const onSubmit = (data) => {
     setsearchResultStudent(

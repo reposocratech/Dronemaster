@@ -23,23 +23,23 @@ export const CourseEditionModal = ({
   const [courseImg, setCourseImg] = useState();
   const [file, setFile] = useState();
   const [teacherPrev_id, setTeacherPrev_id] = useState();
-
-  const closeEditModal = () => {
-    reset()
-    setShowCourseEditionModal(false);
-  };
-
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-    reset
+    reset,
   } = useForm();
-  
+
+  // Function to close the modal
+  const closeEditModal = () => {
+    reset()
+    setShowCourseEditionModal(false);
+  };
+
+  // Getting course info
   useEffect(() => {
     if(courseId){
-
       axios
       .get(`http://localhost:4000/courses/courseInfoEdition/${courseId}`)
       .then((res) => {
@@ -53,7 +53,7 @@ export const CourseEditionModal = ({
       }
   }, [courseImg, courseId]);
 
-
+  // Getting course tags
   useEffect(() => {
     if(courseId){
     axios
@@ -65,22 +65,24 @@ export const CourseEditionModal = ({
     }
   }, [courseId]);
 
+  // Getting allTeachers inside data base
   useEffect(() => {
     axios
       .get(`http://localhost:4000/admin/allTeachers`)
       .then((res) => {
         setTeachersList(res.data);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   }, []);
 
+  // Getting all categories inside data base
   useEffect(() => {
     axios
       .get(`http://localhost:4000/courses/allCategories`)
       .then((res) => {
         setCategoriesList(res.data);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   }, []);
 
   const handleImgChange = (e) => {
@@ -96,6 +98,7 @@ export const CourseEditionModal = ({
     setTag("");
   };
 
+  // Function to modify course info
   const onSubmit = (data) => {
     axios
       .put(
@@ -106,13 +109,11 @@ export const CourseEditionModal = ({
         }
       )
       .then((res) => {
-        reset()
+        reset();
         setShowCourseEditionModal(false);
         setResEffect(!resEffect)
       })
-      .catch((err) => {
-        {}
-      });
+      .catch((err) => {});
 
     if (file) {
       const newFormData = new FormData();
@@ -124,10 +125,12 @@ export const CourseEditionModal = ({
           `http://localhost:4000/courses/uploadCourseImage/${courseId}`,
           newFormData
         )
-        .then((res) => { })
+        .then((res) => {})
         .catch((error) => {});
     }
   };
+
+  // Pre info fixed inside the inputs
   useEffect(() => {
     courseData?.course_name &&
       setValue("course_name", courseData.course_name || "");
@@ -143,17 +146,18 @@ export const CourseEditionModal = ({
       setValue("start_date", courseData.start_date.slice(0, 10) || "");
   }, [courseData, setValue, showCourseEditionModal]);
 
+  // Function to delete tags
   const handleDeleteTag = (tagId, tagName) => {
     let url = "";
     if (tagId != undefined) {
       axios
         .put(`http://localhost:4000/admin/deleteCourseTag/${tagId}/${courseId}`)
-        .then((res) => { })
+        .then((res) => {})
         .catch((error) => {
-          { };
+          {
+          }
         });
     }
-
     const updatedTagsList = tagsList.filter((tag) => tag.tag_name !== tagName);
     setTagsList(updatedTagsList);
   };
@@ -181,7 +185,6 @@ export const CourseEditionModal = ({
           <h4 className="titleText">Edición de curso</h4>
         </div>
       </Modal.Header>
-
       <form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body className="modalBody">
           {/* Image Container */}
@@ -189,7 +192,6 @@ export const CourseEditionModal = ({
           <div className="imgContainer">
             {courseData && <img src={courseImg} alt="" />}
           </div>
-
           {/* Image Input Group */}
           <div className="inputFileContainer">
             <input
@@ -203,7 +205,6 @@ export const CourseEditionModal = ({
               Selecciona Imagen
             </label>
           </div>
-
           {/* Name Input Group */}
           <div className="d-flex flex-column align-items-start gap-1 inputName">
             <label htmlFor="course_name" className="ps-3">
@@ -221,7 +222,6 @@ export const CourseEditionModal = ({
             />
             <span className="errorMessage">{errors.course_name?.message}</span>
           </div>
-
           {/* Category Input Group */}
           <div className="d-flex flex-column align-items-start gap-1 inputCategory">
             <label htmlFor="category_id" className="ps-3">
@@ -248,7 +248,6 @@ export const CourseEditionModal = ({
               })}
             </select>
           </div>
-
           {/* Length Input Group */}
           <div className="d-flex flex-column align-items-start gap-1 inputLength">
             <label htmlFor="course_length" className="ps-3">
@@ -267,7 +266,6 @@ export const CourseEditionModal = ({
               {errors.course_length?.message}
             </span>
           </div>
-
           {/* Teacher Input Group */}
           <div className="d-flex flex-column align-items-start gap-1 inputTeacher">
             <label htmlFor="teacher_id" className="ps-3">
@@ -288,7 +286,6 @@ export const CourseEditionModal = ({
               })}
             </select>
           </div>
-
           {/* Price Input Group */}
           <div className="d-flex flex-column align-items-start gap-1  inputPrice">
             <label htmlFor="price" className="ps-3">
@@ -303,11 +300,11 @@ export const CourseEditionModal = ({
               })}
               id="price"
               className="input1"
-              step="0.01" pattern="\d+(\.\d{1,2})?"
+              step="0.01"
+              pattern="\d+(\.\d{1,2})?"
             />
             <span className="errorMessage">{errors.price?.message}</span>
           </div>
-
           {/* Date Input Group */}
           <div className="d-flex flex-column align-items-start gap-1  inputDate">
             <label htmlFor="start_date" className="ps-3">
@@ -321,7 +318,6 @@ export const CourseEditionModal = ({
               className="input1"
             />
           </div>
-
           {/* Tags Input Group */}
           <div className="d-flex flex-column align-items-start gap-1  inputTags">
             <label htmlFor="tag" className="ps-3">
@@ -344,7 +340,6 @@ export const CourseEditionModal = ({
               </span>
             </div>
           </div>
-
           <div className="d-flex flex-column align-items-start gap-1 tagsList">
             <div className="tagListContainer d-flex flex-wrap ">
               <p>
@@ -364,7 +359,6 @@ export const CourseEditionModal = ({
               </p>
             </div>
           </div>
-
           {/* Description Input Group */}
           <div className="d-flex flex-column align-items-start gap-1  inputDescription">
             <label htmlFor="course_description" className="ps-3">

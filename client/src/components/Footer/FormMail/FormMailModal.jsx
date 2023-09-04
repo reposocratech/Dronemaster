@@ -1,33 +1,12 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import { Modal } from "react-bootstrap";
 import { AiFillPhone } from "react-icons/ai";
-import { useForm } from "react-hook-form";
 import "./formMailModal.scss";
 
 export const FormMailModal = ({ showMailModal, setShowMailModal }) => {
-  const { register, handleSubmit, reset } = useForm();
-
+  // Function to close the modal
   const handleClose = () => {
     setShowMailModal(false);
-  };
-
-  const onSubmit = async (data) => {
-    try {
-      const response = await fetch("http://localhost:4000/infoEmail", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-
-      reset();
-      setShowMailModal(false);
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   return (

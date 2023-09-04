@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 
 export const CommentsAndResponsesList = ({
@@ -20,6 +19,7 @@ export const CommentsAndResponsesList = ({
     setResponseContent(e.target.value);
   };
 
+  // Function get comment responses
   const onSubmit = (commentId) => {
     axios
       .post(
@@ -33,6 +33,7 @@ export const CommentsAndResponsesList = ({
       .catch((err) => { });
   };
 
+  // Function to disable comment
   const handleCommentDisable = (commentId) => {
     axios
       .put(`http://localhost:4000/admin/disableComment/${commentId}`)
@@ -41,6 +42,7 @@ export const CommentsAndResponsesList = ({
     setResetComments(!resetComments);
   };
 
+  // Function to enable comment
   const handleCommentEnable = (commentId) => {
     axios
       .put(`http://localhost:4000/admin/enableComment/${commentId}`)
@@ -105,7 +107,6 @@ export const CommentsAndResponsesList = ({
                 >
                   Responder
                 </button>
-
                 {responseInputForComment === commentIndex && (
                   <div className="commentInputContainer">
                     <div className="userImgContainer">
@@ -140,7 +141,6 @@ export const CommentsAndResponsesList = ({
                     </div>
                   </div>
                 )}
-
                 {allResponses
                   ?.filter(
                     (response) =>

@@ -28,7 +28,7 @@ const AdminAllCoursesCard = ({ resEffect, setResEffect }) => {
   const [courseId, setCourseId] = useState();
   const [searchResultCourse, setsearchResultCourse] = useState();
 
-
+// Open the Edit Form Modal of one course
 
   const openEditModal = (course_id) => {
     setCourseId(course_id)
@@ -38,6 +38,7 @@ const AdminAllCoursesCard = ({ resEffect, setResEffect }) => {
     setShowUnitCreationModal(true);
   };
 
+  // Brings the list of all courses
   useEffect(() => {
     axios
       .get("http://localhost:4000/admin/allCourses")
@@ -46,6 +47,9 @@ const AdminAllCoursesCard = ({ resEffect, setResEffect }) => {
       })
       .catch((err) => { });
   }, [resEffect]);
+
+
+  // Enable one course
 
   const enableCourse = (courseId) => {
     axios
@@ -57,6 +61,8 @@ const AdminAllCoursesCard = ({ resEffect, setResEffect }) => {
         { }
       });
   };
+
+    // Disable one course
   const disableCourse = (courseId) => {
     axios
       .put(`http://localhost:4000/courses/disableCourse/${courseId}`)
@@ -67,6 +73,7 @@ const AdminAllCoursesCard = ({ resEffect, setResEffect }) => {
         { }
       });
   };
+
   //DROPDOWN
   const closedHeight = "0px";
   const openedHeight = "300px";
@@ -77,7 +84,9 @@ const AdminAllCoursesCard = ({ resEffect, setResEffect }) => {
       setOpenCourse([...openCourse, courseIdx]);
     }
   };
-  //Buscador
+
+
+  //Bar seacher of one course
   const onSubmit = (data) => {
     setsearchResultCourse(
       allCourses?.filter((course) =>

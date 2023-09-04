@@ -6,6 +6,7 @@ import { FaUserPlus } from "react-icons/fa";
 import axios from "axios";
 
 const FormularioCreacionTeacher = ({ showModalForm, setShowModalForm }) => {
+  //Hookform
   const {
     register,
     handleSubmit,
@@ -13,11 +14,14 @@ const FormularioCreacionTeacher = ({ showModalForm, setShowModalForm }) => {
     reset,
   } = useForm();
 
+  //Closes the modal form to create a new teacher
+
   const handleClose = () => {
-    reset()
-    setShowModalForm(false)
+    reset();
+    setShowModalForm(false);
   };
 
+  //Saves the information of the new teacher created
   const onSubmit = (data) => {
     axios
       .post("http://localhost:4000/admin/createUser", data)
@@ -25,7 +29,7 @@ const FormularioCreacionTeacher = ({ showModalForm, setShowModalForm }) => {
         reset();
         setShowModalForm(false);
       })
-      .catch((error) => { });
+      .catch((error) => {});
   };
 
   return (
@@ -45,6 +49,8 @@ const FormularioCreacionTeacher = ({ showModalForm, setShowModalForm }) => {
           <h4 className="titleText">Creacion de un nuevo Usuario</h4>
         </div>
       </Modal.Header>
+
+      {/* Updates Name */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body className="modalBodyUser">
           <div className="inputName">
@@ -63,6 +69,7 @@ const FormularioCreacionTeacher = ({ showModalForm, setShowModalForm }) => {
             />
             <p>{errors.firstName?.message}</p>
           </div>
+          {/* Updates Lastname */}
           <div className="inputLastName">
             <label htmlFor="user_lastname" className="ps-3">
               Apellidos
@@ -79,6 +86,7 @@ const FormularioCreacionTeacher = ({ showModalForm, setShowModalForm }) => {
             />
             <p>{errors.lastName?.message}</p>
           </div>
+          {/* Updates email */}
           <div className="inputEmail">
             <label htmlFor="email" className="ps-3">
               Email
@@ -95,6 +103,7 @@ const FormularioCreacionTeacher = ({ showModalForm, setShowModalForm }) => {
             />
             <p>{errors.email?.message}</p>
           </div>
+          {/* Updates Password */}
           <div className="inputPassword">
             <label htmlFor="password" className="ps-3">
               Contraseña
@@ -114,6 +123,7 @@ const FormularioCreacionTeacher = ({ showModalForm, setShowModalForm }) => {
             />
             <p>{errors.password?.message}</p>
           </div>
+          {/* Updates type of user */}
           <div className="inputType">
             <label htmlFor="type" className="ps-3">
               Tipo de Usuario
@@ -129,7 +139,6 @@ const FormularioCreacionTeacher = ({ showModalForm, setShowModalForm }) => {
               <option value={2}> Administrador </option>
             </select>
           </div>
-
         </Modal.Body>
         <Modal.Footer className="modalFooter">
           <button className="btnOutline1" onClick={handleClose}>

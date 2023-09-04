@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import { GiClassicalKnowledge } from "react-icons/gi";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import "../AdminLessonEditForm/AdminLessonEditForm.scss"
+import "../AdminLessonEditForm/AdminLessonEditForm.scss";
 const AdminUnitEdirForm = ({
   unitEditForm,
   setUnitEditForm,
@@ -15,6 +15,9 @@ const AdminUnitEdirForm = ({
   unitInformation,
   setUnitInformation,
 }) => {
+  const [editUnit, setEditUnit] = useState();
+
+  //Closes the modal which edits the Units
   const closeUnitEditForm = () => {
     setUnitEditForm(false);
   };
@@ -26,7 +29,7 @@ const AdminUnitEdirForm = ({
     setValue,
   } = useForm();
 
-  const [editUnit, setEditUnit] = useState();
+  //Saves the information of the Unit information updated
 
   const onSubmit = (data) => {
     axios
@@ -36,11 +39,15 @@ const AdminUnitEdirForm = ({
         closeUnitEditForm(true);
         setResEffect(!resEffect);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
+
+  //Brings the information of the info saved in data base before the update.
   useEffect(() => {
     unitInformation && setValue("unit_tittle", unitInformation || "");
   }, [unitInformation, setValue]);
+
+  //Edit Form
 
   return (
     <Modal show={unitEditForm} onHide={closeUnitEditForm}>

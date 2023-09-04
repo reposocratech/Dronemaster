@@ -3,9 +3,11 @@
 .courseEditionModalContainer {
   backdrop-filter: blur(4px);
   background-color: none;
+
   .modalHeader {
     background-color: $CuaternaryDark;
   }
+
   .modalFooter {
     background-color: $CuaternaryDark;
   }
@@ -22,6 +24,7 @@
       .logoImg {
         width: 200px;
       }
+
       .iconContainer {
         width: 40px;
         aspect-ratio: 1/1;
@@ -37,6 +40,7 @@
         margin: 0;
       }
     }
+
     .btn-close {
       margin: 4px;
       border-radius: 100%;
@@ -48,6 +52,7 @@
       background-color: $PrimaryOrangeColor;
     }
   }
+
   .modalBody {
     height: fit-content;
     padding: 12px clamp(20px, 6vw, 100px);
@@ -73,9 +78,11 @@
     .imgContainer {
       grid-area: imgContainer;
     }
+
     .inputFileContainer {
       grid-area: inputFileContainer;
     }
+
     .inputName {
       grid-area: inputName;
     }
@@ -83,9 +90,11 @@
     .inputCategory {
       grid-area: inputCategory;
     }
+
     .inputLength {
       grid-area: inputLength;
     }
+
     .inputTeacher {
       grid-area: inputTeacher;
     }
@@ -101,9 +110,11 @@
     .inputDescription {
       grid-area: inputDescription;
     }
+
     .tagsList {
       grid-area: tagsList;
     }
+
     .inputDate {
       grid-area: inputDate;
     }
@@ -144,7 +155,7 @@
       border: 2px solid $PrimaryOrangeColor;
     }
 
-    .imgContainer{
+    .imgContainer {
       max-height: 230px;
       min-width: 300px;
       aspect-ratio: 16/9;
@@ -156,12 +167,14 @@
       place-items: center;
       position: relative;
       overflow: hidden;
-      img{
+
+      img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         object-position: center;
       }
+
       .deleteImgButton {
         display: none;
         position: absolute;
@@ -172,10 +185,12 @@
         background-color: red;
         color: white;
       }
+
       .deleteImgButton:hover {
         background-color: rgb(128, 3, 3);
       }
     }
+
     .imgContainer:hover {
 
       .deleteImgButton {
@@ -195,7 +210,7 @@
       cursor: pointer;
     }
 
-    .inputImageLabel:hover{
+    .inputImageLabel:hover {
       color: black;
     }
 
@@ -215,23 +230,24 @@
     .input3 {
       height: 100%;
     }
+
     .tagListContainer {
       width: 100%;
       display: flex;
       flex-wrap: wrap;
-      justify-content: start ;
+      justify-content: start;
       align-self: start;
       padding: 8px 12px;
       overflow-y: auto;
 
-      p{
+      p {
         width: 100%;
         white-space: normal;
-        height: fit-content;;
+        height: fit-content;
+        ;
         display: flex;
         flex-wrap: wrap;
       }
-
     }
 
     input[type="number"]::-webkit-inner-spin-button,
@@ -242,20 +258,20 @@
     .tagListContainer::-webkit-scrollbar {
       width: 10px;
     }
-  
+
     .tagListContainer::-webkit-scrollbar-thumb {
       background-color: #7d7c7c;
       border-top-right-radius: 8px;
       border-bottom-right-radius: 8px;
     }
-  
+
     .tagListContainer::-webkit-scrollbar-thumb:hover {
       background-color: #555;
     }
-  
+
     .tagListContainer::-webkit-scrollbar-track {
       background-color: $PrimaryDarkColor;
-     border-top-right-radius: 8px;
+      border-top-right-radius: 8px;
       border-bottom-right-radius: 8px;
       overflow: hidden;
     }
@@ -263,9 +279,11 @@
     .tagsList,
     .inputDescription {
       height: 100%;
+
       span {
         position: relative;
         margin: 0;
+
         .deleteIcon {
           left: -9px;
           color: black;
@@ -281,8 +299,10 @@
           cursor: pointer;
         }
       }
+
       span:hover {
         text-decoration: line-through;
+
         .deleteIcon {
           display: inline;
         }
@@ -297,6 +317,7 @@
         border-bottom-right-radius: 0px;
         border-right: none;
       }
+
       .addTagButton {
         height: 40px;
         width: 85px;
@@ -326,10 +347,12 @@
       border: 2px solid $PrimaryOrangeColor;
       color: black;
     }
+
     .btnNormal:hover {
       background-color: transparent;
       color: white;
     }
+
     .btnOutline1 {
       padding: 6px;
       width: 150px;

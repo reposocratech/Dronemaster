@@ -20,11 +20,13 @@ export const UnitCreationModal = ({
     reset,
   } = useForm();
 
+  // Function to close the modal
   const handleClose = () => {
     reset();
     setShowUnitCreationModal(false);
   };
 
+  // Function to create a new unit
   const onSubmit = (data) => {
     axios
       .post(`http://localhost:4000/admin/createUnit/${courseId}`, data)
