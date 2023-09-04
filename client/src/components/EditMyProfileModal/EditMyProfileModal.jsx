@@ -38,7 +38,7 @@ export const EditMyProfileModal = ({
   // Function to change the user profile image
   const handleImgChange = (e) => {
     setFile(e.target.files[0]);
-    setProfileImg(e.target.files[0])
+    setProfileImg(e.target.files[0]);
 
     const newFormData = new FormData();
     newFormData.append("editedUser", JSON.stringify({ user_name: `${user.user_name}` }));

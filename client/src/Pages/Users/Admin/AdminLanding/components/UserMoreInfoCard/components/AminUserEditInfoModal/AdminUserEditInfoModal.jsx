@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { DroneMasterContext } from "../../../../../../../../context/DroneMasterProvider";
 
-/* import "./editMyProfileModal.scss"; */
 
 const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, setMoreInformationStudent, moreInformationStudent, closeInfoForm}) => {
   const [file, setFile] = useState();
@@ -15,16 +14,15 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, 
   const [profileImg, setProfileImg] = useState();
 
 
-  const handleClose = () => {
-    setShowEditionModal(false);
-  };
+  // Set the picture of the profile
 
   useEffect(() => {
-    user &&
-      setProfileImg(`http://localhost:4000/images/users/${user?.user_img}`);
-  }, [user]);
+    student &&
+      setProfileImg(`http://localhost:4000/images/users/${student?.user_img}`);
+  }, [student]);
 
 
+// Brings the info of the student from the data base before the update
   useEffect(() => {
     student?.user_name &&
       setValue("user_name", student.user_name || "");
@@ -38,14 +36,17 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, 
       setValue("address", student.address || "");
   }, [student, setValue]);
 
+  // 
 
   const handleImgChange = (e) => {
     setFile(e.target.files[0]);
   };
 
+
+
   const handleDeleteButton = () => {
     axios
-      .put(`http://localhost:4000/myProfile/deleteImage/${user.user_id}`)
+      .put(`http://localhost:4000/myProfile/deleteImage/${student.user_id}`)
       .then((res) => {
         setResetData(!resetData);
         setFile();
@@ -56,6 +57,8 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, 
 
     setProfileImg();
   };
+
+// Saves the updated information
 
   const onSubmit = (data) => {
     const newFormData = new FormData();
@@ -78,7 +81,7 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, 
 
 
   };
-
+// Closes the edit form modal
   const closeEditUserForm = () => {
     setEditUserForm(false)
 
@@ -134,6 +137,8 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, 
               onChange={handleImgChange}
               className="inputFile"
               id="inputFile"
+              autoComplete="off"
+              
             />
 
             <label htmlFor="inputFile" className="inputImageLabel btnNormal">
@@ -151,6 +156,7 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, 
               {...register("user_name")}
               className="input1"
               id="user_name"
+              autoComplete="off"
             />
           </div>
 
@@ -164,6 +170,7 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, 
               {...register("user_lastname")}
               id="user_lastname"
               className="input1"
+              autoComplete="off"
             />
           </div>
 
@@ -177,6 +184,7 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, 
               {...register("passport")}
               id="passport"
               className="input1"
+              autoComplete="off"
             />
           </div>
 
@@ -190,6 +198,7 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, 
               {...register("phone")}
               id="phone"
               className="input1"
+              autoComplete="off"
             />
           </div>
 
@@ -203,6 +212,7 @@ const AdminUserEditInfoModal = ({ user, editUserForm, setEditUserForm, student, 
               {...register("address")}
               id="address"
               className="input1"
+              autoComplete="off"
             />
           </div>
         </Modal.Body>

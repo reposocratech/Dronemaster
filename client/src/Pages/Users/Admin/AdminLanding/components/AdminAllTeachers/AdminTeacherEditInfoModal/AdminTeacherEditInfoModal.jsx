@@ -1,4 +1,3 @@
-
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { BiSolidUserDetail } from "react-icons/bi";
@@ -8,38 +7,40 @@ import axios from "axios";
 import { DroneMasterContext } from "../../../../../../../context/DroneMasterProvider";
 import "./AdminTeacherEditInfoModal.scss";
 
-
-
-const AdminTeacherEditInfoModal = ({ user, teacher, teacherEditForm, setTeacherEditForm, setMoreInformationTeacher }) => {
+const AdminTeacherEditInfoModal = ({
+  user,
+  teacher,
+  teacherEditForm,
+  setTeacherEditForm,
+  setMoreInformationTeacher,
+  closeInfoTeacherForm,
+  setResetInfoTeacher,
+  resetInfoTeacher,
+}) => {
   const [file, setFile] = useState();
   const { resetData, setResetData } = useContext(DroneMasterContext);
   const { register, setValue, handleSubmit } = useForm();
   const [profileImg, setProfileImg] = useState();
-  const [resEffect, setResEffect] = useState(false);
 
-  const handleClose = () => {
-    setShowEditionModal(false);
-  };
+  // Set the picture of the profile
 
   useEffect(() => {
-    user &&
-      setProfileImg(`http://localhost:4000/images/users/${user?.user_img}`);
-  }, [user]);
+    teacher &&
+      setProfileImg(`http://localhost:4000/images/users/${teacher?.user_img}`);
+  }, [teacher, resetInfoTeacher]);
 
+  // Brings the info of the teacher from the data base before the update
 
   useEffect(() => {
-    teacher?.user_name &&
-      setValue("user_name", teacher.user_name || "");
+    teacher?.user_name && setValue("user_name", teacher.user_name || "");
     teacher?.user_lastname &&
       setValue("user_lastname", teacher.user_lastname || "");
-    teacher?.email &&
-      setValue("email", teacher.email || "");
-    teacher?.phone &&
-      setValue("phone", teacher.phone || "");
-    teacher?.address &&
-      setValue("address", teacher.address || "");
+    teacher?.email && setValue("email", teacher.email || "");
+    teacher?.phone && setValue("phone", teacher.phone || "");
+    teacher?.address && setValue("address", teacher.address || "");
   }, [teacher, setValue]);
 
+  // Sets the new profile picture.
 
   const handleImgChange = (e) => {
     setFile(e.target.files[0]);
@@ -47,15 +48,17 @@ const AdminTeacherEditInfoModal = ({ user, teacher, teacherEditForm, setTeacherE
 
   const handleDeleteButton = () => {
     axios
-      .put(`http://localhost:4000/myProfile/deleteImage/${user.user_id}`)
+      .put(`http://localhost:4000/myProfile/deleteImage/${teacher.user_id}`)
       .then((res) => {
         setResetData(!resetData);
         setFile();
       })
-      .catch((err) => { });
+      .catch((err) => {});
 
     setProfileImg();
   };
+
+  // Saves the updated information
 
   const onSubmit = (data) => {
     const newFormData = new FormData();
@@ -67,27 +70,29 @@ const AdminTeacherEditInfoModal = ({ user, teacher, teacherEditForm, setTeacherE
     }
 
     axios
-      .put(`http://localhost:4000/editMyProfile/${teacher.user_id}`, newFormData)
+      .put(
+        `http://localhost:4000/editMyProfile/${teacher.user_id}`,
+        newFormData
+      )
       .then((res) => {
-        setResetData(!resetData);
-        setTeacherEditForm(false)
-        setMoreInformationTeacher(false)
+        setResetInfoTeacher(!resetInfoTeacher);
+        /* setResetData(!resetData); */
+        setTeacherEditForm(false);
+        /* setMoreInformationTeacher(false) */
+        closeInfoTeacherForm();
       })
-      .catch((err) => { });
-
-
+      .catch((err) => {});
   };
-
+  // Closes the edit form modal
   const closeTeacherUserForm = () => {
-    setTeacherEditForm(false)
-
-  }
+    setTeacherEditForm(false);
+  };
 
   return (
     <Modal
       show={teacherEditForm}
       onHide={closeTeacherUserForm}
-      centered={true}
+      centered
       size="lg"
       className="editionTeacherModalContainer"
     >
@@ -150,6 +155,7 @@ const AdminTeacherEditInfoModal = ({ user, teacher, teacherEditForm, setTeacherE
               {...register("user_name")}
               className="input1"
               id="user_name"
+              autoComplete="off"
             />
           </div>
 
@@ -163,6 +169,7 @@ const AdminTeacherEditInfoModal = ({ user, teacher, teacherEditForm, setTeacherE
               {...register("user_lastname")}
               id="user_lastname"
               className="input1"
+              autoComplete="off"
             />
           </div>
 
@@ -176,6 +183,7 @@ const AdminTeacherEditInfoModal = ({ user, teacher, teacherEditForm, setTeacherE
               {...register("passport")}
               id="passport"
               className="input1"
+              autoComplete="off"
             />
           </div>
 
@@ -189,6 +197,7 @@ const AdminTeacherEditInfoModal = ({ user, teacher, teacherEditForm, setTeacherE
               {...register("phone")}
               id="phone"
               className="input1"
+              autoComplete="off"
             />
           </div>
 
@@ -202,6 +211,7 @@ const AdminTeacherEditInfoModal = ({ user, teacher, teacherEditForm, setTeacherE
               {...register("address")}
               id="address"
               className="input1"
+              autoComplete="off"
             />
           </div>
         </Modal.Body>
@@ -215,7 +225,7 @@ const AdminTeacherEditInfoModal = ({ user, teacher, teacherEditForm, setTeacherE
         </Modal.Footer>
       </form>
     </Modal>
-  )
-}
+  );
+};
 
-export default AdminTeacherEditInfoModal
+export default AdminTeacherEditInfoModal;

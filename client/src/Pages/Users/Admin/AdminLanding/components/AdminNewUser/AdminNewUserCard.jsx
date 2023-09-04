@@ -6,18 +6,23 @@ import { CategoryCreationModal } from "../FormulariosCreacion/CategoryCreationMo
 const AdminNewUserCard = ({ resEffect, setResEffect }) => {
   const [showModalForm, setShowModalForm] = useState(false);
   const [showCourseCreationModal, setShowCourseCreationModal] = useState(false);
-  const [showCategoryCreationModal, setShowCategoryCreationModal] = useState(false)
+  const [showCategoryCreationModal, setShowCategoryCreationModal] =
+    useState(false);
+
+  // Opens the modal form which adds a new user
 
   const openCreateForm = () => {
     setShowModalForm(true);
   };
+  // Opens the modal form which adds a new course
+
   const openCreateCourse = () => {
     setShowCourseCreationModal(true);
   };
-
+  // Opens the modal form which adds a new category
   const openCreateCategory = () => {
-    setShowCategoryCreationModal(true)
-  }
+    setShowCategoryCreationModal(true);
+  };
 
   return (
     <div className="creationButtonsCard">
@@ -27,7 +32,8 @@ const AdminNewUserCard = ({ resEffect, setResEffect }) => {
       <CourseCreationModal
         showCourseCreationModal={showCourseCreationModal}
         setShowCourseCreationModal={setShowCourseCreationModal}
-        resEffect={resEffect} setResEffect={setResEffect}
+        resEffect={resEffect}
+        setResEffect={setResEffect}
       />
       <button onClick={openCreateForm} className="btnOutline1">
         Añadir Usuario

@@ -26,7 +26,7 @@ export const CourseEditionModal = ({
     handleSubmit,
     formState: { errors },
     setValue,
-    reset
+    reset,
   } = useForm();
 
   // Function to close the modal
@@ -70,7 +70,7 @@ export const CourseEditionModal = ({
       .then((res) => {
         setTeachersList(res.data);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   }, []);
 
   // Getting all categories inside data base
@@ -80,7 +80,7 @@ export const CourseEditionModal = ({
       .then((res) => {
         setCategoriesList(res.data);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   }, []);
 
   const handleImgChange = (e) => {
@@ -107,10 +107,10 @@ export const CourseEditionModal = ({
         }
       )
       .then((res) => {
-        reset()
+        reset();
         setShowCourseEditionModal(false);
       })
-      .catch((err) => { });
+      .catch((err) => {});
 
     if (file) {
       const newFormData = new FormData();
@@ -122,8 +122,8 @@ export const CourseEditionModal = ({
           `http://localhost:4000/courses/uploadCourseImage/${courseId}`,
           newFormData
         )
-        .then((res) => { })
-        .catch((error) => { });
+        .then((res) => {})
+        .catch((error) => {});
     }
   };
 
@@ -149,9 +149,10 @@ export const CourseEditionModal = ({
     if (tagId != undefined) {
       axios
         .put(`http://localhost:4000/admin/deleteCourseTag/${tagId}/${courseId}`)
-        .then((res) => { })
+        .then((res) => {})
         .catch((error) => {
-          { };
+          {
+          }
         });
     }
     const updatedTagsList = tagsList.filter((tag) => tag.tag_name !== tagName);
@@ -296,7 +297,8 @@ export const CourseEditionModal = ({
               })}
               id="price"
               className="input1"
-              step="0.01" pattern="\d+(\.\d{1,2})?"
+              step="0.01"
+              pattern="\d+(\.\d{1,2})?"
             />
             <span className="errorMessage">{errors.price?.message}</span>
           </div>

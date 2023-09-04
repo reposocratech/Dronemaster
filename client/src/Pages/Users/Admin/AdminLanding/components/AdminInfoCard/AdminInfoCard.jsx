@@ -7,11 +7,12 @@ import { FiMapPin } from "react-icons/fi";
 import { AiOutlineIdcard } from "react-icons/ai";
 
 const AdminInfoCard = () => {
+  //Brings the personal info of the adminInfoCard
   const { user } = useContext(DroneMasterContext);
 
   return (
     <div className="adminInfoCard">
-   <div className="cardTitle">
+      <div className="cardTitle">
         <div className="iconContainer">
           <BiSolidUserDetail />
         </div>
@@ -20,54 +21,51 @@ const AdminInfoCard = () => {
         </div>
       </div>
       <div className="cardBody">
-     
-          {/* User Email */}
+        {/* User Email */}
 
-          <div className="lineInfo">
-            <span className="infoIcon">
-              <HiOutlineMail />
-            </span>
-            <p>{user?.email}</p>
-          </div>
+        <div className="lineInfo">
+          <span className="infoIcon">
+            <HiOutlineMail />
+          </span>
+          <p>{user?.email}</p>
+        </div>
 
-          {/* User Address */}
+        {/* User Address */}
 
-          <div className="lineInfo">
-            <span className="infoIcon">
-              <FiMapPin />
-            </span>
-            {user?.address ? (
-              <p> {user.address} </p>
-            ) : (
-              <p className="noInfoText"> Información no disponible </p>
-            )}
-          </div>
-   
+        <div className="lineInfo">
+          <span className="infoIcon">
+            <FiMapPin />
+          </span>
+          {user?.address ? (
+            <p> {user.address} </p>
+          ) : (
+            <p className="noInfoText"> Información no disponible </p>
+          )}
+        </div>
 
-          {/* User phone */}
-          <div className="lineInfo">
-            <span className="infoIcon">
-              <AiOutlinePhone />
-            </span>
-            {user?.phone ? (
-              <p> {user.phone} </p>
-            ) : (
-              <p className="noInfoText"> Información no disponible </p>
-            )}
-          </div>
+        {/* User phone */}
+        <div className="lineInfo">
+          <span className="infoIcon">
+            <AiOutlinePhone />
+          </span>
+          {user?.phone ? (
+            <p> {user.phone} </p>
+          ) : (
+            <p className="noInfoText"> Información no disponible </p>
+          )}
+        </div>
 
-          {/* User Identification */}
-          <div className="lineInfo">
-            <span className="infoIcon">
-              <AiOutlineIdcard />
-            </span>
-            {user?.passport ? (
-              <p> {user.passport} </p>
-            ) : (
-              <p className="noInfoText"> Información no disponible </p>
-            )}
-          </div>
-        
+        {/* User Identification */}
+        <div className="lineInfo">
+          <span className="infoIcon">
+            <AiOutlineIdcard />
+          </span>
+          {user?.passport ? (
+            <p> {user.passport} </p>
+          ) : (
+            <p className="noInfoText"> Información no disponible </p>
+          )}
+        </div>
       </div>
     </div>
   );

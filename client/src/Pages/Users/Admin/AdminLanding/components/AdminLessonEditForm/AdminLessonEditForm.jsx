@@ -24,6 +24,8 @@ const AdminLessonEditForm = ({
     setShowLessonEditForm(false);
   };
   const [editLesson, setEditLesson] = useState();
+
+  // Reach Hook Form
   const {
     register,
     handleSubmit,
@@ -32,7 +34,7 @@ const AdminLessonEditForm = ({
     setValue,
   } = useForm();
 
-
+  //Saves the information updated of the Lesson
   const onSubmit4 = (data) => {
     axios
       .put(
@@ -46,8 +48,9 @@ const AdminLessonEditForm = ({
         setResEffect(!resEffect);
       })
 
-      .catch((err) => { });
+      .catch((err) => {});
   };
+  // Brings the info of the lesson saved in the database before the update.
 
   useEffect(() => {
     lessonInformation?.lesson_title &&
@@ -55,6 +58,8 @@ const AdminLessonEditForm = ({
     lessonInformation?.lesson_content &&
       setValue("lesson_content", lessonInformation.lesson_content || "");
   }, [lessonInformation, setValue]);
+
+  //Edit Form
 
   return (
     <Modal show={showLessonEditForm} onHide={closeLessonEditForm}>
@@ -74,6 +79,7 @@ const AdminLessonEditForm = ({
       <form onSubmit={handleSubmit(onSubmit4)}>
         <Modal.Body className="modalBody1">
           <div className="d-flex flex-column align-items-start gap-1 inputName">
+            {/*  Edits lesson name */}
             <label htmlFor="lesson_title" className="ps-3">
               Nombre del la lección
             </label>
@@ -89,6 +95,7 @@ const AdminLessonEditForm = ({
             />
             <span className="errorMessage">{errors.lesson_title?.message}</span>
           </div>
+          {/*  Edits lesson description */}
           <div className="d-flex flex-column align-items-start gap-1 inputName">
             <label htmlFor="lesson_content" className="ps-3">
               Descripción de la Lección
