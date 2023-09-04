@@ -9,16 +9,6 @@ export const CourseCard = ({ oneCourse }) => {
   const navigate = useNavigate();
   const [tagList, setTagList] = useState();
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:4000/courses/courseTags/${oneCourse.course_id}`)
-      .then((res) => setTagList(res.data))
-      .catch((error) => { });
-    return () => { };
-  }, [oneCourse]);
-
-
-
   const currentDate = new Date();
   const courseStartDate = new Date(oneCourse?.start_date);
   const monthNames = [
@@ -28,9 +18,18 @@ export const CourseCard = ({ oneCourse }) => {
   const day = courseStartDate.getDate();
   const month = monthNames[courseStartDate.getMonth()];
   const year = courseStartDate.getFullYear();
-
   const formattedStartDate = `${day} de ${month} de ${year}`;
 
+  // Getting tags from one course
+  useEffect(() => {
+    if (oneCourse) {
+      axios
+        .get(`http://localhost:4000/courses/courseTags/${oneCourse.course_id}`)
+        .then((res) => setTagList(res.data))
+        .catch((error) => { });
+      return () => { };
+    }
+  }, [oneCourse]);
 
   return (
     <div
@@ -50,14 +49,13 @@ export const CourseCard = ({ oneCourse }) => {
           <div className="courseTitle">
             <h5 className="mb-0">{oneCourse.course_name}</h5>
           </div>
-          {tagList && 
-          <div className="tagList">
-          {tagList?.map((e) => {
-            return <span key={e.tag_id} className="tag">#{e.tag_name}</span>;
-          })}
+          {tagList &&
+            <div className="tagList">
+              {tagList?.map((e) => {
+                return <span key={e.tag_id} className="tag">#{e.tag_name}</span>;
+              })}
             </div>
-        }
-
+          }
           {(oneCourse?.start_date && courseStartDate > currentDate) &&
             <div className="dateContainer">
               <BsCalendarDate className="icon" />

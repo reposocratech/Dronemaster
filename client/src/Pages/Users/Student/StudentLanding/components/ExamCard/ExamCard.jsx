@@ -6,7 +6,6 @@ import { DroneMasterContext } from '../../../../../../context/DroneMasterProvide
 import axios from 'axios';
 import { RatingModal } from '../RatingModal/RatingModal';
 
-
 export const ExamCard = ({ setShowRatingModal, showRatingModal, counterRating, score, setCounterRating, setScore }) => {
     const { user, courseMaterial } = useContext(DroneMasterContext)
     const [downloadedExam, setDownloadedExam] = useState(0);
@@ -15,43 +14,54 @@ export const ExamCard = ({ setShowRatingModal, showRatingModal, counterRating, s
     const [userStatus, setUserStatus] = useState()
     const [teacherEmail, setTeacherEmail] = useState()
 
+    // Getting teacher email
     useEffect(() => {
-        axios
-            .get(`http://localhost:4000/teachers/teacherEmail/${courseMaterial[0]?.course_id}`)
-            .then((res) => setTeacherEmail(res.data[0].email))
-            .catch((err) => { })
-    }, [])
+        if (courseMaterial) {
+            axios
+                .get(`http://localhost:4000/teachers/teacherEmail/${courseMaterial[0]?.course_id}`)
+                .then((res) => setTeacherEmail(res.data[0].email))
+                .catch((err) => { })
+        }
+    }, [courseMaterial])
 
+    // getting score and rating counter from one course
     useEffect(() => {
-        axios
-            .get(`http://localhost:4000/students/scoreCounterRating/${courseMaterial[0]?.course_id}`)
-            .then((res) => {
-                setScore(parseFloat(res.data[0].score))
-                setCounterRating(parseInt(res.data[0].counter_rating))
-            })
-            .catch((err) => { })
-    }, [showRatingModal, score, counterRating])
+        if (courseMaterial) {
+            axios
+                .get(`http://localhost:4000/students/scoreCounterRating/${courseMaterial[0]?.course_id}`)
+                .then((res) => {
+                    setScore(parseFloat(res.data[0].score))
+                    setCounterRating(parseInt(res.data[0].counter_rating))
+                })
+                .catch((err) => { })
+        }
+    }, [courseMaterial, showRatingModal, score, counterRating])
 
-
-
+    // Getting student status to check if student has finished the course
     useEffect(() => {
-        axios
-            .get(`http://localhost:4000/students/studentStatus/${user.user_id}/${courseMaterial[0]?.course_id}`)
-            .then((res) => setUserStatus(res.data[0].status))
-            .catch((err) => { })
+        if (courseMaterial) {
+            axios
+                .get(`http://localhost:4000/students/studentStatus/${user.user_id}/${courseMaterial[0]?.course_id}`)
+                .then((res) => setUserStatus(res.data[0].status))
+                .catch((err) => { })
+        }
     }, [courseMaterial, downloadedExam, userStatus])
 
+    // Getting exam name to download
     useEffect(() => {
-        axios
-            .get(`http://localhost:4000/downloadExam/${courseMaterial[0]?.course_id}`)
-            .then((res) => setFileExam(res.data[0].exam_file))
-            .catch((err) => { })
+        if (courseMaterial) {
+            axios
+                .get(`http://localhost:4000/downloadExam/${courseMaterial[0]?.course_id}`)
+                .then((res) => setFileExam(res.data[0].exam_file))
+                .catch((err) => { })
+        }
     }, [courseMaterial, downloadedExam, userStatus])
 
     const handleImgChange = (e) => {
         setFile(e.target.files[0])
     }
 
+    // Function to upload the exam into a data base
     const uploadFileExam = async () => {
         const newFormData = new FormData()
         if (file !== undefined) {
@@ -75,9 +85,6 @@ export const ExamCard = ({ setShowRatingModal, showRatingModal, counterRating, s
                 },
                 body: JSON.stringify({ user_name: user.user_name, user_lastname: user.user_lastname, phone: user.phone, email: user.email, course_name: courseMaterial[0]?.course_name, status: 2, teacher_email: teacherEmail }),
             });
-
-            const result = await response.json();
-
         } catch (error) {
             console.error(error);
         }
@@ -130,8 +137,5 @@ export const ExamCard = ({ setShowRatingModal, showRatingModal, counterRating, s
             ></iframe>}
             <RatingModal setShowRatingModal={setShowRatingModal} showRatingModal={showRatingModal} score={score} counterRating={counterRating} setScore={setScore} setCounterRating={setCounterRating} />
         </div>
-
-
-
     )
 }

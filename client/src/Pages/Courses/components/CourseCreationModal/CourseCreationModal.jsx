@@ -17,7 +17,6 @@ export const CourseCreationModal = ({
   const [tag, setTag] = useState();
   const [tagsList, setTagsList] = useState([]);
   const { user } = useContext(DroneMasterContext);
-
   const {
     register,
     handleSubmit,
@@ -25,6 +24,7 @@ export const CourseCreationModal = ({
     reset
   } = useForm();
 
+  // Getting all teachers
   useEffect(() => {
     axios
       .get(`http://localhost:4000/admin/allTeachers`)
@@ -34,6 +34,7 @@ export const CourseCreationModal = ({
       .catch((err) => { });
   }, []);
 
+  // Getting all categories
   useEffect(() => {
     axios
       .get(`http://localhost:4000/courses/allCategories`)
@@ -43,6 +44,7 @@ export const CourseCreationModal = ({
       .catch((err) => { });
   }, []);
 
+  // function to close the modal
   const handleClose = () => {
     setShowCourseCreationModal(false);
     reset()
@@ -57,6 +59,7 @@ export const CourseCreationModal = ({
     setTag("");
   };
 
+  // Function to create a new course
   const onSubmit = (data) => {
     axios
       .post(`http://localhost:4000/courses/createCourse/${user.user_id}`, {
@@ -75,6 +78,7 @@ export const CourseCreationModal = ({
 
   };
 
+  // Function to delete a tag
   const handleDeleteTag = (tagName) => {
     const updatedTagsList = tagsList.filter((tag) => tag !== tagName);
     setTagsList(updatedTagsList);
@@ -98,7 +102,6 @@ export const CourseCreationModal = ({
           <h4 className="titleText">Creacion de un nuevo curso</h4>
         </div>
       </Modal.Header>
-
       <form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body className="modalBody">
           {/* Name Input Group */}
@@ -145,7 +148,6 @@ export const CourseCreationModal = ({
               })}
             </select>
           </div>
-
           {/* Length Input Group */}
           <div className="d-flex flex-column align-items-start gap-1 inputLength">
             <label htmlFor="course_length" className="ps-3">
@@ -164,7 +166,6 @@ export const CourseCreationModal = ({
               {errors.course_length?.message}
             </span>
           </div>
-
           {/* Teacher Input Group */}
           <div className="d-flex flex-column align-items-start gap-1 inputTeacher">
             <label htmlFor="teacher_id" className="ps-3">
@@ -186,7 +187,6 @@ export const CourseCreationModal = ({
               })}
             </select>
           </div>
-
           {/* Price Input Group */}
           <div className="d-flex flex-column align-items-start gap-1  inputPrice">
             <label htmlFor="price" className="ps-3">
@@ -205,7 +205,6 @@ export const CourseCreationModal = ({
             />
             <span className="errorMessage">{errors.price?.message}</span>
           </div>
-
           {/* Date Input Group */}
           <div className="d-flex flex-column align-items-start gap-1  inputDate">
             <label htmlFor="start_date" className="ps-3">
@@ -219,7 +218,6 @@ export const CourseCreationModal = ({
               className="input1"
             />
           </div>
-
           {/* Tags Input Group */}
           <div className="d-flex flex-column align-items-start gap-1  inputTags">
             <label htmlFor="tag" className="ps-3">
@@ -242,11 +240,9 @@ export const CourseCreationModal = ({
               </span>
             </div>
           </div>
-
           <div className="d-flex flex-column align-items-start gap-1 tagsList">
             <div className="tagListContainer ">
               <p>
-
                 {tagsList?.map((tag, index) => {
                   return (
                     <span key={index} className="me-1 mb-0 ">
@@ -261,13 +257,11 @@ export const CourseCreationModal = ({
               </p>
             </div>
           </div>
-
           {/* Description Input Group */}
           <div className="d-flex flex-column align-items-start gap-1  inputDescription">
             <label htmlFor="course_description" className="ps-3">
               Descripción
             </label>
-
             <textarea
               placeholder="#Descripcíon"
               {...register("course_description")}

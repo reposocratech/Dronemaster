@@ -22,12 +22,13 @@ export const UnitsLessonList = ({ myCourseInfo, user, course_id }) => {
   const closedHeight = "0px";
   const openedHeight = "35px";
 
+  // Function to prepare the dropdwon
   const toggleUnit = (unitIndex) => {
     if (openUnits.includes(unitIndex)) {
-      // Si el índice ya está en el array, lo eliminamos
+      // If index exist inside the array, it is deleted
       setOpenUnits(openUnits.filter((index) => index !== unitIndex));
     } else {
-      // Si el índice no está en el array, lo agregamos
+      // If index doesn`t exist inside the array, it is added
       setOpenUnits([...openUnits, unitIndex]);
     }
   };
@@ -42,7 +43,6 @@ export const UnitsLessonList = ({ myCourseInfo, user, course_id }) => {
           const filteredLessons = myCourseInfo.filter(
             (item) => item.unit_tittle === unitName && item.lesson_id !== null
           );
-
           return (
             <div key={unitIndex} className="unitList">
               <div className="unitTitle">
@@ -82,10 +82,10 @@ export const UnitsLessonList = ({ myCourseInfo, user, course_id }) => {
                   >
                     <div className="lessonTitle">
                       <p className="lessonText">
-                        <MdOutlinePlayLesson className="icon3 mb-1 me-1" /> 
-                         {lesson.lesson_title}
+                        <MdOutlinePlayLesson className="icon3 mb-1 me-1" />
+                        {lesson.lesson_title}
                       </p>
-                      <BsArrowRightShort className="icon" /> 
+                      <BsArrowRightShort className="icon" />
                     </div>
                   </li>
                 ))}

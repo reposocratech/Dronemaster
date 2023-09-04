@@ -9,18 +9,16 @@ export const StarRating = ({ rating }) => {
 
   return (
     <>
-      
-        <p className="starsContainer">
-          {starsArray.map((star) => (
-            <span
-              key={star}
-              className={star <= rating ? "starFilled" : "starEmpty"}
-            >
-              {star <= rating ? <BiSolidStar/> : <BiStar/>}
-            </span>
-          ))}
-        </p>
-    
+      <p className="starsContainer">
+        {starsArray.map((star) => (
+          <span
+            key={star}
+            className={star <= rating ? "starFilled" : "starEmpty"}
+          >
+            {star <= rating ? <BiSolidStar /> : <BiStar />}
+          </span>
+        ))}
+      </p>
     </>
   );
 };

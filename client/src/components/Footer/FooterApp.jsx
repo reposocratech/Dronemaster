@@ -10,6 +10,7 @@ import { FormMailModal } from './FormMail/FormMailModal';
 export const FooterApp = () => {
     const navigate = useNavigate()
     const [showMailModal, setShowMailModal] = useState(false)
+
     return (
         <Container fluid className='footer'>
             <Row className='d-flex-column justify-content-center'>

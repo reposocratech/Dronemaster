@@ -6,6 +6,7 @@ import "../../studentLandingStyle.scss";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { saveAs } from "file-saver";
+
 export const StudentCourseTableInfo = ({
   setLessonsViewedByStudent,
   setLessonsOneCourse,
@@ -21,9 +22,12 @@ export const StudentCourseTableInfo = ({
     new Set(courseMaterial?.map((item) => item.unit_tittle))
   );
 
+  // Update unitsName state with course units name
   useEffect(() => {
     setUnitsName(uniqueUnitNames);
   }, [courseMaterial]);
+
+  // Getting the count lessons viewed by student in one course
   useEffect(() => {
     if (courseId) {
       axios
@@ -36,6 +40,8 @@ export const StudentCourseTableInfo = ({
         .catch((err) => { });
     }
   }, [resetUseEffect, courseId]);
+
+  // Getting all lessons of one course
   useEffect(() => {
     if (courseId) {
       axios
@@ -46,6 +52,8 @@ export const StudentCourseTableInfo = ({
         .catch((err) => { });
     }
   }, [resetUseEffect, courseId]);
+
+  // Getting lessons viewed by student in one course
   useEffect(() => {
     if (courseId) {
       axios
@@ -58,10 +66,13 @@ export const StudentCourseTableInfo = ({
         .catch((err) => { });
     }
   }, [resetUseEffect, user, courseId]);
+
+  // Update selectedLessons state with the lessons viewed by student in one course
   useEffect(() => {
     setSelectedLessons(lessonViewed);
   }, [resetUseEffect, user, lessonViewed, selectedLessons]);
 
+  // Function to change the color state if one lesson has been viewed by student
   const toggleLesson = (lessonId) => {
     if (selectedLessons.includes(lessonId)) {
       setSelectedLessons(selectedLessons.filter((id) => id !== lessonId));
@@ -70,6 +81,7 @@ export const StudentCourseTableInfo = ({
     }
   };
 
+  // Function to download a lesson resource
   const downloadResource = (lesson_id) => {
     axios
       .post(

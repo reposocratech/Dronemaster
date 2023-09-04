@@ -3,11 +3,9 @@
 .editionModalContainer {
   backdrop-filter: blur(4px);
 
-
   .modalHeader,
   .modalFooter {
     background-color: $CuaternaryDark;
-
   }
 
   .modalHeader {
@@ -196,15 +194,12 @@
       background-color: rgba(255, 255, 255, 0.181);
       padding: 0 20px;
       border: 2px solid $PrimaryDarkColor;
-
     }
 
     .input1:focus {
       background-color: rgba(82, 82, 82, 0.181);
       outline: none;
       border: 2px solid $PrimaryOrangeColor;
-
-
     }
   }
 
@@ -264,7 +259,6 @@
         "inputPhone"
         " inputAddress"
         "inputAddress";
-
     }
   }
 }

@@ -8,7 +8,6 @@ export const LessonComments = ({ user, course_id, unit_id, lesson_id }) => {
   const [allComments, setAllComments] = useState();
   const [allResponses, setAllResponses] = useState();
   const [resetComments, setResetComments] = useState(false);
-
   const {
     register,
     handleSubmit,
@@ -16,6 +15,7 @@ export const LessonComments = ({ user, course_id, unit_id, lesson_id }) => {
     reset,
   } = useForm();
 
+  // Function to get lesson comments
   useEffect(() => {
     axios
       .get(
@@ -29,6 +29,7 @@ export const LessonComments = ({ user, course_id, unit_id, lesson_id }) => {
       });
   }, [lesson_id, unit_id, course_id, resetComments]);
 
+  // Function to get comment responses
   useEffect(() => {
     axios
       .get(
@@ -42,6 +43,7 @@ export const LessonComments = ({ user, course_id, unit_id, lesson_id }) => {
       });
   }, [lesson_id, unit_id, course_id, resetComments]);
 
+  // Function to add comentary
   const onSubmit = (data) => {
     axios
       .post(
@@ -55,10 +57,9 @@ export const LessonComments = ({ user, course_id, unit_id, lesson_id }) => {
       .catch((error) => { });
   };
 
-const shouldDisplayNoComments =
-  allComments?.length === 0 ||
-  allComments?.every((comment) => comment.comment_is_hidden === 1);
-
+  const shouldDisplayNoComments =
+    allComments?.length === 0 ||
+    allComments?.every((comment) => comment.comment_is_hidden === 1);
 
   return (
     <div className="commentsCard">
@@ -105,7 +106,6 @@ const shouldDisplayNoComments =
           </div>
         </form>
         <hr className="w-100" />
-
         {shouldDisplayNoComments && (
           <div className="noCommnetsContainer">
             <p className="noCommentsText">
@@ -113,7 +113,6 @@ const shouldDisplayNoComments =
             </p>
           </div>
         )}
-
         <CommentsAndResponsesList
           course_id={course_id}
           unit_id={unit_id}

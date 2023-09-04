@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Modal } from "react-bootstrap";
 import "./ratingModal.scss";
 import { useForm } from "react-hook-form";
@@ -14,13 +14,14 @@ export const RatingModal = ({
   setScore,
 }) => {
   const { courseMaterial } = useContext(DroneMasterContext);
-
   const { register, handleSubmit } = useForm();
 
+  // Function to close rating modal
   const handleClose = () => {
     setShowRatingModal(false);
   };
 
+  // Function to update data base with new score
   const onSubmit = (data) => {
     const rating = parseInt(data.rating);
     const newCounterRating = counterRating + 1;

@@ -21,11 +21,13 @@ export const LessonCreationModal = ({
     reset,
   } = useForm();
 
+  // Function to close the modal
   const handleClose = () => {
     reset();
     setShowLessonCreationModal(false);
   };
 
+  // Function to create a new lesson
   const onSubmit = (data) => {
     axios
       .post(
