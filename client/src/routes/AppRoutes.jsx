@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Container } from "react-bootstrap";
 import NavBarApp from "../components/NavBar/NavBarApp";
 import HomeApp from "../Pages/Home/HomeApp";
 import { AllCourses } from "../Pages/AllCourses/AllCourses";
