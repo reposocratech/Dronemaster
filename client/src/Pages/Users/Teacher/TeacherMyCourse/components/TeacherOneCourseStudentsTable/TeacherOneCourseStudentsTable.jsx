@@ -97,7 +97,7 @@ export const TeacherOneCourseStudentsTable = ({ myOneCourseStudentsData }) => {
                 <span className=" d-none d-md-flex">Telefono</span>
               </th>
 
-              <th className="text-center">examen</th>
+              <th className="text-center">Examen</th>
               <th className="text-center">Calificar</th>
             </tr>
           </thead>

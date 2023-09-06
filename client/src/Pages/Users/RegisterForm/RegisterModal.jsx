@@ -122,12 +122,11 @@ const RegisterModal = ({
                 <input
                   {...register("password", {
                     required: "Campo obligatorio",
-                    pattern: {
-                      // value:
-                      //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$/i,
-                      message:
-                        "Contraseña debil",
-
+                     pattern: {
+                        value:
+                          /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/i,
+                        message:
+                          "Contraseña debil",
                     },
                   })}
                   id="password"

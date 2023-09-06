@@ -10,7 +10,7 @@ import AdminViewOneCourse from "../AdminViewOneCourse/AdminViewOneCourse";
 import { CourseEditionModal } from "../../../../../Courses/components/CourseEditionModal/CourseEditionModal";
 import { UnitCreationModal } from "../../../../../Courses/components/CourseCreationModal/UnitCreationModal/UnitCreationModal";
 
-const AdminAllCoursesCard = ({ resEffect, setResEffect }) => {
+const AdminAllCoursesCard = ({ resEffect, setResEffect, resetCategory }) => {
   const [allCourses, setAllCourses] = useState();
   const [openCourse, setOpenCourse] = useState([]);
   const [showCourseEditionModal, setShowCourseEditionModal] = useState(false);
@@ -300,6 +300,7 @@ const AdminAllCoursesCard = ({ resEffect, setResEffect }) => {
           </>
         )}
         <CourseEditionModal
+        resetCategory={resetCategory}
           setShowCourseEditionModal={setShowCourseEditionModal}
           showCourseEditionModal={showCourseEditionModal}
           course={allCourses}

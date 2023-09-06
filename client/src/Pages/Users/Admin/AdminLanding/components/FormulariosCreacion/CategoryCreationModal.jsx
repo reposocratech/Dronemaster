@@ -7,6 +7,8 @@ import "./categoryCreationModal.scss";
 export const CategoryCreationModal = ({
   showCategoryCreationModal,
   setShowCategoryCreationModal,
+  resetCategory,
+  setResetCategory,
 }) => {
   //Hook Form
   const { register, handleSubmit, reset } = useForm();
@@ -16,6 +18,7 @@ export const CategoryCreationModal = ({
   const handleClose = () => {
     reset();
     setShowCategoryCreationModal(false);
+    
   };
 
   //Saves the information of the new category created
@@ -25,7 +28,8 @@ export const CategoryCreationModal = ({
       .post("http://localhost:4000/courses/createCategory", data)
       .then((res) => {
         reset();
-        setShowCategoryCreationModal(false);
+        setShowCategoryCreationModal(false)
+        setResetCategory(!resetCategory)
       })
       .catch((error) => {});
   };
