@@ -82,7 +82,7 @@ export const StudentCourseTableInfo = ({
   };
 
   // Function to download a lesson resource
-  const downloadResource = (lesson_id) => {
+  const downloadResource = (lesson_id, resource_id) => {
     axios
       .post(
         `http://localhost:4000/students/registerLessonViewed/${user.user_id}/${lesson_id}/${courseId}`
@@ -94,12 +94,16 @@ export const StudentCourseTableInfo = ({
       .catch((err) => { });
 
     axios
-      .get(`http://localhost:4000/resourceName/${lesson_id}`)
-      .then((res) =>
+      .get(`http://localhost:4000/resourceName/${resource_id}`)
+      .then((res) => {
+
+
+        console.log(res.data);
         saveAs(
           `http://localhost:4000/images/resources/${res.data[0].resource_name}`,
           `${res.data[0].resource_name}`
         )
+      }
       )
       .catch((err) => { });
   };
@@ -190,7 +194,7 @@ export const StudentCourseTableInfo = ({
                                         role="button"
                                         className="icon"
                                         onClick={() =>
-                                          downloadResource(lesson.lesson_id)
+                                          downloadResource(lesson.lesson_id, lesson.resource_id)
                                         }
                                       />
                                     </td>
