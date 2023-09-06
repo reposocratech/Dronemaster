@@ -19,6 +19,7 @@ const AdminLanding = () => {
   const [showEditionModal, setShowEditionModal] = useState(false);
   const [moreInformationCourses, setMoreInformationCourses] = useState(false);
   const [resEffect, setResEffect] = useState(false);
+  const [resetCategory, setResetCategory] = useState(false)
 
   const { user } = useContext(DroneMasterContext);
 
@@ -51,12 +52,14 @@ const AdminLanding = () => {
           setInscriptionDates={setInscriptionDates}
         />
         {/* Shows the buttons */}
-        <AdminNewUserCard resEffect={resEffect} setResEffect={setResEffect} />
+        <AdminNewUserCard resEffect={resEffect} setResEffect={setResEffect}
+        resetCategory={resetCategory} setResetCategory={setResetCategory} />
       </aside>
       {/*  Body part of the landing */}
       <div className="mainContainer">
         {/* Shows the list of all courses */}
         <AdminAllCoursesCard
+        resetCategory={resetCategory}
           moreInformationCourses={moreInformationCourses}
           setMoreInformationCourses={setMoreInformationCourses}
           resEffect={resEffect}

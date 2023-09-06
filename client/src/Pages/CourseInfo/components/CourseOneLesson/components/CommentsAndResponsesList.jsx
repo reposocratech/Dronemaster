@@ -109,17 +109,20 @@ export const CommentsAndResponsesList = ({
                 </button>
                 {responseInputForComment === commentIndex && (
                   <div className="commentInputContainer">
-                    <div className="userImgContainer">
-                      <img
-                        src={
-                          user?.user_img &&
-                          `http://localhost:4000/images/users/${user?.user_img}`
-                        }
-                      />
-                      <p className="mb-0">
-                        {user?.user_name} {user?.user_lastname}
-                      </p>
-                    </div>
+                   <div className="userImgContainer">
+              {user?.user_img ? (
+                <img
+                  src={`http://localhost:4000/images/users/${user.user_img}`}
+                />
+              ) : (
+                <h6 className="avatarText">
+                  {user?.user_name.at(0).toUpperCase()}
+                </h6>
+              )}
+              <p className="mb-0">
+                {user?.user_name} {user?.user_lastname}
+              </p>
+            </div>
                     <textarea
                       className="commentInput"
                       type="text"

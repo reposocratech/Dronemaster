@@ -13,7 +13,8 @@ export const CourseEditionModal = ({
   showCourseEditionModal,
   courseId,
   resEffect,
-  setResEffect
+  setResEffect,
+  resetCategory
 }) => {
   const [teachersList, setTeachersList] = useState();
   const [categoriesList, setCategoriesList] = useState();
@@ -78,12 +79,12 @@ export const CourseEditionModal = ({
   // Getting all categories inside data base
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/courses/allCategories`)
+      .get(`http://localhost:4000/courses/everyCategories`)
       .then((res) => {
         setCategoriesList(res.data);
       })
       .catch((err) => {});
-  }, []);
+  }, [resetCategory]);
 
   const handleImgChange = (e) => {
     setFile(e.target.files[0]);
