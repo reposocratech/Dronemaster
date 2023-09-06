@@ -3,7 +3,12 @@ import FormularioCreacionTeacher from "../FormulariosCreacion/FormularioCreacion
 import { CourseCreationModal } from "../../../../../Courses/components/CourseCreationModal/CourseCreationModal";
 import { CategoryCreationModal } from "../FormulariosCreacion/CategoryCreationModal";
 
-const AdminNewUserCard = ({ resEffect, setResEffect }) => {
+const AdminNewUserCard = ({
+  resEffect,
+  setResEffect,
+  resetCategory,
+  setResetCategory,
+}) => {
   const [showModalForm, setShowModalForm] = useState(false);
   const [showCourseCreationModal, setShowCourseCreationModal] = useState(false);
   const [showCategoryCreationModal, setShowCategoryCreationModal] =
@@ -30,6 +35,7 @@ const AdminNewUserCard = ({ resEffect, setResEffect }) => {
         Añadir Curso
       </button>
       <CourseCreationModal
+      resetCategory={resetCategory}
         showCourseCreationModal={showCourseCreationModal}
         setShowCourseCreationModal={setShowCourseCreationModal}
         resEffect={resEffect}
@@ -46,6 +52,8 @@ const AdminNewUserCard = ({ resEffect, setResEffect }) => {
         Añadir Categoría
       </button>
       <CategoryCreationModal
+        resetCategory={resetCategory}
+        setResetCategory={setResetCategory}
         showCategoryCreationModal={showCategoryCreationModal}
         setShowCategoryCreationModal={setShowCategoryCreationModal}
       />

@@ -346,6 +346,18 @@ class courseControllers {
       error ? res.status(400).json({ error }) : res.status(200).json(result);
     });
   };
+
+  // 14.- Get all categories
+  // http://localhost:4000/courses/everyCategories
+  selectEveryCourseCategories = (req, res) => {
+    const sql = "SELECT * FROM category"
+
+    connection.query(sql, (error, result) => {
+      error ? res.status(400).json({ error }) : res.status(200).json(result);
+    });
+  };
+
+  
 }
 
 module.exports = new courseControllers();
