@@ -67,55 +67,52 @@ export const TeacherStudentsTableCard = ({ myStudentsData }) => {
                   <p>Sin resultados de busqueda</p>
                 ) : (
                   <>
-                    {searchResultData?.map((student) => {
-                      return (
-                        <tr key={student.student_id}>
-                          <td>
-                            <div className="tableImg">
-                              {student?.student_img ? (
-                                <img
-                                  src={`http://localhost:4000/images/user/${student.student_img}`}
-                                />
-                              ) : (
-                                <h6 className="avatarText">
-                                  {student?.student_name.at(0).toUpperCase()}
-                                </h6>
-                              )}
+                  {searchResultData?.map((student) => {
+                    return (
+                      <tr key={student.student_id}>
+                        <td className="tdImg">
+                          <div className="tableImg">
+                            {student?.student_img ? (
+                              <img
+                                src={`http://localhost:4000/images/user/${student.student_img}`}
+                              />
+                            ) : (
+                              <h6 className="avatarText">
+                                {student?.student_name.at(0).toUpperCase()}
+                              </h6>
+                            )}
+                          </div>
+                        </td>
+                        <td className="tableCellName">{student.student_name}</td>
+                        <td>
+                          <div className="tableCell">
+                            {student.student_lastname}
+                          </div>
+                        </td>
+                        <td>
+                          <div className="tableCell iconCell">
+                            <div className="tableCellContent">
+                              <HiOutlineMail className="icon" />
+                              <span className="d-none d-md-inline ">
+                                {student.student_email}
+                              </span>
                             </div>
-                          </td>
-                          <td className="tableCellName">
-                            {student.student_name}
-                          </td>
-                          <td>
-                            <div className="tableCell">
-                              {student.student_name}
+                          </div>
+                        </td>
+                        <td>
+                          <div className="tableCell iconCell">
+                            <div className="tableCellContent">
+                              <AiOutlinePhone className="icon" />
+                              <span className="d-none d-md-inline ">
+                                {student.student_phone}
+                              </span>
                             </div>
-                          </td>
-                          <td>
-                            <div className="tableCell iconCell">
-                              <div className="tableCellContent">
-                                <span className="d-none d-md-inline ">
-                                  {student.email}
-                                </span>
-                                <HiOutlineMail className="icon text-warning" />
-                              </div>
-                            </div>
-                          </td>
-
-                          <td>
-                            <div className="tableCell iconCell">
-                              <div className="tableCellContent">
-                                <AiOutlinePhone className="icon text-warning" />
-                                <span className="d-none d-md-inline ">
-                                  {student.phone}
-                                </span>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </>
                 )}
               </>
             ) : (

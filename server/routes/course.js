@@ -72,4 +72,8 @@ router.get(
   courseControllers.selectLessonInfo
 );
 
+// 14.- Get all categories
+// http://localhost:4000/courses/everyCategories
+router.get("/everyCategories", courseControllers.selectEveryCourseCategories);
+
 module.exports = router;

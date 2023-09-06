@@ -10,7 +10,8 @@ import { DroneMasterContext } from "../../../../context/DroneMasterProvider";
 export const CourseCreationModal = ({
   setShowCourseCreationModal,
   showCourseCreationModal,
-  resEffect, setResEffect
+  resEffect, setResEffect,
+  resetCategory
 }) => {
   const [teachersList, setTeachersList] = useState();
   const [categoriesList, setCategoriesList] = useState();
@@ -37,12 +38,12 @@ export const CourseCreationModal = ({
   // Getting all categories
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/courses/allCategories`)
+      .get(`http://localhost:4000/courses/everyCategories`)
       .then((res) => {
         setCategoriesList(res.data);
       })
       .catch((err) => { });
-  }, []);
+  }, [resetCategory]);
 
   // function to close the modal
   const handleClose = () => {

@@ -124,7 +124,7 @@ const RegisterModal = ({
                     required: "Campo obligatorio",
                      pattern: {
                         value:
-                          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$/i,
+                          /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/i,
                         message:
                           "Contraseña debil",
 
