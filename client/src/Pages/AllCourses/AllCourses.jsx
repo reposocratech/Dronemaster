@@ -108,11 +108,11 @@ export const AllCourses = () => {
                 </div>
               )}
               <div className="courseCardContainer">
-                {courseData?.slice(counter, counter + counterRatio).map((elem) => {
+                {course?.slice(counter, counter + counterRatio).map((elem) => {
                   return <CourseCard oneCourse={elem} />;
                 })}
               </div>
-              {counter + counterRatio < courseData?.length ? (
+              {counter + counterRatio < course?.length ? (
                 <div className="navigationButtonContainerRight">
                   <MdNavigateNext
                     className="navigationButton"

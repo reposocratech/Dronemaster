@@ -49,6 +49,7 @@ const NavBarApp = () => {
     navigate("/allCourses");
   };
 
+
   // Function to open the login modal
   const openLoginModal = () => {
     setShowLoginModal(true);
